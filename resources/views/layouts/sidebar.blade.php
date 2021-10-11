@@ -24,7 +24,7 @@ if(!isset($active)){
                 </li>
                 <li class="main__info-item">
                   <span>
-                    Заморожено:
+                    Заморожено::
                   </span>
                   <span>
                     {{ Auth::user()->SumOfPendingAmount() }} <i class="fa fa-rub" aria-hidden="true">
