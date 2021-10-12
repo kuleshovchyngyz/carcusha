@@ -4,7 +4,25 @@ $paids = $data;
 ?>
 
 
+<?php
+$sort = '';
+if(isset($_GET['sort'])){
+    $sort = $_GET['sort'];
+}
 
+//    dump($sort);
+if($sort == ''){
+    $paids = $paids;
+    $sort = 'asc';
+}else if($sort == 'asc'){
+    $paids = $paids->sortBy('status');
+    $sort = 'desc';
+}else if($sort == 'desc'){
+    $paids = $paids->sortByDesc('status');
+    $sort = '';
+}
+
+?>
 <div class="main__content">
     <h2 class="main__content-title">Выплаты</h2>
     <input type="text" class="form-control search-tabel-mob" placeholder="Поиск по пользователям">
@@ -15,7 +33,7 @@ $paids = $data;
                 <th>Дата</th>
                 <th>Логин</th>
                 <th>Сумма </th>
-                <th>Статус</th>
+                <th><a href="{{ route('admin.payments') }}@if($sort!='')?sort={{ $sort }}@endif">Статус</a></th>
             </tr>
             </thead>
 
