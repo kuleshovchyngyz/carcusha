@@ -240,6 +240,9 @@ class User extends Authenticatable
         return collect($sum)->sum();
     }
 
-
+    public function promo(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Promo::class);
+    }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\support\QrCode;
 
+use App\Models\Promo;
 use Fpdf\Fpdf;
 use Illuminate\Support\Facades\Auth;
 use setasign\Fpdi\Fpdi;
@@ -31,10 +32,11 @@ class QRCodeGenerator
     private $number;
     private $email;
     private $address;
-
+    private $user;
 
     public function __construct($text){
-            $this->user_id = \auth()->user()->id;
+            $this->user = \auth()->user();
+            $this->user_id = $this->user->id;
         if(isset($text)){
             $this->big_name = 'qr_'.$this->user_id;
             $this->small_name = 'qrsmall_'.$this->user_id;
@@ -51,7 +53,16 @@ class QRCodeGenerator
             }
         }
     }
+    public function saveData(){
 
+        Promo::firstOrCreate([
+            'user_id'=>$this->user_id,
+            'name'=>$this->company,
+            'phone'=>$this->number,
+            'email'=>$this->email,
+            'address'=>$this->address
+            ]);
+    }
     /**
      * @param mixed $address
      */
@@ -211,6 +222,7 @@ class QRCodeGenerator
         $this->create_pdf(true);
         $this->create_pdf(false);
         $this->pdf_part_two();
+        $this->saveData();
     }
 
     public function getBigName(): string

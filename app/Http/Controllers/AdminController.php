@@ -26,12 +26,10 @@ class AdminController extends Controller
         $sort = $request->get('sort', 'desc');
         $users = User::all();
       if($sort == 'asc'){
-
             $users = $users->sortBy(function ($product, $key) {
                 return $product->new_leads_quantity();
             });
         }else if($sort == 'desc'){
-
             $users = $users->sortByDesc(function ($product, $key) {
                 return $product->new_leads_quantity();
             });
