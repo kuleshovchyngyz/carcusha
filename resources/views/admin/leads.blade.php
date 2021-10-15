@@ -4,7 +4,6 @@
         $sort = $_GET['sort'];
     }
 
-//    dump($sort);
     if($sort == ''){
         $leads = $user->leads;
         $sort = 'asc';

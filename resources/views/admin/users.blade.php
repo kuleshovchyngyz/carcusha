@@ -1,35 +1,3 @@
-<?php
-
-$users = $data;
-
-$sort = '';
-if(isset($_GET['sort'])){
-    $sort = $_GET['sort'];
-}
-
-
-
-
-
-
-//    dump($sort);
-if($sort == ''){
-    $sort = 'asc';
-}else if($sort == 'asc'){
-    $users = $users->sortBy(function ($product, $key) {
-        return $product->new_leads_quantity();
-    });
-    $sort = 'desc';
-}else if($sort == 'desc'){
-    $users = $users->sortByDesc(function ($product, $key) {
-        return $product->new_leads_quantity();
-    });
-    $sort = '';
-}
-?>
-
-
-
 <div class="main__content">
     <h2 class="main__content-title">Пользователи</h2>
     <input type="text" class="form-control search-tabel-mob" placeholder="Поиск по пользователям">
@@ -48,14 +16,13 @@ if($sort == ''){
                 <th>Статус</th>
                 <th>Рефералы</th>
                 <th>Баланс</th>
-                <th><a href="{{ route('admin.users') }}@if($sort!='')?sort={{ $sort }}@endif">Объяв</a></th>
+                <th><a href="{{ route('admin.users') }}@if($data['sort']!='')?sort={{ $data['sort'] }}@endif">Объяв</a></th>
             </tr>
             </thead>
             <tbody>
-            @foreach($users as $user)
+            @foreach($data['users'] as $user)
                 @if(!$user->hasRole('admin'))
                 <tr>
-
                     <td><a href="{{ route('admin.user', $user->id) }}" class="main__table-link">User #{{ $user->id  }}<span class="mob-stsus text-success"></span></a></td>
                     <td>{{ $user->setting->number  }}</td>
                     <td>{{ $user->created_at->format('d.m.y')  }}</td>

@@ -21,20 +21,28 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-//        $queriesQuery = DB::table('users')
-//            ->select(DB::raw("users.id as id , leads.checked as checked"))
-//            ->rightJoin('users', 'users.id', '=', 'leads.user_id')->get();
-//
-//        $users = DB::table('users')
-//            ->rightJoin('leads', 'users.id', '=', 'leads.user_id')
-//            ->get();
-//          dd($users);
-        //$user =
+        $sort = $request->get('sort', 'desc');
+        $users = User::all();
+      if($sort == 'asc'){
+
+            $users = $users->sortBy(function ($product, $key) {
+                return $product->new_leads_quantity();
+            });
+        }else if($sort == 'desc'){
+
+            $users = $users->sortByDesc(function ($product, $key) {
+                return $product->new_leads_quantity();
+            });
+        }
+        $sort = ($sort == 'asc') ? 'desc' : 'asc';
         return view('admin.home',[
             'name' => 'users',
-            'data' => User::all()
+            'data' =>[
+                'users'=>$users,
+                'sort' => $sort
+            ]
         ]);
     }
     public function user($id)
@@ -73,11 +81,19 @@ class AdminController extends Controller
 
 
     }
-    public function payments(){
+    public function payments(Request $request){
 
+        $sort = $request->get('sort', 'asc');
+       // dd($request->all());
+        $paids = Paid::orderBy('status', $sort)->get();
+        $sort = ($sort == 'asc') ? 'desc' : 'asc';
+        //$url = GenerateRouteOrder:url($sort) // http://partnersonserver/admin?sort
         return view('admin.home',[
             'name' => 'payments',
-            'data' => Paid::orderBy('status','DESC')->get()
+            'data' => [
+                'sort'=>$sort,
+                'paids' =>$paids
+            ]
         ]);
     }
 

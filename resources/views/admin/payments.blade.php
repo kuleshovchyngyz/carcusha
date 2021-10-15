@@ -1,28 +1,5 @@
-<?php
-
-$paids = $data;
-?>
 
 
-<?php
-$sort = '';
-if(isset($_GET['sort'])){
-    $sort = $_GET['sort'];
-}
-
-//    dump($sort);
-if($sort == ''){
-    $paids = $paids;
-    $sort = 'asc';
-}else if($sort == 'asc'){
-    $paids = $paids->sortBy('status');
-    $sort = 'desc';
-}else if($sort == 'desc'){
-    $paids = $paids->sortByDesc('status');
-    $sort = '';
-}
-
-?>
 <div class="main__content">
     <h2 class="main__content-title">Выплаты</h2>
     <input type="text" class="form-control search-tabel-mob" placeholder="Поиск по пользователям">
@@ -33,12 +10,12 @@ if($sort == ''){
                 <th>Дата</th>
                 <th>Логин</th>
                 <th>Сумма </th>
-                <th><a href="{{ route('admin.payments') }}@if($sort!='')?sort={{ $sort }}@endif">Статус</a></th>
+                <th><a href="{{ route('admin.payments') }}@if($data['sort']!='')?sort={{ $data['sort'] }}@endif">Статус</a></th>
             </tr>
             </thead>
 
             <tbody>
-                @foreach($paids as $paid)
+                @foreach($data['paids'] as $paid)
                         <tr>
                             <td>{{ $paid->updated_at->format('Y-m-d H:i')  }}</td>
                             <td><a href="{{ route('admin.user', $paid->user->id) }}" class="main__table-link">User #{{ $paid->user->id  }}<span class="mob-stsus text-success"></span></a></td>
