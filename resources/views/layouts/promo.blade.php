@@ -9,22 +9,22 @@
         <div class="row">
                 <div class="col-md-6">
                     <div>Названия компании:
-                        <input type="text" id="company" name="company" class="form-control" placeholder="Не указан" value="">
+                        <input type="text" id="company" name="company" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo!==null){{ Auth::user()->promo->name }} @endif">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div>Телефон:
-                        <input type="text" id="number" name="number" class="form-control" placeholder="Не указан" value="{{ Auth::user()->setting->number }}">
+                        <input type="text" id="number" name="number" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo===null){{ Auth::user()->setting->number }}@else {{ Auth::user()->promo->phone }} @endif">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div>E-Mail:
-                        <input type="text" id="email" name="email" class="form-control" placeholder="Не указан" value="{{ Auth::user()->setting->email }}">
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo===null){{ Auth::user()->setting->email }}@else {{ Auth::user()->promo->email }} @endif">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div>Адрес:
-                        <input type="text" id="address" name="address" class="form-control" placeholder="Не указан" value="">
+                        <input type="text" id="address" name="address" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo!==null){{ Auth::user()->promo->address }} @endif">
                     </div>
                 </div>
             <div class="col-md-6">

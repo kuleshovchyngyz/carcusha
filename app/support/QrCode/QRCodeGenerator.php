@@ -54,14 +54,21 @@ class QRCodeGenerator
         }
     }
     public function saveData(){
-
-        Promo::firstOrCreate([
-            'user_id'=>$this->user_id,
-            'name'=>$this->company,
-            'phone'=>$this->number,
-            'email'=>$this->email,
-            'address'=>$this->address
-            ]);
+        if($this->user->promo===null){
+            Promo::firstOrCreate([
+                'user_id'=>$this->user_id,
+                'name'=>$this->company,
+                'phone'=>$this->number,
+                'email'=>$this->email,
+                'address'=>$this->address
+                ]);
+        }else{
+            $this->user->promo->name = $this->company;
+            $this->user->promo->phone = $this->number;
+            $this->user->promo->email = $this->email;
+            $this->user->promo->address = $this->address;
+            $this->user->promo->save();
+        }
     }
     /**
      * @param mixed $address
@@ -110,38 +117,44 @@ class QRCodeGenerator
         $y = 4;
         $x = 6;
         $i = 8;
-        $reportSubtitle = $this->company;
-        $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+        $text = $this->company;
 
-        $pdf->text($x, $y += 7, $reportSubtitle);
+        $newtext = wordwrap($text, 25, "==", false);
+        $arr = explode('==',$newtext);
+        foreach ($arr as $item){
+            $item = iconv('UTF-8', 'cp1251', $item);
+            $pdf->text($x,$y += 7, $item);
+        }
+
+
+
 
         $pdf->SetFont('OpenSans', 'B', 11);
 
         $reportSubtitle = $this->number;
         $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
 
-        $pdf->text($x, $y += 12, $reportSubtitle);
+        $pdf->text($x, $y += 11, $reportSubtitle);
 
 
         $reportSubtitle = $this->email;
         $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
 
         $pdf->text($x, $y += $i, $reportSubtitle);
+        $text = $this->address;
+
+        $newtext = wordwrap($text, 30, "==", false);
+        $arr = explode('==',$newtext);
+        foreach ($arr as $key => $item){
+            $item = iconv('UTF-8', 'cp1251', $item);
+            if($key==0){
+                $pdf->text($x,$y += 7, $item);
+            }else{
+                $pdf->text($x,$y += 4, $item);
+            }
+        }
 
 
-        $reportSubtitle = $this->address;
-        if($this->break_into_multi_lines($reportSubtitle)[0]){
-            $text = $this->break_into_multi_lines($reportSubtitle)[1];
-            $reportSubtitle = iconv('UTF-8', 'cp1251', $text);
-            $pdf->text($x,$y += $i, $reportSubtitle);
-        }else{
-            $text = $this->break_into_multi_lines($reportSubtitle)[1];
-            $text2 = $this->break_into_multi_lines($reportSubtitle)[2];
-            $reportSubtitle = iconv('UTF-8', 'cp1251', $text);
-            $pdf->text($x,$y += $i, $reportSubtitle);
-            $reportSubtitle = iconv('UTF-8', 'cp1251', $text2);
-            $pdf->text($x,$y += 4, $reportSubtitle);
-        }//
         $pdf->AddPage();
         $template = $pdf->importPage(2);
 
@@ -272,10 +285,17 @@ class QRCodeGenerator
         // imagepng($image1);
         imagepng($image1,'qrcodes/card_'.$name.'.png');
     }
-    public function break_into_multi_lines($str=''){
-        if(strlen($str)<30){
+    public function break_into_multi_lines($str='',$length = 30){
+       // $output = substr($string, 0, strpos($string, ' '));
+        if(strlen($str)<$length){
             return [true,$str];
         }
-        return [false,substr($str,0, 30),substr($str,30, 30)];
+
+        if ( strpos($str, ' ') > 17 &&  strpos($str, ' ') < 25  ){
+            return [false,substr($str,0,  strpos($str, ' ') ), substr($str,strpos($str, ' '), $length)];
+        }else{
+            return [false,substr($str,0,  $length ), substr($str,$length, $length)];
+        }
     }
+
 }
