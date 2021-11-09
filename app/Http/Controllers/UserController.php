@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Notifier;
 use App\Models\Paid;
 use App\Models\PaymentAmount;
+use App\Models\PaymentSetting;
 use App\Models\Setting;
 use App\Models\User;
 use App\support\QrCode\QRCodeGenerator;
@@ -22,11 +23,8 @@ public $user_id;
         $QRPics->setEmail(trim($request->email) ?? '');
         $QRPics->setAddress(trim($request->address) ?? '');
         $QRPics->pdf_preview();
-
     }
-
     public function notification_setting(Request $request){
-
         $bought = false;
         $on_work = false;
         if(isset($request->bought)){
@@ -67,28 +65,31 @@ public $user_id;
     }
 
     public function edit_settings(Request $request){
-       // dd($request->all());
-        if ($request->has('email_notification'))
-        {
-            Auth::user()->setting->update(['email_notification'=>1]);
-        }else{
-            Auth::user()->setting->update(['email_notification'=>0]);
-        }
-        if ($request->has('number_notification'))
-        {
-            Auth::user()->setting->update(['number_notification'=>1]);
-        }else{
-            Auth::user()->setting->update(['number_notification'=>0]);
-        }
+        //dd($request->all());
+        Auth::user()->setting
+            ->update([
+                'number_notification'=> $request->has('number_notification') ? 1 : 0,
+                'email_notification'=> $request->has('email_notification') ? 1 : 0,
+                'number'=>$request['number'],
+                'email'=>$request['email'],
+                'city'=>$request['city']
+            ]);
+        $request->request->add(['user_id' => Auth::user()->id]);
         $request->request->remove('_token');
         $request->request->remove('number_notification');
         $request->request->remove('email_notification');
-       // Setting::where('user_id',Auth::user()->id)->update($request->all());
-        Auth::user()->setting->update($request->all());
+        $request->request->remove('number');
+        $request->request->remove('email');
+        $request->request->remove('city');
 
+       // Setting::where('user_id',Auth::user()->id)->update($request->all());
+        Auth::user()->paymentSetting==null ?
+            PaymentSetting::create($request->all()):
+            Auth::user()->paymentSetting->update($request->all());
 
         return redirect()->back()->with('success_message', [__('Обновлено')]);
     }
+
     public function send_to_tg_bot(){
 
 

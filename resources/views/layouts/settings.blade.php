@@ -49,17 +49,51 @@
             </div>
         </div>
         <div class="main__setting-row">
-{{--            <div class="row">--}}
-{{--                <h3 class="main__setting-title w-100">Настройки оплаты</h3>--}}
-{{--                <div class="col-md-6">--}}
-{{--                    <div class="main__setting-item main__setting-item--edit">--}}
-{{--                        <div>Номер карты:--}}
-{{--                            <input name = "card_number"id="bankcardnumber" type="text" class="form-control" placeholder="Не указан" value="{{ Auth::user()->setting->card_number }}">--}}
-
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <div class="row">
+                <h3 class="main__setting-title w-100">Настройки оплаты</h3>
+                <div class="col-md-6">
+                    <div class="main__setting-item main__setting-item--edit">
+                        <div>ФИО:
+                            <input name = "fullName" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->fullName }}@endif">
+                        </div>
+                    </div>
+                    <div class="main__setting-item main__setting-item--edit">
+                        <div>Номер Паспорта:
+                            <input name = "passportNumber" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->passportNumber }}@endif">
+                        </div>
+                    </div>
+                    <div class="main__setting-item main__setting-item--edit">
+                        <div>Банк:
+                            <input name = "bankName" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->bankName }}@endif">
+                        </div>
+                    </div>
+                    <div class="main__setting-item main__setting-item--edit">
+                        <div>БИК:
+                            <input name = "bik" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->bik }}@endif">
+                        </div>
+                    </div>
+                    <div class="main__setting-item main__setting-item--edit">
+                        <div>ИНН:
+                            <input name = "inn" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->inn }}@endif">
+                        </div>
+                    </div>
+                    <div class="main__setting-item main__setting-item--edit">
+                        <div>р/с:
+                            <input name = "rs" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->rs }}@endif">
+                        </div>
+                    </div>
+                    <div class="main__setting-item main__setting-item--edit">
+                        <div>к/с:
+                            <input name = "ks" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->ks }}@endif">
+                        </div>
+                    </div>
+                    <div class="main__setting-item main__setting-item--edit">
+                        <div>Номер карты:
+                            <input name = "cardNumber" id="bankcardnumber" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->cardNumber }}@endif">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="text-danger">
                 Номер карты необходим для вывода средств с баланса!

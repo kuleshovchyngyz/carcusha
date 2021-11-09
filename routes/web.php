@@ -38,6 +38,11 @@ Route::get('/delete', function (){
     \App\Models\MessageNotification::latest()->first()->delete();
 });
 
+
+
+
+
+
 Route::get('admin/l/{id}', [App\Http\Controllers\AdminController::class, 'pay_to_partner']);
 
 
