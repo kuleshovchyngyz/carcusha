@@ -9,6 +9,7 @@ use App\Models\PaymentAmount;
 use App\Models\Question;
 use App\Models\Status;
 use App\Models\User;
+use App\Models\UserPaymentAmount;
 use App\Models\UserStatuses;
 use App\Models\Violation;
 use Illuminate\Http\Request;
@@ -49,6 +50,26 @@ class AdminController extends Controller
             'name' => 'user',
             'data' => User::find($id)
         ]);
+    }
+    public function changePaymentType(Request $request)
+    {
+
+
+        $data = array();
+
+        $user = User::find($request['user']);
+
+        $user->unique_payment =  $request['switch'] == 'true';
+        $user->save();
+
+        if($user->UserPaymentAmounts->count()==0){
+            $arr = PaymentAmount::all()->pluck('amount','reason_of_payment');
+            foreach ($arr as $key =>$item){
+                $data[] =  ['user_id'=>$request['user'], 'reason_of_payment'=> $key, 'amount'=>str_replace('%','',$item)];
+            }
+            UserPaymentAmount::insert($data);
+        }
+        return ($data);
     }
     public function SortByNumber($id,$type)
     {
@@ -159,9 +180,6 @@ class AdminController extends Controller
             //}
         }
         //dd($arr[14]);
-        PaymentAmount::where('reason_of_payment','initial')->update(['amount'=>$arr[1]['amount']]);
-        PaymentAmount::where('reason_of_payment','success')->update(['amount'=>$arr[14]['amount']]);
-        PaymentAmount::where('reason_of_payment','rejected')->update(['amount'=> -$arr[1]['amount']]);
 
         UserStatuses::truncate();
 
@@ -194,15 +212,52 @@ class AdminController extends Controller
             return redirect()->back()->with('success_message', ['Сохранено']);
         }
     }
+
+    public function user_payment_settings($id){
+        $payment = PaymentAmount::all();
+        return view('admin.home',[
+            'name' => 'user',
+            'data' => User::find($id),
+            'file'=> [
+                'user'=>User::find($id),
+                'include'=>'admin.user_payment_settings'
+            ]
+//            'name' => 'user_payment_settings',
+//            'data' => $payment
+        ]);
+
+    }
+
     public function store_payment_settings(Request $request)
     {
         PaymentAmount::where('reason_of_payment','initial')->update(['amount'=>$request->initial]);
         PaymentAmount::where('reason_of_payment','success')->update(['amount'=>$request->success]);
+        PaymentAmount::where('reason_of_payment','nothing')->update(['amount'=>$request->nothing]);
+        PaymentAmount::where('reason_of_payment','rejected')->update(['amount'=>$request->rejected]);
         PaymentAmount::where('reason_of_payment','refer')->update(['amount'=>$request->refer]);
         PaymentAmount::where('reason_of_payment','MinAmountOfPayment')->update(['amount'=>$request->MinAmountOfPayment]);
         $percent =$request->percentage;
         $percent = str_replace("%", "", $percent);
         PaymentAmount::where('reason_of_payment','percentage')->update(['amount'=>$percent]);
+        return redirect()->back()->with('success_message', ['Сохранено']);
+    }
+    public function store_user_payment_settings(Request $request)
+    {
+        $request->request->remove('_token');
+
+        $data = array();
+        $user_id = $request['user_id'];
+
+        $request->request->remove('user_id');
+
+        foreach ($request->all() as $key =>$item){
+            $data[] =  ['user_id'=>$user_id, 'reason_of_payment'=> $key, 'amount'=>$item];
+            UserPaymentAmount::where('user_id',$user_id)->where('reason_of_payment',$key)->update(['amount'=>str_replace('%','',$item)]);
+        }
+
+
+
+
         return redirect()->back()->with('success_message', ['Сохранено']);
     }
     public function pay_to_partner(Paid $paid)
@@ -228,7 +283,7 @@ class AdminController extends Controller
         $payments = Payment::whereIn('id',$arr)->get();
         $sum = 0;
         foreach ($payments as $payment){
-            $sum += $payment->payment_amount->amount;
+            $sum += $payment->payment_amount()->amount;
         }
 
     }

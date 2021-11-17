@@ -24,6 +24,9 @@
                 @if(!$user->hasRole('admin'))
                 <tr>
                     <td><a href="{{ route('admin.user', $user->id) }}" class="main__table-link">User #{{ $user->id  }}<span class="mob-stsus text-success"></span></a></td>
+                    @if(!$user->setting)
+                        @dd($user)
+                    @endif
                     <td>{{ $user->setting->number  }}</td>
                     <td>{{ $user->created_at->format('d.m.y')  }}</td>
                     <td>{{ $user->leads->count()  }}</td>

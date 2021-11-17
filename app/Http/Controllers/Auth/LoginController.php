@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Auth\Code;
+use App\Clients\SmsClient;
 use App\Http\Controllers\Controller;
+use App\Models\AuthConfirmation;
+use App\Notifications\VerifyEmail;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -47,17 +51,14 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         \Session::put('last_auth_attempt', 'login');
-        //dd($request->all());
-        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'number';
+//        dd($request->all());
+//        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'number';
+        $fieldType = isset($request['email']) ? 'email' : 'number';
         $this->fieldType = $fieldType;
         if($this->fieldType=='number'){
-            $request->request->add(['number' => $request->email]);
-            $request->request->remove('email');
+            $request->request->add(['number' => $request->number]);
             $request->request->remove('email');
         }
-
-
-
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
@@ -77,6 +78,24 @@ class LoginController extends Controller
         if($user->active==0){
             return redirect('/logout')->with('error_message', ['Вы заблокированы']);
         }
+    }
+
+    public function sendVerificationCode(Request $request, Code $code, SmsClient $sms)
+    {
+        $this->email = $request->email ?? '';
+        $this->code = $code->generate(CODE::VERIFICATION);
+        if($request->email != ''){
+            $this->notify(new VerifyEmail());
+        } else {
+            $sms->sendSms($request->phone, "Ваш код: ".$this->code);
+        }
+        $param = ($request->email != '') ? ['email' => $this->email] : ['phone' => $request->phone];
+        AuthConfirmation::updateOrCreate(
+            $param,
+            ['code' => $this->code]
+        );
+
+        return redirect()->route('auth.confirm-code', ['email'=>$request->email ?? '', 'phone'=>$request->phone ?? '']);
     }
 
 }

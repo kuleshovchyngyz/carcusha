@@ -23,7 +23,8 @@ use DB;
 use App\Models\Cars;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Http;
-
+use App\Clients\SmsClient;
+use App\Auth\Code;
 class LeadController extends Controller
 {
     use HasRoles;
@@ -462,7 +463,11 @@ class LeadController extends Controller
         }
     }
     public function send(){
-        $this->send_to_tg_bot('maksat');
+        $sms = new SmsClient();
+        $code = new Code();
+        $sms->sendSms(+996708277186, "Ваш код: ".$code->generate(CODE::VERIFICATION));
+        return $code->generate(CODE::VERIFICATION);
+        //$this->send_to_tg_bot('maksat');
     }
 
     public function get_status_list1(){

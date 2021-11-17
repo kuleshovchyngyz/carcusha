@@ -2086,6 +2086,62 @@ __webpack_require__(/*! jquery-confirm */ "./node_modules/jquery-confirm/dist/jq
 
 __webpack_require__(/*! ./custom.js */ "./resources/js/custom.js");
 
+__webpack_require__(/*! ./uniquePayment.js */ "./resources/js/uniquePayment.js");
+
+__webpack_require__(/*! ./auth.js */ "./resources/js/auth.js");
+
+/***/ }),
+
+/***/ "./resources/js/auth.js":
+/*!******************************!*\
+  !*** ./resources/js/auth.js ***!
+  \******************************/
+/***/ (() => {
+
+$('#forgotPass').click(function () {
+  $('#forgotPass').css('display', 'none');
+  $('.restorepass').css('display', 'inline-block');
+}); // let linkToggle = document.querySelectorAll(".pseudo_link");
+// for (let i = 0; i < linkToggle.length; i++) {
+//     linkToggle[i].addEventListener('click', function (e) {
+//         let link = this.querySelector(".main__table-link");
+//         link.click();
+//     }, false);
+// }
+
+$('.main__dd-btn').click(function () {
+  $(this).parent().find('.aside-dd').addClass('active');
+  $(this).parents().find('.main__aside').addClass('active');
+  $('body').addClass('overflow-hidden');
+
+  if ($(this).hasClass("active")) {
+    $('body').removeClass('overflow-hidden');
+    $(this).removeClass("active");
+    $(this).parent().find('.aside-dd').removeClass('active');
+    $(this).parents().find('.main__aside').removeClass('active');
+  } else {
+    $(this).addClass("active");
+    $('body').addClass('overflow-hidden');
+  }
+});
+$('.type-field-select').on("click", function () {
+  if ($('input', this).is(":checked")) {
+    $('input', this).parents('form').find($('.type-mail')).removeClass('disabled').removeAttr('disabled');
+    $('input', this).parents('form').find($('.type-phone')).addClass('disabled').attr('disabled', 'disabled');
+    $('input', this).parents('form').find($('.form-subbtitle')).addClass('disabled');
+    $(this).addClass('mail');
+    $(this).siblings('.phone').removeClass('active');
+    $(this).siblings('.mail').addClass('active');
+  } else {
+    $('input', this).parents('form').find($('.type-mail')).addClass('disabled').attr('disabled', 'disabled');
+    $('input', this).parents('form').find($('.type-phone')).removeClass('disabled').removeAttr('disabled');
+    $('input', this).parents('form').find($('.form-subbtitle')).removeClass('disabled');
+    $(this).removeClass('mail');
+    $(this).siblings('.phone').addClass('active');
+    $(this).siblings('.mail').removeClass('active');
+  }
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2165,6 +2221,13 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
   var element = document.getElementById('number');
+  var maskOptions = {
+    mask: '+{7}(000)000-00-00'
+  };
+  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element, maskOptions);
+});
+$(document).ready(function () {
+  var element = document.getElementById('numberRegister');
   var maskOptions = {
     mask: '+{7}(000)000-00-00'
   };
@@ -2468,10 +2531,6 @@ function _image_names() {
   return _image_names.apply(this, arguments);
 }
 
-$('#invitation').click(function () {
-  $('#invitation').css('display', 'none');
-  $('#invitation-inpup').css('display', 'block');
-});
 $('#forgotPass').click(function () {
   $('#forgotPass').css('display', 'none');
   $('.restorepass').css('display', 'inline-block');
@@ -2536,6 +2595,52 @@ $('.main__dd-btn').click(function () {
     $('body').addClass('overflow-hidden');
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/uniquePayment.js":
+/*!***************************************!*\
+  !*** ./resources/js/uniquePayment.js ***!
+  \***************************************/
+/***/ (() => {
+
+$("#flexCheckUniquePayment").change(function () {
+  var uniquePayment = false;
+  var userId = $('div.main_user-name').data('user');
+  console.log(userId);
+
+  if (this.checked) {
+    //I am checked
+    uniquePayment = true;
+    $('div.uniquePayment').removeClass('d-none');
+    console.log('checked');
+  } else {
+    //I'm not checked
+    uniquePayment = false;
+    $('div.uniquePayment').addClass('d-none');
+    console.log('unchecked');
+  }
+
+  changePayment(userId, uniquePayment, function (output) {
+    console.log(output);
+  });
+});
+
+function changePayment(id, toggle, handleData) {
+  $.ajax({
+    url: "/admin/user/paymentype",
+    data: {
+      _token: $('[name="_token"]').val(),
+      user: id,
+      "switch": toggle
+    },
+    type: 'post'
+  }).done(function (data) {
+    handleData(data);
+  }).fail(function (data) {
+    console.log(data);
+  });
+}
 
 /***/ }),
 

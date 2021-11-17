@@ -2,4 +2,6 @@ require('jquery');
 require('./bootstrap');
 require('jquery-confirm');
 require('./custom.js');
+require('./uniquePayment.js');
+require('./auth.js');
 

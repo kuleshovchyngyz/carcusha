@@ -50,7 +50,7 @@ class LeadBuilder extends UpdatingLeadStatus
     }
 //    public function change_balance(){
 //        $balance = $this->user->balance;
-//        $balance->balance = $balance->balance + $this->status->user_statuses->amount ;
+//        $balance->balance = $balance->balance + $this->status->user_statuses->amount() ;
 //        $balance->save();
 //    }
 //    public function create_pending_amount(){

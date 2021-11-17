@@ -55,7 +55,7 @@
                     <td>{{ $payment->referred_user()->pending()  }}</td>
                     <td>{{ $payment->referred_user()->status() }}</td>
 
-                    <td>@if($payment->amount!=6){{ $payment->payment_amount->amount }}@elseif($payment->amount==6) {{ $payment->refer_amount() }} @endif ₽</td>
+                    <td>@if($payment->amount!=6){{ $payment->payment_amount()->amount }}@elseif($payment->amount==6) {{ $payment->refer_amount() }} @endif ₽</td>
                 </tr>
 
 @endforeach

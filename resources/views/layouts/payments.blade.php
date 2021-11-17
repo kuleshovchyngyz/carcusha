@@ -37,7 +37,7 @@ $leads = $data;
 							@else
 							<td style="color:{{ $payment->status()->color }};">{{ $payment->status()->name }}</td>
 							@endif
-                        <td>{{$payment->payment_amount->amount }} ₽</td>
+                        <td>{{$payment->payment_amount()->amount }} ₽</td>
                     </tr>
                 @endforeach
                 </tbody>

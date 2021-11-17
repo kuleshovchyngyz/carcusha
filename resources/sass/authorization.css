@@ -9,8 +9,7 @@
 
 body {
     background: #F0EDED;
-    font-family: 'Open Sans',
-        sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     font-weight: 400;
     min-height: 100vh;
@@ -21,7 +20,7 @@ body {
     width: 100%;
     background: #E3473F;
     color: #fff;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-size: 22px;
     padding: 5px 10px;
     border-radius: 0;
@@ -37,8 +36,27 @@ body {
     flex-direction: column;
 }
 
-.authentication .logo {
+.logoauth {
     margin-top: 125px;
+}
+
+.invalid-feedbackerror {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+.red-link{
+    color: var(--color-red);
+    font-size: 18px;
+    text-decoration: underline;
+    box-shadow: none !important;
+    background: #fff;
+    color: var(--color-red);
+}
+.red-link:hover {
+    color: #212529;
+    text-decoration: none;
 }
 
 .tab-wrap {
@@ -47,7 +65,6 @@ body {
     margin: auto;
     background: #fff;
 }
-
 
 .nav__tab-item {
     width: 50%;
@@ -81,6 +98,8 @@ body {
 
 .tab-content--custom input {
     margin-bottom: 20px;
+    background-color: #F9F9F9;
+    color: #888888;
 }
 
 .red-btn {
@@ -95,18 +114,158 @@ body {
     margin-bottom: 10px;
 }
 
+.pos-r{
+    position: relative;
+}
+
+.pos-r input{
+    margin-bottom: 0;
+}
+
+.form-subbtitle {
+    max-height: 30px;
+    font-size: 16px;
+    line-height: 19px;
+    color: #8393A1;
+    display: block;
+    margin: 10px 0;
+    margin-left: 10px;
+    transition: all 0.3s;
+}
+
+.form-subbtitle.disabled{
+    max-height: 0;
+}
+
+.type-field {
+    align-items: center;
+    justify-content: space-between;
+    max-width: 273px;
+    margin: 0 auto;
+    margin-bottom: 33px;
+    font-size: 20px;
+    color: #888888;
+}
+
+.type-field-select input{
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.type-field-select {
+    width: 60px;
+    height: 30px !important;
+    background: #FFFFFF;
+    box-shadow: inset 1px 1px 6px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    position: relative;
+    background-image: none !important;
+}
+
+.type-field-select:before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: #E3473F;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.3s;
+}
+
+.type-field-select.mail:before {
+    left: calc(100% - 30px);
+}
+
+span.phone.active,
+span.mail.active{
+    color: #333333;
+}
+
+form .disabled{
+	opacity: 0;
+    visibility: hidden;
+}
+
+form .type-mail{
+	position: absolute;
+	width: 100%;
+	transition: all 0.4s;
+}
+
+form .type-phone{
+	transition: all 0.4s;
+}
+
+.form-head{
+    text-align: center;
+}
+
+.form-title{
+    font-size: 18px;
+    color: #E3473F;
+    font-weight: normal;
+    border-bottom: 1px solid #E3473F;
+    display: inline-block;
+    padding-bottom: 3px;
+    margin-top: 20px;
+}
+
+.confirm-info{
+    max-width: 320px;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #333333;
+    margin-top: 20px;
+}
+
+.confirm-info strong{
+    display: block;
+}
+
+.type-pass{
+    position: relative;
+}
+
+.type-pass input{
+    padding-right: 38px;
+}
+
+.type-pass label{
+    height: 100%;
+    width: 38px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-bottom: 0;
+    display: block;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='23' height='15' viewBox='0 0 23 15'%3E%3Cg id='Сгруппировать_301' data-name='Сгруппировать 301' transform='translate(-1582 -520.001)'%3E%3Cg id='view_3_' data-name='view (3)' transform='translate(1582 427.166)'%3E%3Cg id='Сгруппировать_296' data-name='Сгруппировать 296' transform='translate(0 92.835)'%3E%3Cg id='Сгруппировать_295' data-name='Сгруппировать 295' transform='translate(0 0)'%3E%3Cpath id='Контур_124' data-name='Контур 124' d='M.146,99.877c.205-.288,5.1-7.042,11.354-7.042s11.149,6.755,11.354,7.042a.791.791,0,0,1,0,.916c-.205.288-5.1,7.042-11.354,7.042S.352,101.08.146,100.793A.79.79,0,0,1,.146,99.877ZM11.5,106.283c4.606,0,8.595-4.483,9.776-5.949-1.179-1.467-5.16-5.948-9.776-5.948s-8.594,4.482-9.776,5.949C2.9,101.8,6.884,106.283,11.5,106.283Z' transform='translate(0 -92.835)' fill='%23888'/%3E%3C/g%3E%3C/g%3E%3Cg id='Сгруппировать_298' data-name='Сгруппировать 298' transform='translate(7.039 95.874)'%3E%3Cg id='Сгруппировать_297' data-name='Сгруппировать 297' transform='translate(0 0)'%3E%3Cpath id='Контур_125' data-name='Контур 125' d='M159.183,154.725a4.461,4.461,0,1,1-4.461,4.461A4.466,4.466,0,0,1,159.183,154.725Zm0,7.435a2.974,2.974,0,1,0-2.974-2.974A2.977,2.977,0,0,0,159.183,162.16Z' transform='translate(-154.722 -154.725)' fill='%23888'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+    background-position: left center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.type-pass label.show{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='23' height='15' viewBox='0 0 23 15'%3E%3Cg id='Сгруппировать_304' data-name='Сгруппировать 304' transform='translate(9 -90.835)'%3E%3Cg id='Сгруппировать_296' data-name='Сгруппировать 296' transform='translate(-9 90.835)'%3E%3Cg id='Сгруппировать_295' data-name='Сгруппировать 295' transform='translate(0 0)'%3E%3Cpath id='Контур_124' data-name='Контур 124' d='M.146,99.877c.205-.288,5.1-7.042,11.354-7.042s11.149,6.755,11.354,7.042a.791.791,0,0,1,0,.916c-.205.288-5.1,7.042-11.354,7.042S.352,101.08.146,100.793A.79.79,0,0,1,.146,99.877ZM11.5,106.283c4.606,0,8.595-4.483,9.776-5.949-1.179-1.467-5.16-5.948-9.776-5.948s-8.594,4.482-9.776,5.949C2.9,101.8,6.884,106.283,11.5,106.283Z' transform='translate(0 -92.835)' fill='%23333'/%3E%3C/g%3E%3C/g%3E%3Cg id='Сгруппировать_298' data-name='Сгруппировать 298' transform='translate(-1.961 93.874)'%3E%3Cg id='Сгруппировать_297' data-name='Сгруппировать 297' transform='translate(0 0)'%3E%3Cpath id='Контур_125' data-name='Контур 125' d='M159.183,154.725a4.461,4.461,0,1,1-4.461,4.461A4.466,4.466,0,0,1,159.183,154.725Zm0,7.435a2.974,2.974,0,1,0-2.974-2.974A2.977,2.977,0,0,0,159.183,162.16Z' transform='translate(-154.722 -154.725)' fill='%23333'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+}
+
+.type-pass label input{
+    opacity: 0;
+}
+
 @media screen and (max-width: 768px) {
-    .authentication{
+    .authentication {
         margin-bottom: 20px;
         padding-left: 15px;
         padding-right: 15px;
     }
-
-    .logo{
+    .logo {
         margin-top: 20px;
         margin-bottom: 20px;
     }
-
     .tab-content--custom {
         padding: 40px 20px;
     }

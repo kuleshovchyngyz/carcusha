@@ -26,10 +26,18 @@ class AppServiceProvider extends ServiceProvider
         Validator::extend('phone_number', function($attribute, $value, $parameters)
         {
             $pattern_start = '/^[+]{0,1}[0-9\s]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/';
-            if (preg_match($pattern_start, $value)){
+            if (preg_match($pattern_start, $value)&&strlen($value)>15){
                 return $value;
             }
 
         });
+//        Validator::extend('verification_code', function($attribute, $value, $parameters)
+//        {
+//            $pattern_start = '/^[+]{0,1}[0-9\s]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/';
+//            if (preg_match($pattern_start, $value)&&strlen($value)>15){
+//                return $value;
+//            }
+//
+//        });
     }
 }

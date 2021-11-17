@@ -53,7 +53,7 @@
                 <h3 class="main__setting-title w-100">Настройки оплаты</h3>
                 <div class="col-md-6">
                     <div class="main__setting-item main__setting-item--edit">
-                        <div>ФИО:
+                        <div>"ФИО или наименование Организации":
                             <input name = "fullName" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->fullName }}@endif">
                         </div>
                     </div>

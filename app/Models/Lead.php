@@ -39,7 +39,7 @@ class Lead extends Model
     public function payment_by_status(){
 //        dump( $this->status()->type());
 //        $p = PaymentAmount::where('reason_of_payment',$this->status()==false ? 0 : $this->status()->type())->first();
-        return  $this->status()==false ? 0 : $this->status()->user_statuses->amount;
+        return  $this->status()==false ? 0 : $this->status()->user_statuses->amount();
 
 //        return $p->amount;
     }
@@ -77,7 +77,7 @@ class Lead extends Model
         foreach ($reasons as $reason){
             $payment = Payment::wherereason_id($reason->id)->first();
             if ($payment){
-                $sum += $payment->payment_amount->amount;
+                $sum += $payment->payment_amount()->amount;
             }
         }
         return $sum;

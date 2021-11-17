@@ -22,6 +22,12 @@ class Payment extends Model
         }
     }
     public function payment_amount(){
+        if($this->owner()->unique_payment){
+            return UserPaymentAmount::where('user_id',$this->attributes['user_id'])->where('reason_of_payment',$this->paymentAmount->reason_of_payment)->first();
+        }
+        return $this->paymentAmount;
+    }
+    public function paymentAmount(){
         return $this->belongsTo(PaymentAmount::class,'amount');
     }
 //    public function amount(){
@@ -31,7 +37,7 @@ class Payment extends Model
 ////                return PaymentAmount::find($key)->amount;
 ////            }
 ////        }
-//        return $this->payment_amount->amount;
+//        return $this->payment_amount()->amount;
 //
 //
 //    }

@@ -1,3 +1,6 @@
+@if($errors->any())
+    {{ implode('', $errors->all(':message')) }}
+@endif
 @extends('layouts.app')
 @include('layouts.message')
 @section('content')
@@ -36,7 +39,7 @@
 
 
     <div class="authentication">
-        <img src="{{ asset('img/logo-aut.png') }}" alt="" class="logo">
+        <img src="{{ asset('img/logo-aut.png') }}" alt="" class="logoauth">
         <div class="tab-wrap">
             <ul class="nav mb-3" id="pills-tab" role="tablist">
                 <li class="nav__tab-item">
@@ -53,95 +56,156 @@
                 <div class="tab-pane fade  {{ $login ? 'active show' : ''}}" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
                     <form method="POST" id="authentication" action="{{ route('login') }}" class="text-center">
                         @csrf
-
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-
-
-                        <input id="text" type="text"  placeholder="Телефон или E-Mail" class="form-control
-                        @if($login)
-                         @error('email') is-invalid @enderror
-                        @endif " name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                        @if($login)
+                        <div class="type-field d-flex">
+                            <span class="phone">Телефон</span>
+                            <label class="type-field-select mail">
+                                <input type="checkbox" name="type-field" id="type_field">
+                            </label>
+                            <span class="mail active">E-Mail</span>
+                        </div>
+                        <div class="pos-r">
+                            @error('email')
+                                <span class="invalid-feedbackerror" role="alert">
+                                  <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail
+                                @if($login)
+                                     @error('email') is-invalid @enderror
+                                @endif " value="{{ old('email') }}" required autocomplete="email">
+                            @if($login)
                                 @error('email')
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedbackerror" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                 @enderror
-                                <input id="text" type="hidden"   class="form-control
-                                 @if($login)
-                                        @error('number') is-invalid @enderror
-                                @endif
-                                    " name="number">
-                                @error('number')
-                                <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                @enderror
-
-                        @endif
-                        <button class="btn red-btn restorepass" style="display: none;">Восстановить пароль</button>
-
+                            @endif
+                            <input type="tel" placeholder="Телефон" id="number" name="number" class="form-control type-phone disabled" disabled="disabled">
+                            <span class="form-subbtitle disabled">В формате +7</span>
+                        </div>
                         <input id="password" type="password" placeholder="Пароль" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-
-
                         @if (Route::has('password.request'))
-                            <a  class="btn red-btn" href="{{ route('password.request') }}">
-                                {{ __('Забыли пароль?') }}
-                            </a>
+                            <a  class="red-link" href="{{ route('auth.forgot.password') }}">Забыли пароль?</a>
                         @endif
-                        <button type="submit" class="btn btn-red">Войти</button>
+                        <button class="btn btn-red">Войти</button>
                     </form>
+
+
+
+
+
+{{--                    <form method="POST" id="authentication" action="{{ route('login') }}" class="text-center">--}}
+{{--                        @csrf--}}
+
+{{--                        @error('email')--}}
+{{--                        <span class="invalid-feedback" role="alert">--}}
+{{--                             <strong>{{ $message }}</strong>--}}
+{{--                        </span>--}}
+{{--                        @enderror--}}
+
+
+{{--                        <input id="text" type="text"  placeholder="Телефон или E-Mail" class="form-control--}}
+{{--                        @if($login)--}}
+{{--                         @error('email') is-invalid @enderror--}}
+{{--                        @endif " name="email" value="{{ old('email') }}" required autocomplete="email">--}}
+
+{{--                        @if($login)--}}
+{{--                                @error('email')--}}
+{{--                                <span class="invalid-feedback" role="alert">--}}
+{{--                                                <strong>{{ $message }}</strong>--}}
+{{--                                            </span>--}}
+{{--                                @enderror--}}
+{{--                                <input id="text" type="hidden"   class="form-control--}}
+{{--                                 @if($login)--}}
+{{--                                        @error('number') is-invalid @enderror--}}
+{{--                                @endif--}}
+{{--                                    " name="number">--}}
+{{--                                @error('number')--}}
+{{--                                <span class="invalid-feedback" role="alert">--}}
+{{--                                                <strong>{{ $message }}</strong>--}}
+{{--                                            </span>--}}
+{{--                                @enderror--}}
+
+{{--                        @endif--}}
+{{--                        <button class="btn red-btn restorepass" style="display: none;">Восстановить пароль</button>--}}
+
+{{--                        <input id="password" type="password" placeholder="Пароль" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">--}}
+
+
+
+{{--                        @if (Route::has('password.request'))--}}
+{{--                            <a  class="btn red-btn" href="{{ route('password.request') }}">--}}
+{{--                                {{ __('Забыли пароль?') }}--}}
+{{--                            </a>--}}
+{{--                        @endif--}}
+{{--                        <button type="submit" class="btn btn-red">Войти</button>--}}
+{{--                    </form>--}}
+
+
+
+
+
+
                 </div>
 
 
 
                 <div class="tab-pane fade {{ $register  ? 'active show' : ''}}" id="registrationtab" role="tabpanel" aria-labelledby="registration-tab">
 
-                    <form id="registration" method="POST" action="{{ route('register') }}" class="text-center">
+                    <form id="registration" method="POST" action="{{ route('auth.verification-code') }}" class="text-center">
                         @csrf
+                        <div class="type-field d-flex">
+                            <span class="phone @if(null !==old('number'))  active @endif">Телефон</span>
+                            <label class="type-field-select @if(null ===old('number')) mail @else phone @endif">
+                                <input type="checkbox" name="type-field" id="type_field">
+                            </label>
+                            <span class="mail @if(null ===old('number')) active @endif">E-Mail</span>
 
-                        <input id="text" type="text"  placeholder="Телефон или E-Mail" class="form-control
+                        </div>
                         @if($register)
-                            @error('email') is-invalid @enderror
-                        @endif
-                            "
-                        name="email" value="{{ old('email') }}" required autocomplete="email">
-                        @if($register)
-                        @error('email')
-                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                        @enderror
-                            <input id="text" type="hidden"   class="form-control
-                                 @if($register)
-                            @error('number') is-invalid @enderror
-                            @endif
-                                " name="number">
-                            @error('number')
-                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+                            @error('email')
+                            <span class="invalid-feedbackerror" role="alert">
+                                      <strong>{{ $message }}</strong>
+                            </span>
                             @enderror
                         @endif
-                        <input id="text" type="password" placeholder="Пароль" class="form-control
                         @if($register)
-                        @error('password') is-invalid @enderror
+                            @error('number')
+                            <span class="invalid-feedbackerror" role="alert">
+                                      <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         @endif
-                            " name="password" required autocomplete="new-password">
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                        @enderror
+                        <div class="pos-r">
+                            <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail @if(null !==old('number')) disabled @endif
+                            @if($register)
+                            @error('email') is-invalid @enderror
+                            @endif " value="{{ old('email') }}" required autocomplete="email" @if(null !==old('number')) disabled="disabled" @endif>
 
-                        <a href="#" class="btn red-btn {{ isset($_GET['ref']) ? 'd-none' : ''}}" id="invitation">У меня есть код приглашения</a>
-                        <input type="text" name="invitation_code" class="form-control {{ isset($_GET['ref']) ? 'd-block' : ''}}" value="{{ isset($_GET['ref']) ? $_GET['ref'] : ''}}" id="invitation-inpup" placeholder="Код приглашения" style="display: none;">
+
+                            <input type="tel" placeholder="Телефон" id="numberRegister" name="number" class="form-control type-phone @if(null ===old('number')) disabled @endif" @if(null ===old('number')) disabled="disabled" @endif
+                            @if($register)
+                                   @error('number') is-invalid @enderror
+                            @endif  value="{{ old('number') }}" required autocomplete="email">
+                            <span class="form-subbtitle disabled">В формате +7</span>
+                        </div>
+
+
+
+{{--                        <input id="text" type="password" placeholder="Пароль" class="form-control--}}
+{{--                        @if($register)--}}
+{{--                        @error('password') is-invalid @enderror--}}
+{{--                        @endif--}}
+{{--                            " name="password" required autocomplete="new-password">--}}
+{{--                        @error('password')--}}
+{{--                        <span class="invalid-feedback" role="alert">--}}
+{{--                                                <strong>{{ $message }}</strong>--}}
+{{--                                            </span>--}}
+{{--                        @enderror--}}
+
+
+
+                        <input type="text" name="invitation_code" class="form-control" value="{{ isset($_GET['ref']) ? $_GET['ref'] : ''}}" id="invitation-inpup" placeholder="Код приглашения (если есть)">
                         <button type="submit" class="btn btn-red">РЕГИСТРАЦИЯ</button>
                     </form>
 

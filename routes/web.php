@@ -19,7 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/car_application', [App\Http\Controllers\ApplicationController::class, 'qrform'])->name('car_application');
 Route::post('/car_application/store', [App\Http\Controllers\ApplicationController::class, 'store'])->name('car.store');
 Route::get('/calculate_available_amount', [App\Http\Controllers\AdminController::class, 'calculate_available_amount']);
-
+Route::post('/verification-code', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationCode'])->name('auth.verification-code');
+Route::get('/forgot-password', [App\Http\Controllers\AuthController::class, 'forgotPassword'])->name('auth.forgot.password');
+Route::get('/reset-password', [App\Http\Controllers\AuthController::class, 'resetPassword'])->name('auth.reset-password-code');
+Route::post('/password-create-email', [App\Http\Controllers\AuthController::class, 'EmailVerificationCode'])->name('auth.EmailVerification-code');
+Route::post('/password-create-sms', [App\Http\Controllers\AuthController::class, 'SmsVerificationCode'])->name('auth.SmsVerification-code');
 
 
 Route::get('/generate', [App\Http\Controllers\UserController::class, 'send_to_tg_bot']);
@@ -76,6 +80,7 @@ Route::group(['prefix'=>'leads', 'middleware' => ['auth', 'role:user']], functio
 });
 
 Route::group([ 'middleware' => ['auth', 'role:user']], function () {
+    //Route::post('/send-verification-code', [App\Http\Controllers\Auth\LoginController::class, 'sendVerificationCode'])->name('auth.send-verification-code');
 
     Route::get('/notifications', [App\Http\Controllers\HomeController::class, 'notifications'])->name('notification.list');
     Route::get('/payments', [App\Http\Controllers\HomeController::class, 'payments'])->name('payment.list');
@@ -97,6 +102,7 @@ Route::group([ 'middleware' => ['auth', 'role:user']], function () {
 Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], function () {
     Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.users');
     Route::get('user/{user}', [App\Http\Controllers\AdminController::class, 'user'])->name('admin.user');
+    Route::post('user/paymentype', [App\Http\Controllers\AdminController::class, 'changePaymentType']);
    // Route::get('user/{user}/{type}', [App\Http\Controllers\AdminController::class, 'SortByNumber'])->name('admin.user.sortByNumber');
     Route::get('user/new/{user}', [App\Http\Controllers\AdminController::class, 'newleads'])->name('admin.user.new');
     Route::get('user/verifyleads/{user}', [App\Http\Controllers\AdminController::class, 'verifyleads'])->name('admin.user.verify_leads');
@@ -112,6 +118,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::post('/store_user_statuses', [App\Http\Controllers\AdminController::class, 'store_user_statuses'])->name('admin.store_user_statuses');
     Route::post('/settings/store', [App\Http\Controllers\AdminController::class, 'store_settings'])->name('admin.store_settings');
     Route::post('/settings/payment_settings', [App\Http\Controllers\AdminController::class, 'store_payment_settings'])->name('admin.store_payment_settings');
+    Route::post('/settings/user_payment_settings', [App\Http\Controllers\AdminController::class, 'store_user_payment_settings'])->name('admin.store_user_payment_settings');
+    Route::get('/settings/user_payment_settings/{user}', [App\Http\Controllers\AdminController::class, 'user_payment_settings'])->name('admin.user_payment_settings');
     Route::get('/pay/{paid}', [App\Http\Controllers\AdminController::class, 'pay_to_partner']);
 });
 

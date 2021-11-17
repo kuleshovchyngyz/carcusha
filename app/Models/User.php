@@ -22,7 +22,10 @@ class User extends Authenticatable
         'number',
         'invitation_code',
         'password',
-        'active'
+        'phone_verified_at',
+        'email_verified_at',
+        'active',
+        'unique_payment'
     ];
 
     /**
@@ -53,7 +56,9 @@ class User extends Authenticatable
 //        }
         return $count;
     }
-
+    public function UserPaymentAmounts(){
+        return $this->hasMany(UserPaymentAmount::class);
+    }
     public function new_leads(){
         $leads = Lead::whereuser_id($this->attributes['id'])->where('checked',0)->get();
         return $leads;
@@ -198,7 +203,9 @@ class User extends Authenticatable
 
     public function number_of_violations(){
         return $this->violations->count();
+
     }
+
 
     public function payment(){
         return $this->hasMany(Payment::class);

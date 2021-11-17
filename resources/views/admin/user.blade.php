@@ -1,12 +1,13 @@
 <?php
+
 $user = $data;
 ?>
 <div class="row">
     <div class="col-md-3">
-        <div class="main__aside">
+        <div class="main__aside" >
             <div class="main__dd-btn"></div>
             <div class="main__info">
-                <div class="main_user-name">User #{{ $user->id }}</div>
+                <div class="main_user-name" data-user="{{ $user->id }}">User #{{ $user->id }}</div>
                 <ul class="main__info-list">
                     <li class="main__info-item">
                   <span>
@@ -113,6 +114,9 @@ $user = $data;
                         <a href="{{route('admin.user.report',$user->id)}}" class="btn remove-pass">Сообщить о нарушении</a>
                     </div>
                     <div class="text-center">
+                        <a href="{{route('admin.user_payment_settings',$user->id)}}" class="btn remove-pass">Оплаты</a>
+                    </div>
+                    <div class="text-center">
                         <a href="{{route('admin.user.ban',$user->id)}}" class="btn remove-pass">{{ $user->active==1 ? 'Заблокировать' : 'Активировать' }}</a>
                     </div>
                 </div>
@@ -121,9 +125,9 @@ $user = $data;
     </div>
     @if(isset($new))
         @include('admin.newleads')
+    @elseif(isset($file['include']))
+            @include($file['include'],['user' => $user])
     @else
         @include('admin.leads')
     @endif
-
-
 </div>

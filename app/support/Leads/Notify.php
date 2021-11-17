@@ -121,7 +121,7 @@ class Notify
 
     public function set_rejected_statuses(){
         foreach ($this->statuses as $status){
-            if( $status->user_statuses->notify == 1 && $status->user_statuses->amount < 0 ) {
+            if( $status->user_statuses->notify == 1 && $status->user_statuses->amount() < 0 ) {
                 $this->rejected_statuses[] = $status->id;
             }
         }
