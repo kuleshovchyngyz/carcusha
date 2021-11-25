@@ -70,17 +70,26 @@
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="filelist" id="filelist">
-
-                                        <li><i class="fa fa-times timesicon d-none" id="1"  aria-hidden="true"></i> <img src="" id="img1" class="d-none"></li>
-                                        <li><i class="fa fa-times timesicon d-none" id="2" aria-hidden="true"></i> <img src="" id="img2" class="d-none"></li>
-                                        <li> <i class="fa fa-times timesicon d-none" id="3" aria-hidden="true"></i><img src="" id="img3" class="d-none"></li>
-                                        <li> <i class="fa fa-times timesicon d-none"  id="4" aria-hidden="true"></i><img src="" id="img4" class="d-none"></li>
+                                    <div class="onlyFour">
+                                        <li><i class="fa fa-times timesicon d-none" id="1"  aria-hidden="true"></i> <img src="" id="img1" class="uploadImage d-none"></li>
+                                        <li><i class="fa fa-times timesicon d-none" id="2" aria-hidden="true"></i> <img src="" id="img2" class="uploadImage d-none"></li>
+                                        <li> <i class="fa fa-times timesicon d-none" id="3" aria-hidden="true"></i><img src="" id="img3" class="uploadImage d-none"></li>
+                                        <li> <i class="fa fa-times timesicon d-none"  id="4" aria-hidden="true"></i><img src="" id="img4" class="uploadImage d-none"></li>
+                                    </div>
                                     </ul>
                                 </div>
                             </div>
-
+                            <script>
+                                function submitForm(btn) {
+                                    // disable the button
+                                    btn.disabled = true;
+                                    // submit the form
+                                    btn.form.submit();
+                                }
+                            </script>
                             <div class="text-center">
-                                <button class="btn btn-red" type="submit">ОТПРАВИТЬ</button>
+
+                                <input id="submitButton" class="btn btn-red" type="button" value="ОТПРАВИТЬ" onclick="submitForm(this);" />
                             </div>
                         </form>
                     </div>

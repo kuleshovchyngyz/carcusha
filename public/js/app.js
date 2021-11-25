@@ -2072,6 +2072,94 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/ResetPassword.js":
+/*!***************************************!*\
+  !*** ./resources/js/ResetPassword.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+$(document).ready(function () {
+  $('.password-checkbox').click(function () {
+    var type = $('#password').attr("type") == 'password' ? 'text' : 'password';
+    $('#password').attr("type", type);
+    $('#password-confirm').attr("type", type);
+  });
+});
+$(document).ready(function () {
+  $('.reset-password').click(function () {
+    //console.log('reset')
+    var password = $("#password").val();
+    var user_id = $("#user_id").val();
+    var password_confirmation = $("#password-confirm").val();
+    var fd = new FormData();
+    fd.append('_token', $('[name="_token"]').val());
+    fd.append("password", password);
+    fd.append("user_id", user_id);
+    fd.append("password_confirmation", password_confirmation);
+    submit_form(fd).then(function (result) {
+      console.log(result);
+
+      if (result.errors) {
+        jQuery('.alert-danger').html('');
+        jQuery.each(result.errors, function (key, value) {
+          jQuery('.alert-danger').show();
+          jQuery('.alert-danger').append('<li>' + value + '</li>');
+        });
+      } else {
+        jQuery('.alert-danger').hide();
+        $('#open').hide();
+        $('#resetPassword').modal('hide');
+      }
+    });
+  });
+});
+
+function submit_form(_x) {
+  return _submit_form.apply(this, arguments);
+}
+
+function _submit_form() {
+  _submit_form = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(fd) {
+    var result;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return $.ajax({
+              type: 'post',
+              url: '/admin/reset-password-admin',
+              data: fd,
+              contentType: false,
+              processData: false
+            });
+
+          case 2:
+            result = _context.sent;
+            return _context.abrupt("return", result);
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _submit_form.apply(this, arguments);
+}
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -2089,6 +2177,10 @@ __webpack_require__(/*! ./custom.js */ "./resources/js/custom.js");
 __webpack_require__(/*! ./uniquePayment.js */ "./resources/js/uniquePayment.js");
 
 __webpack_require__(/*! ./auth.js */ "./resources/js/auth.js");
+
+__webpack_require__(/*! ./ResetPassword.js */ "./resources/js/ResetPassword.js");
+
+__webpack_require__(/*! ./uploadImages.js */ "./resources/js/uploadImages.js");
 
 /***/ }),
 
@@ -2371,166 +2463,10 @@ function _pay_to_partner() {
 }
 
 $(document).ready(function () {
-  $('#pictures').change(function (e) {
-    //  var l = $('#pictures')[0].files.length;
-    // preview_pic(-1,l);
-    //console.log($('#pictures')[0].files.length)
-    //
-    // console.log($('#pictures')[0].files.length)
-    var folder_id = $("#folder_id").val();
-    var l = $('#pictures')[0].files.length;
-    repeat(folder_id, -1, l);
-  });
-});
-$(document).ready(function () {
   $('#click').click(function () {
     console.log($('#pictures')[0].files);
   });
 });
-$(document).ready(function () {
-  $('.timesicon').click(function () {
-    $(this).addClass('d-none');
-    var url = $(this).next().attr('src');
-    var name = url.substring(url.lastIndexOf('/') + 1);
-    console.log(name);
-    var folder_id = $("#folder_id").val();
-    var fd = new FormData();
-    fd.append('_token', $('[name="_token"]').val());
-    fd.append("name", name);
-    fd.append("folder", folder_id);
-    delete_image(fd).then(function (v) {
-      console.log(v);
-    });
-    $("#img".concat($(this).attr('id'))).attr("src", '');
-    $("#img".concat($(this).attr('id'))).addClass('d-none');
-    $("#img".concat($(this).attr('id'))).removeClass('d-block');
-  });
-});
-
-function delete_image(_x2) {
-  return _delete_image.apply(this, arguments);
-}
-
-function _delete_image() {
-  _delete_image = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(fd) {
-    var result;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.next = 2;
-            return $.ajax({
-              type: 'post',
-              url: '/deleteimage',
-              data: fd,
-              contentType: false,
-              processData: false
-            });
-
-          case 2:
-            result = _context2.sent;
-            return _context2.abrupt("return", result);
-
-          case 4:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-  return _delete_image.apply(this, arguments);
-}
-
-function preview_pic(i, l) {
-  i++;
-  console.log($("#img1").attr('src'));
-  var reader = new FileReader();
-  var filedata = '';
-
-  if (i < l) {
-    reader.onload = function () {
-      filedata = reader.result;
-      $("#img".concat(i + 1)).attr("src", filedata);
-      $("#img".concat(i + 1)).removeClass('d-none');
-    };
-
-    console.log("#img".concat(i + 1));
-    reader.readAsDataURL($('#pictures')[0].files[i]);
-    preview_pic(i, l);
-  }
-}
-
-function repeat(folder_id, i, l) {
-  i++;
-  console.log($('#pictures')[0].files[i]);
-  var fd = new FormData();
-  fd.append('folder_id', folder_id);
-  fd.append('_token', $('[name="_token"]').val());
-  fd.append("file[]", $('#pictures')[0].files[i]);
-  image_names(fd).then(function (v) {
-    var getUrl = window.location;
-    var baseUrl = getUrl.protocol + "//" + getUrl.host + "/uploads/" + folder_id + '/' + v;
-    var check = false;
-    check = is_busy();
-
-    if (check != false) {
-      console.log(check);
-      $("#img".concat(check)).attr("src", baseUrl);
-      $("#img".concat(check)).removeClass('d-none');
-      $("#".concat(check)).removeClass('d-none');
-      $("#img".concat(check)).addClass('d-block');
-    }
-
-    if (i < l - 1) {
-      repeat(folder_id, i, l);
-    }
-  });
-}
-
-function is_busy() {
-  for (var i = 1; i < 5; i++) {
-    if ($("#img".concat(i)).attr('src') == '') {
-      return i;
-    }
-  }
-
-  return false;
-}
-
-function image_names(_x3) {
-  return _image_names.apply(this, arguments);
-}
-
-function _image_names() {
-  _image_names = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(fd) {
-    var result;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.next = 2;
-            return $.ajax({
-              type: 'post',
-              url: '/testimage',
-              data: fd,
-              contentType: false,
-              processData: false
-            });
-
-          case 2:
-            result = _context3.sent;
-            return _context3.abrupt("return", result);
-
-          case 4:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3);
-  }));
-  return _image_names.apply(this, arguments);
-}
-
 $('#forgotPass').click(function () {
   $('#forgotPass').css('display', 'none');
   $('.restorepass').css('display', 'inline-block');
@@ -2580,21 +2516,14 @@ $(document).ready(function () {
     $('#exampleModalCenter').modal('toggle');
   }); //your code here
 });
-$('.main__dd-btn').click(function () {
-  $(this).parent().find('.aside-dd').addClass('active');
-  $(this).parents().find('.main__aside').addClass('active');
-  $('body').addClass('overflow-hidden');
 
-  if ($(this).hasClass("active")) {
-    $('body').removeClass('overflow-hidden');
-    $(this).removeClass("active");
-    $(this).parent().find('.aside-dd').removeClass('active');
-    $(this).parents().find('.main__aside').removeClass('active');
-  } else {
-    $(this).addClass("active");
-    $('body').addClass('overflow-hidden');
-  }
-});
+function submitForm(btn) {
+  // disable the button
+  console.log('creating');
+  btn.disabled = true; // submit the form
+
+  btn.form.submit();
+}
 
 /***/ }),
 
@@ -2640,6 +2569,188 @@ function changePayment(id, toggle, handleData) {
   }).fail(function (data) {
     console.log(data);
   });
+}
+
+/***/ }),
+
+/***/ "./resources/js/uploadImages.js":
+/*!**************************************!*\
+  !*** ./resources/js/uploadImages.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+$(document).ready(function () {
+  $('#pictures').change(function (e) {
+    var folder_id = $("#folder_id").val();
+    var l = $('#pictures')[0].files.length;
+    console.log('number of files: ' + l);
+    repeat(folder_id, -1, l);
+  });
+});
+
+function repeat(folder_id, i, l) {
+  i++;
+  console.log($('#pictures')[0].files[i]);
+  var fd = new FormData();
+  fd.append('folder_id', folder_id);
+  fd.append('_token', $('[name="_token"]').val());
+  fd.append("file[]", $('#pictures')[0].files[i]);
+  image_names(fd).then(function (v) {
+    var getUrl = window.location;
+    var baseUrl = getUrl.protocol + "//" + getUrl.host + "/uploads/" + folder_id + '/' + v[0];
+    var check = false;
+    check = is_busy(v[1]);
+
+    if (check != false) {
+      console.log(check);
+      $("#img".concat(check)).attr("src", baseUrl);
+      $("#img".concat(check)).removeClass('d-none');
+      $("#".concat(check)).removeClass('d-none');
+      $("#img".concat(check)).addClass('d-block');
+    }
+
+    if (i < l - 1) {
+      repeat(folder_id, i, l);
+    }
+  });
+}
+
+function preview_pic(i, l) {
+  i++;
+  console.log($("#img1").attr('src'));
+  var reader = new FileReader();
+  var filedata = '';
+
+  if (i < l) {
+    reader.onload = function () {
+      filedata = reader.result;
+      $("#img".concat(i + 1)).attr("src", filedata);
+      $("#img".concat(i + 1)).removeClass('d-none');
+    };
+
+    console.log("#img".concat(i + 1));
+    reader.readAsDataURL($('#pictures')[0].files[i]);
+    preview_pic(i, l);
+  }
+}
+
+$("body").on("click", "a.linky", function () {
+  alert($(this).attr("contentID"));
+});
+$(document).ready(function () {
+  $("body").on("click", ".timesicon", function () {
+    $(this).addClass('d-none');
+    var url = $(this).next().attr('src');
+    var name = url.substring(url.lastIndexOf('/') + 1);
+    console.log(name);
+    var folder_id = $("#folder_id").val();
+    var fd = new FormData();
+    fd.append('_token', $('[name="_token"]').val());
+    fd.append("name", name);
+    fd.append("folder", folder_id);
+    delete_image(fd).then(function (v) {
+      console.log(v);
+    });
+    $("#img".concat($(this).attr('id'))).attr("src", '');
+    $("#img".concat($(this).attr('id'))).addClass('d-none');
+    $("#img".concat($(this).attr('id'))).removeClass('d-block');
+  });
+});
+
+function image_names(_x) {
+  return _image_names.apply(this, arguments);
+}
+
+function _image_names() {
+  _image_names = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(fd) {
+    var result;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return $.ajax({
+              type: 'post',
+              url: '/testimage',
+              data: fd,
+              contentType: false,
+              processData: false
+            });
+
+          case 2:
+            result = _context.sent;
+            return _context.abrupt("return", result);
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _image_names.apply(this, arguments);
+}
+
+function is_busy(l) {
+  var images = $('.uploadImage').length;
+
+  if (l > images && l < 11) {
+    for (var i = 0; i < l - images; i++) {
+      $('.onlyFour').append("<li><i class=\"fa fa-times timesicon d-none\" id=\"".concat(images + i + 1, "\" aria-hidden=\"true\"></i> <img src=\"\" id=\"img").concat(images + i + 1, "\" class=\"uploadImage d-none\"></li>"));
+    }
+  }
+
+  for (var _i = 1; _i < l + 1; _i++) {
+    if ($("#img".concat(_i)).attr('src') == '') {
+      return _i;
+    }
+  }
+
+  return false;
+}
+
+function delete_image(_x2) {
+  return _delete_image.apply(this, arguments);
+}
+
+function _delete_image() {
+  _delete_image = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(fd) {
+    var result;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return $.ajax({
+              type: 'post',
+              url: '/deleteimage',
+              data: fd,
+              contentType: false,
+              processData: false
+            });
+
+          case 2:
+            result = _context2.sent;
+            return _context2.abrupt("return", result);
+
+          case 4:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _delete_image.apply(this, arguments);
 }
 
 /***/ }),

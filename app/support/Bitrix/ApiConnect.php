@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class ApiConnect
 {
-    const webhook_url = "https://rosgroup.bitrix24.ru/rest/52/tvk30z03175k7x2p/";
+    protected $webhook_url;
     const fields = [
           'isInAvito.ru' => 'UF_CRM_1526732995',
           'isInAuto.ru' => 'UF_CRM_1526733011',
@@ -16,13 +16,14 @@ class ApiConnect
     public function __construct ($method,$data)
     {
         $this->method = $method;
+        $this->webhook_url = env('BITRIX_CARCUSHA_WEBHOOK_URL');
         $this->data = $data;
         $this->execute();
 
     }
     public function execute ()
     {
-        $res = Http::timeout(5)->post(self::webhook_url.$this->method ,$this->data);
+        $res = Http::timeout(5)->post($this->webhook_url.$this->method ,$this->data);
         $this->result = json_decode($res->body(), 1);
     }
     public function getResponse(){

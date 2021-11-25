@@ -1,6 +1,7 @@
+
 <div class="col-md-9">
 <div class="main__content">
-    <form  method="POST" action="{{ route('settings.edit') }}" >
+    <form  method="POST" id="settings" action="{{ route('settings.edit') }}" >
         @csrf
     <h2 class="main__content-title">Настройки аккаунта</h2>
     <div class="main__setting">
@@ -9,17 +10,30 @@
                 <div class="col-md-6">
                     <div class="main__setting-item">
                         <div>Телефон:
-                            <input type="text" id="phone" name="number" class="form-control" placeholder="Не указан" value="{{ Auth::user()->setting->number }}">
+                            <input type="text" id="phone" name="number" class="form-control  @error('number') is-invalid @enderror" placeholder="Не указан" value="@if( ViewService::init()->view('number') !== null){{ ViewService::init()->view('number') }}@endif">
+                            @error('number')
+
+                            <span class="invalid-feedbackerror" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            {!! ViewService::init()->view('isPhoneConfirmed') !!}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="main__setting-item main__setting-item--edit">
-                        <div>E-Mail:
-                            <input type="email" name="email" class="form-control" value="{{ Auth::user()->setting->email }}" placeholder="Не указан">
-
+                        <div class="main__setting-item main__setting-item--edit">
+                            <div>E-Mail:
+                                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ ViewService::init()->view('email') }}" placeholder="Не указан">
+                                @error('email')
+                                <span class="invalid-feedbackerror" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                <br>
+                                @enderror
+                                {!! ViewService::init()->view('isEmailConfirmed') !!}
+                            </div>
                         </div>
-                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="main__setting-item main__setting-item--edit">
@@ -107,3 +121,13 @@
     </form>
 </div>
 </div>
+<script>
+    function submitEmail() {
+        $( ".main__setting" ).append( $( "<input type='hidden'  name = 'confirmEmail'>" ) );
+        document.getElementById("settings").submit();
+    }
+    function submitPhone() {
+        $( ".main__setting" ).append( $( "<input type='hidden'  name = 'confirmPhone'>" ) );
+        document.getElementById("settings").submit();
+    }
+</script>

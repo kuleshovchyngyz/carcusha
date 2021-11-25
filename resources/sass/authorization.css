@@ -62,7 +62,10 @@ body {
 .tab-wrap {
     max-width: 400px;
     width: 100%;
-    margin: auto;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-left: auto;
     background: #fff;
 }
 

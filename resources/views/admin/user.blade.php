@@ -7,6 +7,7 @@ $user = $data;
         <div class="main__aside" >
             <div class="main__dd-btn"></div>
             <div class="main__info">
+                <input type="hidden" value="{{$user->id}}" id="user_id">
                 <div class="main_user-name" data-user="{{ $user->id }}">User #{{ $user->id }}</div>
                 <ul class="main__info-list">
                     <li class="main__info-item">
@@ -40,8 +41,8 @@ $user = $data;
                      <span>
                      E-Mail:
                      </span>
-                            <span title="{{ $user->setting->email }}">
-                     {{ $user->setting->email  }}
+                            <span title="{{ $user->email }}">
+                     {{ $user->email  }}
                      </span>
                         </li>
                         <li class="main__info-item">
@@ -54,7 +55,9 @@ $user = $data;
                         </li>
                     </ul>
                     <div class="text-center mrg-top-20">
-                        <button class="btn remove-pass">Сбросить пароль</button>
+                        <button type="button" class="btn remove-pass" data-toggle="modal" data-target="#resetPassword">
+                            Сбросить пароль
+                        </button>
                     </div>
                 </div>
             </div>
@@ -131,3 +134,4 @@ $user = $data;
         @include('admin.leads')
     @endif
 </div>
+@include('admin.modals')

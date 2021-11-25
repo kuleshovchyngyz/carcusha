@@ -53,14 +53,13 @@ class LoginController extends Controller
         \Session::put('last_auth_attempt', 'login');
 //        dd($request->all());
 //        $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'number';
-        $fieldType = isset($request['email']) ? 'email' : 'number';
-        $this->fieldType = $fieldType;
+        $this->fieldType = isset($request['email']) ? 'email' : 'number';
         if($this->fieldType=='number'){
             $request->request->add(['number' => $request->number]);
             $request->request->remove('email');
         }
         $request->validate([
-            $this->username() => 'required|string',
+            $this->fieldType => 'required|string',
             'password' => 'required|string',
         ]);
     }
@@ -87,7 +86,8 @@ class LoginController extends Controller
         if($request->email != ''){
             $this->notify(new VerifyEmail());
         } else {
-            $sms->sendSms($request->phone, "Ваш код: ".$this->code);
+            $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->phone), "Ваш код: ".$this->code);
+            //$sms->sendSms($request->phone, "Ваш код: ".$this->code);
         }
         $param = ($request->email != '') ? ['email' => $this->email] : ['phone' => $request->phone];
         AuthConfirmation::updateOrCreate(

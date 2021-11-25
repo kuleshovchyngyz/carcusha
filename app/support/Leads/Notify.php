@@ -70,7 +70,8 @@ class Notify
     }
     public function set_message(){
         if($this->new_status->user_statuses->notify==1){
-            $this->message =  $this->new_status->user_statuses->name;
+//            $this->message =  $this->new_status->user_statuses->name;
+            $this->message =  shortCodeParse($this->new_status->user_statuses->name);
         }
     }
     public function create_notification(): bool
@@ -84,8 +85,8 @@ class Notify
             $s = Status::whereIn('index',$n)->pluck('id');
         }
 
-        dump($s);
-        dump($this->rejected_statuses);
+        //dump($s);
+        //dump($this->rejected_statuses);
         if( $s->contains(14) ){
             return false;
         }

@@ -6,6 +6,7 @@ use App\support\Bitrix\ApiConnect;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\Types\True_;
+use App\Models\Notification;
 
 class Lead extends Model
 {
@@ -47,14 +48,13 @@ class Lead extends Model
 
     }
     public function history(){
-        $n = Notification::where('lead_id',$this->attributes['bitrix_user_id'])->orderBy('created_at','DESC');
+        $n = Notification::where('lead_id',$this->attributes['bitrix_user_id'])->orderBy('created_at','DESC')->get();
         if($n->count()>1){
-            return $n->get()[1];
+            return $n[1];
         }
         else {
             return false;
         }
-
         return $n;
     }
 

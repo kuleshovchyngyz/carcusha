@@ -80,6 +80,7 @@ class HomeController extends Controller
     }
     public function settings(){
 
+       // dd($files);
         return view('home',[
             'name' => 'settings',
             'data' => ''

@@ -20,6 +20,7 @@ use App\Rules\CheckEmailVerificationCode;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     use RegistersUsers;
+    use ResetsPasswords;
     protected $redirectTo = RouteServiceProvider::HOME;
     public $fieldType;
     public $email;
@@ -38,72 +40,82 @@ class AuthController extends Controller
     public function forgotPassword(){
         return view('auth.passwords.forgotpassword');
     }
-    public function resetPassword(Request $request, Code $code,SmsClient $sms){
-        $this->fieldType = filter_var($request['email'] , FILTER_VALIDATE_EMAIL) ? 'email' : 'number';
-        $this->email = $request->email ?? '';
-        $this->code = $code->generate(CODE::VERIFICATION);
-
-        $param = array();
-        ($request->email != '') ?
-            $param['email'] = $this->email :
-            $param['phone'] = $request->number;
-        $param['code'] =$this->code;
-
-        if($this->fieldType=='number'){
-            $validated = $request->validate(['number' => 'required|unique:users|phone_number']);
-            $sms->sendSms($request->number, "Ваш код: ".$this->code);
-            AuthConfirmation::updateOrCreate( $param);
-            //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
-            return view('auth.createPasswordSms',$request->input());
-        }else{
-            $validated = $request->validate(['email' => 'required|unique:users|max:255']);
-            AuthConfirmation::updateOrCreate( $param);
-            Mail::to($request->email)->send((new MailUser())
-                ->markdown('mail.code', ['code' => $this->code,
-                    'message' => 'Пожалуйста, введите код для проверки вашего email.',
-                    'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
-                ]));
-            return view('auth.createPasswordEmail',$request->input());
-        }
+    public function changePassword(Request $request){
+        return $this->RegisterWithVerificationCode($request,'reset');
     }
-    public function RegisterWithVerificationCode(Request $request, Code $code,SmsClient $sms)
-    {
-        //dd($request->toArray());
-        \Session::put('last_auth_attempt', 'register');
-
-        $this->fieldType = filter_var($request['email'] , FILTER_VALIDATE_EMAIL) ? 'email' : 'number';
-        $this->email = $request->email ?? '';
-        $this->code = $code->generate(CODE::VERIFICATION);
-
-        $param = array();
-        ($request->email != '') ?
-            $param['email'] = $this->email :
-            $param['phone'] = $request->number;
-        $param['code'] =$this->code;
-
-        if($this->fieldType=='number'){
-            $validated = $request->validate(['number' => 'required|unique:users|phone_number']);
-            $sms->sendSms($request->number, "Ваш код: ".$this->code);
-            AuthConfirmation::updateOrCreate( $param);
-            //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
-            return view('auth.createPasswordSms',$request->input());
-        }else{
-            $validated = $request->validate(['email' => 'required|unique:users|max:255']);
-            AuthConfirmation::updateOrCreate( $param);
-            Mail::to($request->email)->send((new MailUser())
-                ->markdown('mail.code', ['code' => $this->code,
-                    'message' => 'Пожалуйста, введите код для проверки вашего email.',
-                    'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
-                ]));
-            return view('auth.createPasswordEmail',$request->input());
-        }
-
-    }
-
-    public function SmsVerificationCode(Request $request){
-        $this->fieldType='number';
+    public function confirmNumber(Request $request){
+        $request->request->add(['confirmEmail' => true]);
         $validated = Validator::make($request->all(), [
-            'number' => ['required','phone_number', 'unique:users'],
+            'code' => ['required', 'integer', new CheckEmailVerificationCode()],
+        ], [], []);
+        if ($validated->fails()) {
+            return view('auth.createPasswordEmail',$request->input())->withInput($request->input())->withErrors($validated);
+        }
+        $user = auth()->user();
+        $user->phone_verified_at = Carbon::now();
+        $user->number = $user->setting->number;
+        $user->save();
+        return redirect()->route('settings');
+    }
+    public function confirmEmail(Request $request){
+        $request->request->add(['confirmEmail' => true]);
+        $validated = Validator::make($request->all(), [
+            'code' => ['required', 'integer', new CheckEmailVerificationCode()],
+        ], [], []);
+        if ($validated->fails()) {
+            return view('auth.createPasswordEmail',$request->input())->withInput($request->input())->withErrors($validated);
+        }
+       $user = auth()->user();
+       $user->email_verified_at = Carbon::now();
+       $user->email = $user->setting->email;
+       $user->save();
+        //$request->flashExcept('code');
+       return redirect()->route('settings');
+    }
+    public function RegisterWithVerificationCode(Request $request, $type = '')
+    {
+        $code = new Code();
+        $sms = new SmsClient();
+
+        \Session::put('last_auth_attempt', 'register');
+        $this->fieldType = isset($request['email'])  ? 'email' : 'number';
+
+        $this->email = $request->email ?? '';
+        $this->code = $code->generate(CODE::VERIFICATION);
+        $param = array();
+        ($request->email != '') ?
+            $param['email'] = $this->email :
+            $param['phone'] = $request->number;
+        $param['code'] =$this->code;
+        ($type=='reset') ? $request->request->add(['reset' => true]) : "";
+
+        if($this->fieldType=='number'){
+            ($type=='reset') ?
+                $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
+                $request->validate(['number' => 'required|unique:users|phone_number']);
+            $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
+            AuthConfirmation::updateOrCreate( $param);
+           // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
+            return view('auth.createPasswordSms',$request->input());
+        }else {
+            ($type=='reset') ?
+                $request->validate(['email' => 'required|email_format|is_email_in_database|max:255']) :
+                $request->validate(['email' => 'required|email_format|unique:users|max:255']);
+            AuthConfirmation::updateOrCreate( $param);
+            Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте CARcusha.shop Код:".$this->code)
+                ->markdown('mail.code', ['code' => $this->code,
+                    'message' => 'Пожалуйста, введите код для проверки вашего email.',
+                    'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
+            ]));
+
+
+            return view('auth.createPasswordEmail',$request->input());
+        }
+    }
+    public function SmsVerificationCode(Request $request){
+        $this->fieldType = 'number';
+        $validated = Validator::make($request->all(), [
+            'number' => ['required','phone_number',  (!isset($request->reset)) ? 'unique:users' : ''],
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [], [
@@ -113,33 +125,71 @@ class AuthController extends Controller
         if ($validated->fails()) {
             return view('auth.createPasswordSms', $request->input())->withInput($request->input())->withErrors($validated);
         }
+        if(isset($request->reset)){
+            return $this->resetUserPassword($request);
+        }else{
+            return $this->registerUser($request);
+        }
+
+    }
+    public function adminPasswordReset(Request $request){
+//        return $request->all();
+        $validated = Validator::make($request->all(), [
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ], [], [
+            'password' => 'Пароль'
+        ]);
+        if ($validated->fails()) {
+            //return back()->withErrors($validated);
+            return response()->json(['errors'=>$validated->errors()->all()]);
+        }
+        $user = User::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return response()->json(['success'=>'Data is successfully added']);
+        //dd($request->all());
+    }
+    public function registerUser(Request $request){
         event(new Registered($user = $this->createUser($request->all())));
         $this->guard()->login($user);
         return $request->wantsJson()
             ? new JsonResponse([], 201)
             : redirect($this->redirectPath());
     }
+    public function resetUserPassword(Request $request){
+        AuthConfirmation::where('email',$request->email)->delete();
+        if($this->fieldType == 'number'){
+            $user = User::where('number',$request->number)->first();
+        }else{
+            $user = User::where('email',$request->email)->first();
+        }
 
+        $this->resetPassword($user ,$request->password);
 
+        if($user->hasRole('admin')){
+            return redirect('/admin');
+        }
+        return $request->wantsJson()
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
+    }
     public function EmailVerificationCode(Request $request){
 
         $validated = Validator::make($request->all(), [
-            'email' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'max:255', (!isset($request->reset)) ? 'unique:users' : ''],
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [], [
             'password' => 'Пароль'
         ]);
-
         if ($validated->fails()) {
-            //dd($request->input());
             return view('auth.createPasswordEmail', $request->input())->withInput($request->input())->withErrors($validated);
         }
-        event(new Registered($user = $this->createUser($request->all())));
-        $this->guard()->login($user);
-        return $request->wantsJson()
-            ? new JsonResponse([], 201)
-            : redirect($this->redirectPath());
+        if(isset($request->reset)){
+            return $this->resetUserPassword($request);
+        }else{
+            return $this->registerUser($request);
+        }
 
     }
 

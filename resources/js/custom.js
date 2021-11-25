@@ -37,10 +37,10 @@ $(document).ready(function(){
 
     $('#bankcardnumber').on('input', function(){
 
-            const formattedCreditCardInput = new CreditCardInputMask({
-                element: document.querySelector("#bankcardnumber"),
-                pattern: "{{9999}} {{9999}} {{9999}} {{9999}}",
-            });
+        const formattedCreditCardInput = new CreditCardInputMask({
+            element: document.querySelector("#bankcardnumber"),
+            pattern: "{{9999}} {{9999}} {{9999}} {{9999}}",
+        });
         // document.getElementById("mask").focus()
         // let str = $('#mask').val();
         // console.log(str)
@@ -124,13 +124,13 @@ $('.pay_button').click(function () {
             buttons: {
                 Да: function () {
                     pay_to_partner(id).then(data => {
-                      if(data){
-                          $('#'+button_id).html('Выплачено');
-                          $('#'+button_id).removeClass('header__btn');
-                          $('#'+button_id).addClass('green');
-                      }else{
-                          $.alert('меньше чем минимальная сумма для вывода');
-                      }
+                        if(data){
+                            $('#'+button_id).html('Выплачено');
+                            $('#'+button_id).removeClass('header__btn');
+                            $('#'+button_id).addClass('green');
+                        }else{
+                            $.alert('меньше чем минимальная сумма для вывода');
+                        }
                     });
                 },
                 heyThere: {
@@ -153,126 +153,19 @@ async function pay_to_partner(paid){
     return result;
 }
 
-$(document).ready(function() {
-    $('#pictures').change(function(e) {
-      //  var l = $('#pictures')[0].files.length;
-       // preview_pic(-1,l);
-         //console.log($('#pictures')[0].files.length)
-        //
-        // console.log($('#pictures')[0].files.length)
-        var folder_id = $("#folder_id").val();
-        var l = $('#pictures')[0].files.length;
-        repeat(folder_id,-1,l)
 
-
-    });
-});
 
 $(document).ready(function () {
-$('#click').click(function () {
-    console.log($('#pictures')[0].files)
-});
-});
-$(document).ready(function () {
-    $('.timesicon').click(function () {
-        $(this).addClass('d-none');
-        let url = $(this).next().attr('src');
-        let name = url.substring(url.lastIndexOf('/')+1);
-        console.log(name);
-        var folder_id = $("#folder_id").val();
-        var fd = new FormData();
-        fd.append('_token', $('[name="_token"]').val())
-        fd.append("name", name);
-        fd.append("folder", folder_id);
-        delete_image(fd).then(v => {
-            console.log(v);
-        });
-        $(`#img${$(this).attr('id')}`).attr("src", '');
-        $(`#img${$(this).attr('id')}`).addClass('d-none');
-        $(`#img${$(this).attr('id')}`).removeClass('d-block');
-
+    $('#click').click(function () {
+        console.log($('#pictures')[0].files)
     });
 });
 
-async function delete_image(fd){
-    const result = await $.ajax({
-        type: 'post',
-        url:'/deleteimage',
-        data:fd,
-        contentType: false,
-        processData: false,
-    })
-    return result;
-}
-function preview_pic(i,l)
-{
 
-    i++;
-    console.log($(`#img1`).attr('src'));
-    var reader = new FileReader();
-    var filedata = '';
-    if(i<l){
-        reader.onload = function(){
-            filedata = reader.result;
 
-            $(`#img${i+1}`).attr("src", filedata);
-            $(`#img${i+1}`).removeClass('d-none');
-        };
-        console.log(`#img${i+1}`);
-        reader.readAsDataURL($('#pictures')[0].files[i]);
 
-        preview_pic(i,l);
-    }
-}
 
-function repeat(folder_id,i,l) {
-    i++;
-    console.log($('#pictures')[0].files[i])
-    var fd = new FormData();
-    fd.append('folder_id', folder_id)
-    fd.append('_token', $('[name="_token"]').val())
-    fd.append("file[]", $('#pictures')[0].files[i]);
-    image_names(fd).then(v => {
-        var getUrl = window.location;
-        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/uploads/" + folder_id + '/' + v;
 
-        let check = false;
-        check = is_busy();
-        if(check!=false){
-            console.log(check);
-            $(`#img${check}`).attr("src", baseUrl);
-            $(`#img${check}`).removeClass('d-none');
-            $(`#${check}`).removeClass('d-none');
-            $(`#img${check}`).addClass('d-block');
-        }
-
-        if(i<l-1){
-            repeat(folder_id,i,l);
-        }
-
-    });
-
-}
-function is_busy(){
-
-    for (let i=1;i<5;i++){
-        if($(`#img${i}`).attr('src')==''){
-            return i;
-        }
-    }
-    return false;
-
-}
-async function image_names(fd){
-    const result = await $.ajax({
-        type: 'post',
-        url:'/testimage',
-        data:fd,
-        contentType: false,
-        processData: false,
-    })
-    return result;
-}
 
 
 
@@ -306,7 +199,7 @@ $('#addQuestion').click(function () {
 
 
 
-         ).appendTo( "#question" );
+    ).appendTo( "#question" );
     console.log('sdfasdf');
 })
 
@@ -358,22 +251,13 @@ $(document).ready(function () {
     });
     //your code here
 });
+function submitForm(btn) {
+    // disable the button
+    console.log('creating')
+    btn.disabled = true;
+    // submit the form
+    btn.form.submit();
+}
 
 
-$('.main__dd-btn').click(function () {
-    $(this).parent().find('.aside-dd').addClass('active');
-    $(this).parents().find('.main__aside').addClass('active');
-    $('body').addClass('overflow-hidden');
-    if (
-        $(this).hasClass("active")
-    ) {
-        $('body').removeClass('overflow-hidden');
-        $(this).removeClass("active");
-        $(this).parent().find('.aside-dd').removeClass('active');
-        $(this).parents().find('.main__aside').removeClass('active');
-    } else {
-        $(this).addClass("active");
-        $('body').addClass('overflow-hidden');
-    }
-});
 

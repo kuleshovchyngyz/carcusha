@@ -9,7 +9,7 @@ $questions = \App\Models\Question::all();
                 <li class="help-list__item">
                     <h3>{!! $question->question !!}</h3>
                     <p>
-                        {!! $question->answer !!}
+                        {!! shortCodeParse($question->answer) !!}
                     </p>
                 </li>
             @endforeach

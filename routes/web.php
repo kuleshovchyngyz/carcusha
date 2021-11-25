@@ -21,9 +21,10 @@ Route::post('/car_application/store', [App\Http\Controllers\ApplicationControlle
 Route::get('/calculate_available_amount', [App\Http\Controllers\AdminController::class, 'calculate_available_amount']);
 Route::post('/verification-code', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationCode'])->name('auth.verification-code');
 Route::get('/forgot-password', [App\Http\Controllers\AuthController::class, 'forgotPassword'])->name('auth.forgot.password');
-Route::get('/reset-password', [App\Http\Controllers\AuthController::class, 'resetPassword'])->name('auth.reset-password-code');
+Route::post('/change-password', [App\Http\Controllers\AuthController::class, 'changePassword'])->name('auth.reset-password-code');
 Route::post('/password-create-email', [App\Http\Controllers\AuthController::class, 'EmailVerificationCode'])->name('auth.EmailVerification-code');
 Route::post('/password-create-sms', [App\Http\Controllers\AuthController::class, 'SmsVerificationCode'])->name('auth.SmsVerification-code');
+
 
 
 Route::get('/generate', [App\Http\Controllers\UserController::class, 'send_to_tg_bot']);
@@ -88,7 +89,8 @@ Route::group([ 'middleware' => ['auth', 'role:user']], function () {
     Route::get('/refer', [App\Http\Controllers\HomeController::class, 'refer'])->name('refer.list');
     Route::get('/settings', [App\Http\Controllers\HomeController::class, 'settings'])->name('settings');
     Route::get('/promo', [App\Http\Controllers\HomeController::class, 'promo'])->name('promo');
-
+    Route::post('/confirm-email', [App\Http\Controllers\AuthController::class, 'confirmEmail'])->name('confirm.email');
+    Route::post('/confirm-number', [App\Http\Controllers\AuthController::class, 'confirmNumber'])->name('confirm.number');
     Route::get('/download_card', [App\Http\Controllers\HomeController::class, 'downloadСard'])->name('download_card');
     Route::get('/download-business-card', [App\Http\Controllers\HomeController::class, 'downloadBusinessCard'])->name('download.business.card');
 
@@ -107,6 +109,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::get('user/new/{user}', [App\Http\Controllers\AdminController::class, 'newleads'])->name('admin.user.new');
     Route::get('user/verifyleads/{user}', [App\Http\Controllers\AdminController::class, 'verifyleads'])->name('admin.user.verify_leads');
 
+    Route::post('/reset-password-admin', [App\Http\Controllers\AuthController::class, 'adminPasswordReset'])->name('auth.Reset-password');
     Route::get('user/ban/{user}', [App\Http\Controllers\AdminController::class, 'ban'])->name('admin.user.ban');
     Route::get('user/report/{user}', [App\Http\Controllers\AdminController::class, 'report'])->name('admin.user.report');
     Route::get('/settings', [App\Http\Controllers\AdminController::class, 'settings'])->name('admin.settings');

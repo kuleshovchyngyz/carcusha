@@ -27,3 +27,5 @@
         </button>
     </div>
 @endif
+<?php
+\Session::forget('success_message');

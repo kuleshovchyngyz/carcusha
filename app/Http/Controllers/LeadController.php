@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Clients\Bitrix;
 use App\Models\balance;
 use App\support\Bitrix\ApiConnect;
 use App\support\Leads\LeadBuilder;
@@ -126,11 +127,10 @@ class LeadController extends Controller
         curl_close($curl);
         return json_decode($result, 1);
     }
-
 	function sendDataToBitrixGuzzle($method, $data) {
         // $webhook_url = "https://b24-4goccw.bitrix24.ru/rest/1/gfb5rzf8p5iwam80/";//test
 
-        $webhook_url = "https://rosgroup.bitrix24.ru/rest/52/tvk30z03175k7x2p/";//real
+        $webhook_url = "https://rosgroup.bitrix24.ru/rest/52/dy6hojhc5p47lao6/";//real
         $res = Http::timeout(5)->post($webhook_url.$method ,$data);
         return json_decode($res->body(), 1);
 
@@ -209,11 +209,12 @@ class LeadController extends Controller
                 'REGISTER_SONET_EVENT' => 'Y'
             ],
         ]);
+       // dd($dealData);
         return $dealData;
     }
     public function fields(){
         $u = User::find(2)->notifier;
-        dump($u);
+        //dump($u);
         //$dealData = $this->sendDataToBitrixGuzzle('crm.status.fields',array());
 //        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.fields',array());
 //        "UF_CRM_1526732995" => "yesdo"
@@ -273,6 +274,7 @@ class LeadController extends Controller
 			    \Storage::disk('local')->append('example.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
                 \Storage::disk('local')->append('sst.txt', $this->get_status($request->all()['data']['FIELDS']['ID']));
                 $lead_id = Lead::where('bitrix_user_id',$request->all()['data']['FIELDS']['ID'])->first()->bitrix_user_id;
+
                 new UpdatingLeadStatus($lead_id,$this->get_status($request->all()['data']['FIELDS']['ID']));
 			}
         }
@@ -475,7 +477,7 @@ class LeadController extends Controller
             'order'=> ["SORT"=> "ASC"],
             'filter'=> ["ENTITY_ID"=> "STATUS"]
         ]);
-        dump($dealData);
+        //dump($dealData);
         //return  json_encode($dealData,JSON_UNESCAPED_UNICODE);
     }
     public function generateinvitation_code() {
@@ -508,7 +510,7 @@ class LeadController extends Controller
                 'name' =>  $status['NAME'],
                 'color' => $status['COLOR']
             ]);
-            dump($status);
+            //dump($status);
             $this->sendDataToBitrixGuzzle('crm.status.add',[
                 'fields' => $status
             ]);
@@ -536,6 +538,7 @@ class LeadController extends Controller
                 $file = pathinfo($path);
                 $image_names[] =  $file['basename'] ;
             }
+
             $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
         }else{
             $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
@@ -551,6 +554,8 @@ class LeadController extends Controller
             $result['result'],
             0
         );
+        $path = public_path('uploads/'.$folder_name);
+        \File::deleteDirectory($path);
         return redirect()->route('home');
     }
 
@@ -571,7 +576,7 @@ class LeadController extends Controller
         $s = Status::select('*')->get();
 
         foreach ($s as $si){
-            dump($si->toArray());
+            //dump($si->toArray());ßß
 //            DB::connection('mysql2')
 //                ->table('statuses')
 //                ->create([
@@ -595,17 +600,30 @@ class LeadController extends Controller
     }
     public function testimage(Request $request){
         $images = $request->file;
+
         $folder_name = $request->folder_id;
+
+        if (!file_exists('uploads/'.$folder_name)) {
+            \File::makeDirectory('uploads/'.$folder_name, $mode = 0777, true, true);
+            // path does not exist
+        }
+        $files = \File::files('uploads/'.$folder_name);
+
         $image_names = array();
-        if($images){
+        if($images && count($files)<10){
             foreach ($images as  $key => $image){
-                if($key<4){
+                if($key<10){
                     $image->move(public_path('uploads/'.$folder_name),$image->getClientOriginalName());
                     $image_names[]=$image->getClientOriginalName();
                 }
             }
         }
-        return $image_names;
+//        return $image_names;
+
+        $path = public_path('uploads/'.$folder_name);
+        $files = \File::files($path);
+        return [$image_names,count($files) ];
+       // return [$image_names,count($files)];
     }
     public function lead_status(Request $request)
     {

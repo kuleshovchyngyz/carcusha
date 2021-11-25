@@ -14,13 +14,51 @@ class ViewData
     public function init($user=null,$method='')
     {
         $this->method = $method;
-        $this->user =$user;
+        $this->user = ($user===null) ? auth()->user() : $user;
         return $this;
     }
 
     protected function getResponse($view)
     {
         switch ($view) {
+
+            case 'qr':
+                $this->response =  '<img src="{{ asset(`img/qr.png`) }}" alt="">';
+                break;
+            case 'email':
+                if(old('email')){
+                    $this->response = old('email');
+                }else if($this->user !== null){
+                    $this->response = $this->user->setting->email===null ? '' : $this->user->setting->email;
+                }else{
+                    $this->response = '';
+                }
+                break;
+            case 'number':
+                if(old('number')){
+                    $this->response = old('number');
+                }else if($this->user !== null){
+                    $this->response = $this->user->setting->number===null ? '' : $this->user->setting->number;
+                }else{
+                    $this->response = '';
+                }
+                break;
+            case 'isEmailConfirmed':
+                $this->response = ($this->user->email_verified_at !== null && $this->user->email ==$this->user->setting->email) ?
+                    'Подтверждён' :
+                    "<a class='red-link' href='#' onclick='submitEmail()' >Подтвердить</a>";
+                if(old('email')){
+                    $this->response = '';
+                }
+                break;
+            case 'isPhoneConfirmed':
+                $this->response = ($this->user->phone_verified_at !== null && $this->user->number ==$this->user->setting->number) ?
+                    'Подтверждён' :
+                    "<a class='red-link' href='#' onclick='submitPhone()' >Подтвердить</a>";
+                if(old('number')){
+                    $this->response = '';
+                }
+                break;
             case 'isUniquePaymentChecked':
                 ($this->user->UserPaymentAmounts->count()==0) ?
                     ($this->response = 'checked') :
@@ -66,7 +104,11 @@ class ViewData
                     $this->defaultAmount('rejected') :
                     call_user_func(array($this, $this->method), 'rejected');
                 break;
-
+            case 'amount_of_firstPayment':
+                $this->method=='' ?
+                    $this->defaultAmount('firstPayment') :
+                    call_user_func(array($this, $this->method), 'firstPayment');
+                break;
         }
         return $this;
     }
@@ -80,6 +122,9 @@ class ViewData
     }
     protected function defaultAmount($type){
         $this->response = PaymentAmount::where('reason_of_payment',$type)->first()->amount;
+    }
+    protected function route($type){
+
     }
 
     protected function checkError()
@@ -105,7 +150,7 @@ class ViewData
         if ($this->errorMsg) {
             $this->responseMsg = $this->errorMsg;
         } else {
-            $this->responseMsg = ($this->response!='') ? $this->response : 'Не обнаружено';
+            $this->responseMsg = ($this->response!==null) ? $this->response : 'Не обнаружено';
         }
         return $this;
     }

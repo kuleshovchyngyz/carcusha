@@ -7,6 +7,7 @@
             @include('layouts.sidebar',['active'=>$name])
             @include('layouts.'.$name,['data'=>$data])
         </div>
+       
     </div>
 </main>
 

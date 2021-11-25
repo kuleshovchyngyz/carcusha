@@ -1,7 +1,4 @@
-<?php
 
-$payment = $data['payment'];
-?>
 
 <div class="main__content">
     <h2 class="main__content-title">Оплаты</h2>
@@ -58,6 +55,12 @@ $payment = $data['payment'];
                 <label class="new-satings-input-wrap">
                     <b>rejected</b> (Отрицательный):
                     <input type="text" name="rejected" value="{{ ViewService::init()->view('amount_of_rejected_payment') }}" class="form-control">
+                </label>
+            </div>
+            <div class="col-md-6">
+                <label class="new-satings-input-wrap">
+                    <b>firstPayment</b> (Первая выплата при регистрации использовался промокод):
+                    <input type="text" name="firstPayment" value="{{ ViewService::init()->view('amount_of_firstPayment') }}" class="form-control">
                 </label>
             </div>
         </div>

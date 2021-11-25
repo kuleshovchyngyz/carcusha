@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Auth\Code;
+use App\Clients\SmsClient;
+use App\Mail\MailUser;
+use App\Models\AuthConfirmation;
 use App\Models\Notifier;
 use App\Models\Paid;
 use App\Models\PaymentAmount;
@@ -11,6 +15,8 @@ use App\Models\User;
 use App\support\QrCode\QRCodeGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use setasign\Fpdi\Fpdi;
 
 class UserController extends Controller
@@ -66,6 +72,94 @@ public $user_id;
 
     public function edit_settings(Request $request){
         //dd($request->all());
+        $user = \auth()->user();
+        $code = new Code();
+        $sms = new SmsClient();
+        $this->code = $code->generate(CODE::VERIFICATION);
+        $param = array();
+        ($request->has('confirmEmail')) ?
+            $param['email'] = $request->email :
+            $param['phone'] = $request->number;
+        $param['code'] =$this->code;
+        $validated = Validator::make($request->all(), [
+            'email' => ($request->email!=null) ? ['email_format','confirm_email_settings'] : '',
+            'number' => ($request->number!=null) ?  ['phone_number','confirm_phone_settings'] : '',
+        ], [], []);
+
+
+        if ($validated->fails()) {
+            $request->flash();
+            return view('home',[
+                'name' => 'settings',
+                'data' =>''
+            ])->withInput($request->input())->withErrors($validated);
+        }
+
+        if($request->has('confirmEmail')){
+            $request->request->add(['confirmEmail' => true]);
+                     //$request->validate(['email' => 'required|email_format|is_email_in_database|max:255']);
+            $validated = Validator::make($request->all(), [
+                'email' => ['email_format','required','confirm_email_settings'],
+            ], [], []);
+            if ($validated->fails()) {
+                $request->flash();
+                return view('home',[
+                    'name' => 'settings',
+                    'data' =>''
+                ])->withInput($request->input())->withErrors($validated);
+                // return view('auth.createPasswordSms', $request->input())->withInput($request->input())->withErrors($validated);
+            }
+
+            Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте CARcusha.shop Код:".$this->code)
+                    ->markdown('mail.code', ['code' => $this->code,
+                        'message' => 'Пожалуйста, введите код для проверки вашего email.',
+                        'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
+                    ]));
+                AuthConfirmation::updateOrCreate( $param);
+                return view('auth.createPasswordEmail',$request->input());
+
+
+
+        }else if($request->has('confirmPhone')){
+            $request->request->add(['confirmPhone' => true]);
+            $validated = Validator::make($request->all(), [
+                'number' => ['phone_number','confirm_email_settings'],
+            ], [], []);
+            if ($validated->fails()) {
+                $request->flash();
+                return view('home',[
+                    'name' => 'settings',
+                    'data' =>''
+                ])->withInput($request->input())->withErrors($validated);
+                // return view('auth.createPasswordSms', $request->input())->withInput($request->input())->withErrors($validated);
+            }
+            $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
+            //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
+            AuthConfirmation::updateOrCreate( $param);
+            return view('auth.createPasswordSms',$request->input());
+        }
+
+
+        $this->updateSettings($request);
+
+//        session(['success_message' => ['Обновлено']]);
+        foreach (old() as $key=>$o){
+            $request->session()->forget($key);
+        }
+
+        $request->flash();
+        //\Session::pull()->all();
+        \Session::flash('success_message', ['Обновлено']);
+
+        return view('home',[
+            'name' => 'settings',
+            'data' =>''
+
+        ]);
+
+    }
+    public function updateSettings(Request $request){
+
         Auth::user()->setting
             ->update([
                 'number_notification'=> $request->has('number_notification') ? 1 : 0,
@@ -82,13 +176,24 @@ public $user_id;
         $request->request->remove('email');
         $request->request->remove('city');
 
-       // Setting::where('user_id',Auth::user()->id)->update($request->all());
+        // Setting::where('user_id',Auth::user()->id)->update($request->all());
+
         Auth::user()->paymentSetting==null ?
             PaymentSetting::create($request->all()):
             Auth::user()->paymentSetting->update($request->all());
-
-        return redirect()->back()->with('success_message', [__('Обновлено')]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function send_to_tg_bot(){
 

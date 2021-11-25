@@ -24,14 +24,13 @@ $leads = $data;
                     <td class="d-flex">{{ $lead->created_at->format('d-m-Y H:i') }}</td>
                     <td class="snowflake">#{{ $lead->bitrix_user_id }}
                         @if($lead->number==1)
-                            {!! file_get_contents(asset('img/qr.svg')) !!}
+                            <img src="{{ asset('img/qr.png') }}" alt="">
                         @endif
                     </td>
                     <td>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</td>
                     <td>{{ $lead->phonenumber }}</td>
 
                     <td class="main__table-dd-wrap" style="color:{{ $lead->status()->color }};">{{ $lead->status()->name }}
-
                         <ul class="main__table-dd">
                             <li>
                                 <span >{{ $lead->history()==false ? "" : $lead->history()->status()->name }}</span>
@@ -51,7 +50,10 @@ $leads = $data;
 
                     <td class="snowflake">{{ $lead->all_amount() }} ₽
                         @if(!$lead->is_on_pending() && $lead->all_amount()>0)
-                        {!! file_get_contents(asset('img/snowflake.svg')) !!}
+{{--                            @dd(asset('img/snowflake.svg'))--}}
+{{--                        {{ ViewService::init()->view('snowflake') }}--}}
+
+                            <img src="{{ asset('img/snowflake.png') }}" alt="">
 
                         @endif
                     </td>

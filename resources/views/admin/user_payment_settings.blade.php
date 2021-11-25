@@ -43,7 +43,7 @@ $payment = \App\Models\PaymentAmount::all();
 
                     <div class="col-md-6">
                         <label class="new-satings-input-wrap">
-                            <b>initial</b> (Стоимость лида в работе):
+                            Стоимость лида в работе:
                             <input type="text" name="initial" value="{{ ViewService::init($user,'uniqueAmount')->view('amount_of_initial_payment') }}" class="form-control">
                         </label>
                     </div>
@@ -52,14 +52,14 @@ $payment = \App\Models\PaymentAmount::all();
                 <div class="row">
                     <div class="col-md-6">
                         <label class="new-satings-input-wrap">
-                            <b>success</b> (Стоимость завершённого лида):
+                            Стоимость завершённого лида:
                             <input type="text" name="success" value="{{ ViewService::init($user,'uniqueAmount')->view('amount_of_success_payment') }}" class="form-control">
                         </label>
                     </div>
 
                     <div class="col-md-6">
                         <label class="new-satings-input-wrap">
-                            <b>nothing</b> (Нулевая вознаграждения):
+                            Нулевая вознаграждения:
                             <input type="text" name="nothing" value="{{ ViewService::init($user,'uniqueAmount')->view('amount_of_nothing_payment') }}" class="form-control">
                         </label>
                     </div>
@@ -67,8 +67,14 @@ $payment = \App\Models\PaymentAmount::all();
                 <div class="row">
                     <div class="col-md-6">
                         <label class="new-satings-input-wrap">
-                            <b>rejected</b> (Отрицательный):
+                            Отрицательный:
                             <input type="text" name="rejected" value="{{ ViewService::init($user,'uniqueAmount')->view('amount_of_rejected_payment') }}" class="form-control">
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="new-satings-input-wrap">
+                            <b>firstPayment</b> (Первая выплата при регистрации использовался промокод):
+                            <input type="text" name="firstPayment" value="{{ ViewService::init($user,'uniqueAmount')->view('amount_of_firstPayment') }}" class="form-control">
                         </label>
                     </div>
                 </div>
