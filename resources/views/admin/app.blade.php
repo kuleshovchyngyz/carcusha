@@ -23,6 +23,7 @@
 @auth
     @include('layouts.message')
     <header class="header">
+
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-4 col-6">

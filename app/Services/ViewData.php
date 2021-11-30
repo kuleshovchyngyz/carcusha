@@ -10,26 +10,33 @@ class ViewData
 {
     private $method;
     private $response;
-    private $user;
-    public function init($user=null,$method='')
+    private $model;
+    public function init($model=null,$method='')
     {
         $this->method = $method;
-        $this->user = ($user===null) ? auth()->user() : $user;
+        $this->model =  $model;
+        $this->handeModel();
         return $this;
+    }
+    protected function handeModel(){
+        $this->model = ($this->model===null) ? auth()->user() : $this->model;
     }
 
     protected function getResponse($view)
     {
         switch ($view) {
 
+            case 'total_payments_by_lead':
+                    call_user_func(array($this, 'totalPaymentByLead'), '');
+                break;
             case 'qr':
                 $this->response =  '<img src="{{ asset(`img/qr.png`) }}" alt="">';
                 break;
             case 'email':
                 if(old('email')){
                     $this->response = old('email');
-                }else if($this->user !== null){
-                    $this->response = $this->user->setting->email===null ? '' : $this->user->setting->email;
+                }else if($this->model !== null){
+                    $this->response = $this->model->setting->email===null ? '' : $this->model->setting->email;
                 }else{
                     $this->response = '';
                 }
@@ -37,14 +44,14 @@ class ViewData
             case 'number':
                 if(old('number')){
                     $this->response = old('number');
-                }else if($this->user !== null){
-                    $this->response = $this->user->setting->number===null ? '' : $this->user->setting->number;
+                }else if($this->model !== null){
+                    $this->response = $this->model->setting->number===null ? '' : $this->model->setting->number;
                 }else{
                     $this->response = '';
                 }
                 break;
             case 'isEmailConfirmed':
-                $this->response = ($this->user->email_verified_at !== null && $this->user->email ==$this->user->setting->email) ?
+                $this->response = ($this->model->email_verified_at !== null && $this->model->email ==$this->model->setting->email) ?
                     'Подтверждён' :
                     "<a class='red-link' href='#' onclick='submitEmail()' >Подтвердить</a>";
                 if(old('email')){
@@ -52,7 +59,7 @@ class ViewData
                 }
                 break;
             case 'isPhoneConfirmed':
-                $this->response = ($this->user->phone_verified_at !== null && $this->user->number ==$this->user->setting->number) ?
+                $this->response = ($this->model->phone_verified_at !== null && $this->model->number ==$this->model->setting->number) ?
                     'Подтверждён' :
                     "<a class='red-link' href='#' onclick='submitPhone()' >Подтвердить</a>";
                 if(old('number')){
@@ -60,20 +67,24 @@ class ViewData
                 }
                 break;
             case 'isUniquePaymentChecked':
-                ($this->user->UserPaymentAmounts->count()==0) ?
+                ($this->model->UserPaymentAmounts->count()==0) ?
                     ($this->response = 'checked') :
-                    $this->response = ($this->user->unique_payment==true) ? 'checked' : '';
+                    $this->response = ($this->model->unique_payment==true) ? 'checked' : '';
                 break;
             case 'isUniquePayment':
-                ($this->user->UserPaymentAmounts->count()==0) ?
+                ($this->model->UserPaymentAmounts->count()==0) ?
                     ($this->response = 'd-none') :
-                    $this->response = ($this->user->unique_payment==true) ? '' : 'd-none';
+                    $this->response = ($this->model->unique_payment==true) ? '' : 'd-none';
                 break;
             case 'amount_of_referral_payment':
                 $this->method=='' ?
                     $this->defaultAmount('refer') :
                     call_user_func(array($this, $this->method), 'refer');
                 break;
+            case 'leadStatusName':
+                    call_user_func(array($this, $this->method),'' );
+                break;
+
             case 'amount_of_percentage_payment':
                 $this->method=='' ?
                     $this->defaultAmount('percentage') :
@@ -112,14 +123,29 @@ class ViewData
         }
         return $this;
     }
-
-    protected function uniqueAmount($type){
-        if($this->user->UserPaymentAmounts->count()==0){
-            $this->defaultAmount($type);
-        }else{
-            $this->response = $this->user->UserPaymentAmounts->where('reason_of_payment',$type)->first()->amount;
+    public function totalPaymentByLead(){
+        if($this->model!=null){
+            $this->response = $this->model->all_amount();
         }
     }
+    public function leadStatusName(){
+        if($this->model!=null){
+            $this->response = $this->model->status()->user_statuses->comments;
+        }
+    }
+    protected function uniqueAmount($type){
+
+        if($this->model->UserPaymentAmounts->count()==0){
+            $this->defaultAmount($type);
+        }else{
+            if($this->model->UserPaymentAmounts->where('reason_of_payment',$type)->first()===null){
+                $this->response = 0;
+            }else{
+                $this->response = $this->model->UserPaymentAmounts->where('reason_of_payment',$type)->first()->amount;
+            }
+        }
+    }
+
     protected function defaultAmount($type){
         $this->response = PaymentAmount::where('reason_of_payment',$type)->first()->amount;
     }

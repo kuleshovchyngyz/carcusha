@@ -17,7 +17,6 @@ class Notify
         $this->new_status = $new_status;
         $this->statuses = Status::all();
         $this->set_rejected_statuses();
-        //dd($this->rejected_statuses);
 
     }
     public function notify(){
@@ -54,9 +53,10 @@ class Notify
                 $date = date('d.m.Y', strtotime($this->history_of_lead->first()->updated_at));
                 $time = date('H:i:s', strtotime($this->history_of_lead->first()->updated_at));
             }
-            $str = $date.' в '.$time.'. Машина #'.$this->lead->bitrix_user_id.': ';
+           // $str = $date.' в '.$time.'. Машина #'.$this->lead->bitrix_user_id.': ';
+            $str = 'Авто #'.$this->lead->bitrix_user_id.': ';
             $this->message = $str.$this->message;
-            $this->create_message_notification();
+//            $this->create_message_notification();
         }
 
     }
@@ -71,7 +71,7 @@ class Notify
     public function set_message(){
         if($this->new_status->user_statuses->notify==1){
 //            $this->message =  $this->new_status->user_statuses->name;
-            $this->message =  shortCodeParse($this->new_status->user_statuses->name);
+            $this->message =  $this->new_status->user_statuses->name.' '.shortCodeParse($this->new_status->user_statuses->comments);
         }
     }
     public function create_notification(): bool
@@ -103,12 +103,12 @@ class Notify
         return false;
     }
     public function NotificationCreate(){
-        Notification::create([
-            'lead_id' => $this->lead->bitrix_user_id,
-            'f_lead_id' => $this->lead->id,
-            'event' => 'sdssd',
-            'status' => $this->new_status->index
-        ]);
+//        Notification::create([
+//            'lead_id' => $this->lead->bitrix_user_id,
+//            'f_lead_id' => $this->lead->id,
+//            'event' => 'sdssd',
+//            'status' => $this->new_status->index
+//        ]);
     }
     public function checkForRejectedStatuses( $collection): bool
     {
@@ -121,9 +121,12 @@ class Notify
     }
 
     public function set_rejected_statuses(){
-        foreach ($this->statuses as $status){
-            if( $status->user_statuses->notify == 1 && $status->user_statuses->amount() < 0 ) {
-                $this->rejected_statuses[] = $status->id;
+        foreach ($this->statuses as $key=>$status){
+            if($key<26){
+                if( $status->user_statuses->notify == 1 && $status->user_statuses->amount() < 0  ) {
+                    $this->rejected_statuses[] = $status->id;
+                }
+
             }
         }
     }

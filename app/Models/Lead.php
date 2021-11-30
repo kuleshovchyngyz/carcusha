@@ -28,7 +28,18 @@ class Lead extends Model
         'checked_texts'
     ];
 
-
+    public function color(){
+        if($this->status()->color=='#EB5757'){
+            return 'statusRed';
+        }
+        if($this->status()->color=='#27AE60'){
+            return 'statusGreen';
+        }
+        if($this->status()->color=='#2D9CDB'){
+            return 'statusBlue';
+        }
+        return '';
+    }
     public function status()
     {
         $status = Status::find($this->attributes['status_id']);
@@ -57,18 +68,14 @@ class Lead extends Model
         }
         return $n;
     }
+    public function leadHistory(){
+        return Notification::where('lead_id',$this->attributes['bitrix_user_id'])->orderBy('created_at','ASC')->get();
+    }
 
     public function is_on_pending(){
-        $reasons = Reason::wheretable_id($this->attributes['bitrix_user_id'])->wherereason_name('lead')->get();
-        foreach ($reasons as $reason){
-            $payment = Payment::wherereason_id($reason->id)->first();
-            if ($payment){
-                if($payment->amount==2 ){
-                    return true;
-                }
-            }
-        }
-        return false;
+        $reasons = Reason::wheretable_id($this->attributes['bitrix_user_id'])->wherereason_name('lead')->pluck('id');
+        $bought = Payment::whereIn('reason_id',$reasons)->where('status_group','like','success%')->get();
+        return ($bought->count()==1) ? true : false;
     }
     public function all_amount(){
         $reasons = Reason::wheretable_id($this->attributes['bitrix_user_id'])->wherereason_name('lead')->get();
@@ -77,7 +84,8 @@ class Lead extends Model
         foreach ($reasons as $reason){
             $payment = Payment::wherereason_id($reason->id)->first();
             if ($payment){
-                $sum += $payment->payment_amount()->amount;
+//                $sum += $payment->payment_amount()->amount;
+                $sum += $payment->amount;
             }
         }
         return $sum;

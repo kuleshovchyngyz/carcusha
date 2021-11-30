@@ -2182,6 +2182,8 @@ __webpack_require__(/*! ./ResetPassword.js */ "./resources/js/ResetPassword.js")
 
 __webpack_require__(/*! ./uploadImages.js */ "./resources/js/uploadImages.js");
 
+__webpack_require__(/*! ./newtable.js */ "./resources/js/newtable.js");
+
 /***/ }),
 
 /***/ "./resources/js/auth.js":
@@ -2524,6 +2526,24 @@ function submitForm(btn) {
 
   btn.form.submit();
 }
+
+/***/ }),
+
+/***/ "./resources/js/newtable.js":
+/*!**********************************!*\
+  !*** ./resources/js/newtable.js ***!
+  \**********************************/
+/***/ (() => {
+
+$(".t-row:odd").each(function () {
+  $(this).addClass('bg-gray');
+});
+$('.btn-show').click(function () {
+  $(this).toggleClass('active');
+  $(this).parent().toggleClass('active');
+  var tabid = $(this).data("id");
+  $('#' + tabid).slideToggle();
+});
 
 /***/ }),
 

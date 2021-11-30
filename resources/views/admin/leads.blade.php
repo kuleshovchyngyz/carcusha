@@ -68,7 +68,8 @@
 
                             @endif
                             {{--                            <td>777777777 ₽</td>--}}
-                            <td>{{ $lead->payment_by_status() }} ₽</td>
+{{--                            <td>{{ $lead->payment_by_status() }} ₽</td>--}}
+                            <td>{{ ViewService::init($lead)->view('total_payments_by_lead') }} ₽</td>
                         </tr>
                     @endif
                 @endforeach

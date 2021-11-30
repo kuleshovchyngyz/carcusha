@@ -15,6 +15,19 @@ class SmsClient
 
     public function __construct()
     {
+//        SMS_MAIN_URL="https://smsc.ru"
+//SMS_LOGIN="carcusha"
+//SMS_PASSWORD="rRqkg29Q9h"
+//SMS_CHARSET="utf-8"
+//SMS_DEBUG=true
+//        $this->http = Http::baseUrl('https://smsc.ru')
+//            ->withHeaders([
+//                'Content-Type' => 'application/json'
+//            ]);
+//        $this->login = 'carcusha';
+//        $this->password ='rRqkg29Q9h';
+//        $this->charset = 'utf-8';
+//        $this->debug = true;
         $this->http = Http::baseUrl(config('services.sms.main_url'))
             ->withHeaders([
                 'Content-Type' => 'application/json'

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Clients;
+use App\Models\Status;
 use Illuminate\Support\Facades\Http;
 
 class Bitrix
@@ -16,11 +17,28 @@ class Bitrix
     }
 
     public function connect($method, $data) {
+
+        $this->http =  "https://carcusha.bitrix24.ru/rest/1/wt8rsyj3jvc6rvum/";
         $res = Http::timeout(5)->post($this->http.$method ,$data);
         $this->result =  json_decode($res->body(), 1);
         return $this->result;
     }
+    public function getResponse(){
+        if(!array_key_exists('error_description',$this->result)){
+            return $this->result;
+        }
+        return false;
+    }
 
+    public function addLeadAdd($array = []){
+        $this->result = $this->connect('crm.lead.add', [
+            'fields' => $array,
+            'params' => [
+                'REGISTER_SONET_EVENT' => 'Y'
+            ],
+        ]);
+        return $this->getResponse();
+    }
     public function getStatusList(){
         $this->result = $this->connect('crm.status.list',[
             'order'=> ["SORT"=> "ASC"],
@@ -36,11 +54,38 @@ class Bitrix
         $this->result = $this->connect('crm.lead.get', ['id' =>  $leadId]);
         return $this->getResponse();
     }
-    public function getResponse(){
-        if(!array_key_exists('error_description',$this->result)){
-            return $this->result;
+    public function getLeadStatus($leadId){
+        $dealData = $this->getLead($leadId);
+        $s = Status::where('index',$dealData['result']['STATUS_ID'])->first();
+        return $s->id;
+    }
+
+    public function syncStatuses(){
+        $dealData = $this->getStatusList();
+        foreach ($dealData['result'] as $key=>$status){
+            Status::where('id',$key+1)->update([
+                'index' =>$status['STATUS_ID'],
+                'ID_on_bitrix' =>$status['ID'],
+                'name' =>  $status['NAME'],
+                'color' => $status['COLOR']
+            ]);
+            if(Status::find($key+1)===null){
+                Status::create([
+                    'index' =>$status['STATUS_ID'],
+                    'ID_on_bitrix' =>$status['ID'],
+                    'name' =>  $status['NAME'],
+                    'color' => $status['COLOR']
+                ]);
+            }
+            //dump($status);
         }
-        return false;
+        return true;
+
+    }
+    private function crmStatusAdd(){
+        $this->connect('crm.status.add',[
+            'fields' => $this->status
+        ]);
     }
 
     protected function getError($response)

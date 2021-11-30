@@ -167,6 +167,7 @@ class AdminController extends Controller
      public function store_user_statuses(Request $request){
         $arr = [];
         $check = [];
+
         $request->request->remove('_token');
         foreach ($request->all() as $key=>$item){
             //if($item!=null){
@@ -179,23 +180,30 @@ class AdminController extends Controller
                 }
             //}
         }
-        //dd($arr[14]);
+//dd($arr);
 
         UserStatuses::truncate();
 
         foreach ($arr as $key => $item){
+
+            $status = Status::find($key);
+            $status->color = $item['color'];
+            $status->save();
             $notify = 0;
             if(isset($item['notify'])){
                 $notify = 1;
             }
+
             $s = UserStatuses::create([
                 'status_id'=>$key,
                 'name'=>$item['name'],
                 'amount'=>$item['amount'],
+                'comments'=>$item['comments'],
                 'notify'=> $notify
                 ]);
 
         }
+
          return redirect()->back()->with('success_message', ['Сохранено']);
      }
 
@@ -236,6 +244,7 @@ class AdminController extends Controller
         PaymentAmount::where('reason_of_payment','rejected')->update(['amount'=>$request->rejected]);
         PaymentAmount::where('reason_of_payment','refer')->update(['amount'=>$request->refer]);
         PaymentAmount::where('reason_of_payment','MinAmountOfPayment')->update(['amount'=>$request->MinAmountOfPayment]);
+        PaymentAmount::where('reason_of_payment','firstPayment')->update(['amount'=>$request->firstPayment]);
         $percent =$request->percentage;
         $percent = str_replace("%", "", $percent);
         PaymentAmount::where('reason_of_payment','percentage')->update(['amount'=>$percent]);

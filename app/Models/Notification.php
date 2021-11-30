@@ -17,6 +17,9 @@ class Notification extends Model
         'event'
 
     ];
+    public function user_status(){
+        return Status::where('index',$this->attributes['status'])->first()->user_statuses;
+    }
     public function status(){
         return Status::where('index',$this->attributes['status'])->first();
     }

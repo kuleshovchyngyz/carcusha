@@ -896,6 +896,30 @@ td:hover .main__table-dd {
         margin-bottom: 10px;
     }
 }
+.statusRed{
+    color: #EB5757;
+}
+.statusGreen{
+    color: #27AE60;
+}
+.statusBlue{
+    color: #2D9CDB;
+}
+.square_blue {
+    height: 10px;
+    width: 10px;
+    background-color: #2D9CDB;
+}
+.square_green {
+    height: 10px;
+    width: 10px;
+    background-color: #27AE60;
+}
+.square_red {
+    height: 10px;
+    width: 10px;
+    background-color: #EB5757;
+}
 .green{
     color: green;
 }
@@ -906,9 +930,42 @@ td:hover .main__table-dd {
     padding-left: 4rem!important;
 }
 .status{
-    width: 50%;
+    width: 20%;
 }
+.comments{
+    width: 44%;
+}
+.amount{
+    width: 8%;
+}
+.notify{
+    width: 8%;
+}
+.crmstatus{
+    width: 8%;
+}
+
+.thblue{
+    width: 2%;
+}
+.thgreen{
+    width: 2%;
+}
+.thblue{
+    width: 2%;
+}
+
+
 .status_input{
+    width: 100%;
+}
+.comments_input{
+    width: 100%;
+}
+.amount_input{
+    width: 100%;
+}
+.notify_input{
     width: 100%;
 }
 .red-btn{

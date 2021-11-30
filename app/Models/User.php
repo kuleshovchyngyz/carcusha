@@ -86,12 +86,15 @@ class User extends Authenticatable
 
 
     public function user_who_referred(){
+
         $referred_user =   Refer::wherereferred_user_id($this->attributes['id'])->pluck('user_id');
         if(count($referred_user)>0){
             return User::find($referred_user[0]);
         }
         return false;
     }
+
+
     public function leads(){
         return $this->hasMany(Lead::class);
     }
@@ -239,12 +242,13 @@ class User extends Authenticatable
     public function SumOfPendingAmount(){
         $payments = Payment::where('user_id',$this->attributes['id'])->pluck('id');
         $pending = PendingAmount::whereIn('payment_id',$payments)->where('status',false)->pluck('payment_id');
-        $payment_amount = Payment::whereIn('id',$pending)->pluck('amount');
-        $sum = [];
-        foreach ($payment_amount as $p){
-            $sum[] = PaymentAmount::find($p)->amount;
-        }
-        return collect($sum)->sum();
+        $payment_amount = Payment::whereIn('id',$pending)->pluck('amount')->sum();
+//        dd($payment_amount);
+//        $sum = [];
+//        foreach ($payment_amount as $p){
+//            $sum[] = PaymentAmount::find($p)->amount;
+//        }
+        return $payment_amount;
     }
 
     public function paymentSetting(){

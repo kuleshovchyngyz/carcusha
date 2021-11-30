@@ -18,6 +18,8 @@ class Status extends Model
 
     ];
 
+    
+
     public function leads(){
         return $this->hasMany(Lead::class,'status_id');
     }

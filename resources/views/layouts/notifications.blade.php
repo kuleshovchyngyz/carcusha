@@ -18,7 +18,6 @@ $notifications = $data->toArray();
                {!! $notification['message'] !!}
             </li>
             @endforeach
-
         </ul>
     </div>
 </div>

@@ -11,6 +11,7 @@
                         <h2 class="main__content-title">Добавление авто</h2>
                         <form method="POST" action="{{ route('lead.store') }}" id ="formdata" enctype="multipart/form-data">
                             @csrf
+
                             <input type="hidden" name="folder_id" id="folder_id" value="{{  uniqid() }}">
                             <div class="row">
                                 <div class="col-md-6">
@@ -106,7 +107,7 @@
                     Мы не выкупаем авто, если:
                 </div>
                 <ul class="modal__list">
-                    <li>- Оно старше 10 лет (2010 года и ранее);</li>
+                    <li>- Оно старше 15 лет (2006 года и ранее);</li>
                     <li>- Оно размещено на Avito и Auto.Ru;</li>
                     <li>- Продавец не заинтересован в продаже.</li>
                 </ul>

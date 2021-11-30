@@ -102,8 +102,10 @@
                         </div>
                     </div>
                     <div class="main__setting-item main__setting-item--edit">
-                        <div>Номер карты:
-                            <input name = "cardNumber" id="bankcardnumber" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->cardNumber }}@endif">
+                        <div class="row">
+                            <div>Номер карты:
+                                <input name = "cardNumber" id="bankcardnumber" type="text" class="form-control" placeholder="Не указан" value="@if( Auth::user()->paymentSetting!=null ){{ Auth::user()->paymentSetting->cardNumber }}@endif">
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -24,6 +24,24 @@ function shortCodeParse($str,$arr = [],$value=[]){
     return $str;
 }
 
-function mkmk(){
-    return 'asdfasdf';
+function selectedColor($color,$current){
+    $result = '';
+    switch ($color){
+        case '#2D9CDB':
+            $current == 'blue' ?
+                ($result = 'checked'):
+                ($result = '');
+            break;
+        case '#27AE60':
+            $current == 'green' ?
+                ($result = 'checked'):
+                ($result = '');
+            break;
+        case '#EB5757':
+            $current == 'red' ?
+                ($result = 'checked'):
+                ($result = '');
+            break;
+    }
+    return $result;
 }

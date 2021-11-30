@@ -901,6 +901,30 @@ td:hover .main__table-dd {
         margin-bottom: 10px;
     }
 }
+.statusRed{
+    color: #EB5757;
+}
+.statusGreen{
+    color: #27AE60;
+}
+.statusBlue{
+    color: #2D9CDB;
+}
+.square_blue {
+    height: 10px;
+    width: 10px;
+    background-color: #2D9CDB;
+}
+.square_green {
+    height: 10px;
+    width: 10px;
+    background-color: #27AE60;
+}
+.square_red {
+    height: 10px;
+    width: 10px;
+    background-color: #EB5757;
+}
 .green{
     color: green;
 }
@@ -911,9 +935,42 @@ td:hover .main__table-dd {
     padding-left: 4rem!important;
 }
 .status{
-    width: 50%;
+    width: 20%;
 }
+.comments{
+    width: 44%;
+}
+.amount{
+    width: 8%;
+}
+.notify{
+    width: 8%;
+}
+.crmstatus{
+    width: 8%;
+}
+
+.thblue{
+    width: 2%;
+}
+.thgreen{
+    width: 2%;
+}
+.thblue{
+    width: 2%;
+}
+
+
 .status_input{
+    width: 100%;
+}
+.comments_input{
+    width: 100%;
+}
+.amount_input{
+    width: 100%;
+}
+.notify_input{
     width: 100%;
 }
 .red-btn{
@@ -3534,6 +3591,312 @@ form .type-phone{
     .tab-content--custom {
         padding: 40px 20px;
     }
+}
+
+
+/* new table */
+.table-content {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+.divTableCell,
+.dd-body__item{
+    font-size: 14px;
+}
+.table-content .main__content-title {
+    padding: 0 20px;
+}
+
+.divTable {
+    display: table;
+    width: 100%;
+}
+
+.divTable-head {
+    background: #F2F2F2;
+}
+
+.divTableRow {
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+
+.divTableCell {
+    /*     display: table-cell; */
+    padding: 8px 4px;
+}
+
+
+.divTable-head .divTableCell {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.btn-show {
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-show:after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14.817' height='7.71' viewBox='0 0 14.817 7.71'%3E%3Cpath id='Контур_128' data-name='Контур 128' d='M3102.488,6963.162l6-5,6,5' transform='translate(3115.896 6964.57) rotate(180)' fill='none' stroke='%23e3473f' stroke-linecap='round' stroke-width='2'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0 auto;
+    transition: all 0.3s;
+}
+
+.btn-show.active {
+    transform: rotate(180deg);
+}
+
+.bg-gray {
+    background: #F2F2F2;
+}
+
+.bg-gray+.dd-body {
+    background: #F2F2F2;
+}
+
+.dd-btn {
+    position: relative;
+}
+
+.dd-btn__info {
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    max-width: 250px;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: #fff;
+    z-index: 9;
+    font-size: 14px;
+    padding: 10px;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 10%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+: after
+}
+
+.dd-btn:hover .dd-btn__info {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tb-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: -2px;
+    background-repeat: no-repeat;
+    transition: all 0.3s;
+}
+
+.tb-icon:after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    display: block;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+}
+
+.tb-icon:hover:after {
+    opacity: 1;
+}
+
+.danger-icon:after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg id='warning_1_' data-name='warning (1)' transform='translate(0 -14.759)'%3E%3Cg id='Сгруппировать_295' data-name='Сгруппировать 295' transform='translate(0 14.759)'%3E%3Cpath id='Контур_127' data-name='Контур 127' d='M15.668,27,10.016,15.976a2.277,2.277,0,0,0-4.031,0L.333,27a2.49,2.49,0,0,0,2.015,3.757h11.3A2.491,2.491,0,0,0,15.668,27ZM8,28.769a1,1,0,1,1,.938-.995A.969.969,0,0,1,8,28.769Zm.938-3.979a.939.939,0,1,1-1.875,0V19.815a.939.939,0,1,1,1.875,0Z' transform='translate(0 -14.759)' fill='%23e3473f'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+}
+
+.info-icon:after {
+    background-image: url("data:image/svg+xml,%3Csvg id='info-button' xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg id='Сгруппировать_294' data-name='Сгруппировать 294'%3E%3Cpath id='Контур_126' data-name='Контур 126' d='M13.657,2.343a8,8,0,1,0,0,11.314A8,8,0,0,0,13.657,2.343ZM9.043,11.478a1.043,1.043,0,1,1-2.087,0V7.3a1.043,1.043,0,1,1,2.087,0ZM7.981,5.521a.931.931,0,0,1-.989-.951.93.93,0,0,1,1-.964.96.96,0,1,1-.012,1.915Z' transform='translate(0 0)' fill='%23333'/%3E%3C/g%3E%3C/svg%3E%0A");
+}
+
+.lock-icon:after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='16' viewBox='0 0 12 16'%3E%3Cpath id='padlock' d='M13.5,6H13V4A4,4,0,0,0,5,4V6H4.5A1.5,1.5,0,0,0,3,7.5v7A1.5,1.5,0,0,0,4.5,16h9A1.5,1.5,0,0,0,15,14.5v-7A1.5,1.5,0,0,0,13.5,6ZM6.333,4a2.667,2.667,0,0,1,5.333,0V6H6.333Zm3.333,7.148v1.519a.667.667,0,1,1-1.333,0V11.148a1.333,1.333,0,1,1,1.333,0Z' transform='translate(-3)' fill='%23333'/%3E%3C/svg%3E%0A");
+}
+
+.dd-body {
+    padding-top: 10px;
+    padding-left: 52px;
+    padding-bottom: 10px;
+    display: none;
+}
+
+.dd-body__item {
+    margin-bottom: 11px;
+}
+
+.dd-body__item:last-child {
+    margin-bottom: 0;
+}
+
+.dd-body.active {
+    display: block;
+}
+
+.t-row {
+    position: relative;
+}
+
+.t-row.active {
+    box-shadow: 0 2px 6px rgb(0 0 0 / 16%)
+}
+
+.table-i {
+    flex-basis: 280px;
+}
+
+.divTableCell:nth-last-child(2) .dd-btn__info {
+    left: -136px;
+}
+
+.divTableCell:last-child .dd-btn__info {
+    left: auto;
+    right: 0;
+    text-align: right;
+}
+
+.divTableCell span {
+    max-width: -webkit-fit-content;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+    width: calc(100% - 25px);
+    display: inline-flex;
+}
+
+
+
+.table-col-1,
+.table-col-2 {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+
+/* new table x */
+
+/* media */
+
+
+@media screen and (max-width:1200px) {
+    .responsive-table {
+        overflow: auto;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    /* table-new */
+    .dd-body__item{
+        font-size: 13px;
+    }
+    .divTable-head {
+        display: none;
+    }
+
+    .responsive-table {
+        overflow: initial;
+    }
+
+    .responsive-table .main__table {
+        min-width: 100%;
+    }
+
+    .divTableRow {
+        align-items: stretch;
+        padding: 10px;
+        flex-wrap: wrap;
+        background: #F2F2F2;
+    }
+
+    .table-col-1,
+    .table-col-2 {
+        width: 50%;
+        display: block;
+    }
+
+    .table-col-1 div:first-child {
+        color: #888888;
+    }
+
+    .table-col-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: right;
+    }
+
+    .divTableCell {
+        width: 100% !important;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        line-height: 22px;
+    }
+
+    .table-col-2 .divTableCell {
+        justify-content: end;
+    }
+
+    .table-col-2 .dd-btn__info,
+    .dd-body .dd-btn__info {
+        left: auto !important;
+        right: 0 !important;
+    }
+
+    .tb-icon {
+        width: auto;
+        min-width: 16px;
+        margin-left: 5px;
+    }
+
+    .btn-show {
+        order: 3;
+    }
+
+    .dd-body {
+        padding: 10px;
+        background: #f2f2f2;
+    }
+
+    .bg-gray + .dd-body {
+        background: #fff;
+    }
+
+    .dd-body__item div {
+        flex-basis: auto;
+        width: 50%;
+    }
+
+    .dd-btn__info {
+        width: -webkit-max-content !important;
+        width: -moz-max-content !important;
+        width: max-content !important;
+    }
+
+
+    .dd-body__item div:first-child {
+        text-align: left;
+    }
+
+    .bg-gray {
+        background: #ffffff !important;
+    }
+
 }
 
 /*!

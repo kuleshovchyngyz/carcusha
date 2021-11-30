@@ -71,12 +71,12 @@ $payment = \App\Models\PaymentAmount::all();
                             <input type="text" name="rejected" value="{{ ViewService::init($user,'uniqueAmount')->view('amount_of_rejected_payment') }}" class="form-control">
                         </label>
                     </div>
-                    <div class="col-md-6">
-                        <label class="new-satings-input-wrap">
-                            <b>firstPayment</b> (Первая выплата при регистрации использовался промокод):
-                            <input type="text" name="firstPayment" value="{{ ViewService::init($user,'uniqueAmount')->view('amount_of_firstPayment') }}" class="form-control">
-                        </label>
-                    </div>
+{{--                    <div class="col-md-6">--}}
+{{--                        <label class="new-satings-input-wrap">--}}
+{{--                            <b>firstPayment</b> (Первая выплата при регистрации использовался промокод):--}}
+{{--                            <input type="text" name="firstPayment" value="{{ ViewService::init($user,'uniqueAmount')->view('amount_of_firstPayment') }}" class="form-control">--}}
+{{--                        </label>--}}
+{{--                    </div>--}}
                 </div>
                 {{--        <hr class="bottom-line">--}}
 

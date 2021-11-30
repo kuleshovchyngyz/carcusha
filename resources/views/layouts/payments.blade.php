@@ -25,7 +25,6 @@ $leads = $data;
                 <tbody>
 {{--                @dd(auth()->user()->lead_payments())--}}
                 @foreach(auth()->user()->lead_payments() as $payment)
-
                     <tr>
                         <td>{{$payment->created_at->format('d-m-Y H:i') }}</td>
                         <td>{{ $payment->reasons->table_id }}</td>
@@ -37,14 +36,15 @@ $leads = $data;
 							@else
 							<td style="color:{{ $payment->status()->color }};">{{ $payment->status()->name }}</td>
 							@endif
-                        <td>{{$payment->payment_amount()->amount }} ₽</td>
+
+                        <td>{{$payment->amount }} ₽</td>
+{{--                        <td>{{$payment->payment_amount()->amount }} ₽</td>--}}
                     </tr>
                 @endforeach
                 </tbody>
             </table>
             <br>
             <div class="text-center">
-
                 <button type="button"  class="btn btn-red" data-toggle="modal" data-target="#exampleModal">
                     Заказать  выплату
                 </button>

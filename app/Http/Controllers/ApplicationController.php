@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Clients\Bitrix;
 use App\Models\Cars;
 use App\support\Leads\LeadBuilder;
 use Illuminate\Http\Request;
@@ -116,6 +117,7 @@ class ApplicationController extends Controller
         // $array['UF_CRM_1625740924'] = isset($year)==true ? $year :"";
         $array['SOURCE_ID'] = "5";
         $array['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
+        $b = new Bitrix();
         $dealData = $this->sendDataToBitrixGuzzle('crm.lead.add', [
             'fields' => $array,
             'params' => [

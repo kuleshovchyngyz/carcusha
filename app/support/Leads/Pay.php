@@ -12,16 +12,17 @@ class Pay
 {
     protected $new_status,  $user, $lead, $amount, $amount_id, $reasons, $percent, $type, $user_who_referred,$percentAmount;
     public function __construct($lead,$new_status){
+
         $this->lead = $lead;
         $this->user = $this->lead->user;
         $this->user_who_referred = $this->user->user_who_referred();
         $this->new_status = $new_status;
         $this->reasons =  Reason::where('reason_name','lead')->where('table_id', $this->lead->bitrix_user_id)->get();
         $this->reasons_refer = Reason::where('reason_name','refer')->where('table_id', $this->user->id)->get();
-        $this->new_status = $new_status;
         $this->amount = $this->new_status->user_statuses->amount($this->user);
+
         $this->percent = PaymentAmount::where('reason_of_payment','percentage')->first()->amount;
-        if($this->new_status->id==14){
+        if($this->new_status->id==15){
             $this->type = 'success';
             $this->amount_id = 2;
         }else{

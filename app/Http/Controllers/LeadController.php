@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Clients\Bitrix;
 use App\Models\balance;
+use App\Models\Vendors;
 use App\support\Bitrix\ApiConnect;
 use App\support\Leads\LeadBuilder;
 use App\support\Leads\UpdatingLeadStatus;
@@ -41,7 +42,7 @@ class LeadController extends Controller
         //auth()->user()->assignRole('admin');
         $leads = Lead::select('*')
             ->where('user_id',Auth::user()->id)
-			 ->orderBy('updated_at','DESC')
+            ->orderBy('updated_at','DESC')
             ->get();
         //dd($leads);
         return view('home',[
@@ -58,18 +59,17 @@ class LeadController extends Controller
     public function create()
     {
         $userId = Auth::id();
-        $result = Cars::select('*')
-            ->where('vendor','!=','')
-            ->orderBy('vendor','ASC')
-            ->get()
-            ->groupBy('vendor');
+
+        $results = Vendors::orderBy('name','ASC')->get();
+//        $result = Cars::select('vendor','model','modification')->where('vendor','!=','')->orderBy('vendor','ASC')->get()->groupBy('vendor');
+//        $result = Cars::select('vendor')->orderBy('vendor','ASC')->get()->groupBy('vendor');
 
         $buffer = '<option value="">Марка авто</option>';
-        foreach($result as $car_vendor => $car_vendor_data) {
-            $car_vendor = stripslashes($car_vendor);
+        foreach($results as $result) {
+            $car_vendor = stripslashes($result->name);
             $buffer .= '<option value="'.$car_vendor.'">'.$car_vendor.'</option>';
         }
-        //dd($buffer);
+
         return view('leads.create', [
             'buffer'=> $buffer,
             'years'=>$this->get_car_years()
@@ -79,7 +79,10 @@ class LeadController extends Controller
 
     }
     public function get_car_years() {
-        $buffer = '<option value=2005>'.'2005'.' и старше</option>';
+        $buffer='';
+//        $buffer = '<option value=2006>'.'2006'.' и старше</option>';
+//        $buffer = '<option value=2010>'.'2010'.'</option>';
+
         for($i = date("Y")-15; $i < date("Y"); $i++){
             $buffer .= '<option value="'.$i.'">'.$i.'</option>';
         }
@@ -94,7 +97,7 @@ class LeadController extends Controller
             ->orderBy('model','ASC')
             ->get()
             ->groupBy('model');
-        //dd($result);
+
         $buffer = '<option value="">Модель авто</option>';
 
         foreach($result as $car_model => $car_model_data) {
@@ -127,7 +130,7 @@ class LeadController extends Controller
         curl_close($curl);
         return json_decode($result, 1);
     }
-	function sendDataToBitrixGuzzle($method, $data) {
+    function sendDataToBitrixGuzzle($method, $data) {
         // $webhook_url = "https://b24-4goccw.bitrix24.ru/rest/1/gfb5rzf8p5iwam80/";//test
 
         $webhook_url = "https://rosgroup.bitrix24.ru/rest/52/dy6hojhc5p47lao6/";//real
@@ -166,21 +169,22 @@ class LeadController extends Controller
             "2007" => "759",
             "2008" => "330",
             "2009" => "328",
-            "2010" => "326",
-            "2011" => "324",
-            "2012" => "322",
-            "2013" => "320",
-            "2014" => "318",
-            "2015" => "304",
-            "2016" => "316",
-            "2017" => "302",
-            "2018" => "314",
-            "2019" => "300",
-            "2020" => "312"
+            "2010" => "67",
+            "2011" => "65",
+            "2012" => "63",
+            "2013" => "61",
+            "2014" => "59",
+            "2015" => "57",
+            "2016" => "55",
+            "2017" => "53",
+            "2018" => "51",
+            "2019" => "49",
+            "2020" => "47",
+            "2021" => "45"
         ];
         $data_img=[];
         //$crm_pics_field_name = ['UF_CRM_1627988390','UF_CRM_1625740903','UF_CRM_1627988418','UF_CRM_1627988441'];//test
-        $crm_pics_field_name = ['UF_CRM_1526660196','UF_CRM_1541502441','UF_CRM_1541502472','UF_CRM_1541502488'];//real
+        $crm_pics_field_name = ['UF_CRM_1633362445295','UF_CRM_1633362456303','UF_CRM_1633362468187','UF_CRM_1633362478787','UF_CRM_1633362488670','UF_CRM_1637847699599','UF_CRM_1637847730399','UF_CRM_1637847742893','UF_CRM_1637847753241','UF_CRM_1637847764708'];//real
         foreach ($img as $key => $i){
             $data_img[] =
                 curl_file_create(public_path('uploads').'/'.$folder_name.'/'.$img[$key],'image/*',$img[$key]);
@@ -192,24 +196,27 @@ class LeadController extends Controller
             ]];
         }
         $array['TITLE'] = "Тестовое";
-		$v = isset($vendor)==true ? $vendor :"";
-		$car = isset($model)==true ? $model :"";
+        $v = isset($vendor)==true ? $vendor :"";
+        $car = isset($model)==true ? $model :"";
 
-        $array['UF_CRM_1526660063'] = $v.' '.$car; //real   "ID" => "312"
+        $array['UF_CRM_1633361973449'] = $v.' '.$car; //real   "ID" => "312"
 
-        $array['UF_CRM_1526659328'] =  isset($year)==true ? [$years[$year]] :""; //real
+        $array['UF_CRM_1633362091686'] =  isset($year)==true ? [$years[$year]] :""; //real
         // $array['UF_CRM_1625740869'] = $v.' '.$car;
 
         // $array['UF_CRM_1625740924'] = isset($year)==true ? $year :"";
-        $array['SOURCE_ID'] = "5";
+        $array['SOURCE_ID'] = "1";
         $array['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
-        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.add', [
-            'fields' => $array,
-            'params' => [
-                'REGISTER_SONET_EVENT' => 'Y'
-            ],
-        ]);
-       // dd($dealData);
+
+        $bitrix = new Bitrix();
+        $dealData = $bitrix->addLeadAdd($array);
+//        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.add', [
+//            'fields' => $array,
+//            'params' => [
+//                'REGISTER_SONET_EVENT' => 'Y'
+//            ],
+//        ]);
+        // dd($dealData);
         return $dealData;
     }
     public function fields(){
@@ -219,7 +226,7 @@ class LeadController extends Controller
 //        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.fields',array());
 //        "UF_CRM_1526732995" => "yesdo"
 //    "UF_CRM_1526733011" => "nono"
-      //  $dealData = new ApiConnect('crm.lead.get', ['id' => '771965']);
+        //  $dealData = new ApiConnect('crm.lead.get', ['id' => '771965']);
         //dump($dealData->getResponse());
 //        dump($dealData->getFieldName('isInAuto.ru'));
 //        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.get', ['id' => '77965'] );
@@ -266,17 +273,18 @@ class LeadController extends Controller
 
 
     }
-    public function getstatuses(Request $request){
+    public function getstatuses(Request $request,Bitrix $bitrix){
         if($request->all()['event'] == "ONCRMLEADUPDATE")
         {
-			$l = Lead::where('bitrix_user_id',$request->all()['data']['FIELDS']['ID'])->count();
-			if($l>0){
-			    \Storage::disk('local')->append('example.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
-                \Storage::disk('local')->append('sst.txt', $this->get_status($request->all()['data']['FIELDS']['ID']));
-                $lead_id = Lead::where('bitrix_user_id',$request->all()['data']['FIELDS']['ID'])->first()->bitrix_user_id;
-
-                new UpdatingLeadStatus($lead_id,$this->get_status($request->all()['data']['FIELDS']['ID']));
-			}
+            $l = Lead::where('bitrix_user_id',$request->all()['data']['FIELDS']['ID'])->count();
+            if($l>0){
+                \Storage::disk('local')->append('example.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
+                \Storage::disk('local')->append('sst.txt', $bitrix->getLeadStatus($request->all()['data']['FIELDS']['ID']));
+                $lead_id =$request->all()['data']['FIELDS']['ID'];
+                \Storage::disk('local')->append('ids.txt', $lead_id);
+                new UpdatingLeadStatus($lead_id,$bitrix->getLeadStatus($request->all()['data']['FIELDS']['ID']));
+                //App\support\Leads\UpdatingLeadStatus
+            }
         }
     }
     public function cheching(){
@@ -332,20 +340,20 @@ class LeadController extends Controller
                     $str = "";
                     $changed = "";
                     $key = 0;
-					$changed_id = '20';
+                    $changed_id = '20';
                     foreach ($seps as  $sep){
                         if ($key==0){
                             $date = date('d.m.Y', strtotime($sep->updated_at));
                             $time = date('H:i:s', strtotime($sep->updated_at));
                             $str = $date.' в '.$time.' у лида #'.$sep->lead_id.' изменился статус с ';
                             $changed = $statuses[$sep->status];
-							 $changed_id = $sep->status;
+                            $changed_id = $sep->status;
                         }else if($key==1){
-							if($statuses[$sep->status]!=$changed){
-								$str = $str.'"'.$statuses[$sep->status].'"'.' на "'.$changed.'"' ;
-							}else{
-								$str = 'false';
-							}
+                            if($statuses[$sep->status]!=$changed){
+                                $str = $str.'"'.$statuses[$sep->status].'"'.' на "'.$changed.'"' ;
+                            }else{
+                                $str = 'false';
+                            }
 
 
                             if ($changed == "Согласен продать"){
@@ -443,16 +451,16 @@ class LeadController extends Controller
                             }
 
                             $notes[] = $str;
-							if($str!='false'){
-							MessageNotification::create([
-                                'user_id'=>$l->user_id,
-                                'seen'=>false,
-                                'message'=>$str,
-                                'lead_id'=>$l_id
-                            ]);
-							$this->send_to_tg_bot($str);
+                            if($str!='false'){
+                                MessageNotification::create([
+                                    'user_id'=>$l->user_id,
+                                    'seen'=>false,
+                                    'message'=>$str,
+                                    'lead_id'=>$l_id
+                                ]);
+                                $this->send_to_tg_bot($str);
 
-							}
+                            }
 
                             //dump($str);
                         }
@@ -623,7 +631,7 @@ class LeadController extends Controller
         $path = public_path('uploads/'.$folder_name);
         $files = \File::files($path);
         return [$image_names,count($files) ];
-       // return [$image_names,count($files)];
+        // return [$image_names,count($files)];
     }
     public function lead_status(Request $request)
     {

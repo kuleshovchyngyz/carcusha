@@ -8,15 +8,15 @@ class ApiConnect
 {
     protected $webhook_url;
     const fields = [
-          'isInAvito.ru' => 'UF_CRM_1526732995',
-          'isInAuto.ru' => 'UF_CRM_1526733011',
+          'isInAvito.ru' => 'UF_CRM_1633362412350',
+          'isInAuto.ru' => 'UF_CRM_1633362418776',
         ];
     private $method, $data;
     public $result;
     public function __construct ($method,$data)
     {
         $this->method = $method;
-        $this->webhook_url = env('BITRIX_CARCUSHA_WEBHOOK_URL');
+        $this->webhook_url = "https://carcusha.bitrix24.ru/rest/1/wt8rsyj3jvc6rvum/";
         $this->data = $data;
         $this->execute();
 
