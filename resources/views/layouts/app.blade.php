@@ -27,6 +27,7 @@
         <div class="container">
             <div class="row align-items-center justify-content-between" style="padding: 0 14px;">
                 <div class="">
+                    Test
                     <a href="{{ route('home') }}">
                     <img src="{{ asset('img/logo.png') }}" alt="" class="logo">
                     <img src="{{ asset('img/logo-min.png') }}" alt="" class="logo-min">
