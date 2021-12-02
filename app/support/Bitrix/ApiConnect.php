@@ -16,7 +16,7 @@ class ApiConnect
     public function __construct ($method,$data)
     {
         $this->method = $method;
-        $this->webhook_url = "https://carcusha.bitrix24.ru/rest/1/wt8rsyj3jvc6rvum/";
+        $this->webhook_url = "https://carcusha.bitrix24.ru/rest/1/faad1wbn834vv030/";
         $this->data = $data;
         $this->execute();
 
