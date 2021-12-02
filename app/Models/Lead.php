@@ -21,7 +21,7 @@ class Lead extends Model
         'vendor_model',
         'vendor_year',
         'user_id',
-        'bitrix_user_id',
+        'bitrix_lead_id',
         'folder',
         'status_id',
         'checked',
@@ -38,6 +38,7 @@ class Lead extends Model
         if($this->status()->color=='#2D9CDB'){
             return 'statusBlue';
         }
+
         return '';
     }
     public function status()
@@ -59,7 +60,7 @@ class Lead extends Model
 
     }
     public function history(){
-        $n = Notification::where('lead_id',$this->attributes['bitrix_user_id'])->orderBy('created_at','DESC')->get();
+        $n = Notification::where('lead_id',$this->attributes['bitrix_lead_id'])->orderBy('created_at','DESC')->get();
         if($n->count()>1){
             return $n[1];
         }
@@ -69,16 +70,17 @@ class Lead extends Model
         return $n;
     }
     public function leadHistory(){
-        return Notification::where('lead_id',$this->attributes['bitrix_user_id'])->orderBy('created_at','ASC')->get();
+        return Notification::where('lead_id',$this->attributes['bitrix_lead_id'])->orderBy('created_at','ASC')->get();
     }
 
     public function is_on_pending(){
-        $reasons = Reason::wheretable_id($this->attributes['bitrix_user_id'])->wherereason_name('lead')->pluck('id');
+        $reasons = Reason::wheretable_id($this->attributes['bitrix_lead_id'])->wherereason_name('lead')->pluck('id');
         $bought = Payment::whereIn('reason_id',$reasons)->where('status_group','like','success%')->get();
         return ($bought->count()==1) ? true : false;
     }
     public function all_amount(){
-        $reasons = Reason::wheretable_id($this->attributes['bitrix_user_id'])->wherereason_name('lead')->get();
+//        dump($this->attributes['bitrix_lead_id']);
+        $reasons = Reason::wheretable_id($this->attributes['bitrix_lead_id'])->wherereason_name('lead')->get();
         $payment_amounts = [];
         $sum = 0;
         foreach ($reasons as $reason){
@@ -88,6 +90,7 @@ class Lead extends Model
                 $sum += $payment->amount;
             }
         }
+
         return $sum;
 
     }

@@ -13,6 +13,6 @@ class Reason extends Model
         return $this->belongsTo(Payment::class, 'id','reason');
     }
     public function lead(){
-        return Lead::where('bitrix_user_id',$this->attributes['table_id'])->first();
+        return Lead::where('bitrix_lead_id',$this->attributes['table_id'])->first();
     }
 }

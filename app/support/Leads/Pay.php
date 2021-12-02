@@ -17,7 +17,7 @@ class Pay
         $this->user = $this->lead->user;
         $this->user_who_referred = $this->user->user_who_referred();
         $this->new_status = $new_status;
-        $this->reasons =  Reason::where('reason_name','lead')->where('table_id', $this->lead->bitrix_user_id)->get();
+        $this->reasons =  Reason::where('reason_name','lead')->where('table_id', $this->lead->bitrix_lead_id)->get();
         $this->reasons_refer = Reason::where('reason_name','refer')->where('table_id', $this->user->id)->get();
         $this->amount = $this->new_status->user_statuses->amount($this->user);
 
@@ -150,14 +150,14 @@ class Pay
             return $reason->id;
         }
         $reason = Reason::create([
-            'table_id'=>$this->lead->bitrix_user_id,
+            'table_id'=>$this->lead->bitrix_lead_id,
             'reason_name'=> $reason
         ]);
         return $reason->id;
     }
     public function defroze_initial_lead_payment(){
         if($this->check_for_lead_payments_initial()){
-            $reasons =  Reason::where('reason_name','lead')->where('table_id', $this->lead->bitrix_user_id)->get();
+            $reasons =  Reason::where('reason_name','lead')->where('table_id', $this->lead->bitrix_lead_id)->get();
 
             foreach ($reasons as $reason){
                 $payment = \App\Models\Payment::where('reason_id',$reason->id)->first();
@@ -192,7 +192,7 @@ class Pay
     public function defroze_percentage_referral_payments_for_referred_user(){
         if($this->check_for_lead_payments_for_referred_user()){
 
-            $reasons =  Reason::where('reason_name','percent')->where('table_id', $this->lead->bitrix_user_id)->where('user_id_who_referred',$this->user->user_who_referred()->id)->get();
+            $reasons =  Reason::where('reason_name','percent')->where('table_id', $this->lead->bitrix_lead_id)->where('user_id_who_referred',$this->user->user_who_referred()->id)->get();
             foreach ($reasons as $reason){
                 $payment = \App\Models\Payment::where('reason_id',$reason->id)->first();
                 if($payment->amount==6){

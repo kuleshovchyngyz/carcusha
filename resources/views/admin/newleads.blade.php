@@ -21,7 +21,7 @@
                 @foreach($user->new_leads() as $lead)
                     @if($lead!=false)
                         <tr>
-                            <td>#{{ $lead->bitrix_user_id }}  @if($lead->checked()!==false)  {!! file_get_contents(asset('img/unchecked.svg')) !!} @endif</td>
+                            <td>#{{ $lead->bitrix_lead_id }}  @if($lead->checked()!==false)  {!! file_get_contents(asset('img/unchecked.svg')) !!} @endif</td>
                             <td>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</td>
                             <td>{{ $lead->phonenumber }}</td>
 

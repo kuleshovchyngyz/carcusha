@@ -8,10 +8,10 @@
         $leads = $user->leads;
         $sort = 'asc';
     }else if($sort == 'asc'){
-        $leads = $user->leads->sortBy('bitrix_user_id');
+        $leads = $user->leads->sortBy('bitrix_lead_id');
         $sort = 'desc';
     }else if($sort == 'desc'){
-        $leads = $user->leads->sortByDesc('bitrix_user_id');
+        $leads = $user->leads->sortByDesc('bitrix_lead_id');
         $sort = '';
     }
 
@@ -41,7 +41,7 @@
                 @foreach($leads as $lead)
                     @if($lead!=false)
                         <tr>
-                            <td>#{{ $lead->bitrix_user_id }}  @if($lead->checked())  <img src="{{ asset('img/unchecked.png') }}" alt=""> @endif</td>
+                            <td>#{{ $lead->bitrix_lead_id }}  @if($lead->checked())  <img src="{{ asset('img/unchecked.png') }}" alt=""> @endif</td>
                             <td>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</td>
                             <td>{{ $lead->phonenumber }}</td>
                             @if($lead->status()==false)

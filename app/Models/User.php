@@ -110,8 +110,11 @@ class User extends Authenticatable
         return $p->amount;
     }
     public function total_amount_from_referral(){
-        $p= PaymentAmount::where('reason_of_payment','refer')->first();
-        return $this->partners()->count()*$p->amount;
+        $sum = 0;
+        if($this->partners()!==null){
+            $sum = Payment::where('user_id',$this->attributes['id'])->where('status_group','refer')->pluck('amount')->sum();
+        }
+        return $sum;
     }
     public function payments(){
         return $this->hasMany(Payment::class);
@@ -155,7 +158,7 @@ class User extends Authenticatable
         $rs = Payment::where('user_id',$this->attributes['id'])->pluck('reason_id');
         $rlid = Reason::whereIn('id',$rs)->where('reason_name','lead')->pluck('table_id');
 
-        $lead_real = Lead::whereIn('bitrix_user_id',$rlid)->pluck('bitrix_user_id');
+        $lead_real = Lead::whereIn('bitrix_lead_id',$rlid)->pluck('bitrix_lead_id');
 
         $intersect = $rlid->intersect($lead_real);
 
@@ -173,22 +176,14 @@ class User extends Authenticatable
 
     public function pending(){
         $count = 0;
-        $pending = [20,2,30,31,9,23,32,33,36,'ASSIGNED','CANNOT_CONTACT'];
-        foreach ($this->leads as $lead){
-            if(in_array($lead->status_id,$pending)){
-                $count++;
-            }
-        }
+        $userStatuses = UserStatuses::where('amount','nothing')->orwhere('amount','initial')->pluck('id');
+        $count = $this->leads->whereIn('status_id',$userStatuses)->count();
         return $count;
     }
     public function rejected(){
         $count = 0;
-        $rejected = [1,26,13,4,10,29,24,34,25,35,37,'JUNK'];
-        foreach ($this->leads as $lead){
-            if(in_array($lead->status_id,$rejected)){
-                $count++;
-            }
-        }
+        $userStatuses = UserStatuses::where('amount','rejected')->pluck('id');
+        $count = $this->leads->whereIn('status_id',$userStatuses)->count();
         return $count;
     }
     public function paid(){

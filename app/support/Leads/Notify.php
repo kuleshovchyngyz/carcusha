@@ -49,14 +49,15 @@ class Notify
         if($this->new_status->user_statuses->notify == 1 && $notify ){
             $date = Carbon::now()->format('d.m.Y');
             $time = Carbon::now()->format('H:i:s');
-            if($this->history_of_lead){
+
+            if ($this->history_of_lead->count()>1){
                 $date = date('d.m.Y', strtotime($this->history_of_lead->first()->updated_at));
                 $time = date('H:i:s', strtotime($this->history_of_lead->first()->updated_at));
             }
-           // $str = $date.' в '.$time.'. Машина #'.$this->lead->bitrix_user_id.': ';
-            $str = 'Авто #'.$this->lead->bitrix_user_id.': ';
+           // $str = $date.' в '.$time.'. Машина #'.$this->lead->bitrix_lead_id.': ';
+            $str = 'Авто #'.$this->lead->bitrix_lead_id.': ';
             $this->message = $str.$this->message;
-//            $this->create_message_notification();
+            $this->create_message_notification();
         }
 
     }
@@ -65,7 +66,7 @@ class Notify
             'user_id'=>$this->user->id,
             'seen'=>false,
             'message'=>$this->message,
-            'lead_id'=>$this->lead->bitrix_user_id,
+            'lead_id'=>$this->lead->bitrix_lead_id,
         ]);
     }
     public function set_message(){
@@ -76,7 +77,7 @@ class Notify
     }
     public function create_notification(): bool
     {
-        $n = Notification::where('lead_id',$this->lead->bitrix_user_id)
+        $n = Notification::where('lead_id',$this->lead->bitrix_lead_id)
             ->orderby('updated_at','DESC')
             ->pluck('status')
             ->unique();
@@ -103,12 +104,12 @@ class Notify
         return false;
     }
     public function NotificationCreate(){
-//        Notification::create([
-//            'lead_id' => $this->lead->bitrix_user_id,
-//            'f_lead_id' => $this->lead->id,
-//            'event' => 'sdssd',
-//            'status' => $this->new_status->index
-//        ]);
+        Notification::create([
+            'lead_id' => $this->lead->bitrix_lead_id,
+            'f_lead_id' => $this->lead->id,
+            'event' => $this->new_status->color,
+            'status' => $this->new_status->index
+        ]);
     }
     public function checkForRejectedStatuses( $collection): bool
     {

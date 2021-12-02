@@ -19,14 +19,14 @@ class LeadBuilder extends UpdatingLeadStatus
     public $phone;
     public $folder;
     public $user_id;
-    public $bitrix_user_id;
+    public $bitrix_lead_id;
     public $status;
     public $from;
     private $reason_id;
     private $reason;
     private $payment;
 
-    public function __construct($vendor = '', $vendor_model = '', $vendor_year = '', $phone = '', $folder = '', $user_id = '', $bitrix_user_id = '', $from = 0)
+    public function __construct($vendor = '', $vendor_model = '', $vendor_year = '', $phone = '', $folder = '', $user_id = '', $bitrix_lead_id = '', $from = 0)
     {
         $this->vendor = $vendor;
         $this->vendor_model = $vendor_model;
@@ -36,10 +36,10 @@ class LeadBuilder extends UpdatingLeadStatus
         $this->user_id = $user_id;
         $this->user = User::find($user_id);
         $this->status = Status::where('name', 'Новый лид')->first();
-        $this->bitrix_user_id = $bitrix_user_id;
+        $this->bitrix_lead_id = $bitrix_lead_id;
         $this->from = $from;
         $this->create_lead();
-        parent::__construct($bitrix_user_id, 1);
+        parent::__construct($bitrix_lead_id, 1);
 
 
     }
@@ -53,7 +53,7 @@ class LeadBuilder extends UpdatingLeadStatus
             'phonenumber' => $this->phone,
             'folder' => $this->folder,
             'user_id' => $this->user_id,
-            'bitrix_user_id' => $this->bitrix_user_id,
+            'bitrix_lead_id' => $this->bitrix_lead_id,
             'status_id' => 1,
             'number' => $this->from
         ]);

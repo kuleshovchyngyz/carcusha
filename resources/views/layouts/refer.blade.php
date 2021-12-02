@@ -48,14 +48,18 @@
 
 
 @foreach( Auth::user()->payments_by_refer() as $payment)
+
                 <tr>
+                    @if($payment->referred_user()!==null)
                     <td>User {{ $payment->referred_user()->id }}</td>
-                    <td>{{ $payment->referred_user()->setting->number }}</td>
+                    <td >{{ $payment->referred_user()->setting->number }}</td>
                     <td>{{ $payment->referred_user()->leads->count() }}</td>
                     <td>{{ $payment->referred_user()->pending()  }}</td>
                     <td>{{ $payment->referred_user()->status() }}</td>
-
                     <td>{{ $payment->amount }} ₽</td>
+                    @else
+                        @dump($payment)
+                    @endif
                 </tr>
 
 @endforeach

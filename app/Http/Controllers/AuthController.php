@@ -231,14 +231,12 @@ class AuthController extends Controller
             $p = PaymentAmount::where('reason_of_payment','refer')->first();
 
 
-            $payment = Payment::create(['user_id'=>$source_user->id,'reason_id'=>$reason->id,'amount'=>$p->id,'status'=>false,'status_group'=>'refer']);
+            $payment = Payment::create(['user_id'=>$source_user->id,'reason_id'=>$reason->id,'amount'=>$p->amount,'status'=>false,'status_group'=>'refer']);
 
             $balance_referred = balance::where('user_id',$source_user->id)->first();
-            $balance_referred->balance = $balance_referred->balance +  $payment->payment_amount()->amount;
+            $balance_referred->balance = $balance_referred->balance +  $payment->amount;
             $balance_referred->save();
-
             PendingAmount::create(['payment_id'=>$payment->id,'status'=>0]);
-
         }
         Setting::create(['number'=>$user->number,'email'=>$user->email, 'user_id'=>$user->id]);
         return $user;

@@ -13,14 +13,11 @@ class UpdatingLeadStatus
 
     protected $new_status, $old_status, $user, $lead,  $statuses;
     public function __construct($id,$status){
-        $this->lead = Lead::where('bitrix_user_id',$id)->first();
+        $this->lead = Lead::where('bitrix_lead_id',$id)->first();
         $this->user = $this->lead->user;
         $this->checkForAds();
-
-
         $this->new_status = Status::find($status);
         $notify = new Notify($this->lead,$this->new_status);
-
         if($notify->notify()){
             new NewPayment($this->lead, $this->new_status);
 //            new Pay($this->lead, $this->new_status);
@@ -33,7 +30,7 @@ class UpdatingLeadStatus
         $str = Ad::first();
         $str = explode("\r\n", $str->name);
         $str = collect($str);
-        $dealData = new ApiConnect('crm.lead.get', ['id' =>  $this->lead->bitrix_user_id]);
+        $dealData = new ApiConnect('crm.lead.get', ['id' =>  $this->lead->bitrix_lead_id]);
         if($dealData->getResponse()===false){
             $this->lead->checked = 1;
             $this->lead->save();

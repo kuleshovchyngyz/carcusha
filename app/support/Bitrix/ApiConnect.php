@@ -23,7 +23,7 @@ class ApiConnect
     }
     public function execute ()
     {
-        $res = Http::timeout(5)->post($this->webhook_url.$this->method ,$this->data);
+        $res = Http::timeout(10)->post($this->webhook_url.$this->method ,$this->data);
         $this->result = json_decode($res->body(), 1);
     }
     public function getResponse(){

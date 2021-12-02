@@ -66,7 +66,7 @@ $leads = $data;
                         <div class="d-flex dd-body__item" style="width: 100%;">
                             <div class="table-time">{{ $history->created_at->format('d-m-Y H:i') }}</div>
                             <div class="table-i text-right">
-                                <span>{{ $history-> user_status()->name }}</span>
+                                <span class="{{color($history->event)}}"> {{ $history-> user_status()->name }} </span>
                                 @if($history-> user_status()->comments!='')
                                 <span class="info-icon tb-icon dd-btn">
                                                     <div class="dd-btn__info">
@@ -120,7 +120,7 @@ $leads = $data;
 {{--                @foreach($leads as $lead)--}}
 {{--                <tr>--}}
 {{--                    <td class="d-flex">{{ $lead->created_at->format('d-m-Y H:i') }}</td>--}}
-{{--                    <td class="snowflake">#{{ $lead->bitrix_user_id }}--}}
+{{--                    <td class="snowflake">#{{ $lead->bitrix_lead_id }}--}}
 {{--                        @if($lead->number==1)--}}
 {{--                            <img src="{{ asset('img/qr.png') }}" alt="">--}}
 {{--                        @endif--}}

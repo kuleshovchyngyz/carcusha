@@ -63,7 +63,7 @@ class AdminController extends Controller
         $user->save();
 
         if($user->UserPaymentAmounts->count()==0){
-            $arr = PaymentAmount::all()->pluck('amount','reason_of_payment');
+            $arr = PaymentAmount::pluck('amount','reason_of_payment');
             foreach ($arr as $key =>$item){
                 $data[] =  ['user_id'=>$request['user'], 'reason_of_payment'=> $key, 'amount'=>str_replace('%','',$item)];
             }

@@ -17,9 +17,8 @@ class Bitrix
     }
 
     public function connect($method, $data) {
-
         $this->http =  "https://carcusha.bitrix24.ru/rest/1/wt8rsyj3jvc6rvum/";
-        $res = Http::timeout(5)->post($this->http.$method ,$data);
+        $res = Http::timeout(10)->post($this->http.$method ,$data);
         $this->result =  json_decode($res->body(), 1);
         return $this->result;
     }

@@ -47,9 +47,11 @@ class Payment extends Model
         return User::find($this->attributes['user_id']);
     }
     public function referred_user(){
-        $r = Reason::find($this->attributes['reason_id']);
+
         //$refer = Refer::where('user_id',$this->attributes['user_id'])->first
-        return User::find($r->table_id);
+
+
+        return User::find($this->reasons->table_id);
     }
     public function pending_amount(){
         return $this->hasOne(PendingAmount::class);

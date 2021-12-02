@@ -56,16 +56,15 @@ public $user_id;
     public function query_for_payment(Request $request){
         $min_amount = PaymentAmount::where('reason_of_payment','MinAmountOfPayment')->first()->amount;
 
-        if( $request->payment_amount() > (Auth::user()->availableAmount())){
+        if( $request->payment_amount > (Auth::user()->availableAmount())){
             return redirect()->back()->with('error_message', [__('Сумма вывода не может быть больше чем на балансе')]);
-
         }
-        if($request->payment_amount() < $min_amount ){
+        if($request->payment_amount < $min_amount ){
             return redirect()->back()->with('error_message', [__('Меньше чем минимальная сумма('.$min_amount.' руб)'.' для вывода')]);
 
         }else{
             Setting::where('user_id',\auth()->user()->id)->update(['card_number'=>$request->bankcardnumber]);
-            Paid::create(['user_id'=>\auth()->user()->id,'status'=>'pending','amount'=>$request->payment_amount(),'cardnumber'=>$request->bankcardnumber]);
+            Paid::create(['user_id'=>\auth()->user()->id,'status'=>'pending','amount'=>$request->payment_amount,'cardnumber'=>$request->bankcardnumber]);
             return redirect()->back()->with('success_message', [__('Заказано')]);
         }
     }

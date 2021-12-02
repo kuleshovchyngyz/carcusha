@@ -1,7 +1,7 @@
 <?php
 function shortCodeParse($str,$arr = [],$value=[]){
-    $value = \App\Models\PaymentAmount::all()->pluck('amount','reason_of_payment');
-    $arr = \App\Models\PaymentAmount::all()->pluck('reason_of_payment');
+    $value = \App\Models\PaymentAmount::pluck('amount','reason_of_payment');
+    $arr = \App\Models\PaymentAmount::pluck('reason_of_payment');
     foreach ($arr as $item){
 
         $str = str_replace('['.$item.']',abs($value[$item]),$str);
@@ -44,4 +44,17 @@ function selectedColor($color,$current){
             break;
     }
     return $result;
+}
+
+function color($color){
+    if($color=='#EB5757'){
+        return 'statusRed';
+    }
+    if($color=='#27AE60'){
+        return 'statusGreen';
+    }
+    if($color=='#2D9CDB'){
+        return 'statusBlue';
+    }
+    return '';
 }

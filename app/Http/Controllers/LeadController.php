@@ -276,7 +276,7 @@ class LeadController extends Controller
     public function getstatuses(Request $request,Bitrix $bitrix){
         if($request->all()['event'] == "ONCRMLEADUPDATE")
         {
-            $l = Lead::where('bitrix_user_id',$request->all()['data']['FIELDS']['ID'])->count();
+            $l = Lead::where('bitrix_lead_id',$request->all()['data']['FIELDS']['ID'])->count();
             if($l>0){
                 \Storage::disk('local')->append('example.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
                 \Storage::disk('local')->append('sst.txt', $bitrix->getLeadStatus($request->all()['data']['FIELDS']['ID']));
@@ -320,12 +320,12 @@ class LeadController extends Controller
     }
     public function notifications($id,$status)
     {
-        $l = Lead::where('bitrix_user_id',$id)->first();
+        $l = Lead::where('bitrix_lead_id',$id)->first();
         $l->status_id = $status;
         $l->save();
 
         $user = User::find($l->user_id);
-        $l_ids = Lead::where('user_id', $l->user_id)->pluck('bitrix_user_id');
+        $l_ids = Lead::where('user_id', $l->user_id)->pluck('bitrix_lead_id');
         $statuses = Status::pluck('name','index');
         $hooks = Notification::whereIn('lead_id',$l_ids)
             ->orderby('updated_at','DESC')
@@ -335,7 +335,7 @@ class LeadController extends Controller
         foreach ($l_ids as $l_id){
             $seps = $hooks->where('lead_id',$l_id);
             //dd();
-            if($l->bitrix_user_id==$l_id){
+            if($l->bitrix_lead_id==$l_id){
                 if(count($seps)>1){
                     $str = "";
                     $changed = "";
@@ -658,7 +658,7 @@ class LeadController extends Controller
 
         Notification::truncate();
         foreach ($hooks as $hook){
-//            Lead::where('bitrix_user_id', $hook->lead_id)
+//            Lead::where('bitrix_lead_id', $hook->lead_id)
 //                ->update([
 //
 //                ]);
@@ -672,7 +672,7 @@ class LeadController extends Controller
         $leads = Lead::where('user_id',Auth::user()->id)->get();
 
         foreach ($leads as $lead){
-            $n = Notification::where('lead_id',$lead->bitrix_user_id)->get()->last();
+            $n = Notification::where('lead_id',$lead->bitrix_lead_id)->get()->last();
             $st = Status::where('index',$n->status)->first();
             //dd($st->id);
             Lead::where('id',$lead->id)

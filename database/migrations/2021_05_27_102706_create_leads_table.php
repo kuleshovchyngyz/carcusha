@@ -23,7 +23,7 @@ class CreateLeadsTable extends Migration
             $table->string('phonenumber');
             $table->string('folder');
             $table->integer('user_id');
-            $table->integer('bitrix_user_id')->nullable();
+            $table->integer('bitrix_lead_id')->nullable();
             $table->integer('status_id');
             $table->timestamps();
         });
