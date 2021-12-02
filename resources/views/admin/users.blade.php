@@ -20,7 +20,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($data['users']->sortByDesc('created_date') as $user)
+            @foreach($data['users']->sortByDesc('created_at') as $user)
                 @if(!$user->hasRole('admin'))
                 <tr>
                     <td><a href="{{ route('admin.user', $user->id) }}" class="main__table-link">User #{{ $user->id  }}<span class="mob-stsus text-success"></span></a></td>
