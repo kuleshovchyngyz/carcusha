@@ -70,11 +70,12 @@
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="filelist" id="filelist">
-
-                                        <li><i class="fa fa-times timesicon d-none" id="1"  aria-hidden="true"></i> <img src="" id="img1" class="d-none"></li>
-                                        <li><i class="fa fa-times timesicon d-none" id="2" aria-hidden="true"></i> <img src="" id="img2" class="d-none"></li>
-                                        <li> <i class="fa fa-times timesicon d-none" id="3" aria-hidden="true"></i><img src="" id="img3" class="d-none"></li>
-                                        <li> <i class="fa fa-times timesicon d-none"  id="4" aria-hidden="true"></i><img src="" id="img4" class="d-none"></li>
+                                        <div class="onlyFour">
+                                            <li><i class="fa fa-times timesicon d-none" id="1"  aria-hidden="true"></i> <img src="" id="img1" class="uploadImage d-none"></li>
+                                            <li><i class="fa fa-times timesicon d-none" id="2" aria-hidden="true"></i> <img src="" id="img2" class="uploadImage d-none"></li>
+                                            <li> <i class="fa fa-times timesicon d-none" id="3" aria-hidden="true"></i><img src="" id="img3" class="uploadImage d-none"></li>
+                                            <li> <i class="fa fa-times timesicon d-none"  id="4" aria-hidden="true"></i><img src="" id="img4" class="uploadImage d-none"></li>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>

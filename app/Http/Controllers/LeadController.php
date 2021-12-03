@@ -195,9 +195,17 @@ class LeadController extends Controller
                 $data_img[$key]->postname,base64_encode(file_get_contents($data_img[$key]->name))
             ]];
         }
-        $array['TITLE'] = "Тестовое";
+
+
         $v = isset($vendor)==true ? $vendor :"";
         $car = isset($model)==true ? $model :"";
+
+        if(env('BITRIX_HEADER')=='test'){
+            $array['TITLE'] = "Тестовое";
+        }
+        if(env('BITRIX_HEADER')=='real'){
+            $array['TITLE'] =  $v.' '.$car;
+        }
 
         $array['UF_CRM_1633361973449'] = $v.' '.$car; //real   "ID" => "312"
 
