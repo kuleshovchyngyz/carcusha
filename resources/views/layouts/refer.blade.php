@@ -13,8 +13,11 @@
             </div>
             <div class="col-md-6">
                 <div class="main__setting-item">
-                    <div>Код приглашения:
+                    <div>Промокод:<i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Партнеры, которые введут этот промокод, будут считаться привлеченными вами"></i>
                         <div class="invitation-code">{{ Auth::user()->invitation_code }}</div>
+                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                            Tooltip on top
+                        </button>
                     </div>
                 </div>
             </div>
