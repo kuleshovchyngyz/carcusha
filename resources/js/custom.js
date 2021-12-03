@@ -8,6 +8,10 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
+
+
+
+
 $(document).ready(function(){
     var element = document.getElementById('phone');
     var maskOptions = {
