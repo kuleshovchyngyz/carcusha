@@ -3,7 +3,14 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="636419db-603d-418e-9a8a-a660198bf66c" name="PartnersOnServer">
-        <fileTransfer rootFolder="/var/www/www-root/data/www/partners/" accessType="SFTP" host="62.109.0.102" port="22" sshConfigId="35bf7b97-0ac6-41d7-affc-ffff8ba0c959" sshConfig="root@62.109.0.102:22 password">
+        <fileTransfer rootFolder="/var/www/www-root/data/www/partner.kuleshov.studio" accessType="SFTP" host="62.109.0.102" port="22" sshConfigId="35bf7b97-0ac6-41d7-affc-ffff8ba0c959" sshConfig="root@62.109.0.102:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="2cc9f36f-4e4a-4fd1-8d26-644d8b395abd" name="carcusha">
+        <fileTransfer rootFolder="/var/www/www-root/data/www/partner.kuleshov.studio" accessType="SFTP" host="62.109.0.102" port="22" sshConfigId="35bf7b97-0ac6-41d7-affc-ffff8ba0c959" sshConfig="root@62.109.0.102:22 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

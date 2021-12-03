@@ -58,30 +58,42 @@
                     <form method="POST" id="authentication" action="{{ route('login') }}" class="text-center">
                         @csrf
                         <div class="type-field d-flex">
-                            <span class="phone">Телефон</span>
-                            <label class="type-field-select mail">
+                            <span class="phone @if(null !==old('number'))  active @endif">Телефон</span>
+                            <label class="type-field-select @if(null ===old('number')) mail @else phone @endif">
                                 <input type="checkbox" name="type-field" id="type_field">
                             </label>
-                            <span class="mail active">E-Mail</span>
+                            <span class="mail @if(null ===old('number')) active @endif">E-Mail</span>
                         </div>
+                        @if($login)
+                            @error('email')
+                            <span class="invalid-feedbackerror" role="alert">
+                                      <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        @endif
+                        @if($login)
+                            @error('number')
+                            <span class="invalid-feedbackerror" role="alert">
+                                      <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        @endif
                         <div class="pos-r">
+                            <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail @if(null !==old('number')) disabled @endif
                             @if($login)
-                                @error('email')
-                                <span class="invalid-feedbackerror" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            @endif
-                            <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail
-                                @if($login)
-                                     @error('email') is-invalid @enderror
-                                @endif " value="{{ ViewService::init()->view('email') }}" required autocomplete="email">
+                            @error('email') is-invalid @enderror
+                            @endif " value="{{ old('email') }}" required autocomplete="email" @if(null !==old('number')) disabled="disabled" @endif>
 
-                            <input type="tel" placeholder="Телефон" id="number" name="number" class="form-control type-phone disabled" disabled="disabled">
+
+                            <input type="tel" placeholder="Телефон" id="numberRegister" name="number" class="form-control type-phone @if(null ===old('number')) disabled @endif" @if(null ===old('number')) disabled="disabled" @endif
+                            @if($login)
+                            @error('number') is-invalid @enderror
+                                   @endif  value="{{ old('number') }}" required autocomplete="email">
                             <span class="form-subbtitle disabled">В формате +7</span>
                         </div>
                         <div class="type-pass">
-                            <input id="password" type="password" placeholder="Пароль" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                            <input id="password" type="password" placeholder="Пароль"  class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="current-password">
                             <label><input type="checkbox" class="password-checkbox"></label>
                         </div>
                         @if (Route::has('password.request'))
