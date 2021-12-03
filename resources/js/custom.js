@@ -4,6 +4,9 @@ import CreditCardInputMask from "credit-card-input-mask";
 import IMask from 'imask';
 
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 
 $(document).ready(function(){
     var element = document.getElementById('phone');

@@ -2306,6 +2306,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
 $(document).ready(function () {
   var element = document.getElementById('phone');
   var maskOptions = {
