@@ -26,6 +26,7 @@ class UpdatingLeadStatus
 
 
 
+
     public function checkForAds(){
         $str = Ad::first();
         $str = explode("\r\n", $str->name);

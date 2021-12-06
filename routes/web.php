@@ -33,7 +33,7 @@ Route::get('/send', [App\Http\Controllers\LeadController::class, 'send']);
 Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 
 Route::get('/test', function (){
-    new UpdatingLeadStatus('129', 15);
+    new UpdatingLeadStatus('141', 15);
 });
 Route::get('/delete', function (){
     \App\Models\PendingAmount::latest()->first()->delete();

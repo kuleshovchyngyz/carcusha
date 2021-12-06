@@ -13,6 +13,7 @@ use App\Models\User;
 
 class LeadBuilder extends UpdatingLeadStatus
 {
+
     public $vendor;
     public $vendor_model;
     public $vendor_year;

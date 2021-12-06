@@ -12,6 +12,7 @@ class NewPayment
     protected $new_status,  $user, $lead, $amount, $reasons, $percent, $typeOfStatus, $user_who_referred,$balance,$continue ;
     public function __construct($lead,$new_status)
     {
+
         echo 'in construct';
         $this->continue = true;
         $this->lead = $lead;
