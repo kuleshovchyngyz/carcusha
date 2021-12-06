@@ -33,7 +33,7 @@ Route::get('/send', [App\Http\Controllers\LeadController::class, 'send']);
 Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 
 Route::get('/test', function (){
-    new UpdatingLeadStatus('141', 15);
+    new UpdatingLeadStatus(env('LEAD_BITRIX_ID'), env('LEAD_STATUS'));
 });
 Route::get('/delete', function (){
     \App\Models\PendingAmount::latest()->first()->delete();
