@@ -51,7 +51,7 @@ class ViewData
                 }
                 break;
             case 'isEmailConfirmed':
-                $this->response = ($this->model->email_verified_at !== null && $this->model->email ==$this->model->setting->email) ?
+                $this->response = ($this->model->email_verified_at !== null && $this->model->email == $this->model->setting->email) ?
                     'Подтверждён' :
                     "<a class='red-link' href='#' onclick='submitEmail()' >Подтвердить</a>";
                 if(old('email')){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Clients\Bitrix;
 use App\Models\Cars;
+use App\Models\Vendors;
 use App\support\Leads\LeadBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -41,19 +42,16 @@ class ApplicationController extends Controller
                 1
             );
         }
+        $path = public_path('uploads/'.$folder_name);
+        \File::deleteDirectory($path);
         return redirect()->route('home');
     }
     public function qrform(){
 
-        $result = Cars::select('*')
-            ->where('vendor','!=','')
-            ->orderBy('vendor','ASC')
-            ->get()
-            ->groupBy('vendor');
-
+        $results = Vendors::orderBy('name','ASC')->get();
         $buffer = '<option value="">Марка авто</option>';
-        foreach($result as $car_vendor => $car_vendor_data) {
-            $car_vendor = stripslashes($car_vendor);
+        foreach($results as $result) {
+            $car_vendor = stripslashes($result->name);
             $buffer .= '<option value="'.$car_vendor.'">'.$car_vendor.'</option>';
         }
         //dd($buffer);
@@ -72,7 +70,6 @@ class ApplicationController extends Controller
         }
         return $buffer;
     }
-
     public function addDeal($vendor, $model,$year,$img,$phone,$folder_name) {
         $years = [
             "2005" => "987",
@@ -80,21 +77,22 @@ class ApplicationController extends Controller
             "2007" => "759",
             "2008" => "330",
             "2009" => "328",
-            "2010" => "326",
-            "2011" => "324",
-            "2012" => "322",
-            "2013" => "320",
-            "2014" => "318",
-            "2015" => "304",
-            "2016" => "316",
-            "2017" => "302",
-            "2018" => "314",
-            "2019" => "300",
-            "2020" => "312"
+            "2010" => "67",
+            "2011" => "65",
+            "2012" => "63",
+            "2013" => "61",
+            "2014" => "59",
+            "2015" => "57",
+            "2016" => "55",
+            "2017" => "53",
+            "2018" => "51",
+            "2019" => "49",
+            "2020" => "47",
+            "2021" => "45"
         ];
         $data_img=[];
         //$crm_pics_field_name = ['UF_CRM_1627988390','UF_CRM_1625740903','UF_CRM_1627988418','UF_CRM_1627988441'];//test
-        $crm_pics_field_name = ['UF_CRM_1526660196','UF_CRM_1541502441','UF_CRM_1541502472','UF_CRM_1541502488'];//real
+        $crm_pics_field_name = ['UF_CRM_1633362445295','UF_CRM_1633362456303','UF_CRM_1633362468187','UF_CRM_1633362478787','UF_CRM_1633362488670','UF_CRM_1637847699599','UF_CRM_1637847730399','UF_CRM_1637847742893','UF_CRM_1637847753241','UF_CRM_1637847764708'];//real
         foreach ($img as $key => $i){
             $data_img[] =
                 curl_file_create(public_path('uploads').'/'.$folder_name.'/'.$img[$key],'image/*',$img[$key]);
@@ -105,25 +103,36 @@ class ApplicationController extends Controller
                 $data_img[$key]->postname,base64_encode(file_get_contents($data_img[$key]->name))
             ]];
         }
-        $array['TITLE'] = "Тестовое";
+
+
         $v = isset($vendor)==true ? $vendor :"";
         $car = isset($model)==true ? $model :"";
 
-        $array['UF_CRM_1526660063'] = $v.' '.$car; //real   "ID" => "312"
+        if(env('BITRIX_HEADER')=='test'){
+            $array['TITLE'] = "Тестовое";
+        }
+        if(env('BITRIX_HEADER')=='real'){
+            $array['TITLE'] =  $v.' '.$car;
+        }
 
-        $array['UF_CRM_1526659328'] =  isset($year)==true ? [$years[$year]] :""; //real
+        $array['UF_CRM_1633361973449'] = $v.' '.$car; //real   "ID" => "312"
+
+        $array['UF_CRM_1633362091686'] =  isset($year)==true ? [$years[$year]] :""; //real
         // $array['UF_CRM_1625740869'] = $v.' '.$car;
 
         // $array['UF_CRM_1625740924'] = isset($year)==true ? $year :"";
-        $array['SOURCE_ID'] = "5";
+        $array['SOURCE_ID'] = "1";
         $array['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
-        $b = new Bitrix();
-        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.add', [
-            'fields' => $array,
-            'params' => [
-                'REGISTER_SONET_EVENT' => 'Y'
-            ],
-        ]);
+
+        $bitrix = new Bitrix();
+        $dealData = $bitrix->addLeadAdd($array);
+//        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.add', [
+//            'fields' => $array,
+//            'params' => [
+//                'REGISTER_SONET_EVENT' => 'Y'
+//            ],
+//        ]);
+        // dd($dealData);
         return $dealData;
     }
 

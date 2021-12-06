@@ -225,23 +225,21 @@ class AuthController extends Controller
         $user->assignRole('user');
         $balance = balance::create(['user_id'=>$user->id,'balance'=>0]);
         if($refer){
-            $reason = Reason::create(['table_id'=>$user->id,'reason_name'=>'refer','user_id_who_referred'=>$source_user->id]);
+//            $reason = Reason::create(['table_id'=>$user->id,'reason_name'=>'refer','user_id_who_referred'=>$source_user->id]);
             Refer::create(['user_id'=>$source_user->id,'referred_user_id'=>$user->id]);
 
             $p = PaymentAmount::where('reason_of_payment','refer')->first();
 
 
-            $payment = Payment::create(['user_id'=>$source_user->id,'reason_id'=>$reason->id,'amount'=>$p->amount,'status'=>false,'status_group'=>'refer']);
+//            $payment = Payment::create(['user_id'=>$source_user->id,'reason_id'=>$reason->id,'amount'=>$p->amount,'status'=>false,'status_group'=>'refer']);
 
-            $balance_referred = balance::where('user_id',$source_user->id)->first();
-            $balance_referred->balance = $balance_referred->balance +  $payment->amount;
-            $balance_referred->save();
-            PendingAmount::create(['payment_id'=>$payment->id,'status'=>0]);
+//            $balance_referred = balance::where('user_id',$source_user->id)->first();
+//            $balance_referred->balance = $balance_referred->balance +  $payment->amount;
+//            $balance_referred->save();
+//            PendingAmount::create(['payment_id'=>$payment->id,'status'=>0]);
         }
         Setting::create(['number'=>$user->number,'email'=>$user->email, 'user_id'=>$user->id]);
         return $user;
-
-
     }
     protected function generateinvitation_code() {
         $users = User::count()==0 ? 1 : User::count();
