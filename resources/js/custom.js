@@ -9,9 +9,6 @@ $(function () {
 })
 
 
-
-
-
 $(document).ready(function(){
     var element = document.getElementById('phone');
     var maskOptions = {
@@ -19,6 +16,7 @@ $(document).ready(function(){
     };
     var mask = IMask(element, maskOptions);
 })
+
 
 $(document).ready(function(){
     var element = document.getElementById('number');
