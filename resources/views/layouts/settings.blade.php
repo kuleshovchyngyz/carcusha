@@ -45,23 +45,23 @@
                 </div>
             </div>
         </div>
-        <div class="main__setting-row">
-            <div class="row">
-                <h3 class="main__setting-title w-100">Настройки уведомлений</h3>
-                <div class="col-md-2 col-6">
-                    <div>
-                        <input type="checkbox" name="number_notification" id="number_notification" @if( Auth::user()->setting->number_notification) checked @endif>
-                        По телефону
-                    </div>
-                </div>
-                <div class="col-md-2 col-6">
-                    <div>
-                        <input type="checkbox" name="email_notification" id="email_notification" @if( Auth::user()->setting->email_notification) checked @endif>
-                        По почте
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--        <div class="main__setting-row">--}}
+{{--            <div class="row">--}}
+{{--                <h3 class="main__setting-title w-100">Настройки уведомлений</h3>--}}
+{{--                <div class="col-md-2 col-6">--}}
+{{--                    <div>--}}
+{{--                        <input type="checkbox" name="number_notification" id="number_notification" @if( Auth::user()->setting->number_notification) checked @endif>--}}
+{{--                        По телефону--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-2 col-6">--}}
+{{--                    <div>--}}
+{{--                        <input type="checkbox" name="email_notification" id="email_notification" @if( Auth::user()->setting->email_notification) checked @endif>--}}
+{{--                        По почте--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="main__setting-row">
             <div class="row">
                 <h3 class="main__setting-title w-100">Настройки оплаты</h3>
