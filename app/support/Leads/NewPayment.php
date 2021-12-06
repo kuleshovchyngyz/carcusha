@@ -31,7 +31,7 @@ class NewPayment
         $this->payForUser()
             ->payForReferredUser()
             ->defroze_initial_lead_payment()
-            ->defrozePaymentsOfUserWhoReferred()
+            //->defrozePaymentsOfUserWhoReferred()
             ->changeBalance()
         ;
     }
@@ -45,6 +45,7 @@ class NewPayment
             $this->user_who_referred->payments_by_refer();
             $reasonIds =  Reason::where('reason_name','refer')->where('table_id', $this->user->id)->where('user_id_who_referred',$this->user_who_referred->id)->pluck('id');
             $payment = Payment::whereIn('reason_id',$reasonIds)->where('user_id',$this->user_who_referred->id)->where('status_group','refer')->first();
+
             $pending_amount = $payment->pending_amount;
             $pending_amount->status = 1;
             $pending_amount->save();
