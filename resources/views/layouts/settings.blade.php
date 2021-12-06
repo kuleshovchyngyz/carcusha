@@ -117,13 +117,17 @@
         </div>
     </div>
         <div class="text-center">
-            <button class="btn btn-red" type="submit">СОХРАНИТЬ</button>
+            <button class='btn btn-red' href='#' onclick='submitSettings()' >СОХРАНИТЬ</button>
         </div>
 
     </form>
 </div>
 </div>
 <script>
+    function submitSettings() {
+        $( ".main__setting" ).append( $( "<input type='hidden'  name = 'submitSettings'>" ) );
+        document.getElementById("settings").submit();
+    }
     function submitEmail() {
         $( ".main__setting" ).append( $( "<input type='hidden'  name = 'confirmEmail'>" ) );
         document.getElementById("settings").submit();

@@ -44,7 +44,8 @@ class AuthController extends Controller
         return $this->RegisterWithVerificationCode($request,'reset');
     }
     public function confirmNumber(Request $request){
-        $request->request->add(['confirmEmail' => true]);
+
+        $request->request->add(['confirmPhone' => true]);
         $validated = Validator::make($request->all(), [
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
         ], [], []);
@@ -52,12 +53,17 @@ class AuthController extends Controller
             return view('auth.createPasswordEmail',$request->input())->withInput($request->input())->withErrors($validated);
         }
         $user = auth()->user();
+        $user->setting->number = $request->number;
+        $user->setting->save();
+
         $user->phone_verified_at = Carbon::now();
         $user->number = $user->setting->number;
         $user->save();
+        $request->request->remove('confirmPhone');
         return redirect()->route('settings');
     }
     public function confirmEmail(Request $request){
+
         $request->request->add(['confirmEmail' => true]);
         $validated = Validator::make($request->all(), [
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
@@ -65,11 +71,16 @@ class AuthController extends Controller
         if ($validated->fails()) {
             return view('auth.createPasswordEmail',$request->input())->withInput($request->input())->withErrors($validated);
         }
+
        $user = auth()->user();
+       $user->setting->email = $request->email;
+       $user->setting->save();
+
        $user->email_verified_at = Carbon::now();
        $user->email = $user->setting->email;
        $user->save();
         //$request->flashExcept('code');
+        $request->request->remove('confirmEmail');
        return redirect()->route('settings');
     }
     public function RegisterWithVerificationCode(Request $request, $type = '')
@@ -228,7 +239,7 @@ class AuthController extends Controller
 //            $reason = Reason::create(['table_id'=>$user->id,'reason_name'=>'refer','user_id_who_referred'=>$source_user->id]);
             Refer::create(['user_id'=>$source_user->id,'referred_user_id'=>$user->id]);
 
-            $p = PaymentAmount::where('reason_of_payment','refer')->first();
+//            $p = PaymentAmount::where('reason_of_payment','refer')->first();
 
 
 //            $payment = Payment::create(['user_id'=>$source_user->id,'reason_id'=>$reason->id,'amount'=>$p->amount,'status'=>false,'status_group'=>'refer']);

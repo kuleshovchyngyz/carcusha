@@ -47,7 +47,6 @@ class ApplicationController extends Controller
         return redirect()->route('home');
     }
     public function qrform(){
-
         $results = Vendors::orderBy('name','ASC')->get();
         $buffer = '<option value="">Марка авто</option>';
         foreach($results as $result) {

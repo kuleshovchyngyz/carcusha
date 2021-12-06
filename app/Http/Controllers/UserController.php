@@ -94,7 +94,7 @@ public $user_id;
             ])->withInput($request->input())->withErrors($validated);
         }
 
-        if($request->has('confirmEmail')){
+        if($request->has('confirmEmail') && !$request->has('submitSettings')){
             $request->request->add(['confirmEmail' => true]);
                      //$request->validate(['email' => 'required|email_format|is_email_in_database|max:255']);
             $validated = Validator::make($request->all(), [
@@ -119,7 +119,7 @@ public $user_id;
 
 
 
-        }else if($request->has('confirmPhone')){
+        }else if($request->has('confirmPhone') && !$request->has('submitSettings')){
             $request->request->add(['confirmPhone' => true]);
             $validated = Validator::make($request->all(), [
                 'number' => ['phone_number','confirm_email_settings'],
