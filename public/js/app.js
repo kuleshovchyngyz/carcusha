@@ -2309,6 +2309,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
+
+function submitRegisterForm(btn) {// if($('.checkbox-agree').is(':checked')){
+  //     btn.form.submit();
+  //     btn.disabled = true;
+  // }
+  // disable the button
+  // submit the form
+  //
+}
+
+$(document).ready(function () {
+  $(".checkbox-agree").on('change', function () {
+    if ($('.checkbox-agree').is(':checked')) {
+      $('.submitRegister').disabled = true;
+    }
+
+    if (!$('.checkbox-agree').is(':checked')) {
+      $('.submitRegister').disabled = false;
+    }
+  });
+});
 $(document).ready(function () {
   var element = document.getElementById('phone');
   var maskOptions = {

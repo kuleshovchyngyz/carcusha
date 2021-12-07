@@ -51,6 +51,11 @@
 
             @yield('content')
 
-
+    <footer class="footer">
+        <div class="container d-flex">
+            <img src="{{ asset('img//logo-white.png') }}" alt="" class="footer__logo">
+            <a href="{{ route('public_offer') }}" class="footer__link ml-auto">Публичная оферта</a>
+        </div>
+    </footer>
 </body>
 </html>

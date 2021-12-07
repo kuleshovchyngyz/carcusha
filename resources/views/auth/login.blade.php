@@ -144,12 +144,16 @@
                             <span class="form-subbtitle disabled">В формате +7</span>
                         </div>
                         <input type="text" name="invitation_code" class="form-control" value="{{ isset($_GET['ref']) ? $_GET['ref'] : ''}}" id="invitation-inpup" placeholder="Промокод (если есть)">
-                        <button type="submit" class="btn btn-red">РЕГИСТРАЦИЯ</button>
+                        <button  class="btn btn-red submitRegister"  onclick="submitRegisterForm(this);">РЕГИСТРАЦИЯ</button>
+                        <input type="checkbox" class="checkbox-agree"> Соглашаюсь с <a href="{{ route('public_offer') }}" class="red-link">Публичной офертой</a>
                     </form>
 
                 </div>
             </div>
         </div>
     </div>
+        <script>
+
+        </script>
     @endguest
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Clients\Bitrix;
 use App\Models\Cars;
+use App\Models\PublicOffer;
 use App\Models\Vendors;
 use App\support\Leads\LeadBuilder;
 use Illuminate\Http\Request;
@@ -133,6 +134,19 @@ class ApplicationController extends Controller
 //        ]);
         // dd($dealData);
         return $dealData;
+    }
+    public function publicOffer(){
+        $all = PublicOffer::all();
+        $text = '';
+        $title = '';
+        if($all->count()==2){
+            $text = $all[1]->text;
+            $title = $all[0]->text;
+        }
+
+        return view('layouts.publicOffer', [
+            'data'=> [$title,$text],
+          ]);
     }
 
     function sendDataToBitrixGuzzle($method, $data) {

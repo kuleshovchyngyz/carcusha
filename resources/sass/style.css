@@ -247,6 +247,7 @@ body {
     font-size: 32px;
     color: var(--color-red);
     margin-bottom: 20px;
+    font-family: Open Sans;
 }
 
 .main__table {
@@ -534,10 +535,23 @@ td:hover .main__table-dd {
     margin: 10px 15px;
     margin-bottom: 30px;
 }
-
+.publicOffer h1, h2, h3{
+    margin: 20px !important;
+    color: var(--color-red);
+}
 .setting-textar {
     width: 100%;
     min-height: 140px;
+    resize: none;
+    background: #F9F9F9;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+
+.setting-textarea-admin {
+    width: 100%;
+    min-height: 340px;
     resize: none;
     background: #F9F9F9;
     border: 1px solid #ced4da;

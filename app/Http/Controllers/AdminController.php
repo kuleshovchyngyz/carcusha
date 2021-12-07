@@ -6,6 +6,7 @@ use App\Models\Ad;
 use App\Models\Paid;
 use App\Models\Payment;
 use App\Models\PaymentAmount;
+use App\Models\PublicOffer;
 use App\Models\Question;
 use App\Models\Status;
 use App\Models\User;
@@ -134,9 +135,29 @@ class AdminController extends Controller
             'data' => ['question'=>$question,'payment'=>$payment]
         ]);
     }
+    public function publicOffers()
+    {
+       $all = PublicOffer::all();
+       $text = '';
+       $title = '';
+       if($all->count()==2){
+            $text = $all[1]->text;
+            $title = $all[0]->text;
+       }
+        return view('admin.home',[
+            'name' => 'publicOffer',
+            'data' => [$title,$text]
+        ]);
+    }
+    public function storePublicOffers(Request $request)
+    {
+        PublicOffer::truncate();
+        PublicOffer::create(['text'=>$request->title]);
+        PublicOffer::create(['text'=>$request->text]);
+        return redirect()->back()->with('success_message', ['Сохранено']);
+    }
     public function ads()
     {
-
         return view('admin.home',[
             'name' => 'ads',
             'data' => ''

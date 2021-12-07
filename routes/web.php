@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/public-offer', [App\Http\Controllers\ApplicationController::class, 'publicOffer'])->name('public_offer');
 Route::get('/car_application', [App\Http\Controllers\ApplicationController::class, 'qrform'])->name('car_application');
 Route::post('/car_application/store', [App\Http\Controllers\ApplicationController::class, 'store'])->name('car.store');
 Route::get('/calculate_available_amount', [App\Http\Controllers\AdminController::class, 'calculate_available_amount']);
@@ -114,6 +115,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::get('user/report/{user}', [App\Http\Controllers\AdminController::class, 'report'])->name('admin.user.report');
     Route::get('/settings', [App\Http\Controllers\AdminController::class, 'settings'])->name('admin.settings');
     Route::get('/ads', [App\Http\Controllers\AdminController::class, 'ads'])->name('admin.ads');
+    Route::get('/public-offers', [App\Http\Controllers\AdminController::class, 'publicOffers'])->name('admin.offer');
+    Route::post('/public-offers-store', [App\Http\Controllers\AdminController::class, 'storePublicOffers'])->name('admin.store.offers');
     Route::post('/ads/store', [App\Http\Controllers\AdminController::class, 'storeAds'])->name('admin.store.ads');
     Route::get('/payment_settings', [App\Http\Controllers\AdminController::class, 'payments_settings'])->name('admin.payments_settings');
     Route::get('/payments', [App\Http\Controllers\AdminController::class, 'payments'])->name('admin.payments');

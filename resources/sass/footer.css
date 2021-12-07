@@ -1,0 +1,23 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.footer{
+    background: #A4AFC1;
+    padding: 15px 0;
+    margin-top: auto;
+}
+
+.footer__link{
+    color: #fff;
+    transition: all 0.3s;
+}
+
+.footer__link:hover{
+    color: #fff;
+    text-decoration: none;
+    opacity: 0.6;
+}
+
