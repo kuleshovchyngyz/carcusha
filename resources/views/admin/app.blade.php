@@ -59,7 +59,7 @@
                                     </a>
                                     <a class="btn header__btn color-red" href="{{ route('admin.ads') }}">        Объявления
                                     </a>
-                                    <a class="btn header__btn color-red" href="{{ route('admin.offer') }}">        Публичная оферта
+                                    <a class="btn header__btn color-red" href="{{ route('admin.offer') }}">Публичная оферта
                                     </a>
                                 </div>
                             </div>

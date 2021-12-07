@@ -85,6 +85,8 @@ class AuthController extends Controller
     }
     public function RegisterWithVerificationCode(Request $request, $type = '')
     {
+
+
         $code = new Code();
         $sms = new SmsClient();
 
@@ -103,7 +105,7 @@ class AuthController extends Controller
         if($this->fieldType=='number'){
             ($type=='reset') ?
                 $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
-                $request->validate(['number' => 'required|unique:users|phone_number']);
+                $request->validate(['number' => 'not_empty|unique:users|phone_number','invitation_code'=>'is_promocode_in_database']);
             $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
             AuthConfirmation::updateOrCreate( $param);
            // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
@@ -111,7 +113,7 @@ class AuthController extends Controller
         }else {
             ($type=='reset') ?
                 $request->validate(['email' => 'required|email_format|is_email_in_database|max:255']) :
-                $request->validate(['email' => 'required|email_format|unique:users|max:255']);
+                $request->validate(['email' => 'not_empty|email_format|unique:users|max:255','invitation_code'=>'is_promocode_in_database']);
             AuthConfirmation::updateOrCreate( $param);
             Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте CARcusha.shop Код:".$this->code)
                 ->markdown('mail.code', ['code' => $this->code,

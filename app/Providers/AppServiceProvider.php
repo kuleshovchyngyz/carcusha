@@ -45,10 +45,27 @@ class AppServiceProvider extends ServiceProvider
                 return $value;
             }
 
+
         });
         Validator::extend('is_number_in_database', function($attribute, $value, $parameters)
         {
             if (User::where('number', '=', $value)->count() > 0) {
+                return $value;
+            }
+
+        });
+        Validator::extend('is_promocode_in_database', function($attribute, $value, $parameters)
+        {
+//           return $value;
+
+            if (User::where('invitation_code', '=', $value)->count() > 0 ) {
+                return $value;
+            }
+
+        });
+        Validator::extend('not_empty', function($attribute, $value, $parameters)
+        {
+            if ( $value != '') {
                 return $value;
             }
 

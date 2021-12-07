@@ -52,12 +52,15 @@ body {
 .text-warning {
     color: var(--color-yellow) !important;
 }
+#invitation-inpup{
+    margin-bottom: 5px !important;
+}
 
 .btn-red {
     max-width: 320px;
     width: 100%;
-    background: #E3473F;
-    color: #fff;
+    background: #E3473F !important;
+    color: #fff !important;
     text-transform: uppercase;
     font-size: 22px;
     padding: 5px 10px;

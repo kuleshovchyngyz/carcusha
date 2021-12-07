@@ -116,20 +116,7 @@
                             <span class="mail @if(null ===old('number')) active @endif">E-Mail</span>
 
                         </div>
-                        @if($register)
-                            @error('email')
-                            <span class="invalid-feedbackerror" role="alert">
-                                      <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        @endif
-                        @if($register)
-                            @error('number')
-                            <span class="invalid-feedbackerror" role="alert">
-                                      <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        @endif
+
                         <div class="pos-r">
                             <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail @if(null !==old('number')) disabled @endif
                             @if($register)
@@ -141,19 +128,44 @@
                             @if($register)
                                    @error('number') is-invalid @enderror
                             @endif  value="{{ old('number') }}" required autocomplete="email">
+                            @if($register)
+                                @error('email')
+                                <span class="invalid-feedbackerror" role="alert">
+                                      <strong>{{ $message }}</strong>
+                            </span>
+                                @enderror
+                            @endif
+                            @if($register)
+                                @error('number')
+                                <span class="invalid-feedbackerror" role="alert">
+                                      <strong>{{ $message }}</strong>
+                            </span>
+                                @enderror
+                            @endif
                             <span class="form-subbtitle disabled">В формате +7</span>
                         </div>
-                        <input type="text" name="invitation_code" class="form-control" value="{{ isset($_GET['ref']) ? $_GET['ref'] : ''}}" id="invitation-inpup" placeholder="Промокод (если есть)">
-                        <button  class="btn btn-red submitRegister"  onclick="submitRegisterForm(this);">РЕГИСТРАЦИЯ</button>
-                        <input type="checkbox" class="checkbox-agree"> Соглашаюсь с <a href="{{ route('public_offer') }}" class="red-link">Публичной офертой</a>
+                        <div class="invitation-code">
+                             <input type="text" name="invitation_code" class="form-control" value="{{ isset($_GET['ref']) ? $_GET['ref'] :  old('invitation_code') }}" id="invitation-inpup" placeholder="Промокод (если есть)"  @error('email') is-invalid @enderror>
+                        </div>
+
+                            <p class="error text-danger d-none">Такого промокода не существует</p>
+
+{{--                        @error('invitation_code')--}}
+{{--                        <span class="invalid-feedbackerror" role="alert">--}}
+{{--                                      <strong>{{ $message }}</strong>--}}
+{{--                            </span>--}}
+{{--                        @enderror--}}
+
+                        <input type="button" value="РЕГИСТРАЦИЯ" class="btn btn-red submitRegisterForm" >
+
+
+                        <input type="checkbox"  class="checkbox-agree" @if($errors->any()) checked @endif> Соглашаюсь с <a href="{{ route('public_offer') }}" target="_blank" class="red-link">Публичной офертой</a>
                     </form>
 
                 </div>
             </div>
         </div>
     </div>
-        <script>
 
-        </script>
     @endguest
 @endsection

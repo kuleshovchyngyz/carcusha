@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Clients\Bitrix;
 use App\Models\Cars;
 use App\Models\PublicOffer;
+use App\Models\User;
 use App\Models\Vendors;
 use App\support\Leads\LeadBuilder;
 use Illuminate\Http\Request;
@@ -135,6 +136,13 @@ class ApplicationController extends Controller
         // dd($dealData);
         return $dealData;
     }
+    public function checkPromo(Request $request){
+        if (User::where('invitation_code', '=', $request->promo)->count() > 0 ) {
+            return 'yes';
+        }
+        return 'no';
+    }
+
     public function publicOffer(){
         $all = PublicOffer::all();
         $text = '';

@@ -2072,6 +2072,122 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/CheckPromo.js":
+/*!************************************!*\
+  !*** ./resources/js/CheckPromo.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+console.log('checking promocode');
+console.log($('#invitation-inpup').text());
+$(document).ready(function () {
+  var value = $('#invitation-inpup').val();
+
+  if (value != '') {
+    var fd = new FormData();
+    fd.append('_token', $('[name="_token"]').val());
+    fd.append("promo", value);
+    check_promo(fd).then(function (v) {
+      if (v == 'yes') {
+        $('div.invitation-code').addClass('success');
+        $('div.invitation-code input').addClass('success_code');
+        $('p.error').addClass('d-none');
+      }
+
+      if (v == 'no') {
+        $('div.invitation-code').removeClass('success');
+        $('div.invitation-code input').removeClass('success_code');
+        $('p.error').removeClass('d-none');
+      }
+    });
+  }
+
+  $("#invitation-inpup").on('keyup', function () {
+    var value = $(this).val();
+    var fd = new FormData();
+    fd.append('_token', $('[name="_token"]').val());
+    fd.append("promo", value);
+    check_promo(fd).then(function (v) {
+      if (v == 'yes') {
+        $('div.invitation-code').addClass('success');
+        $('div.invitation-code input').addClass('success_code');
+        $('p.error').addClass('d-none');
+      }
+
+      if (v == 'no') {
+        $('div.invitation-code').removeClass('success');
+        $('div.invitation-code input').removeClass('success_code');
+        $('p.error').removeClass('d-none');
+      }
+    });
+  });
+});
+$(document).ready(function () {
+  $(".submitRegisterForm").on('click', function () {
+    if ($('.checkbox-agree').is(':checked')) {
+      $('#registration').submit();
+      console.log($('#registration'));
+    }
+  });
+});
+$(document).ready(function () {
+  $(".checkbox-agree").on('change', function () {
+    if ($('.checkbox-agree').is(':checked')) {
+      $('.submitRegister').disabled = true;
+    }
+
+    if (!$('.checkbox-agree').is(':checked')) {
+      $('.submitRegister').disabled = false;
+    }
+  });
+});
+
+function check_promo(_x) {
+  return _check_promo.apply(this, arguments);
+}
+
+function _check_promo() {
+  _check_promo = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(fd) {
+    var result;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return $.ajax({
+              type: 'post',
+              url: '/check-promo',
+              data: fd,
+              contentType: false,
+              processData: false
+            });
+
+          case 2:
+            result = _context.sent;
+            return _context.abrupt("return", result);
+
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _check_promo.apply(this, arguments);
+}
+
+/***/ }),
+
 /***/ "./resources/js/ResetPassword.js":
 /*!***************************************!*\
   !*** ./resources/js/ResetPassword.js ***!
@@ -2183,6 +2299,8 @@ __webpack_require__(/*! ./ResetPassword.js */ "./resources/js/ResetPassword.js")
 __webpack_require__(/*! ./uploadImages.js */ "./resources/js/uploadImages.js");
 
 __webpack_require__(/*! ./newtable.js */ "./resources/js/newtable.js");
+
+__webpack_require__(/*! ./CheckPromo */ "./resources/js/CheckPromo.js");
 
 /***/ }),
 
@@ -2308,27 +2426,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
-});
-
-function submitRegisterForm(btn) {// if($('.checkbox-agree').is(':checked')){
-  //     btn.form.submit();
-  //     btn.disabled = true;
-  // }
-  // disable the button
-  // submit the form
-  //
-}
-
-$(document).ready(function () {
-  $(".checkbox-agree").on('change', function () {
-    if ($('.checkbox-agree').is(':checked')) {
-      $('.submitRegister').disabled = true;
-    }
-
-    if (!$('.checkbox-agree').is(':checked')) {
-      $('.submitRegister').disabled = false;
-    }
-  });
 });
 $(document).ready(function () {
   var element = document.getElementById('phone');

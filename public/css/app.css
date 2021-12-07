@@ -57,12 +57,15 @@ body {
 .text-warning {
     color: var(--color-yellow) !important;
 }
+#invitation-inpup{
+    margin-bottom: 5px !important;
+}
 
 .btn-red {
     max-width: 320px;
     width: 100%;
-    background: #E3473F;
-    color: #fff;
+    background: #E3473F !important;
+    color: #fff !important;
     text-transform: uppercase;
     font-size: 22px;
     padding: 5px 10px;
@@ -3918,7 +3921,15 @@ body{
     flex-direction: column;
     min-height: 100vh;
 }
-
+.success_code{
+    color: #27AE60 !important;
+}
+p.error{
+    font-size: 80%;
+    font-weight: bolder;
+    color: #dc3545 !important;
+    margin-bottom: 0 !important;
+}
 .footer{
     background: #A4AFC1;
     padding: 15px 0;
@@ -3936,6 +3947,60 @@ body{
     opacity: 0.6;
 }
 
+
+/* --------- */
+.invitation-code{
+    display: flex;
+}
+
+.invitation-code input{
+    border-radius: 0.25rem 0 0 0.25rem;
+    border-right: 0;
+    margin-bottom: 0 !important;
+}
+
+.invitation-code::after{
+    content: "";
+    display: inline-block;
+    width: 60px;
+    height: 38px;
+    background-color: #E3473F;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='10' viewBox='0 0 12 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.7763 0.501653C12.0514 0.746265 12.0762 1.16765 11.8316 1.44283L4.7205 9.44283C4.59399 9.58516 4.41265 9.66659 4.22223 9.66659C4.0318 9.66659 3.85047 9.58516 3.72396 9.44283L0.168401 5.44283C-0.0762111 5.16765 -0.051424 4.74626 0.223765 4.50165C0.498953 4.25704 0.920335 4.28183 1.16495 4.55702L4.22223 7.99646L10.8351 0.557016C11.0797 0.281828 11.5011 0.257041 11.7763 0.501653Z' fill='white'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.invitation-code.success::after{
+    background-color: #27AE60;
+}
+
+.checkbox-form{
+    position: relative;
+    cursor: pointer;
+}
+
+.checkbox-form input{
+    position: absolute;
+    opacity: 0;
+    z-index: -5;
+    margin-bottom: 0;
+}
+
+.checkbox-form .checkbox{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #E3473F;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='13' height='11' viewBox='0 0 13 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.2763 1.00165C12.5514 1.24626 12.5762 1.66765 12.3316 1.94283L5.2205 9.94283C5.09399 10.0852 4.91265 10.1666 4.72223 10.1666C4.5318 10.1666 4.35047 10.0852 4.22396 9.94283L0.668401 5.94283C0.423789 5.66765 0.448576 5.24626 0.723765 5.00165C0.998953 4.75704 1.42033 4.78183 1.66495 5.05702L4.72223 8.49646L11.3351 1.05702C11.5797 0.781828 12.0011 0.757041 12.2763 1.00165Z' fill='white'/%3E%3C/svg%3E%0A");
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 1px;
+}
+
+.checkbox-form input:checked + .checkbox{
+    background-color: #E3473F;
+}
 
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
