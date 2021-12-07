@@ -159,7 +159,16 @@
                         <input type="button" value="РЕГИСТРАЦИЯ" class="btn btn-red submitRegisterForm" >
 
 
-                        <input type="checkbox"  class="checkbox-agree" @if($errors->any()) checked @endif> Соглашаюсь с <a href="{{ route('public_offer') }}" target="_blank" class="red-link">Публичной офертой</a>
+
+
+                        <div class="text-left">
+                            <label class="checkbox-form">
+                                <input type="checkbox"  class="checkbox-agree" @if($errors->any()) checked @endif>
+                                <span class="checkbox"></span>
+                                Соглашаюсь с
+                            </label>
+                            <a href="{{ route('public_offer') }}" target="_blank" class="red-link">Публичной офертой</a>
+                        </div>
                     </form>
 
                 </div>
