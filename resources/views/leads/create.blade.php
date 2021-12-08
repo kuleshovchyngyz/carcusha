@@ -1,3 +1,6 @@
+@if($errors->any())
+    {{ implode('', $errors->all(':message')) }}
+@endif
 
 @extends('layouts.app')
 @section('content')
@@ -50,12 +53,13 @@
                                 <div class="col-md-6">
                                     <div class="main__setting-item">
                                         <div>Телефон продавца:
-                                            <input name="phone" id="phone" type="text" class="form-control" placeholder="Не указан" required>
-                                            @error('phone')
-                                            <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                            @enderror
+                                            <input name="phone" id="phone" type="text" class="form-control phone-error" placeholder="Не указан" required>
+                                            <p class="error text-danger d-none"></p>
+{{--                                            @error('phone')--}}
+{{--                                            <span class="invalid-feedback" role="alert">--}}
+{{--                                        <strong>{{ $message }}</strong>--}}
+{{--                                    </span>--}}
+{{--                                            @enderror--}}
                                         </div>
                                     </div>
                                 </div>
@@ -82,10 +86,22 @@
                             </div>
                             <script>
                                 function submitForm(btn) {
-                                    // disable the button
-                                    btn.disabled = true;
-                                    // submit the form
-                                    btn.form.submit();
+                                    let val = $("input[name=phone]").val()
+                                    console.log(val.length)
+                                    if(val.length==0){
+                                        $('p.error').removeClass('d-none')
+                                        $('p.error').empty()
+                                        $('p.error').append('Пожалуйста, заполните это поле.');
+                                    }else if(val.length>0 && val.length<16){
+                                        $('p.error').removeClass('d-none')
+                                        $('p.error').empty()
+                                        $('p.error').append('Пожалуйста введите правильный номер телефона.');
+                                    }else{
+                                        $('p.error').empty()
+                                        btn.disabled = true;
+                                        btn.form.submit();
+                                    }
+
                                 }
                             </script>
                             <div class="text-center">

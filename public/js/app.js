@@ -2649,14 +2649,13 @@ $(document).ready(function () {
     $('#exampleModalCenter').modal('toggle');
   }); //your code here
 });
+$(".phone-error").on('keyup', function () {
+  var val = $("input[name=phone]").val();
 
-function submitForm(btn) {
-  // disable the button
-  console.log('creating');
-  btn.disabled = true; // submit the form
-
-  btn.form.submit();
-}
+  if (val.length == 16) {
+    $('p.error').empty();
+  }
+});
 
 /***/ }),
 

@@ -258,13 +258,12 @@ $(document).ready(function () {
     });
     //your code here
 });
-function submitForm(btn) {
-    // disable the button
-    console.log('creating')
-    btn.disabled = true;
-    // submit the form
-    btn.form.submit();
-}
+$(".phone-error").on('keyup', function(){
+    let val = $("input[name=phone]").val()
+    if(val.length==16){
+        $('p.error').empty()
+    }
+})
 
 
 
