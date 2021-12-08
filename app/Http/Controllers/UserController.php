@@ -10,6 +10,7 @@ use App\Models\Notifier;
 use App\Models\Paid;
 use App\Models\PaymentAmount;
 use App\Models\PaymentSetting;
+use App\Models\Refer;
 use App\Models\Setting;
 use App\Models\User;
 use App\support\QrCode\QRCodeGenerator;
@@ -70,6 +71,15 @@ public $user_id;
     }
 
     public function edit_settings(Request $request){
+        if($request->has('confirmPromo')){
+            $user = User::where('invitation_code',$request->invitationCode)->where('id','!=',Auth::user()->id)->first();
+            if($user){
+                Refer::create(['user_id'=>$user->id,'referred_user_id'=>Auth::user()->id]);
+                return redirect()->back()->with('success_message',['Активировано']);
+            }
+            return redirect()->back()->with('error_message',['Нельзя использовать свой промокод']);
+        }
+
         //dd($request->all());
         $user = \auth()->user();
         $code = new Code();

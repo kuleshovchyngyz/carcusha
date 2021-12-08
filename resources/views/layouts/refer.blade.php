@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <div class="main__setting-item">
                     <div>Промокод: <i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Партнеры, которые введут этот промокод, будут считаться привлеченными вами"></i>
-                        <div class="invitation-code">{{ Auth::user()->invitation_code }}</div>
+                        <div class="invitation-code-number">{{ Auth::user()->invitation_code }}</div>
                     </div>
                 </div>
             </div>
@@ -37,29 +37,22 @@
                 <thead>
                 <tr>
                     <th>Логин</th>
+                    <th>Дата</th>
                     <th>Телефон</th>
                     <th>Лидов</th>
                     <th>В работе</th>
-                    <th>Статус</th>
                     <th>Начислено</th>
                 </tr>
                 </thead>
                 <tbody>
-
-
-@foreach( Auth::user()->payments_by_refer() as $payment)
-
+@foreach( Auth::user()->partners() as $partner)
                 <tr>
-                    @if($payment->referred_user()!==null)
-                    <td>User {{ $payment->referred_user()->id }}</td>
-                    <td >{{ $payment->referred_user()->setting->number }}</td>
-                    <td>{{ $payment->referred_user()->leads->count() }}</td>
-                    <td>{{ $payment->referred_user()->pending()  }}</td>
-                    <td>{{ $payment->referred_user()->status() }}</td>
-                    <td>{{ $payment->amount }} ₽</td>
-                    @else
-                        @dump($payment)
-                    @endif
+                    <td>User {{ $partner->id }}</td>
+                    <td >{{ $partner->created_at->format('d-m-Y H:i') }}</td>
+                    <td>{{ $partner->setting->number }}</td>
+                    <td>{{ $partner->numberOfLeads()  }}</td>
+                    <td>{{ $partner->pending() }}</td>
+                    <td>{{ $data[$partner->id] }} ₽</td>
                 </tr>
 
 @endforeach

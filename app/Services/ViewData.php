@@ -58,6 +58,18 @@ class ViewData
                     $this->response = '';
                 }
                 break;
+            case 'InvitationCode':
+                $code = \Auth::user()->user_who_referred()!==false ? \Auth::user()->user_who_referred()->invitation_code : false;
+                $disabled = $code===false ? '' : 'disabled';
+                $mask = $code===false ? 'text' : 'password';
+                $underText = $code===false ?
+                    "<a class='red-link activatePromo' href='#' onclick='submitPromo()' >Активировать</a>"
+                    :'Был использован';
+                $this->response = '<input type="'.$mask.'" class="form-control" id="invitation-inpup" name = "invitationCode" placeholder="Не указан" value="'.$code.'" '.$disabled.'>
+                                        <p class="error text-danger d-none">Такого промокода не существует</p>
+                                        '.$underText;
+                break;
+
             case 'isPhoneConfirmed':
                 $this->response = ($this->model->phone_verified_at !== null && $this->model->number ==$this->model->setting->number) ?
                     'Подтверждён' :

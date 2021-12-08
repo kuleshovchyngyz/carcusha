@@ -2114,22 +2114,32 @@ $(document).ready(function () {
 
   $("#invitation-inpup").on('keyup', function () {
     var value = $(this).val();
-    var fd = new FormData();
-    fd.append('_token', $('[name="_token"]').val());
-    fd.append("promo", value);
-    check_promo(fd).then(function (v) {
-      if (v == 'yes') {
-        $('div.invitation-code').addClass('success');
-        $('div.invitation-code input').addClass('success_code');
-        $('p.error').addClass('d-none');
-      }
 
-      if (v == 'no') {
-        $('div.invitation-code').removeClass('success');
-        $('div.invitation-code input').removeClass('success_code');
-        $('p.error').removeClass('d-none');
-      }
-    });
+    if (value != '') {
+      console.log(value);
+      var fd = new FormData();
+      fd.append('_token', $('[name="_token"]').val());
+      fd.append("promo", value);
+      check_promo(fd).then(function (v) {
+        if (v == 'yes') {
+          $('div.invitation-code').addClass('success');
+          $('div.invitation-code input').addClass('success_code');
+          $('p.error').addClass('d-none');
+          $('.activatePromo').removeClass('d-none');
+        }
+
+        if (v == 'no') {
+          $('div.invitation-code').removeClass('success');
+          $('div.invitation-code input').removeClass('success_code');
+          $('p.error').removeClass('d-none');
+          $('.activatePromo').addClass('d-none');
+        }
+      });
+    }
+
+    if (value == '') {
+      $('p.error').addClass('d-none');
+    }
   });
 });
 $(document).ready(function () {
@@ -2143,11 +2153,11 @@ $(document).ready(function () {
 $(document).ready(function () {
   $(".checkbox-agree").on('change', function () {
     if ($('.checkbox-agree').is(':checked')) {
-      $('.submitRegister').disabled = true;
+      $('.submitRegisterForm').disabled = true;
     }
 
     if (!$('.checkbox-agree').is(':checked')) {
-      $('.submitRegister').disabled = false;
+      $('.submitRegisterForm').disabled = false;
     }
   });
 });

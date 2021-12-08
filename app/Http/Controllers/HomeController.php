@@ -6,6 +6,7 @@ use App\Models\Cars;
 use App\Models\Lead;
 use App\Models\MessageNotification;
 use App\Models\Paid;
+use App\Models\Payment;
 use App\Models\PaymentAmount;
 use App\Models\Question;
 use App\Models\Status;
@@ -73,9 +74,19 @@ class HomeController extends Controller
         ]);
     }
     public function refer(){
+        $partners = array_flip(\auth()->user()->partners()->pluck('id')->toArray());
+        foreach ($partners as $key =>$partner){
+            $partners[$key] = 0;
+        }
+        $payments = Payment::where('status_group','refer')->where('user_id',\auth()->user()->id)->get();
+        foreach ($payments as $payment){
+            $val = isset($reasons[$payment->reasons->table_id]) ? $reasons[$payment->reasons->table_id] : 0;
+            $partners[$payment->reasons->table_id] = $payment->amount +  $partners[$payment->reasons->table_id];
+        }
+
         return view('home',[
             'name' => 'refer',
-            'data' => ''
+            'data' => $partners
         ]);
     }
     public function settings(){

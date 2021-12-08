@@ -93,7 +93,9 @@ class User extends Authenticatable
         }
         return false;
     }
+    public function totalPaymentsToPartner(){
 
+    }
 
     public function leads(){
         return $this->hasMany(Lead::class);
@@ -134,6 +136,9 @@ class User extends Authenticatable
            $payment->status = 1;
            $payment->save();
         }
+    }
+    public function numberOfLeads(){
+        return Lead::where('user_id',$this->attributes['id'])->count();
     }
 //    public function pay(Paid $paid)
 //    {
@@ -238,11 +243,7 @@ class User extends Authenticatable
         $payments = Payment::where('user_id',$this->attributes['id'])->pluck('id');
         $pending = PendingAmount::whereIn('payment_id',$payments)->where('status',false)->pluck('payment_id');
         $payment_amount = Payment::whereIn('id',$pending)->pluck('amount')->sum();
-//        dd($payment_amount);
-//        $sum = [];
-//        foreach ($payment_amount as $p){
-//            $sum[] = PaymentAmount::find($p)->amount;
-//        }
+
         return $payment_amount;
     }
 

@@ -37,6 +37,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="main__setting-item main__setting-item--edit">
+                        <div>Промокод:
+                            {!! ViewService::init()->view('InvitationCode') !!}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="main__setting-item main__setting-item--edit">
                         <div>Город:
                             <input type="text" class="form-control" name = "city" placeholder="Не указан" value="{{ Auth::user()->setting->city }}">
 
@@ -130,6 +137,10 @@
     }
     function submitEmail() {
         $( ".main__setting" ).append( $( "<input type='hidden'  name = 'confirmEmail'>" ) );
+        document.getElementById("settings").submit();
+    }
+    function submitPromo() {
+        $( ".main__setting" ).append( $( "<input type='hidden'  name = 'confirmPromo'>" ) );
         document.getElementById("settings").submit();
     }
     function submitPhone() {

@@ -163,7 +163,7 @@
 
                         <div class="text-left">
                             <label class="checkbox-form">
-                                <input type="checkbox"  class="checkbox-agree" @if($errors->any()) checked @endif>
+                                <input type="checkbox"  class="checkbox-agree" @if($errors->any()) checked @endif required>
                                 <span class="checkbox"></span>
                                 Соглашаюсь с
                             </label>

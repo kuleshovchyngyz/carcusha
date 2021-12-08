@@ -99,7 +99,7 @@
             </div>
         </div>
     </main>
-
+    @if(!$errors->any())
     <div class="modal fade show" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: block; padding-right: 17px;" aria-modal="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">
             <div class="modal-info">
@@ -118,6 +118,7 @@
             </div>
         </div>
     </div>
+    @endif
 @endsection
 
 
