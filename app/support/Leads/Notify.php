@@ -9,12 +9,13 @@ use Carbon\Carbon;
 
 class Notify
 {
-    public $lead, $new_status, $message, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses;
+    public $lead, $new_status, $message, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses,$typeOfStatus;
 
     public function __construct($lead, $new_status){
         $this->lead = $lead;
         $this->user = $this->lead->user;
         $this->new_status = $new_status;
+        $this->typeOfStatus = $this->new_status->user_statuses->amount;
         $this->statuses = Status::all();
         $this->set_rejected_statuses();
 
@@ -73,6 +74,9 @@ class Notify
         if($this->new_status->user_statuses->notify==1){
 //            $this->message =  $this->new_status->user_statuses->name;
             $this->message =  $this->new_status->user_statuses->name.' '.shortCodeParse($this->new_status->user_statuses->comments);
+            if( $this->user->user_who_referred()!==false && $this->user->payments->where('status_group','successCONVERTED')->count()===0 && $this->typeOfStatus=='success'){
+                $this->message =  $this->new_status->user_statuses->name.' '.shortCodeParse($this->new_status->user_statuses->comments,[],[],true);
+            }
         }
     }
     public function create_notification(): bool

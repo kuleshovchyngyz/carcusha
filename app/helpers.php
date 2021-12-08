@@ -1,10 +1,13 @@
 <?php
-function shortCodeParse($str,$arr = [],$value=[]){
+function shortCodeParse($str,$arr = [],$value=[],$firstPayment = false){
     $value = \App\Models\PaymentAmount::pluck('amount','reason_of_payment');
     $arr = \App\Models\PaymentAmount::pluck('reason_of_payment');
     foreach ($arr as $item){
-
-        $str = str_replace('['.$item.']',abs($value[$item]),$str);
+        if($firstPayment && ($item == 'success')){
+            $str = str_replace('['.$item.']',abs($value['firstPayment']),$str);
+        }else{
+            $str = str_replace('['.$item.']',abs($value[$item]),$str);
+        }
     }
     $r = '/сумма\(.*?\)/';
     if(preg_match($r, $str, $matches)){

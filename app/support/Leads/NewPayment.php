@@ -154,7 +154,6 @@ class NewPayment
     }
     protected function determineAmount(){
         $this->amount = $this->new_status->user_statuses->amount($this->user);
-        //dd($this->typeOfStatus);
         if( $this->user_who_referred!==false && $this->user->payments->where('status_group','successCONVERTED')->count()===0 && $this->typeOfStatus=='success'){
             $this->amount = PaymentAmount::where('reason_of_payment','firstPayment')->first()->amount;
         }
