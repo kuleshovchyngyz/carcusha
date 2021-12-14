@@ -13,9 +13,6 @@
                   </div>
                   <div class="modal-body">
                       <div class="form-group">
-                          <input type="text" class="form-control input_type1" id="username" name="username" placeholder="@username">
-                      </div>
-                      <div class="form-group">
                           <input type="text" class="form-control input_type1" id="token" name="token" placeholder="Код компаний">
                       </div>
                   </div>
