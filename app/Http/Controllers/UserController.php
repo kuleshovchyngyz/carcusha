@@ -75,10 +75,39 @@ public $user_id;
     public function telegramNotification(Request $request){
         $s = SiteSetting::where('name','telegramBotToken')->first();
         $data = ["companycode" => $s->value, "data" => [["webhook" => route('apiforpartnerstelegram')]]];
-        $res = Http::timeout(5)->post("https://t.kuleshov.studio/api/webhook-link",$data);
-        $client = new GuzzleHttpClient();
-        $request = $client->createRequest('POST', "https://t.kuleshov.studio/api/webhook-link", $data);
-        dd(json_decode($request->getBody()));
+//        $res = Http::timeout(5)->post("https://t.kuleshov.studio/api/webhook-link",$data);
+
+
+
+        try {
+            /**
+             * We use Guzzle to make an HTTP request somewhere in the
+             * following theMethodMayThrowException().
+             */
+            $client = new GuzzleHttpClient();
+            $request = $client->createRequest('POST', "https://t.kuleshov.studio/api/webhook-link", $data);
+            $result = theMethodMayThrowException();
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            /**
+             * Here we actually catch the instance of GuzzleHttp\Psr7\Response
+             * (find it in ./vendor/guzzlehttp/psr7/src/Response.php) with all
+             * its own and its 'Message' trait's methods. See more explanations below.
+             *
+             * So you can have: HTTP status code, message, headers and body.
+             * Just check the exception object has the response before.
+             */
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+                var_dump($response->getStatusCode()); // HTTP status code;
+                var_dump($response->getReasonPhrase()); // Response message;
+                var_dump((string) $response->getBody()); // Body, normally it is JSON;
+                var_dump(json_decode((string) $response->getBody())); // Body as the decoded JSON;
+                var_dump($response->getHeaders()); // Headers array;
+                var_dump($response->hasHeader('Content-Type')); // Is the header presented?
+                var_dump($response->getHeader('Content-Type')[0]); // Concrete header value;
+                die();
+            }
+        }
         return Redirect::to('https://t.me/Kuleshov_Studio_Bot?start='.$s->value);
     }
 
