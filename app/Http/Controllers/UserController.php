@@ -85,7 +85,7 @@ public $user_id;
              * following theMethodMayThrowException().
              */
             $client = new GuzzleHttpClient();
-            $request = $client->createRequest('POST', "https://t.kuleshov.studio/api/webhook-link", $data);
+            $result = $client->createRequest('POST', "https://t.kuleshov.studio/api/webhook-link", $data);
             $result = theMethodMayThrowException();
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             /**
@@ -96,6 +96,7 @@ public $user_id;
              * So you can have: HTTP status code, message, headers and body.
              * Just check the exception object has the response before.
              */
+            dd( $e->getResponse()->getBody()->getContents());
             if ($e->hasResponse()) {
                 $response = $e->getResponse();
                 var_dump($response->getStatusCode()); // HTTP status code;
