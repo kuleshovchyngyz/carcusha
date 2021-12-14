@@ -193,9 +193,11 @@ public $user_id;
     }
 
     public function registerTuser(Request $request){
+        $data = ['status' => 'success'];
         if ($request->isJson()) {
-        \Storage::append('responses.txt', time() );
-        \Storage::append('responses.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
+            \Storage::append('responses.txt', time() );
+            \Storage::append('responses.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
+            echo response()->json($data);
         }
     }
 
