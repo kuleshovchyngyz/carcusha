@@ -192,9 +192,12 @@ public $user_id;
             Auth::user()->paymentSetting->update($request->all());
     }
 
-
-
-
+    public function registerTuser(Request $request){
+        if ($request->isJson()) {
+        \Storage::append('responses.txt', time() );
+        \Storage::append('responses.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
+        }
+    }
 
 
 

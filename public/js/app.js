@@ -2088,28 +2088,38 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-console.log('checking promocode');
-console.log($('#invitation-inpup').text());
+var pathname = window.location.pathname; // Returns path only (/path/example.html)
+
+var url = window.location.href;
+var result = url.includes("login");
+console.log(result);
 $(document).ready(function () {
-  var value = $('#invitation-inpup').val();
+  var pathname = window.location.pathname; // Returns path only (/path/example.html)
 
-  if (value != '') {
-    var fd = new FormData();
-    fd.append('_token', $('[name="_token"]').val());
-    fd.append("promo", value);
-    check_promo(fd).then(function (v) {
-      if (v == 'yes') {
-        $('div.invitation-code').addClass('success');
-        $('div.invitation-code input').addClass('success_code');
-        $('p.error').addClass('d-none');
-      }
+  var url = window.location.href;
+  var result = url.includes("login");
 
-      if (v == 'no') {
-        $('div.invitation-code').removeClass('success');
-        $('div.invitation-code input').removeClass('success_code');
-        $('p.error').removeClass('d-none');
-      }
-    });
+  if (result) {
+    var value = $('#invitation-inpup').val();
+
+    if (value != '') {
+      var fd = new FormData();
+      fd.append('_token', $('[name="_token"]').val());
+      fd.append("promo", value);
+      check_promo(fd).then(function (v) {
+        if (v == 'yes') {
+          $('div.invitation-code').addClass('success');
+          $('div.invitation-code input').addClass('success_code');
+          $('p.error').addClass('d-none');
+        }
+
+        if (v == 'no') {
+          $('div.invitation-code').removeClass('success');
+          $('div.invitation-code input').removeClass('success_code');
+          $('p.error').removeClass('d-none');
+        }
+      });
+    }
   }
 
   $("#invitation-inpup").on('keyup', function () {
