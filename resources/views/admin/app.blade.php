@@ -61,6 +61,8 @@
                                     </a>
                                     <a class="btn header__btn color-red" href="{{ route('admin.offer') }}">Публичная оферта
                                     </a>
+                                    <a data-toggle="modal" data-target="#AddTelegramBot" class="btn header__btn color-red"> Добавить бот</a>
+
                                 </div>
                             </div>
                         </li>
@@ -79,7 +81,7 @@
 
 
 @yield('content')
-
+@include('modals.modals')
 
 </body>
 </html>

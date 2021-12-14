@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\PaymentAmount;
 use App\Models\PublicOffer;
 use App\Models\Question;
+use App\Models\SiteSetting;
 use App\Models\Status;
 use App\Models\User;
 use App\Models\UserPaymentAmount;
@@ -117,6 +118,11 @@ class AdminController extends Controller
         ]);
     }
 
+    public function addBot(Request $request){
+       SiteSetting::truncate();
+        SiteSetting::create(['value'=>$request->token,'name'=>'telegramBotToken']);
+        return redirect()->back()->with('success_message', [__('Сохранено')]);
+    }
     public function payments_settings(){
 
         $question = Question::all();

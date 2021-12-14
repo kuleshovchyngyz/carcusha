@@ -12,11 +12,14 @@ use App\Models\PaymentAmount;
 use App\Models\PaymentSetting;
 use App\Models\Refer;
 use App\Models\Setting;
+use App\Models\SiteSetting;
 use App\Models\User;
 use App\support\QrCode\QRCodeGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use setasign\Fpdi\Fpdi;
 
@@ -68,6 +71,13 @@ public $user_id;
             Paid::create(['user_id'=>\auth()->user()->id,'status'=>'pending','amount'=>$request->payment_amount,'cardnumber'=>$request->bankcardnumber]);
             return redirect()->back()->with('success_message', [__('Заказано')]);
         }
+    }
+    public function telegramNotification(Request $request){
+        $s = SiteSetting::where('name','telegramBotToken')->first();
+        $data = ["companycode" => $s->value, "data" => [["webhook" => route('apiforpartnerstelegram')]]];
+        $res = Http::timeout(5)->post("https://t.kuleshov.studio/api/webhook-link",$data);
+        dd($res);
+        return Redirect::to('https://t.me/Kuleshov_Studio_Bot?start='.$s->value);
     }
 
     public function edit_settings(Request $request){
@@ -195,7 +205,7 @@ public $user_id;
     public function registerTuser(Request $request){
         $data = ['status' => 'success'];
         if ($request->isJson()) {
-            \Storage::append('responses.txt', time() );
+            \Storage::append('responses.txt', time());
             \Storage::append('responses.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
             echo response()->json($data);
         }

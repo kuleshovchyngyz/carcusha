@@ -50,6 +50,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-6">
+                    <div class="main__setting-item main__setting-item--edit">
+                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn telegram'>Telegram uved</a>
+                    </div>
+                </div>
             </div>
         </div>
 {{--        <div class="main__setting-row">--}}
@@ -131,6 +137,7 @@
 </div>
 </div>
 <script>
+    import App from "../../../public/js/app";
     function submitSettings() {
         $( ".main__setting" ).append( $( "<input type='hidden'  name = 'submitSettings'>" ) );
         document.getElementById("settings").submit();
@@ -146,5 +153,8 @@
     function submitPhone() {
         $( ".main__setting" ).append( $( "<input type='hidden'  name = 'confirmPhone'>" ) );
         document.getElementById("settings").submit();
+    }
+    export default {
+        components: {App}
     }
 </script>
