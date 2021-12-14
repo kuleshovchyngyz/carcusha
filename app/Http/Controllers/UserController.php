@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use GuzzleHttp\Stream\Stream;
 use App\Auth\Code;
 use App\Clients\SmsClient;
 use App\Mail\MailUser;
@@ -76,7 +76,9 @@ public $user_id;
         $s = SiteSetting::where('name','telegramBotToken')->first();
         $data = ["companycode" => $s->value, "data" => [["webhook" => route('apiforpartnerstelegram')]]];
         $res = Http::timeout(5)->post("https://t.kuleshov.studio/api/webhook-link",$data);
-        dd(json_decode($res->getBody()));
+        $client = new GuzzleHttpClient();
+        $request = $client->createRequest('POST', "https://t.kuleshov.studio/api/webhook-link", $data);
+        dd(json_decode($request->getBody()));
         return Redirect::to('https://t.me/Kuleshov_Studio_Bot?start='.$s->value);
     }
 
