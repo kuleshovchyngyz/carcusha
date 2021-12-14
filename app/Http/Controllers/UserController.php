@@ -76,7 +76,7 @@ public $user_id;
         $s = SiteSetting::where('name','telegramBotToken')->first();
         $data = ["companycode" => $s->value, "data" => [["webhook" => route('apiforpartnerstelegram')]]];
         $res = Http::timeout(5)->post("https://t.kuleshov.studio/api/webhook-link",$data);
-        dd($res->json()) ;
+        dd(json_decode($res->getBody()));
         return Redirect::to('https://t.me/Kuleshov_Studio_Bot?start='.$s->value);
     }
 
