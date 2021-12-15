@@ -12,6 +12,9 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'stripe/*',
+        'https://t.kuleshov.studio/api/webhook-link',
+        'https://t.kuleshov.studio/api/*',
+        'settings.telegramNotification',
     ];
 }
