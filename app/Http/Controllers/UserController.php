@@ -209,6 +209,9 @@ public $user_id;
             $userId = $request->all()["userId"];
             \Storage::append('responses.txt', time());
             \Storage::append('responses.txt', $userId);
+            $userSetting = Auth::user()->setting;
+            $userSetting->telegram_id = $userId;
+            $userSetting->save();
             echo response()->json($data);
         }
     }
