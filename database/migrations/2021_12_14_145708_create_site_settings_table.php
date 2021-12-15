@@ -21,6 +21,8 @@ class CreateSiteSettingsTable extends Migration
         });
     }
 
+
+
     /**
      * Reverse the migrations.
      *
