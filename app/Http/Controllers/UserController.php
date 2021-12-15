@@ -206,8 +206,9 @@ public $user_id;
     public function registerTuser(Request $request){
         $data = ['status' => 'success'];
         if ($request->isJson()) {
+            $userId = $request->all()["userId"];
             \Storage::append('responses.txt', time());
-            \Storage::append('responses.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
+            \Storage::append('responses.txt', $userId);
             echo response()->json($data);
         }
     }
