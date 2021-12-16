@@ -207,10 +207,12 @@ public $user_id;
     public function registerTuser(Request $request){
         $data = ['status' => 'success'];
         if ($request->isJson()) {
+            $data = $request->collect();
+            $telegramUserId = $data['telegramUserId'];
             $userId = $request->all()["userId"];
             \Storage::append('responses.txt', time());
             \Storage::append('responses.txt', json_encode($request->all()));
-            \Storage::append('responses.txt', $userId);
+            \Storage::append('responses.txt', $telegramUserId);
 //            $userSetting = Auth::user()->setting;
 //            $userSetting->telegram_id = $userId;
 //            $userSetting->save();
