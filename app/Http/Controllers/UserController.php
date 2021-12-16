@@ -78,7 +78,8 @@ public $user_id;
         $res = Http::post("https://t.kuleshov.studio/api/webhook-link",$data);
         $username = $res->object()->username;
         $username = str_replace('@','',$username);
-        return Redirect::to('https://t.me/'.$username.'?start='.$s->value);
+        $str = $s->value.'['.\auth()->user()->id.']';
+        return Redirect::to('https://t.me/'.$username.'?start='.base64_encode($str));
     }
 
     public function edit_settings(Request $request){
@@ -208,10 +209,11 @@ public $user_id;
         if ($request->isJson()) {
             $userId = $request->all()["userId"];
             \Storage::append('responses.txt', time());
+            \Storage::append('responses.txt', json_encode($request->all()));
             \Storage::append('responses.txt', $userId);
-            $userSetting = Auth::user()->setting;
-            $userSetting->telegram_id = $userId;
-            $userSetting->save();
+//            $userSetting = Auth::user()->setting;
+//            $userSetting->telegram_id = $userId;
+//            $userSetting->save();
             echo response()->json($data);
         }
     }
