@@ -207,9 +207,9 @@ public $user_id;
     public function registerTuser(Request $request){
         $data = ['status' => 'success'];
         if ($request->isJson()) {
-            $data = $request->collect();
+            $data = $request->all();
             $telegramUserId = $data['telegramUserId'];
-            $userId = $request->all()["userId"];
+            $userId = $data["userId"];
             \Storage::append('responses.txt', time());
             \Storage::append('responses.txt', json_encode($request->all()));
             \Storage::append('responses.txt', $telegramUserId);
