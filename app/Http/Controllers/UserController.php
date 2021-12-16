@@ -205,18 +205,18 @@ public $user_id;
     }
 
     public function registerTuser(Request $request){
-        $data = ['status' => 'success'];
+        $response = ['status' => 'success'];
         if ($request->isJson()) {
             $data = $request->all();
             $telegramUserId = $data['telegramUserId'];
             $userId = $data["userId"];
             \Storage::append('responses.txt', time());
             \Storage::append('responses.txt', json_encode($request->all()));
-            \Storage::append('responses.txt', $telegramUserId);
-//            $userSetting = Auth::user()->setting;
-//            $userSetting->telegram_id = $userId;
-//            $userSetting->save();
-            echo response()->json($data);
+
+            $userSetting = User::find($userId)->setting;
+            $userSetting->telegram_id = $telegramUserId;
+            $userSetting->save();
+            echo response()->json($response);
         }
     }
 
