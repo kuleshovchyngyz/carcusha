@@ -216,6 +216,7 @@ public $user_id;
             $userSetting = User::find($userId)->setting;
             $userSetting->telegram_id = $telegramUserId;
             $userSetting->save();
+
             echo response()->json($response);
         }
     }
