@@ -28,10 +28,10 @@ class TelegramBot
 
     }
     public function makeTextReady(){
-        $this->data = ["companycode" => $this->companyCode, "data" => [["message" =>  $this->text],["userId"=>$this->telegramId]]];
+        $this->data = ["companycode" => $this->companyCode, "data" => [["message" =>  $this->text,"userId"=>$this->telegramId]]];
     }
     public function sendMessage(){
         $res = Http::post($this->telegramWebhook,$this->text);
-        return $res->object();
+
     }
 }

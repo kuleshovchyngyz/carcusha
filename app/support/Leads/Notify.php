@@ -124,6 +124,9 @@ class Notify
         }
         return true;
     }
+    public function sendTelegramNotication(){
+
+    }
 
     public function set_rejected_statuses(){
         foreach ($this->statuses as $key=>$status){
