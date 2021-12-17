@@ -31,7 +31,7 @@ class TelegramBot
         $this->data = ["companycode" => $this->companyCode, "data" => [["message" =>  $this->text,"userId"=>$this->telegramId]]];
     }
     public function sendMessage(){
-        $res = Http::post($this->telegramWebhook,$this->text);
-
+        $res = Http::post($this->telegramWebhook,$this->data);
+        return $res->object();
     }
 }
