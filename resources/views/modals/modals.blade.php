@@ -13,7 +13,7 @@
                   </div>
                   <div class="modal-body">
                       <div class="form-group">
-                          <input type="text" class="form-control input_type1" id="token" name="token" placeholder="Код компаний">
+                          <input type="text" class="form-control input_type1" id="token" name="token" placeholder="Код компаний" value="{{ ViewService::init()->view('telegramBot') }}">
                       </div>
                   </div>
                   <div class="modal-footer text-center">

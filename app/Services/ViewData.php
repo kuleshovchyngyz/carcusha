@@ -3,6 +3,7 @@
 
 namespace App\Services;
 use App\Models\PaymentAmount;
+use App\Models\SiteSetting;
 use Carbon\Carbon;
 use http\Client\Curl\User;
 
@@ -26,6 +27,10 @@ class ViewData
     {
         switch ($view) {
 
+            case 'telegramBot':
+                   $s = SiteSetting::where('name','telegramBotToken');
+                    $this->response = ($s->exists() ? $s->first()->value : '');
+                break;
             case 'total_payments_by_lead':
                     call_user_func(array($this, 'totalPaymentByLead'), '');
                 break;

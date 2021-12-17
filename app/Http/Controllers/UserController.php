@@ -75,7 +75,7 @@ public $user_id;
     public function telegramNotification(){
         $s = SiteSetting::where('name','telegramBotToken')->first();
         $data = ["companycode" => $s->value, "webhook" => route('apiforpartnerstelegram')];
-        $res = Http::post("https://t.kuleshov.studio/api/webhook-link",$data);
+        $res = Http::post(env('TELEGRAM_WEB_HOOK_LINK'),$data);
         $username = $res->object()->username;
         $username = str_replace('@','',$username);
         $str = $s->value.'['.\auth()->user()->id.']';
@@ -205,8 +205,9 @@ public $user_id;
     }
 
     public function registerTuser(Request $request){
-        $response = ['status' => 'success'];
+        $response = ['status' => 'error'];
         if ($request->isJson()) {
+            $response = ['status' => 'success'];
             $data = $request->all();
             $telegramUserId = $data['telegramUserId'];
             $userId = $data["userId"];
@@ -219,6 +220,7 @@ public $user_id;
 
             echo response()->json($response);
         }
+        echo response()->json($response);
     }
 
 
