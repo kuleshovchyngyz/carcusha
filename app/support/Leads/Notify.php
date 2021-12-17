@@ -1,6 +1,7 @@
 <?php
 
 namespace App\support\Leads;
+use App\Clients\TelegramBot;
 use App\Models\MessageNotification;
 use App\Models\Notification;
 use App\Models\Status;
@@ -63,6 +64,7 @@ class Notify
 
     }
     public function create_message_notification(){
+        $this->sendTelegramNotication();
         MessageNotification::create([
             'user_id'=>$this->user->id,
             'seen'=>false,
@@ -125,7 +127,9 @@ class Notify
         return true;
     }
     public function sendTelegramNotication(){
-
+        if($this->user->setting->telegram_id!=null){
+            new TelegramBot($this->message,$this->user);
+        }
     }
 
     public function set_rejected_statuses(){
