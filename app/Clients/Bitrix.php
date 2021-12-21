@@ -29,7 +29,18 @@ class Bitrix
         return false;
     }
 
-    public function addLeadAdd($array = []){
+    public function updateLead($id=0,$array = []){
+        $this->result = $this->connect('crm.lead.update', [
+            'id'=>$id,
+            'fields' => $array,
+            'params' => [
+                'REGISTER_SONET_EVENT' => 'Y'
+            ],
+        ]);
+        return $this->getResponse();
+    }
+
+    public function addLead($array = []){
         $this->result = $this->connect('crm.lead.add', [
             'fields' => $array,
             'params' => [

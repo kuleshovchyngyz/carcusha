@@ -138,30 +138,6 @@ class LeadController extends Controller
         return json_decode($res->body(), 1);
 
     }
-
-
-    function sendDataToBitrix($method, $data) {
-        //$webhook_url = "https://b24-4goccw.bitrix24.ru/rest/1/gfb5rzf8p5iwam80/";//test
-        $webhook_url = "https://rosgroup.bitrix24.ru/rest/52/tvk30z03175k7x2p/";//real
-        $queryUrl = $webhook_url . $method ;
-        $queryData = http_build_query($data);
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_POST => 1,
-            CURLOPT_HEADER => 0,
-            CURLOPT_HTTPHEADER => array("Content-Type:multipart/form-data"),
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => $queryUrl,
-            CURLOPT_POSTFIELDS => $queryData,
-
-        ));
-
-        $result = curl_exec($curl);
-        curl_close($curl);
-        return json_decode($result, 1);
-    }
     public function addDeal($vendor, $model,$year,$img,$phone,$folder_name) {
         $years = [
             "2005" => "987",
@@ -183,7 +159,6 @@ class LeadController extends Controller
             "2021" => "45"
         ];
         $data_img=[];
-        //$crm_pics_field_name = ['UF_CRM_1627988390','UF_CRM_1625740903','UF_CRM_1627988418','UF_CRM_1627988441'];//test
         $crm_pics_field_name = ['UF_CRM_1633362445295','UF_CRM_1633362456303','UF_CRM_1633362468187','UF_CRM_1633362478787','UF_CRM_1633362488670','UF_CRM_1637847699599','UF_CRM_1637847730399','UF_CRM_1637847742893','UF_CRM_1637847753241','UF_CRM_1637847764708'];//real
         foreach ($img as $key => $i){
             $data_img[] =
@@ -210,36 +185,14 @@ class LeadController extends Controller
         $array['UF_CRM_1633361973449'] = $v.' '.$car; //real   "ID" => "312"
 
         $array['UF_CRM_1633362091686'] =  isset($year)==true ? [$years[$year]] :""; //real
-        // $array['UF_CRM_1625740869'] = $v.' '.$car;
 
-        // $array['UF_CRM_1625740924'] = isset($year)==true ? $year :"";
         $array['SOURCE_ID'] = "1";
         $array['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
-
         $bitrix = new Bitrix();
-        $dealData = $bitrix->addLeadAdd($array);
-//        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.add', [
-//            'fields' => $array,
-//            'params' => [
-//                'REGISTER_SONET_EVENT' => 'Y'
-//            ],
-//        ]);
-        // dd($dealData);
+        $dealData = $bitrix->addLead($array);
         return $dealData;
     }
-    public function fields(){
-        $u = User::find(2)->notifier;
-        //dump($u);
-        //$dealData = $this->sendDataToBitrixGuzzle('crm.status.fields',array());
-//        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.fields',array());
-//        "UF_CRM_1526732995" => "yesdo"
-//    "UF_CRM_1526733011" => "nono"
-        //  $dealData = new ApiConnect('crm.lead.get', ['id' => '771965']);
-        //dump($dealData->getResponse());
-//        dump($dealData->getFieldName('isInAuto.ru'));
-//        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.get', ['id' => '77965'] );
-//        dump($dealData);
-    }
+
     public function get_status($id){
         $dealData = $this->sendDataToBitrixGuzzle('crm.lead.get', ['id' => $id] );
         $s = Status::where('index',$dealData['result']['STATUS_ID'])->first();
@@ -323,163 +276,7 @@ class LeadController extends Controller
 
     }
 
-    public function ready_to_sell(){
 
-    }
-    public function notifications($id,$status)
-    {
-        $l = Lead::where('bitrix_lead_id',$id)->first();
-        $l->status_id = $status;
-        $l->save();
-
-        $user = User::find($l->user_id);
-        $l_ids = Lead::where('user_id', $l->user_id)->pluck('bitrix_lead_id');
-        $statuses = Status::pluck('name','index');
-        $hooks = Notification::whereIn('lead_id',$l_ids)
-            ->orderby('updated_at','DESC')
-            ->get();
-        $notes = array();
-        $fiststatuses = ['В работе','Ожидаем фото','На оценку','На повторную оценку','Оценка без фото','Сообщить цену','Клиент сомневается','Ожидаем решения клиента','Конкуренты предлагают больше','Другое','Судебное'];
-        foreach ($l_ids as $l_id){
-            $seps = $hooks->where('lead_id',$l_id);
-            //dd();
-            if($l->bitrix_lead_id==$l_id){
-                if(count($seps)>1){
-                    $str = "";
-                    $changed = "";
-                    $key = 0;
-                    $changed_id = '20';
-                    foreach ($seps as  $sep){
-                        if ($key==0){
-                            $date = date('d.m.Y', strtotime($sep->updated_at));
-                            $time = date('H:i:s', strtotime($sep->updated_at));
-                            $str = $date.' в '.$time.' у лида #'.$sep->lead_id.' изменился статус с ';
-                            $changed = $statuses[$sep->status];
-                            $changed_id = $sep->status;
-                        }else if($key==1){
-                            if($statuses[$sep->status]!=$changed){
-                                $str = $str.'"'.$statuses[$sep->status].'"'.' на "'.$changed.'"' ;
-                            }else{
-                                $str = 'false';
-                            }
-
-
-                            if ($changed == "Согласен продать"){
-                                $amount = PaymentAmount::where('reason_of_payment','success')->first()->amount;
-                                $this->payments_to_reffered_user($user,$amount);
-                                $reason = Reason::create([
-                                    'table_id'=>$l_id,
-                                    'reason'=> 'lead'
-                                ]);
-                                Payment::create([
-                                    'user_id' => $l->user_id,
-                                    'reason'=>$reason->id,
-                                    'amount'=>$amount,
-                                    'status'=>0,
-                                    'status_group'=>'success'
-                                ]);
-                                $balance = balance::where('user_id',$l->user_id)->first();
-                                $balance->balance = $balance->balance +  $amount;
-                                $str = $str.'. <sapn class="text-danger">'.$amount.' ₽</sapn>';
-                            }
-                            if (in_array($changed,$fiststatuses)){
-                                $reason= Reason::where('table_id',$l_id)->where('reason','lead');
-
-                                if($reason->count()==0){
-                                    $amount = PaymentAmount::where('reason_of_payment','initial')->first()->amount;
-                                    if($user->user_who_referred()==false){
-
-                                    }else{
-                                        $r = Reason::where('reason','refer')->where('table_id',$user->id)->first();
-                                        $percent = PaymentAmount::where('reason_of_payment','percentage')->first()->amount;
-
-                                        Payment::create([
-                                            'user_id' => $user->user_who_referred()->id,
-                                            'reason'=>$r->id,
-                                            'amount'=>$amount*$percent/100,
-                                            'status'=>0,
-                                            'status_group'=>'refer'
-                                        ]);
-                                        $balance = balance::where('user_id',$user->user_who_referred()->id)->first();
-                                        $balance->balance = $balance->balance +  $amount*$percent/100;
-                                    }
-                                    $reason = Reason::create([
-                                        'table_id'=>$l_id,
-                                        'reason'=> 'lead'
-                                    ]);
-                                    Payment::create([
-                                        'user_id' => $l->user_id,
-                                        'reason'=>$reason->id,
-                                        'amount'=>$amount,
-                                        'status'=>0,
-                                        'status_group'=>'initial'.$changed_id
-                                    ]);
-                                    $balance = balance::where('user_id',$l->user_id)->first();
-                                    $balance->balance = $balance->balance +  $amount;
-                                    $str = $str.'. <sapn class="text-danger">'.$amount.' ₽</sapn>';
-                                }else{
-                                    $reason = $reason->first();
-                                    $is_registered_payment = Payment::where('user_id',$l->user_id)->where('reason',$reason->id)->where('status_group','like','%initial%')->count();
-                                    if($is_registered_payment==0){
-                                        $amount = PaymentAmount::where('reason_of_payment','initial')->first()->amount;
-                                        if($user->user_who_referred()==false){
-
-                                        }else{
-                                            $r = Reason::where('reason','refer')->where('table_id',$user->id)->first();
-                                            $percent = PaymentAmount::where('reason_of_payment','percentage')->first()->amount;
-
-                                            Payment::create([
-                                                'user_id' => $user->user_who_referred()->id,
-                                                'reason'=>$r->id,
-                                                'amount'=>floor($amount*$percent/100),
-                                                'status'=>0,
-                                                'status_group'=>'refer'
-                                            ]);
-                                            $balance = balance::where('user_id',$user->user_who_referred()->id)->first();
-                                            $balance->balance = $balance->balance +  floor($amount*$percent/100);
-                                        }
-                                        Payment::create([
-                                            'user_id' => $l->user_id,
-                                            'reason'=>$reason->id,
-                                            'amount'=>$amount,
-                                            'status'=>0,
-                                            'status_group'=>'initial'.$changed_id
-
-                                        ]);
-                                        $balance = balance::where('user_id',$l->user_id)->first();
-                                        $balance->balance = $balance->balance +  $amount;
-                                        $str = $str.'. <sapn class="text-danger">'.$amount.' ₽</sapn>';
-                                    }
-                                }
-
-
-                            }
-                            if ($changed =="Жесткий негатив"){
-                                $str = $str.'.  Лид вышел из работы.';
-                            }
-
-                            $notes[] = $str;
-                            if($str!='false'){
-                                MessageNotification::create([
-                                    'user_id'=>$l->user_id,
-                                    'seen'=>false,
-                                    'message'=>$str,
-                                    'lead_id'=>$l_id
-                                ]);
-                                $this->send_to_tg_bot($str);
-
-                            }
-
-                            //dump($str);
-                        }
-                        $key++;
-
-                        // dump(Carbon::createFromFormat('Y-m-d H:i:s', $sep->updated_at)->format('d-m-Y'));
-                    }
-                }
-            }
-        }
-    }
     public function send(){
         $sms = new SmsClient();
         $code = new Code();

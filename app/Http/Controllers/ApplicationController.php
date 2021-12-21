@@ -126,7 +126,7 @@ class ApplicationController extends Controller
         $array['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
 
         $bitrix = new Bitrix();
-        $dealData = $bitrix->addLeadAdd($array);
+        $dealData = $bitrix->addLead($array);
 //        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.add', [
 //            'fields' => $array,
 //            'params' => [

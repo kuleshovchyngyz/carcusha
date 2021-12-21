@@ -53,7 +53,7 @@
 
                 <div class="col-md-6">
                     <div class="main__setting-item main__setting-item--edit">
-                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn telegram'>Telegram uved</a>
+                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn btn-red telegram'>Telegram uved</a>
                     </div>
                 </div>
             </div>
