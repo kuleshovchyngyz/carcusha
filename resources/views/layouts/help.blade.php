@@ -13,7 +13,7 @@ $questions = \App\Models\Question::all();
                     </p>
                 </li>
             @endforeach
-
+{{--        <a href="{{route('public_offer')}}">sdfsdf</a>--}}
 
         </ul>
     </div>

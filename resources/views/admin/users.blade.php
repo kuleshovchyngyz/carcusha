@@ -21,7 +21,6 @@
             </thead>
             <tbody>
             @foreach($data['users']->sortByDesc('created_at') as $user)
-                @if(!$user->hasRole('admin'))
                 <tr>
                     <td><a href="{{ route('admin.user', $user->id) }}" class="main__table-link">User #{{ $user->id  }}<span class="mob-stsus text-success"></span></a></td>
                     @if(!$user->setting)
@@ -30,20 +29,20 @@
                     <td>{{ $user->setting->number  }}</td>
                     <td>{{ $user->created_at->format('d.m.y')  }}</td>
                     <td>{{ $user->leads->count()  }}</td>
-                    <td>{{ $user->pending()  }}</td>
-                    <td>{{ $user->rejected()  }}</td>
-                    <td>{{ $user->paid()  }}</td>
+                    <td>{{ $user->pending  }}</td>
+                    <td>{{ $user->rejected  }}</td>
+                    <td>{{ $user->paid  }}</td>
                     <td>{{ $user->number_of_violations()  }}</td>
                     @if($user->active==1)
                         <td class="text-success">{{ $user->status()  }}</td>
                     @else
                         <td class="text-danger">{{ $user->status()  }}</td>
                     @endif
-                    <td>{{ $user->partners()->count() }}</td>
+                    <td>{{ $user->refers->count() }}</td>
                     <td>{{ $user->balance->balance }} ₽</td>
-                    <td>{{ $user->new_leads_quantity() }} </td>
+                    <td>{{ $user->numberOfNewLeads }} </td>
                 </tr>
-                @endif
+
             @endforeach
 
             </tbody>

@@ -49,11 +49,6 @@ class User extends Authenticatable
     public function new_leads_quantity(){
         $count = 0;
         $count = Lead::where('user_id',$this->attributes['id'])->where('checked',false)->count();
-//        foreach ($this->leads as $lead){
-//            if($lead->checked==0){
-//                $count++;
-//            }
-//        }
         return $count;
     }
     public function UserPaymentAmounts(){
@@ -174,6 +169,9 @@ class User extends Authenticatable
         return Payment::where('user_id', $this->attributes['id'])->where('status_group','<>','refer')->whereIn('reason_id',$r)->get();
     }
 
+    public function refers(){
+        return $this->hasMany(Refer::class);
+    }
     public function payments_by_refer()
     {
         return Payment::where('user_id', $this->attributes['id'])->where('status_group','=','refer')->get();

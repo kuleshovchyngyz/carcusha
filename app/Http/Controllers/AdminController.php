@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\PaymentAmount;
 use App\Models\PublicOffer;
 use App\Models\Question;
+use App\Models\Refer;
 use App\Models\SiteSetting;
 use App\Models\Status;
 use App\Models\User;
@@ -26,16 +27,40 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
+
+
         $sort = $request->get('sort', 'desc');
-        $users = User::all();
+
+//        return User::whereIn('id',$users)->get();
+
+        $users = User::with(['setting','leads','balance','violations','paids','roles','refers'])
+            ->whereHas(
+                'roles', function($q){
+                $q->where('name', 'user');
+            })
+            ->withSum(['paids as paid'=>function($query){
+                $query->where('status','complete');
+            }],'amount')
+            ->withCount(['leads as pending'=> function($query){
+                $userStatuses = UserStatuses::where('amount','nothing')->orwhere('amount','initial')->pluck('id');
+                $query->whereIn('status_id',$userStatuses);
+            }])
+            ->withCount(['leads as rejected'=> function($query){
+                $userStatuses = UserStatuses::where('amount','rejected')->pluck('id');
+                $query->whereIn('status_id',$userStatuses);
+            }])
+            ->withCount(['leads as numberOfNewLeads' => function ($query) {
+            $query->where('checked', 0);
+        }])
+            ->get();
       if($sort == 'asc'){
-            $users = $users->sortBy(function ($product, $key) {
-                return $product->new_leads_quantity();
+            $users = $users->sortBy(function ($users) {
+                return $users->leads->where('checked',0)->count();
             });
         }else if($sort == 'desc'){
-            $users = $users->sortByDesc(function ($product, $key) {
-                return $product->new_leads_quantity();
-            });
+          $users = $users->sortByDesc(function ($users) {
+              return $users->leads->where('checked',0)->count();
+          });
         }
         $sort = ($sort == 'asc') ? 'desc' : 'asc';
         return view('admin.home',[

@@ -60,7 +60,7 @@
                         <div class="type-field d-flex">
                             <span class="phone @if(null !==old('number'))  active @endif">Телефон</span>
                             <label class="type-field-select @if(null ===old('number')) mail @else phone @endif">
-                                <input type="checkbox" name="type-field" id="type_field">
+                                <input type="checkbox" name="type-field" id="type_field" checked>
                             </label>
                             <span class="mail @if(null ===old('number')) active @endif">E-Mail</span>
                         </div>
