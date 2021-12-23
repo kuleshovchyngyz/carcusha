@@ -37,11 +37,11 @@ $leads = $data;
                         </div>
                         <div class="table-col-2">
                             <div class="divTableCell" style="width: 264px;">
-                                <span class="{{$lead->color()}}"> {{ $lead->status()->user_statuses->name }}</span>
-                                @if($lead->status()->user_statuses->comments!='')
+                                <span class="{{$lead->color()}}"> {{ $lead->status->user_statuses->name }}</span>
+                                @if($lead->status->user_statuses->comments!='')
                                     <span class="info-icon tb-icon dd-btn">
                                         <div class="dd-btn__info">
-                                           {{   shortCodeParse($lead->status()->user_statuses->comments) }}
+                                           {{   shortCodeParse($lead->status->user_statuses->comments) }}
                                         </div>
                                     </span>
                                 @endif
@@ -62,15 +62,15 @@ $leads = $data;
                         </div>
                     </div>
                     <div class="dd-body" id="info-{{$key+1}}" style="display: none;">
-                        @foreach($lead->leadHistory() as $history)
+                        @foreach($lead->leadHistory as $history)
                         <div class="d-flex dd-body__item" style="width: 100%;">
                             <div class="table-time">{{ $history->created_at->format('d-m-Y H:i') }}</div>
                             <div class="table-i text-right">
-                                <span class="{{color($history->event)}}"> {{ $history-> user_status()->name }} </span>
-                                @if($history-> user_status()->comments!='')
+                                <span class="{{color($history->event)}}"> {{ $history->userStatus->name }} </span>
+                                @if($history->userStatus->comments!='')
                                 <span class="info-icon tb-icon dd-btn">
                                                     <div class="dd-btn__info">
-                                                       {{ shortCodeParse($history-> user_status()->comments) }}
+                                                       {{ shortCodeParse($history->userStatus->comments) }}
                                                     </div>
                                                 </span>
                                 @endif
@@ -88,80 +88,3 @@ $leads = $data;
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{--<div class="col-md-9">--}}
-{{--    <div class="main__content">--}}
-{{--        <h2 class="main__content-title">Авто</h2>--}}
-{{--        <div class="table-responsive">--}}
-{{--            <table class="main__table">--}}
-{{--                <thead>--}}
-{{--                <tr>--}}
-{{--                    <th>Дата</th>--}}
-{{--                    <th>Номер</th>--}}
-{{--                    <th>Автомобиль</th>--}}
-{{--                    <th>Телефон</th>--}}
-{{--                    <th>Статус</th>--}}
-{{--                    <th>Оплата</th>--}}
-{{--                </tr>--}}
-{{--                </thead>--}}
-{{--                <tbody>--}}
-{{--                @foreach($leads as $lead)--}}
-{{--                <tr>--}}
-{{--                    <td class="d-flex">{{ $lead->created_at->format('d-m-Y H:i') }}</td>--}}
-{{--                    <td class="snowflake">#{{ $lead->bitrix_lead_id }}--}}
-{{--                        @if($lead->number==1)--}}
-{{--                            <img src="{{ asset('img/qr.png') }}" alt="">--}}
-{{--                        @endif--}}
-{{--                    </td>--}}
-{{--                    <td>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</td>--}}
-{{--                    <td>{{ $lead->phonenumber }}</td>--}}
-
-{{--                    <td class="main__table-dd-wrap" style="color:{{ $lead->status()->color }};">{{  ViewService::init($lead,'leadStatusName')->view('leadStatusName') }}--}}
-{{--                        <ul class="main__table-dd">--}}
-{{--                            <li>--}}
-{{--                                <span >{{ $lead->history()==false ? "" : $lead->history()->status()->name }}</span>--}}
-{{--                                <span>{{ $lead->history()==false ? "" :  $lead->history()->updated_at->format('d.m.y') }}</span>--}}
-{{--                            </li>--}}
-{{--                            <li>--}}
-{{--                                $lead->status()->name--}}
-{{--                                <span class="text-warning"> {{  $lead->status()->name }}</span>--}}
-{{--                                <span>{{ $lead->updated_at->format('d.m.y') }}</span>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-{{--                    </td>--}}
-
-
-
-
-
-
-{{--                    <td class="snowflake">{{ $lead->all_amount() }} ₽--}}
-{{--                        @if(!$lead->is_on_pending() && $lead->all_amount()>0)--}}
-{{--                            @dd(asset('img/snowflake.svg'))--}}
-{{--                        {{ ViewService::init()->view('snowflake') }}--}}
-
-{{--                            <img src="{{ asset('img/snowflake.png') }}" alt="">--}}
-
-{{--                        @endif--}}
-{{--                    </td>--}}
-{{--                </tr>--}}
-{{--                @endforeach--}}
-{{--                </tbody>--}}
-{{--            </table>--}}
-
-{{--        </div>--}}
-{{--    </div>--}}
-
-{{--</div>--}}

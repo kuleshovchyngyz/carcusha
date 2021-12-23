@@ -30,9 +30,6 @@ class AdminController extends Controller
 
 
         $sort = $request->get('sort', 'desc');
-
-//        return User::whereIn('id',$users)->get();
-
         $users = User::with(['setting','leads','balance','violations','paids','roles','refers'])
             ->whereHas(
                 'roles', function($q){

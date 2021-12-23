@@ -29,13 +29,13 @@ class Lead extends Model
     ];
 
     public function color(){
-        if($this->status()->color=='#EB5757'){
+        if($this->status->color=='#EB5757'){
             return 'statusRed';
         }
-        if($this->status()->color=='#27AE60'){
+        if($this->status->color=='#27AE60'){
             return 'statusGreen';
         }
-        if($this->status()->color=='#2D9CDB'){
+        if($this->status->color=='#2D9CDB'){
             return 'statusBlue';
         }
 
@@ -43,6 +43,7 @@ class Lead extends Model
     }
     public function status()
     {
+        return $this->belongsTo(Status::class);
         $status = Status::find($this->attributes['status_id']);
         if($status){
             return $status;
@@ -50,14 +51,7 @@ class Lead extends Model
         return false;
     }
     public function payment_by_status(){
-//        dump( $this->status()->type());
-//        $p = PaymentAmount::where('reason_of_payment',$this->status()==false ? 0 : $this->status()->type())->first();
-        return  $this->status()==false ? 0 : $this->status()->user_statuses->amount();
-
-//        return $p->amount;
-    }
-    public function leads_total_payment(){
-
+        return  $this->status==null ? 0 : $this->status->user_statuses->amount();
     }
     public function history(){
         $n = Notification::where('lead_id',$this->attributes['bitrix_lead_id'])->orderBy('created_at','DESC')->get();
@@ -70,7 +64,8 @@ class Lead extends Model
         return $n;
     }
     public function leadHistory(){
-        return Notification::where('lead_id',$this->attributes['bitrix_lead_id'])->orderBy('created_at','ASC')->get();
+        return $this->hasMany(Notification::class,'lead_id','bitrix_lead_id');
+//        return Notification::where('lead_id',$this->attributes['bitrix_lead_id'])->orderBy('created_at','ASC')->get();
     }
 
     public function is_on_pending(){

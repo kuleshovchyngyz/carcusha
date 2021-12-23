@@ -31,7 +31,7 @@ $leads = $data;
                         <td>{{ $payment->reasons->lead()->vendor }} {{ $payment->reasons->lead()->vendor_model }}, {{ $payment->reasons->lead()->vendor_year }}</td>
                         <td>{{ $payment->reasons->lead()->phonenumber }}</td>
 							 @if($payment->status()==false)
-							<td style="color:{{ $payment->reasons->lead()->status()->color }};">{{ $payment->reasons->lead()->status()->name }}</td>
+							<td style="color:{{ $payment->reasons->lead()->status->color }};">{{ $payment->reasons->lead()->status->name }}</td>
 
 							@else
 							<td style="color:{{ $payment->status()->color }};">{{ $payment->status()->name }}</td>

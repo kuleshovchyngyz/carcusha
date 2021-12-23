@@ -37,10 +37,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-
-
-        //auth()->user()->assignRole('admin');
-        $leads = Lead::select('*')
+        $leads = Lead::with('status','leadHistory')
             ->where('user_id',Auth::user()->id)
             ->orderBy('updated_at','DESC')
             ->get();

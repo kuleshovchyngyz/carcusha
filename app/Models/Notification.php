@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     use HasFactory;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
     protected $table = 'notifications';
     protected $fillable = [
         'lead_id',
@@ -17,10 +18,17 @@ class Notification extends Model
         'event'
 
     ];
+    public function userStatus(){
+        return $this->hasOneDeep(UserStatuses::class, [Status::class],['index'],['status']);
+    }
     public function user_status(){
-        return Status::where('index',$this->attributes['status'])->first()->user_statuses;
+
+        return $this->leadStatus->user_statuses;
     }
     public function status(){
         return Status::where('index',$this->attributes['status'])->first();
+    }
+    public function leadStatus(){
+        return $this->hasOne(Status::class,'index','status');
     }
 }
