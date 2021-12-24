@@ -1219,7 +1219,11 @@ select:invalid option:not(:first-child) {
         overflow: auto;
     }
 }
-
+@media screen and (min-width: 950px) {
+    .logo-min {
+        display: none;
+    }
+}
 @media screen and (max-width: 950px) {
     .logo {
         display: none;

@@ -44,14 +44,14 @@
                             <td>#{{ $lead->bitrix_lead_id }}  @if($lead->checked())  <img src="{{ asset('img/unchecked.png') }}" alt=""> @endif</td>
                             <td>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</td>
                             <td>{{ $lead->phonenumber }}</td>
-                            @if($lead->status()==false)
+                            @if($lead->status==false)
 
                                 <td>NULL</td>
                             @else
 
                                 {{--                                @dump($lead->history())--}}
                                 {{--                                @dump($lead)--}}
-                                <td class="main__table-dd-wrap" style="color:{{ $lead->status()->color }};">{{ $lead->status()->name }}
+                                <td class="main__table-dd-wrap" style="color:{{ $lead->status->color }};">{{ $lead->status->name }}
 
                                     <ul class="main__table-dd">
                                         <li>
@@ -60,7 +60,7 @@
                                             <span>{{ $lead->history()==false ? "" :  $lead->history()->updated_at->format('d.m.y') }}</span>
                                         </li>
                                         <li>
-                                            <span class="text-warning"> {{ $lead->status()->name }}</span>
+                                            <span class="text-warning"> {{ $lead->status->name }}</span>
                                             <span>{{ $lead->updated_at->format('d.m.y') }}</span>
                                         </li>
                                     </ul>

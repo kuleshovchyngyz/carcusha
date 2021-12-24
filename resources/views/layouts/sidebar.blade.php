@@ -11,10 +11,16 @@ if(!isset($active)){
             </div>
             <ul class="main__info-list">
                 <li class="main__info-item">
-                  <span>
-                    <strong>Балланс:
-                    </strong>
-                  </span>
+                  <span class="z-index-3">
+                                        <span class="info-icon tb-icon dd-btn">
+                                            <div class="dd-btn__info">
+                                                <div class="dd-btn__info-content">
+                                                    {{ ViewService::init()->view('paymentAmountsDetail') }}
+                                                </div>
+                                            </div>
+                                        </span>
+                                        <strong>Балланс:</strong>
+                                    </span>
                             <span>
                     <strong>{{ Auth::user()->balance->balance }}
                     </strong>

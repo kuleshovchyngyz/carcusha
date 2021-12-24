@@ -42,6 +42,7 @@ class LeadController extends Controller
             ->orderBy('updated_at','DESC')
             ->get();
         //dd($leads);
+
         return view('home',[
             'name' => 'leads',
             'data' => $leads

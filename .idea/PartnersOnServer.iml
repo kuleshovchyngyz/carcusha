@@ -140,6 +140,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/debug" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/maximebf/debugbar" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/staudenmeir/eloquent-has-many-deep" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/staudenmeir/eloquent-eager-limit" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/staudenmeir/belongs-to-through" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

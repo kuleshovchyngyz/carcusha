@@ -32,14 +32,29 @@
                     <img src="{{ asset('img/logo-min.png') }}" alt="" class="logo-min">
                     </a>
                 </div>
-                @auth()
-                    @if(Route::currentRouteName()!='lead.create' && Route::currentRouteName()!='qrform'&& Route::currentRouteName()!='car_application')
-                        <div class="">
-                            <a class="btn header__btn red-btn" href="{{ route('lead.create') }}"> Добавить авто</a>
+                <div class="ml-auto d-flex">
+                    @auth()
+                    <div class="notification-head">
+                        <a href="#">
 
+
+                            {!! ViewService::init()->view('numberOfNewNotifications') !!}
+                            <img src="{{ asset('img/icon-alert.png') }}" alt="">
+                        </a>
+                        <div class="notification-head-dd">
+                            <ul class="notifications">
+                                {!! ViewService::init()->view('headerNotifications') !!}
+
+                            </ul>
                         </div>
-                    @endif
-                @endauth
+                    </div>
+
+                        @if(Route::currentRouteName()!='lead.create' && Route::currentRouteName()!='qrform'&& Route::currentRouteName()!='car_application')
+                                <a class="btn header__btn red-btn" href="{{ route('lead.create') }}"> Добавить авто</a>
+                        @endif
+                    @endauth
+                </div>
+
                 <div class="main__dd-btn"></div>
             </div>
         </div>
@@ -53,6 +68,7 @@
 
     <footer class="footer">
         <div class="container d-flex">
+
             <img src="{{ asset('img//logo-white.png') }}" alt="" class="footer__logo">
             <a href="{{ route('public_offer') }}"  class="footer__link ml-auto">Публичная оферта</a>
         </div>

@@ -11,6 +11,8 @@ use App\Models\Notification;
 class Lead extends Model
 {
     use HasFactory;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+    use \Znck\Eloquent\Traits\BelongsToThrough;
     protected $table = 'leads';
     protected $fillable = [
         'number',
@@ -102,6 +104,9 @@ class Lead extends Model
     {
         return $this->belongsTo(User::class);
     }
+//    public function leadsNotification(){
+//        return $this->belongsToThrough(Notification::class, [User::class]);
+//    }
 
 
 }

@@ -2,8 +2,11 @@
 
 
 namespace App\Services;
+use App\Models\MessageNotification;
+use App\Models\Notification;
 use App\Models\PaymentAmount;
 use App\Models\SiteSetting;
+use App\Models\UserPaymentAmount;
 use Carbon\Carbon;
 use http\Client\Curl\User;
 
@@ -27,6 +30,27 @@ class ViewData
     {
         switch ($view) {
 
+            case 'paymentAmountsDetail':
+                $this->model = auth()->user();
+
+                $this->response = 'Сумма за добавление авто - '.$this->uniqueAmount('initial').' ₽.
+                Сумма за завершение сделки - '.$this->uniqueAmount('success').' ₽';
+                break;
+            case 'numberOfNewNotifications':
+                $this->response = MessageNotification::where('user_id',auth()->user()->id)->where('seen',0)->count();
+                if($this->response>0){
+                    $this->response = '<span class="notification-head-count">'.$this->response.'</span>';
+                    break;
+                }
+                $this->response = '';
+                break;
+            case 'headerNotifications':
+                    $notifications = MessageNotification::where('user_id',auth()->user()->id)->latest()->limit(10)->get();
+                    $this->response = '';
+                    foreach ($notifications as $notification){
+                        $this->response .= '<li class="notifications__item notifications__new">'.$notification->message.'</li>'. PHP_EOL;
+                    }
+                break;
             case 'telegramBot':
                    $s = SiteSetting::where('name','telegramBotToken');
                     $this->response = ($s->exists() ? $s->first()->value : '');
@@ -161,10 +185,12 @@ class ViewData
                 $this->response = $this->model->UserPaymentAmounts->where('reason_of_payment',$type)->first()->amount;
             }
         }
+        return $this->response;
     }
 
     protected function defaultAmount($type){
         $this->response = PaymentAmount::where('reason_of_payment',$type)->first()->amount;
+        return $this->response;
     }
     protected function route($type){
 
