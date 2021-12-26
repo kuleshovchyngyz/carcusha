@@ -41,13 +41,6 @@ class Bitrix
     }
 
     public function addLead($array = []){
-        $folder = '61a9efdaeb99c';
-        $array = [];
-        foreach ($data_img as $key=>$ready){
-            $array[$crm_pics_field_name[$key]] = ['fileData'=>[
-                $data_img[$key]->postname,base64_encode(file_get_contents($data_img[$key]->name))
-            ]];
-        }
         $this->result = $this->connect('crm.lead.add', [
             'fields' => $array,
             'params' => [
