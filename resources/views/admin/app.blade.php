@@ -61,6 +61,8 @@
                                     </a>
                                     <a class="btn header__btn color-red" href="{{ route('admin.offer') }}">Публичная оферта
                                     </a>
+                                    <a class="btn header__btn color-red" href="{{ route('admin.updates') }}">Обновления
+                                    </a>
                                     <a data-toggle="modal" data-target="#AddTelegramBot" class="btn header__btn color-red"> Добавить бот</a>
 
                                 </div>

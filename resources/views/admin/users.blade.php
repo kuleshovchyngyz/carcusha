@@ -7,40 +7,43 @@
             <tr>
                 <th>Логин</th>
                 <th>Телефон</th>
+                <th>E-Mail</th>
                 <th>Регистрация</th>
                 <th>Лидов</th>
-                <th>В работе</th>
-                <th>Отклонено</th>
-                <th>Оплачено</th>
-                <th>Нарушения</th>
-                <th>Статус</th>
-                <th>Рефералы</th>
-                <th>Баланс</th>
+                <th>Наруш.</th>
                 <th><a href="{{ route('admin.users') }}@if($data['sort']!='')?sort={{ $data['sort'] }}@endif">Объяв</a></th>
+                <th>Реф.</th>
+                <th>Начисления</th>
             </tr>
             </thead>
             <tbody>
             @foreach($data['users']->sortByDesc('created_at') as $user)
                 <tr>
-                    <td><a href="{{ route('admin.user', $user->id) }}" class="main__table-link">User #{{ $user->id  }}<span class="mob-stsus text-success"></span></a></td>
+
+                    <td>
+                      @if($user->active==1)
+                           <span class="status-dot text-success"></span>
+                      @else
+                            <span class="status-dot text-danger"></span>
+                      @endif
+                        <a href="{{ route('admin.user', $user->id) }}" class="main__table-link">User #{{ $user->id  }}<span class="mob-stsus text-success"></span></a></td>
                     @if(!$user->setting)
                         @dd($user)
                     @endif
                     <td>{{ $user->setting->number  }}</td>
+                    <td>{{ $user->setting->email  }}</td>
                     <td>{{ $user->created_at->format('d.m.y')  }}</td>
-                    <td>{{ $user->leads->count()  }}</td>
-                    <td>{{ $user->pending  }}</td>
-                    <td>{{ $user->rejected  }}</td>
-                    <td>{{ $user->paid  }}</td>
+                    <td><span>{{ $user->leads->count()  }} /
+                            <span class="text-primary">{{ $user->pending  }}</span> /
+                            <span class="text-success">{{ $user->successful  }}</span> /
+                            <span class="text-danger">{{ $user->rejected  }}</span></span></td>
                     <td>{{ $user->number_of_violations()  }}</td>
-                    @if($user->active==1)
-                        <td class="text-success">{{ $user->status()  }}</td>
-                    @else
-                        <td class="text-danger">{{ $user->status()  }}</td>
-                    @endif
-                    <td>{{ $user->refers->count() }}</td>
-                    <td>{{ $user->balance->balance }} ₽</td>
                     <td>{{ $user->numberOfNewLeads }} </td>
+                    <td>{{ $user->refers->count() }}</td>
+                    <td>10304 ₽ / <span class="text-success">@if($user->paid){{ $user->paid  }} ₽@else 0 ₽@endif</span></td>
+                    {{--                    <td>{{ $user->paid  }}</td>--}}
+
+{{--                    <td>{{ $user->balance->balance }} ₽</td>--}}
                 </tr>
 
             @endforeach

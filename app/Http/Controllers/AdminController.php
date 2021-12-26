@@ -46,6 +46,10 @@ class AdminController extends Controller
                 $userStatuses = UserStatuses::where('amount','rejected')->pluck('id');
                 $query->whereIn('status_id',$userStatuses);
             }])
+            ->withCount(['leads as successful'=> function($query){
+                $userStatuses = UserStatuses::where('amount','success')->pluck('id');
+                $query->whereIn('status_id',$userStatuses);
+            }])
             ->withCount(['leads as numberOfNewLeads' => function ($query) {
             $query->where('checked', 0);
         }])
@@ -160,6 +164,15 @@ class AdminController extends Controller
         $payment = PaymentAmount::all();
         return view('admin.home',[
             'name' => 'settings',
+            'data' => ['question'=>$question,'payment'=>$payment]
+        ]);
+    }
+    public function updates()
+    {
+        $question = Question::all();
+        $payment = PaymentAmount::all();
+        return view('admin.home',[
+            'name' => 'updates',
             'data' => ['question'=>$question,'payment'=>$payment]
         ]);
     }
