@@ -343,7 +343,7 @@ class LeadController extends Controller
         ]);
         $image_names = array();
         $folder_name = $request->folder_id;
-
+dd($request->all());
         if(\File::exists('uploads/'.$folder_name)) {
             $filesInFolder = \File::files('uploads/'.$folder_name);
             foreach($filesInFolder as $path) {
