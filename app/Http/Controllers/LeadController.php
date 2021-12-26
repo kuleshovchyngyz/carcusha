@@ -343,7 +343,7 @@ class LeadController extends Controller
         ]);
         $image_names = array();
         $folder_name = $request->folder_id;
-dd($request->all());
+
         if(\File::exists('uploads/'.$folder_name)) {
             $filesInFolder = \File::files('uploads/'.$folder_name);
             foreach($filesInFolder as $path) {
@@ -355,6 +355,7 @@ dd($request->all());
         }else{
             $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
         }
+        dd($result);
 
         new LeadBuilder(
             isset($request->car_vendor) == true ? $request->car_vendor : '',
