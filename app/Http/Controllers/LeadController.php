@@ -350,7 +350,6 @@ class LeadController extends Controller
                 $file = pathinfo($path);
                 $image_names[] =  $file['basename'] ;
             }
-
             $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
         }else{
             $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
