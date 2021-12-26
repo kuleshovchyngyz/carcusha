@@ -16,18 +16,24 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div>Телефон:
-                        <input type="text" id="number" name="number" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo===null){{ Auth::user()->setting->number }}@else {{ Auth::user()->promo->phone }} @endif">
+                    <div class="main__setting-item">
+                        <div>Телефон:
+                            <input type="text" id="number" name="number" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo===null){{ Auth::user()->setting->number }}@else {{ Auth::user()->promo->phone }} @endif">
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div>E-Mail:
-                        <input type="text" id="email" name="email" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo===null){{ Auth::user()->setting->email }}@else {{ Auth::user()->promo->email }} @endif">
+                    <div class="main__setting-item">
+                        <div>E-Mail:
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo===null){{ Auth::user()->setting->email }}@else {{ Auth::user()->promo->email }} @endif">
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div>Адрес:
-                        <input type="text" id="address" name="address" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo!==null){{ Auth::user()->promo->address }} @endif">
+                    <div class="main__setting-item">
+                        <div>Адрес:
+                            <input type="text" id="address" name="address" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo!==null){{ Auth::user()->promo->address }} @endif">
+                        </div>
                     </div>
                 </div>
             <div class="col-md-6">
