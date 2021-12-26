@@ -144,17 +144,7 @@ class ApplicationController extends Controller
     }
 
     public function publicOffer(){
-        $all = PublicOffer::all();
-        $text = '';
-        $title = '';
-        if($all->count()==2){
-            $text = $all[1]->text;
-            $title = $all[0]->text;
-        }
-
-        return view('layouts.publicOffer', [
-            'data'=> [$title,$text],
-          ]);
+        return view('layouts.publicOffer');
     }
 
     function sendDataToBitrixGuzzle($method, $data) {

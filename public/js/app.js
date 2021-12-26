@@ -2153,6 +2153,15 @@ $(document).ready(function () {
   });
 });
 $(document).ready(function () {
+  $("#registerButton").on('click', function () {
+    if (!$('.checkbox-agree').is(':checked')) {
+      $('#publicOfferWindow').modal('toggle');
+    } else {
+      $('#registration').submit();
+    }
+  });
+});
+$(document).ready(function () {
   $(".submitRegisterForm").on('click', function () {
     if ($('.checkbox-agree').is(':checked')) {
       $('#registration').submit();
@@ -2164,10 +2173,14 @@ $(document).ready(function () {
   $(".checkbox-agree").on('change', function () {
     if ($('.checkbox-agree').is(':checked')) {
       $('.submitRegisterForm').disabled = true;
+      $('.submitRegisterForm').removeClass('btn-disabled');
+      $('.submitRegisterForm').addClass('btn-red');
     }
 
     if (!$('.checkbox-agree').is(':checked')) {
       $('.submitRegisterForm').disabled = false;
+      $('.submitRegisterForm').removeClass('btn-red');
+      $('.submitRegisterForm').addClass('btn-disabled');
     }
   });
 });
@@ -2657,7 +2670,7 @@ $(document).ready(function () {
   $('#exampleModalCenter').modal('toggle');
   $(".agreed").click(function () {
     $('#exampleModalCenter').modal('toggle');
-  }); //your code here
+  });
 });
 $(".phone-error").on('keyup', function () {
   var val = $("input[name=phone]").val();

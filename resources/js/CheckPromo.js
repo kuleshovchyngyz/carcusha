@@ -59,6 +59,17 @@ $(document).ready(function(){
 
 });
 
+$(document).ready(function() {
+    $("#registerButton").on('click', function(){
+        if (!$('.checkbox-agree').is(':checked')) {
+            $('#publicOfferWindow').modal('toggle');
+        }else{
+            $('#registration').submit();
+        }
+    });
+
+});
+
 $(document).ready(function(){
 
     $(".submitRegisterForm").on('click', function(){
@@ -75,9 +86,14 @@ $(document).ready(function(){
 
         if($('.checkbox-agree').is(':checked')){
             $('.submitRegisterForm').disabled = true;
+            $('.submitRegisterForm').removeClass('btn-disabled');
+            $('.submitRegisterForm').addClass('btn-red');
+
         }
         if(!$('.checkbox-agree').is(':checked')){
             $('.submitRegisterForm').disabled = false;
+            $('.submitRegisterForm').removeClass('btn-red');
+            $('.submitRegisterForm').addClass('btn-disabled');
         }
     });
 

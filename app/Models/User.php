@@ -183,6 +183,13 @@ class User extends Authenticatable
         $count = $this->leads->whereIn('status_id',$userStatuses)->count();
         return $count;
     }
+    public function successful(){
+        $count = 0;
+        $userStatuses = UserStatuses::where('amount','success')->pluck('id');
+        $count = $this->leads->whereIn('status_id',$userStatuses)->count();
+        return $count;
+    }
+
     public function rejected(){
         $count = 0;
         $userStatuses = UserStatuses::where('amount','rejected')->pluck('id');

@@ -4,32 +4,40 @@ $paids = $data;
 
 
 <div class="col-md-9">
-    <div class="main__content">
-        <h2 class="main__content-title">Лиды</h2>
-        <div class="table-responsive">
-            <table class="main__table">
-                <thead>
-                <tr>
-                    <th>Дата</th>
-                    <th>Номер карты </th>
-                    <th>Сумма </th>
-                    <th>Статус</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($paids as $paid)
-                    <tr>
-                        <td>{{$paid->updated_at->format('d-m-Y H:i') }}</td>
-                        <td>#{{ auth()->user()->setting->card_number }}</td>
-                        <td>{{ $paid->amount }} </td>
-                        @if($paid->status=='complete')<td class="green">{{ 'переведено' }}</td>@else<td class="orange">{{ 'в ожидании' }}</td>@endif
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-            <br>
+    <div class="main__content-v2">
+        <h2 class="main__content-title">Выплаты</h2>
+        <div class="responsive-table" id="payments_table">
+            <div class="divTable main__table tabletwo">
+                <div class="divTableBody">
+                    <div class="divTableRow divTable-head">
+                        <div class="divTableCell" style="width: 145px;">Дата</div>
+                        <div class="divTableCell" style="width: 250px;">Номер карты</div>
+                        <div class="divTableCell text-center" style="width: 240px;">Сумма</div>
+                        <div class="divTableCell text-center" style="width: 265px;">Статус</div>
+                    </div>
+                    @foreach($paids as $paid)
+                    <div class="divTableRow t-row">
+                        <div class="table-col-1">
+                            <div class="divTableCell" style="width: 145px;">{{$paid->updated_at->format('d-m-Y') }}</div>
+                            <div class="divTableCell" style="width: 250px;">
+                                <span>{{ auth()->user()->setting->card_number }}</span>
+                            </div>
+                        </div>
+                        <div class="table-col-2">
+                            <div class="divTableCell text-center" style="width: 240px;">
+                                <span>{{ $paid->amount }} ₽</span>
+                            </div>
+                            <div class="divTableCell text-center" style="width: 265px;">
+                                @if($paid->status=='complete')<span class="green">{{ 'переведено' }}</span>@else<span class="orange">{{ 'в ожидании' }}</span>@endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
 
+                </div>
+            </div>
         </div>
+
     </div>
 
 

@@ -85,7 +85,7 @@ class HomeController extends Controller
             $val = isset($partners[$payment->reasons->table_id]) ? $partners[$payment->reasons->table_id] : 0;
             $partners[$payment->reasons->table_id] = $payment->amount +  $val;
         }
-
+        dump($partners);
         return view('home',[
             'name' => 'refer',
             'data' => $partners

@@ -256,7 +256,7 @@ $(document).ready(function () {
     $( ".agreed" ).click(function() {
         $('#exampleModalCenter').modal('toggle')
     });
-    //your code here
+
 });
 $(".phone-error").on('keyup', function(){
     let val = $("input[name=phone]").val()

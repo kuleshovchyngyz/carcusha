@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\MessageNotification;
 use App\Models\Notification;
 use App\Models\PaymentAmount;
+use App\Models\PublicOffer;
 use App\Models\SiteSetting;
 use App\Models\UserPaymentAmount;
 use Carbon\Carbon;
@@ -15,6 +16,7 @@ class ViewData
     private $method;
     private $response;
     private $model;
+    private $vars;
     public function init($model=null,$method='')
     {
         $this->method = $method;
@@ -25,14 +27,32 @@ class ViewData
     protected function handeModel(){
         $this->model = ($this->model===null) ? auth()->user() : $this->model;
     }
+    public function type($vars = []){
+        $this->vars = $vars;
+        return $this;
+    }
 
     protected function getResponse($view)
     {
         switch ($view) {
 
+            case 'publicOffer':
+                $all = PublicOffer::all();
+                $text = '';
+                $title = '';
+                if($all->count()==2){
+                    $text = $all[1]->text;
+                    $title = $all[0]->text;
+                }
+                if($this->vars[0]=='title'){
+                    $this->response = $title;
+                }else{
+                    $this->response = $text;
+                }
+                break;
+
             case 'paymentAmountsDetail':
                 $this->model = auth()->user();
-
                 $this->response = 'Сумма за добавление авто - '.$this->uniqueAmount('initial').' ₽.
                 Сумма за завершение сделки - '.$this->uniqueAmount('success').' ₽';
                 break;
@@ -91,6 +111,7 @@ class ViewData
                 $code = \Auth::user()->user_who_referred()!==false ? \Auth::user()->user_who_referred()->invitation_code : false;
                 $disabled = $code===false ? '' : 'disabled';
                 $mask = $code===false ? 'text' : 'password';
+                $mask = 'text';
                 $underText = $code===false ?
                     "<a class='red-link activatePromo' href='#' onclick='submitPromo()' >Активировать</a>"
                     :'Был использован';

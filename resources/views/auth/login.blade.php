@@ -156,19 +156,14 @@
 {{--                            </span>--}}
 {{--                        @enderror--}}
 
-                        <input type="button" value="РЕГИСТРАЦИЯ" class="btn btn-red submitRegisterForm" >
+{{--                        <input type="button" value="РЕГИСТРАЦИЯ" class="btn btn-red submitRegisterForm" >--}}
+
+                        <button type="button" id="registerButton" class="btn btn-red">
+                            РЕГИСТРАЦИЯ
+                        </button>
 
 
 
-
-                        <div class="text-left">
-                            <label class="checkbox-form">
-                                <input type="checkbox"  class="checkbox-agree" @if($errors->any()) checked @endif required>
-                                <span class="checkbox"></span>
-                                Соглашаюсь с
-                            </label>
-                            <a href="{{ route('public_offer') }}" target="_blank" class="red-link">Публичной офертой</a>
-                        </div>
                     </form>
 
                 </div>
@@ -176,5 +171,36 @@
         </div>
     </div>
 
+        <div class="modal fade show" id="publicOfferWindow" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="padding-right: 17px;" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 900px">
+                <div class="modal-info">
+                    <div class="container ">
+                        <div class="d-flex justify-content-between">
+                            <div class="publicOffer"><h1>{!! ViewService::init()->type(['title'])->view('publicOffer') !!}</h1></div>
+
+                        </div>
+                        <div class="publicOffer">{!! ViewService::init()->type(['text'])->view('publicOffer') !!}</div>
+                        <div class="text-left">
+                            <label class="checkbox-form">
+                                <input type="checkbox"  class="checkbox-agree" @if($errors->any()) checked @endif required>
+                                <span class="checkbox"></span>
+                                Соглашаюсь с Публичной офертой
+                            </label>
+{{--                            <a href="{{ route('public_offer') }}" target="_blank" class="red-link">Публичной офертой</a>--}}
+                        </div>
+                        <div class="d-flex flex-wrap align-items-baseline">
+                            <div class="col-md-6">
+                                <input type="button" value="СОГЛАСИТЬСЯ" class="btn btn-disabled submitRegisterForm" >
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-center">
+                                    <a href="{{ url()->previous() }}" class="red-link back">Вернуться назад</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endguest
 @endsection
