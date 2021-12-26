@@ -162,14 +162,14 @@ class LeadController extends Controller
             $data_img[] =
                 curl_file_create(public_path('uploads').'/'.$folder_name.'/'.$img[$key],'image/*',$img[$key]);
         }
-        dump($data_img);
+
         $array = [];
         foreach ($data_img as $key=>$ready){
             $array[$crm_pics_field_name[$key]] = ['fileData'=>[
                 $data_img[$key]->postname,base64_encode(file_get_contents($data_img[$key]->name))
             ]];
         }
-        dd($array);
+
 
         $v = isset($vendor)==true ? $vendor :"";
         $car = isset($model)==true ? $model :"";
