@@ -103,32 +103,14 @@ class HomeController extends Controller
 
     public function promo(){
         $user_id = Auth::user()->id;
-//        $pdf = new Fpdi();
-//        $pdf->AddPage();
-//
-//        $filename = '/qrcodes/CARbusinessCard.pdf';
-//        $pdf->setSourceFile(public_path($filename));
-//
-//        $template = $pdf->importPage(2);
-//
-//        $size = $pdf->getTemplateSize($template);
-//
-//        $pdf->useTemplate($template, 0, 0,$size['width'], $size['height'],true);
-//        $pdf->Image( public_path('qrcodes/qrqrsmall_'.$user_id.'.png'),52.65, 15.44, 23.1, 23.1);
-//        $pdf->Output();
-
-
-//        require(base_path() . '/vendor/setasign/fpdf/makefont/makefont.php');
-//
-//        MakeFont(public_path('qrcodes/Calibri.ttf'),'cp1251');
-
+dd(1111);
         $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
         if(!file_exists(public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf'))){
             $QRPics->pdf_part_two();
         }
-        if(!file_exists(public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf'))){
-            $QRPics->pdf_part_two();
-        }
+//        if(!file_exists(public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf'))){
+//            $QRPics->pdf_part_two();
+//        }
 
         //$pdf->Output();
         return view('home',[
