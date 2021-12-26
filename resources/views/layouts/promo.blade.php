@@ -8,8 +8,11 @@
         @csrf
         <div class="row">
                 <div class="col-md-6">
-                    <div>Названия компании:
-                        <input type="text" id="company" name="company" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo!==null){{ Auth::user()->promo->name }} @endif">
+                    <div class="main__setting-item">
+                        <div>Названия компании:
+                            <input type="text" id="company" name="company" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo!==null){{ Auth::user()->promo->name }} @endif">
+                        </div>
+
                     </div>
                 </div>
                 <div class="col-md-6">
