@@ -103,7 +103,7 @@ class HomeController extends Controller
 
     public function promo(){
         $user_id = Auth::user()->id;
-dd(1111);
+
         $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
         if(!file_exists(public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf'))){
             $QRPics->pdf_part_two();
