@@ -355,7 +355,7 @@ class LeadController extends Controller
         }else{
             $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
         }
-        dd($result);
+
 
         new LeadBuilder(
             isset($request->car_vendor) == true ? $request->car_vendor : '',
