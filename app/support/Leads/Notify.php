@@ -10,10 +10,11 @@ use Carbon\Carbon;
 
 class Notify
 {
-    public $lead, $new_status, $message, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses,$typeOfStatus,$vendor,$vendor_model,$vendor_year;
+    public $lead, $new_status, $message, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses,$typeOfStatus,$vendor,$vendor_model,$vendor_year,$old_color,$new_color;
 
     public function __construct($lead, $new_status){
         $this->lead = $lead;
+
         $this->vendor = $this->lead->vendor ?? '';
         $this->vendor_model = $this->lead->vendor_model ?? '';
         $this->vendor_year = $this->lead->vendor_year ?? '';
@@ -29,12 +30,15 @@ class Notify
         if($sent){
             $this->lead->status_id = $this->new_status->id;
             $this->lead->save();
+            $this->new_color = $this->lead->color();
             $this->statuses = Status::all();
             $this->history_of_lead = Notification::where('f_lead_id',$this->lead->id)
                 ->orderby('updated_at','DESC')
                 ->get();
             if ($this->history_of_lead->count()>1){
                 $this->old_status = $this->statuses->where('index',$this->history_of_lead[1]->status)->first();
+            }else{
+                $this->old_color = $this->lead->color();
             }
             $this->set_message();
             $this->send_notification();
@@ -64,10 +68,10 @@ class Notify
                 $str = $date.' в '.$time.'. у авто '.
                     $this->vendor.' '.$this->vendor_model.', '.
                     $this->vendor_year.' изменился статус с "'.
-                    str_replace('.','',$this->old_status->user_statuses->name).'" на "'.
-                    str_replace('.','',$this->new_status->user_statuses->name).'".';
+                    '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->old_status->user_statuses->name).'"</span> на "'.
+                    '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->new_status->user_statuses->name).'"</span>.';
             }else{
-                $str = $date.' в '.$time.' '.str_replace('.','',$this->old_status->user_statuses->name).' Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.'. ';
+                $str = $date.' в '.$time.' '.'<span class="statusBlue">"'.str_replace('.','',$this->old_status->user_statuses->name).'"</span>'.' Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.'. ';
             }
 
            // $str = 'Авто #'.$this->lead->bitrix_lead_id.': ';
