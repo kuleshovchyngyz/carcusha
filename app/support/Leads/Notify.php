@@ -53,17 +53,21 @@ class Notify
         }
         if($this->new_status->user_statuses->notify == 1 && $notify ){
             $date = Carbon::now()->format('d.m.Y');
-            $time = Carbon::now()->format('H:i:s');
+            $time = Carbon::now()->format('H:i');
 
             if ($this->history_of_lead->count()>1){
                 $date = date('d.m.Y', strtotime($this->history_of_lead->first()->updated_at));
-                $time = date('H:i:s', strtotime($this->history_of_lead->first()->updated_at));
+                $time = date('H:i', strtotime($this->history_of_lead->first()->updated_at));
             }
             //03.11.2020 в 14:59 у авто Volkswagen Gold, 2015 изменился статус с "Добавлен" на "В работе". Вам начислено 50 ₽.
             if($this->old_status!=null){
-                $str = $date.' в '.$time.'. у авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.' изменился статус с "'.$this->old_status->user_statuses->name.'" на "'.$this->new_status->user_statuses->name.'".';
+                $str = $date.' в '.$time.'. у авто '.
+                    $this->vendor.' '.$this->vendor_model.', '.
+                    $this->vendor_year.' изменился статус с "'.
+                    str_replace('.','',$this->old_status->user_statuses->name).'" на "'.
+                    str_replace('.','',$this->new_status->user_statuses->name).'".';
             }else{
-                $str = $date.' в '.$time.' '.$this->new_status->user_statuses->name.'. Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year;
+                $str = $date.' в '.$time.' '.str_replace('.','',$this->old_status->user_statuses->name).' Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.'. ';
             }
 
            // $str = 'Авто #'.$this->lead->bitrix_lead_id.': ';
