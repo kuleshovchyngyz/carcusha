@@ -60,7 +60,11 @@ class Notify
                 $time = date('H:i:s', strtotime($this->history_of_lead->first()->updated_at));
             }
             //03.11.2020 в 14:59 у авто Volkswagen Gold, 2015 изменился статус с "Добавлен" на "В работе". Вам начислено 50 ₽.
-            $str = $date.' в '.$time.'. у авто #'.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.' изменился статус с "'.$this->old_status->user_statuses->name.'" на "'.$this->new_status->user_statuses->name.'".';
+            if($this->old_status!=null){
+                $str = $date.' в '.$time.'. у авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.' изменился статус с "'.$this->old_status->user_statuses->name.'" на "'.$this->new_status->user_statuses->name.'".';
+            }else{
+                $str = $date.' в '.$time.' '.$this->new_status->user_statuses->name.'. Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year;
+            }
 
            // $str = 'Авто #'.$this->lead->bitrix_lead_id.': ';
             $this->message = $str.$this->message;
