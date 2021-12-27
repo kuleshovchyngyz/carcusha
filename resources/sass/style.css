@@ -1206,6 +1206,11 @@ select:invalid option:not(:first-child) {
     align-items: flex-start;
 }
 
+.main__setting-item .main__info-item span:last-child{
+    overflow: visible;
+    white-space: inherit;
+}
+
 /* media */
 @media (min-width: 1200px) {
 

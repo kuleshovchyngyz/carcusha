@@ -78,14 +78,11 @@ class HomeController extends Controller
         foreach ($partners as $key =>$partner){
             $partners[$key] = 0;
         }
-
         $payments = Payment::where('status_group','refer')->where('user_id',\auth()->user()->id)->get();
-
         foreach ($payments as $payment){
             $val = isset($partners[$payment->reasons->table_id]) ? $partners[$payment->reasons->table_id] : 0;
             $partners[$payment->reasons->table_id] = $payment->amount +  $val;
         }
-        dump($partners);
         return view('home',[
             'name' => 'refer',
             'data' => $partners

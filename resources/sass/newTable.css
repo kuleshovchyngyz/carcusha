@@ -78,7 +78,7 @@
 .dd-btn__info {
     width: max-content;
     max-width: 250px;
-    position: absolute;
+    position: absolute !important;
     left: 0;
     top: 100%;
     background: #fff;
