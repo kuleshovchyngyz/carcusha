@@ -87,6 +87,7 @@ class HomeController extends Controller
             'name' => 'refer',
             'data' => $partners
         ]);
+
     }
     public function settings(){
 

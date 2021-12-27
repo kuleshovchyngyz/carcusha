@@ -40,7 +40,7 @@
                     <td>{{ $user->number_of_violations()  }}</td>
                     <td>{{ $user->numberOfNewLeads }} </td>
                     <td>{{ $user->refers->count() }}</td>
-                    <td>10304 ₽ / <span class="text-success">@if($user->paid){{ $user->paid  }} ₽@else 0 ₽@endif</span></td>
+                    <td>{{ $user->balance->balance }} ₽ / <span class="text-success">@if($user->paid){{ $user->paid  }} ₽@else 0 ₽@endif</span></td>
                     {{--                    <td>{{ $user->paid  }}</td>--}}
 
 {{--                    <td>{{ $user->balance->balance }} ₽</td>--}}
