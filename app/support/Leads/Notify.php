@@ -6,14 +6,17 @@ use App\Models\MessageNotification;
 use App\Models\Notification;
 use App\Models\Status;
 use Carbon\Carbon;
-
+//03.11.2020 в 14:59 у авто Volkswagen Gold, 2015 изменился статус с "Добавлен" на "В работе". Вам начислено 50 ₽.
 
 class Notify
 {
-    public $lead, $new_status, $message, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses,$typeOfStatus;
+    public $lead, $new_status, $message, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses,$typeOfStatus,$vendor,$vendor_model,$vendor_year;
 
     public function __construct($lead, $new_status){
         $this->lead = $lead;
+        $this->vendor = $this->lead->vendor ?? '';
+        $this->vendor_model = $this->lead->vendor_model ?? '';
+        $this->vendor_year = $this->lead->vendor_year ?? '';
         $this->user = $this->lead->user;
         $this->new_status = $new_status;
         $this->typeOfStatus = $this->new_status->user_statuses->amount;
@@ -56,8 +59,10 @@ class Notify
                 $date = date('d.m.Y', strtotime($this->history_of_lead->first()->updated_at));
                 $time = date('H:i:s', strtotime($this->history_of_lead->first()->updated_at));
             }
-           // $str = $date.' в '.$time.'. Машина #'.$this->lead->bitrix_lead_id.': ';
-            $str = 'Авто #'.$this->lead->bitrix_lead_id.': ';
+            //03.11.2020 в 14:59 у авто Volkswagen Gold, 2015 изменился статус с "Добавлен" на "В работе". Вам начислено 50 ₽.
+            $str = $date.' в '.$time.'. у авто #'.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.' изменился статус с "'.$this->old_status->user_statuses->name.'" на "'.$this->new_status->user_statuses->name.'".';
+
+           // $str = 'Авто #'.$this->lead->bitrix_lead_id.': ';
             $this->message = $str.$this->message;
             $this->create_message_notification();
         }
@@ -75,9 +80,9 @@ class Notify
     public function set_message(){
         if($this->new_status->user_statuses->notify==1){
 //            $this->message =  $this->new_status->user_statuses->name;
-            $this->message =  $this->new_status->user_statuses->name.' '.shortCodeParse($this->new_status->user_statuses->comments);
+            $this->message =  shortCodeParse($this->new_status->user_statuses->comments);
             if( $this->user->user_who_referred()!==false && $this->user->payments->where('status_group','successCONVERTED')->count()===0 && $this->typeOfStatus=='success'){
-                $this->message =  $this->new_status->user_statuses->name.' '.shortCodeParse($this->new_status->user_statuses->comments,[],[],true);
+                $this->message =  shortCodeParse($this->new_status->user_statuses->comments,[],[],true);
             }
         }
     }
