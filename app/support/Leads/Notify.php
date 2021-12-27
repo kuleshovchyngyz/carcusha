@@ -65,10 +65,10 @@ class Notify
             }
             //03.11.2020 в 14:59 у авто Volkswagen Gold, 2015 изменился статус с "Добавлен" на "В работе". Вам начислено 50 ₽.
             if($this->old_status!=null){
-                $str = $date.' в '.$time.'. у авто '.
+                $str = $date.' в '.$time.' у авто '.
                     $this->vendor.' '.$this->vendor_model.', '.
-                    $this->vendor_year.' изменился статус с "'.
-                    '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->old_status->user_statuses->name).'"</span> на "'.
+                    $this->vendor_year.' изменился статус с '.
+                    '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->old_status->user_statuses->name).'"</span> на '.
                     '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->new_status->user_statuses->name).'"</span>.';
             }else{
                 $str = $date.' в '.$time.' '.'<span class="statusBlue">"'.str_replace('.','',$this->old_status->user_statuses->name).'"</span>'.' Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.'. ';
