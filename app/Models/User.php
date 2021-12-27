@@ -211,7 +211,6 @@ class User extends Authenticatable
 
     public function number_of_violations(){
         return $this->violations->count();
-
     }
 
 

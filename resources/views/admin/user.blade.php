@@ -114,7 +114,8 @@ $user = $data;
                         </li>
                     </ul>
                     <div class="text-center mrg-top-20">
-                        <a href="{{route('admin.user.report',$user->id)}}" class="btn remove-pass">Сообщить о нарушении</a>
+{{--                        <a href="{{route('admin.user.report',$user->id)}}" class="btn remove-pass">Сообщить о нарушении</a>--}}
+                        <a data-toggle="modal" data-target="#reportUser" class="btn remove-pass"> Сообщить о нарушении</a>
                     </div>
                     <div class="text-center">
                         <a href="{{route('admin.user_payment_settings',$user->id)}}" class="btn remove-pass">Оплаты</a>
@@ -123,6 +124,29 @@ $user = $data;
                         <a href="{{route('admin.user.ban',$user->id)}}" class="btn remove-pass">{{ $user->active==1 ? 'Заблокировать' : 'Активировать' }}</a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="reportUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('admin.user.report',$user->id) }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Сообщить о нарушении</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control input_type1" name="reason" placeholder="Причина нарушения">
+                        </div>
+                    </div>
+                    <div class="modal-footer text-center">
+                        <button type="submit" class="btn btn-red">Создать</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

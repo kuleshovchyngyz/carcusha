@@ -115,7 +115,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
 
     Route::post('/reset-password-admin', [App\Http\Controllers\AuthController::class, 'adminPasswordReset'])->name('auth.Reset-password');
     Route::get('user/ban/{user}', [App\Http\Controllers\AdminController::class, 'ban'])->name('admin.user.ban');
-    Route::get('user/report/{user}', [App\Http\Controllers\AdminController::class, 'report'])->name('admin.user.report');
+    Route::post('user/report/{user}', [App\Http\Controllers\AdminController::class, 'report'])->name('admin.user.report');
     Route::get('/settings', [App\Http\Controllers\AdminController::class, 'settings'])->name('admin.settings');
     Route::get('/ads', [App\Http\Controllers\AdminController::class, 'ads'])->name('admin.ads');
     Route::get('/public-offers', [App\Http\Controllers\AdminController::class, 'publicOffers'])->name('admin.offer');

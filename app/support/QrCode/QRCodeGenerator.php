@@ -221,6 +221,7 @@ class QRCodeGenerator
         if(!$preview){
 
             $pdf->Output('F', public_path('/qrcodes/vizitka'.Auth::user()->id.'.pdf'));
+
             $imagick = new \Imagick();
             $imagick->readImage(public_path('/qrcodes/vizitka'.Auth::user()->id.'.pdf'));
         }else{
@@ -231,7 +232,7 @@ class QRCodeGenerator
     public function pdf_preview()
     {
         $this->saveData();
-        $this->create_pdf(true);
+//        $this->create_pdf(true);
         $this->create_pdf(false);
         $this->pdf_part_two();
     }

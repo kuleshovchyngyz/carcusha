@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ad;
+use App\Models\MessageNotification;
 use App\Models\Paid;
 use App\Models\Payment;
 use App\Models\PaymentAmount;
@@ -213,10 +214,16 @@ class AdminController extends Controller
 
     }
 
-    public function report(User $user)
+    public function report(Request $request,User $user)
     {
-       Violation::create(['user_id'=>$user->id]);
-        return redirect()->back();
+        Violation::create(['user_id'=>$user->id,'reason'=>$request->reason]);
+        MessageNotification::create([
+            'user_id'=>$user->id,
+            'seen'=>false,
+            'message'=>$request->reason,
+            'lead_id'=>-3,
+        ]);
+        return redirect()->back()->with('success_message', ['Сохранено']);
     }
 
     public function statuses(){

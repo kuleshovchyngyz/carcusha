@@ -122,8 +122,8 @@ class HomeController extends Controller
         return Response::download($file);
     }
     public function downloadBusinessCard(){
-
         $file = public_path('/qrcodes/vizitka'.Auth::user()->id.'.pdf');
+//        dd(4564);
         return Response::download($file);
     }
 

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use setasign\Fpdi\Fpdi;
 
@@ -33,6 +34,16 @@ public $user_id;
         $QRPics->setEmail(trim($request->email) ?? '');
         $QRPics->setAddress(trim($request->address) ?? '');
         $QRPics->pdf_preview();
+        if($request->has('submitplakat')){
+            $file = public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf');
+            return Response::download($file);
+        }
+        if($request->has('submitVizitki')){
+            $file = public_path('/qrcodes/vizitka'.Auth::user()->id.'.pdf');
+//        dd(4564);
+            return Response::download($file);
+        }
+
     }
     public function notification_setting(Request $request){
         $bought = false;
