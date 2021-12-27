@@ -6,6 +6,8 @@ use App\Models\MessageNotification;
 use App\Models\Notification;
 use App\Models\Status;
 use Carbon\Carbon;
+use function Symfony\Component\Translation\t;
+
 //03.11.2020 в 14:59 у авто Volkswagen Gold, 2015 изменился статус с "Добавлен" на "В работе". Вам начислено 50 ₽.
 
 class Notify
@@ -66,8 +68,10 @@ class Notify
             //03.11.2020 в 14:59 у авто Volkswagen Gold, 2015 изменился статус с "Добавлен" на "В работе". Вам начислено 50 ₽.
             if($this->old_status!=null){
                 $str = $date.' в '.$time.' у авто '.
+                    '<span class="statusRed">'.
                     $this->vendor.' '.$this->vendor_model.', '.
                     $this->vendor_year.' изменился статус с '.
+                    '</span>'.
                     '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->old_status->user_statuses->name).'"</span> на '.
                     '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->new_status->user_statuses->name).'"</span>.';
             }else{
@@ -92,9 +96,9 @@ class Notify
     public function set_message(){
         if($this->new_status->user_statuses->notify==1){
 //            $this->message =  $this->new_status->user_statuses->name;
-            $this->message =  shortCodeParse($this->new_status->user_statuses->comments);
+            $this->message =  shortCodeParse($this->new_status->user_statuses->comments,[],[],false,true);
             if( $this->user->user_who_referred()!==false && $this->user->payments->where('status_group','successCONVERTED')->count()===0 && $this->typeOfStatus=='success'){
-                $this->message =  shortCodeParse($this->new_status->user_statuses->comments,[],[],true);
+                $this->message =  shortCodeParse($this->new_status->user_statuses->comments,[],[],true,true);
             }
         }
     }
