@@ -135,4 +135,11 @@ class HomeController extends Controller
             'data' => ''
         ]);
     }
+    public function updates(){
+
+        return view('home',[
+            'name' => 'updates',
+            'data' => ''
+        ]);
+    }
 }

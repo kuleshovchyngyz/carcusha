@@ -210,6 +210,31 @@ $('#addQuestion').click(function () {
     console.log('sdfasdf');
 })
 
+$('#addVersion').click(function () {
+
+
+    $( `
+               <div class="row mrg-top-40 ">
+                <div class="col-md-4">
+                    <label class="new-satings-input-wrap">
+                        Версия:
+                        <input type="text" name="versions[]"  class="form-control">
+                    </label>
+                </div>
+                <div class="col-md-8">
+                    <div class="title-field">Обновления:</div>
+                    <textarea name="changes[]" id="" class="setting-textar">
+                    </textarea>
+                </div>
+            </div>
+    `
+
+
+
+    ).appendTo( "#version" );
+    console.log('version');
+})
+
 $('.btn--copy').click(function () {
     var copyText = document.getElementById("reference");
     copyText.select();

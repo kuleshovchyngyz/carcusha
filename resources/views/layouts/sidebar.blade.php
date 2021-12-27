@@ -111,6 +111,12 @@ if(!isset($active)){
                         Помощь
                     </a>
                 </li>
+                <li class="main__nav-item @if($active=="help") active @endif">
+                    <a href="{{ route('updates') }}" class="main__nav-link">
+                        <img src="{{ asset('img/icon-update.png') }} " alt="">
+                        Обновления
+                    </a>
+                </li>
             </ul>
             <div class="text-center">
                 <a  href="{{ route('customlogout') }}" style="color:#EE1D24;"> Выход из аккаунта

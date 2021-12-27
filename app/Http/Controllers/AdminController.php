@@ -11,6 +11,7 @@ use App\Models\Question;
 use App\Models\Refer;
 use App\Models\SiteSetting;
 use App\Models\Status;
+use App\Models\Updates;
 use App\Models\User;
 use App\Models\UserPaymentAmount;
 use App\Models\UserStatuses;
@@ -169,11 +170,10 @@ class AdminController extends Controller
     }
     public function updates()
     {
-        $question = Question::all();
-        $payment = PaymentAmount::all();
+        $updates = Updates::all();
         return view('admin.home',[
             'name' => 'updates',
-            'data' => ['question'=>$question,'payment'=>$payment]
+            'data' => ['updates'=>$updates]
         ]);
     }
     public function publicOffers()
@@ -387,6 +387,46 @@ class AdminController extends Controller
                     Question::create([
                         'question'=> $request->questions[$key],
                         'answer'=>$request->answers[$key]
+                    ]);
+                }
+            }
+
+        return redirect()->back()->with('success_message', ['Сохранено']);
+
+
+
+
+
+
+    }
+
+    public function store_updates(Request $request)
+    {
+
+        $request->validate([
+            'versions.*'=>'required',
+            'changes.*'=>'required'
+        ]);
+
+            if(isset($request->version_id)){
+
+                foreach ($request->version_id as $key => $version_id){
+                    Updates::find($version_id)->update([
+                        'version'=> $request->versions[$key],
+                        'changes'=>$request->changes[$key]
+                    ]);
+                }
+                for ($i = count($request->version_id); $i < count($request->versions); $i++){
+                    Updates::create([
+                        'version'=> $request->versions[$i],
+                        'changes'=>$request->changes[$i]
+                    ]);
+                }
+            }else{
+                foreach ($request->versions as $key => $version){
+                    Updates::create([
+                        'version'=> $request->versions[$key],
+                        'changes'=>$request->changes[$key]
                     ]);
                 }
             }

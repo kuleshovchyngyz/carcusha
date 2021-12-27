@@ -103,6 +103,7 @@ Route::group([ 'middleware' => ['auth', 'role:user']], function () {
     Route::post('/promo', [App\Http\Controllers\UserController::class, 'promo'])->name('user.promo');
 
     Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name('help');
+    Route::get('/updates', [App\Http\Controllers\HomeController::class, 'updates'])->name('updates');
 });
 Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], function () {
     Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.users');
@@ -127,6 +128,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::get('/statuses', [App\Http\Controllers\AdminController::class, 'statuses'])->name('admin.statuses');
     Route::post('/store_user_statuses', [App\Http\Controllers\AdminController::class, 'store_user_statuses'])->name('admin.store_user_statuses');
     Route::post('/settings/store', [App\Http\Controllers\AdminController::class, 'store_settings'])->name('admin.store_settings');
+    Route::post('/updates/store', [App\Http\Controllers\AdminController::class, 'store_updates'])->name('admin.store_updates');
     Route::post('/settings/payment_settings', [App\Http\Controllers\AdminController::class, 'store_payment_settings'])->name('admin.store_payment_settings');
     Route::post('/settings/user_payment_settings', [App\Http\Controllers\AdminController::class, 'store_user_payment_settings'])->name('admin.store_user_payment_settings');
     Route::get('/settings/user_payment_settings/{user}', [App\Http\Controllers\AdminController::class, 'user_payment_settings'])->name('admin.user_payment_settings');

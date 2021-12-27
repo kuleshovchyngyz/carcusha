@@ -2631,6 +2631,10 @@ $('#addQuestion').click(function () {
   $("\n               <div class=\"row mrg-top-40 \">\n                <div class=\"col-md-4\">\n                    <label class=\"new-satings-input-wrap\">\n                        \u0412\u043E\u043F\u0440\u043E\u0441:\n                        <input type=\"text\" name=\"questions[]\"  class=\"form-control\">\n                    </label>\n                </div>\n                <div class=\"col-md-8\">\n                    <div class=\"title-field\">\u041E\u0442\u0432\u0435\u0442:</div>\n                    <textarea name=\"answers[]\" id=\"\" class=\"setting-textar\">\n                    </textarea>\n                </div>\n            </div>\n    ").appendTo("#question");
   console.log('sdfasdf');
 });
+$('#addVersion').click(function () {
+  $("\n               <div class=\"row mrg-top-40 \">\n                <div class=\"col-md-4\">\n                    <label class=\"new-satings-input-wrap\">\n                        \u0412\u0435\u0440\u0441\u0438\u044F:\n                        <input type=\"text\" name=\"versions[]\"  class=\"form-control\">\n                    </label>\n                </div>\n                <div class=\"col-md-8\">\n                    <div class=\"title-field\">\u041E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F:</div>\n                    <textarea name=\"changes[]\" id=\"\" class=\"setting-textar\">\n                    </textarea>\n                </div>\n            </div>\n    ").appendTo("#version");
+  console.log('version');
+});
 $('.btn--copy').click(function () {
   var copyText = document.getElementById("reference");
   copyText.select();
