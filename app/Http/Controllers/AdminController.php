@@ -221,7 +221,7 @@ class AdminController extends Controller
         $date = Carbon::now()->format('d.m.Y');
         $time = Carbon::now()->format('H:i');
         if($request->reason!=null){
-            $str = "{$date} в {$time} Вам вынесено предупреждение ".
+            $str = "{$date} в {$time} Вам вынесено ".
                 '<span class="text-warning">предупреждение</span>'.
                 " по причине: ".'“'.$request->reason.'”';
             Violation::create(['user_id'=>$user->id,'reason'=>$request->reason]);
@@ -355,6 +355,17 @@ class AdminController extends Controller
         $balance = $user->balance;
         $balance->balance = $balance->balance -  $paid->amount;
         $balance->save();
+        $date = Carbon::now()->format('d.m.Y');
+        $time = Carbon::now()->format('H:i');
+
+        $str = "{$date} в {$time} Заявка на вывод ".$paid->amount.' ₽ '.'<span class="text-success">Выполнена</span>';
+        MessageNotification::create([
+            'user_id'=>$user->id,
+            'seen'=>false,
+            'message'=>$str,
+            'lead_id'=>-3,
+        ]);
+//        03.11.2020 в 14:59 Заявка на вывод 50 ₽ Выполнена.
         return true;
 
     }
