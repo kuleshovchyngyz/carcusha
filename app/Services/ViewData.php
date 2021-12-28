@@ -106,7 +106,7 @@ class ViewData
             case 'isEmailConfirmed':
                 $this->response = ($this->model->email_verified_at !== null && $this->model->email == $this->model->setting->email) ?
                     'Подтверждён' :
-                    "<a class='red-link' href='#' onclick='submitEmail()' >Подтвердить</a>";
+                    "<button class='red-link' type='button' id='submitEmail' >Подтвердить</button>";
                 if(old('email')){
                     $this->response = '';
                 }
@@ -116,12 +116,18 @@ class ViewData
                 $disabled = $code===false ? '' : 'disabled';
                 $mask = $code===false ? 'text' : 'password';
                 $mask = 'text';
-//                $underText = $code===false ?
-//                    "<a class='red-link activatePromo' href='#' onclick='submitPromo()' >Активировать</a>"
-//                    :'Был использован';
+                $underText = $code===false ?
+                    "<button class='red-link activatePromo' id='submitPromo' type='button' >Активировать</button>"
+                    :'';
+            if($code===false){
+                $this->response ='<div class="inv-code red">
+                                    <input type="text" class="form-control" id="invitation-inpup" name="invitationCode" placeholder="Код приглашения" value="'.$code.'">
+                                </div><p class="error text-danger d-none">Такого промокода не существует</p>'.$underText;
+            }else{
                 $this->response ='<div class="inv-code success">
                                     <input type="text" class="form-control" id="invitation-inpup" placeholder="Код приглашения" value="'.$code.'" disabled>
                                 </div>';
+            }
 //                $this->response = '<input type="'.$mask.'" class="form-control" id="invitation-inpup" name = "invitationCode" placeholder="Не указан" value="'.$code.'" '.$disabled.'>
 //                                        <p class="error text-danger d-none">Такого промокода не существует</p>';
 
@@ -130,7 +136,7 @@ class ViewData
             case 'isPhoneConfirmed':
                 $this->response = ($this->model->phone_verified_at !== null && $this->model->number ==$this->model->setting->number) ?
                     'Подтверждён' :
-                    "<a class='red-link' href='#' onclick='submitPhone()' >Подтвердить</a>";
+                    "<button class='red-link' id='submitPhone' type='button'>Подтвердить</button>";
                 if(old('number')){
                     $this->response = '';
                 }

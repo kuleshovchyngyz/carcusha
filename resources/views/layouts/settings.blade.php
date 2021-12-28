@@ -6,7 +6,7 @@
 
         <div class="d-flex main__content-head">
             <h1 class="main__content-title">Настройки</h1>
-            <button class='red-link ml-auto' href='#' onclick='submitSettings()' >Сохранить</button>
+            <button class='red-link ml-auto' type="button" id="submitSettings">Сохранить</button>
 
         </div>
     <div class="main__setting">
@@ -155,8 +155,8 @@
     </form>
 </div>
 </div>
-<script>
-    import App from "../../../public/js/app";
+<script type="javascript">
+
     function submitSettings() {
         $( ".main__setting" ).append( $( "<input type='hidden'  name = 'submitSettings'>" ) );
         document.getElementById("settings").submit();
@@ -170,8 +170,7 @@
         document.getElementById("settings").submit();
     }
     function submitPhone() {
-        $( ".main__setting" ).append( $( "<input type='hidden'  name = 'confirmPhone'>" ) );
-        document.getElementById("settings").submit();
+     alert(234523);
     }
     export default {
         components: {App}

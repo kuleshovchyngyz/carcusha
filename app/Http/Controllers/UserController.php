@@ -46,6 +46,7 @@ public $user_id;
 
     }
     public function notification_setting(Request $request){
+
         $bought = false;
         $on_work = false;
         if(isset($request->bought)){
@@ -94,8 +95,11 @@ public $user_id;
     }
 
     public function edit_settings(Request $request){
+
         if($request->has('confirmPromo')){
+
             $user = User::where('invitation_code',$request->invitationCode)->where('id','!=',Auth::user()->id)->first();
+
             if($user){
                 Refer::create(['user_id'=>$user->id,'referred_user_id'=>Auth::user()->id]);
                 return redirect()->back()->with('success_message',['Активировано']);

@@ -9,4 +9,6 @@ require('./ResetPassword.js');
 require('./uploadImages.js');
 require('./newtable.js');
 require('./CheckPromo')
+require('./submitButtons')
+
 
