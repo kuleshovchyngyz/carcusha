@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Models\UserPaymentAmount;
 use App\Models\UserStatuses;
 use App\Models\Violation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -216,13 +217,21 @@ class AdminController extends Controller
 
     public function report(Request $request,User $user)
     {
-        Violation::create(['user_id'=>$user->id,'reason'=>$request->reason]);
-        MessageNotification::create([
-            'user_id'=>$user->id,
-            'seen'=>false,
-            'message'=>$request->reason,
-            'lead_id'=>-3,
-        ]);
+        //03.11.2020 в 14:59 Вам вынесено предупреждение по причине: “Спам”.
+        $date = Carbon::now()->format('d.m.Y');
+        $time = Carbon::now()->format('H:i');
+        if($request->reason!=null){
+            $str = "{$date} в {$time} Вам вынесено предупреждение ".
+                '<span class="text-warning">предупреждение</span>'.
+                " по причине: ".'“'.$request->reason.'”';
+            Violation::create(['user_id'=>$user->id,'reason'=>$request->reason]);
+            MessageNotification::create([
+                'user_id'=>$user->id,
+                'seen'=>false,
+                'message'=>$str,
+                'lead_id'=>-3,
+            ]);
+        }
         return redirect()->back()->with('success_message', ['Сохранено']);
     }
 

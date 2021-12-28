@@ -4,10 +4,11 @@ $notifications = $data->toArray();
 
 <div class="col-md-9">
     <div class="main__content">
-        <h2 class="main__content-title">Уведомления</h2>
+        <h2 class="main__content-title">Уведоssмления</h2>
         <ul class="notifications">
             @foreach(array_reverse($notifications) as $notification)
-            <li class="notifications__item notifications__new">
+
+                <li class="notifications__item @if(!$notification['seen']) notifications__new @endif">
                {!! $notification['message'] !!}
             </li>
             @endforeach

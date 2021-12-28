@@ -88,7 +88,7 @@
                             </div>
                             <div class="table-col-2">
                                 <div class="divTableCell text-center" style="width: 175px;">
-                                    <span>{{ $partner->numberOfLeads()  }} / <span class="text-primary">{{ $partner->pending() }}</span> / <span class="text-success">{{ $partner->successful()  }}</span> / <span class="text-danger">{{ $partner->rejected()  }}</span></span>
+                                    <span>{{ $partner->numberOfLeads()  }}/ <span class="text-primary">{{ $partner->pending() }}</span> / <span class="text-success">{{ $partner->successful()  }}</span> / <span class="text-danger">{{ $partner->rejected()  }}</span></span>
                                 </div>
                                 <div class="divTableCell text-center" style="width: 265px;">
                                     {{ $data[$partner->id] }} ₽

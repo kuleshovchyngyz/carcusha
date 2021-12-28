@@ -14,7 +14,7 @@ $notifications = $data->toArray();
         </div>
         <ul class="notifications">
             @foreach(array_reverse($notifications) as $notification)
-            <li class="notifications__item notifications__new">
+                <li class="notifications__item @if(!$notification['seen']) notifications__new @endif">
                {!! $notification['message'] !!}
             </li>
             @endforeach

@@ -79,7 +79,7 @@ class Notify
                 $str = $date.' в '.$time.' "'.
                     '<span class="statusBlue">'.str_replace('.','',$this->new_status->user_statuses->name).'</span>"'.
                     '<span class="statusRed">'.
-                    ' Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.
+                    ' авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.
                     '</span>'.'. ';
             }
 
