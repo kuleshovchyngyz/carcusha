@@ -58,7 +58,7 @@
 
                 <div class="col-md-6">
                     <div class="main__setting-item ">
-                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn btn-red telegram'>Telegram uved</a>
+                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn btn-primary telegram' style="background-color: #e3473f; border-color: #e3473f;">Телеграм уведомление</a>
                     </div>
                 </div>
             </div>

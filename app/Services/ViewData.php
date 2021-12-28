@@ -116,12 +116,15 @@ class ViewData
                 $disabled = $code===false ? '' : 'disabled';
                 $mask = $code===false ? 'text' : 'password';
                 $mask = 'text';
-                $underText = $code===false ?
-                    "<a class='red-link activatePromo' href='#' onclick='submitPromo()' >Активировать</a>"
-                    :'Был использован';
-                $this->response = '<input type="'.$mask.'" class="form-control" id="invitation-inpup" name = "invitationCode" placeholder="Не указан" value="'.$code.'" '.$disabled.'>
-                                        <p class="error text-danger d-none">Такого промокода не существует</p>
-                                        '.$underText;
+//                $underText = $code===false ?
+//                    "<a class='red-link activatePromo' href='#' onclick='submitPromo()' >Активировать</a>"
+//                    :'Был использован';
+                $this->response ='<div class="inv-code success">
+                                    <input type="text" class="form-control" id="invitation-inpup" placeholder="Код приглашения" value="'.$code.'" disabled>
+                                </div>';
+//                $this->response = '<input type="'.$mask.'" class="form-control" id="invitation-inpup" name = "invitationCode" placeholder="Не указан" value="'.$code.'" '.$disabled.'>
+//                                        <p class="error text-danger d-none">Такого промокода не существует</p>';
+
                 break;
 
             case 'isPhoneConfirmed':
