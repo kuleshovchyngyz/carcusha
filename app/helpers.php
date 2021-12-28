@@ -3,16 +3,17 @@ function shortCodeParse($str,$arr = [],$value=[],$firstPayment = false,$color=fa
     $value = \App\Models\PaymentAmount::pluck('amount','reason_of_payment');
     $arr = \App\Models\PaymentAmount::pluck('reason_of_payment');
     foreach ($arr as $item){
-        if($firstPayment && ($item == 'success')){
-            $str = str_replace('['.$item.']',abs($value['firstPayment']),$str);
-        }else{
-            $str = str_replace('['.$item.']',abs($value[$item]),$str);
-        }
-        if(!$color){
+        if($color){
             if($firstPayment && ($item == 'success')){
                 $str = str_replace('['.$item.']','<span class="statusRed">'.abs($value['firstPayment']).'</span>',$str);
             }else{
                 $str = str_replace('['.$item.']','<span class="statusRed">'.abs($value[$item]).'</span>',$str);
+            }
+        }else{
+            if($firstPayment && ($item == 'success')){
+                $str = str_replace('['.$item.']',abs($value['firstPayment']),$str);
+            }else{
+                $str = str_replace('['.$item.']',abs($value[$item]),$str);
             }
         }
     }
