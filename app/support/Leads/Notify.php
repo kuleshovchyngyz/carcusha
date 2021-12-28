@@ -75,7 +75,7 @@ class Notify
                     '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->old_status->user_statuses->name).'"</span> на '.
                     '<span class="'.$this->new_color.'">"'.str_replace('.','',$this->new_status->user_statuses->name).'"</span>.';
             }else{
-                $str = $date.' в '.$time.' '.'<span class="statusBlue">"'.str_replace('.','',$this->old_status->user_statuses->name).'"</span>'.' Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.'. ';
+                $str = $date.' в '.$time.' '.'<span class="statusBlue">"'.str_replace('.','',$this->new_status->user_statuses->name).'"</span>'.' Авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.'. ';
             }
 
            // $str = 'Авто #'.$this->lead->bitrix_lead_id.': ';
