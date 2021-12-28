@@ -9,6 +9,7 @@ function shortCodeParse($str,$arr = [],$value=[],$firstPayment = false,$color=fa
             }else{
                 $str = str_replace('['.$item.']','<span class="statusRed">'.abs($value[$item]).'</span>',$str);
             }
+            $str = str_replace(['руб','₽'],['<span class="statusRed">'.'руб'.'</span>','<span class="statusRed">'.'₽'.'</span>'],$str);
         }else{
             if($firstPayment && ($item == 'success')){
                 $str = str_replace('['.$item.']',abs($value['firstPayment']),$str);
