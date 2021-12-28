@@ -68,7 +68,11 @@ class ViewData
                     $notifications = MessageNotification::where('user_id',auth()->user()->id)->latest()->limit(10)->get();
                     $this->response = '';
                     foreach ($notifications as $notification){
-                        $this->response .= '<li class="notifications__item notifications__new">'.$notification->message.'</li>'. PHP_EOL;
+                        if(!$notification->seen){
+                            $this->response .= '<li class="notifications__item notifications__new">'.$notification->message.'</li>'. PHP_EOL;
+                        }else{
+                            $this->response .= '<li class="notifications__item">'.$notification->message.'</li>'. PHP_EOL;
+                        }
                     }
                 break;
             case 'telegramBot':
