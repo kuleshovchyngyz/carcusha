@@ -56,11 +56,11 @@
                     </div>
                 </div>
 
-{{--                <div class="col-md-6">--}}
-{{--                    <div class="main__setting-item ">--}}
-{{--                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn btn-primary telegram' style="background-color: #e3473f; border-color: #e3473f;">Телеграм уведомление</a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="col-md-6">
+                    <div class="main__setting-item ">
+                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn btn-primary telegram' style="background-color: #e3473f; border-color: #e3473f;">Телеграм уведомление</a>
+                    </div>
+                </div>
             </div>
         </div>
 {{--        <div class="main__setting-row">--}}
