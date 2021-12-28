@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="main__setting-item ml-55">
-                        <div>Промокод:
+                        <div class="promodiv">Промокод:
                             {!! ViewService::init()->view('InvitationCode') !!}
                         </div>
                     </div>
