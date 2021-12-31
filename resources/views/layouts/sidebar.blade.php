@@ -119,7 +119,7 @@ if(!isset($active)){
                 </li>
             </ul>
             <div class="text-center">
-                <a  href="{{ route('customlogout') }}" style="color:#EE1D24;"> Выход из аккаунта
+                <a  href="{{ route('customlogout') }}" style="color:var(--color-blue);"> Выход из аккаунта
                 </a>
             </div>
         </div>

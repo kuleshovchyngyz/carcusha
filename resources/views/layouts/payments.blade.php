@@ -7,7 +7,7 @@ $leads = $data;
     <div class="main__content-v2"">
         <div class="d-flex main__content-head">
             <h2 class="main__content-title">Начисления</h2>
-            <button type="button"  class="red-link ml-auto" data-toggle="modal" data-target="#exampleModal">
+            <button type="button"  class="blue-link ml-auto" data-toggle="modal" data-target="#exampleModal">
                 Заказать  выплату
             </button>
         </div>

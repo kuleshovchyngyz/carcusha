@@ -2,7 +2,8 @@
     --color-green: #00D87A;
     --color-yellow: #FFBE0D;
     --color-orange: #FF5454;
-    --color-blue: #2E9EFF;
+    --color-blue: #39A2DD;
+    --color-blue-dark: #1975A8;
     --color-gray: #888888;
     --color-red: #E3473F;
 }
@@ -55,6 +56,19 @@ body {
     color: var(--color-red);
 }
 .red-link:hover {
+    color: #212529;
+    text-decoration: none;
+}
+.blue-link{
+    color: var(--color-red);
+    font-size: 18px;
+    text-decoration: underline;
+    box-shadow: none !important;
+    background: #fff;
+    color: var(--color-blue);
+    border: none;
+}
+.blue-link:hover {
     color: #212529;
     text-decoration: none;
 }

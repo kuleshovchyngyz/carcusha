@@ -6,7 +6,7 @@
 
         <div class="d-flex main__content-head">
             <h1 class="main__content-title">Настройки</h1>
-            <button class='red-link ml-auto' type="button" id="submitSettings">Сохранить</button>
+            <button class='blue-link ml-auto' type="button" id="submitSettings">Сохранить</button>
 
         </div>
     <div class="main__setting">

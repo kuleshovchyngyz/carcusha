@@ -50,16 +50,16 @@
                 <h3>Визитки</h3>
                 <img src="{{ asset('qrcodes/card1.jpg') }}" class="img-promo" alt="">
                 <img src="{{ asset('qrcodes/card_qrsmall_'.\auth()->user()->id.'.png') }}" class="img-promo" alt="">
-{{--                <a href="{{route('download.business.card')}}" class="red-link promo-link">Скачать визитки в PDF</a>--}}
-                <button class='red-link ml-auto' href='#' onclick='submitVizitki()' >Скачать визитки в PDF</button>
+{{--                <a href="{{route('download.business.card')}}" class="blue-link promo-link">Скачать визитки в PDF</a>--}}
+                <button class='blue-link ml-auto' href='#' onclick='submitVizitki()' >Скачать визитки в PDF</button>
             </div>
             <div class="col-md-6 d-flex">
                 <div class="ml-auto mr-auto">
                     <h3>Плакаты</h3>
                     <img src="{{ asset('qrcodes/card_qr_'.\auth()->user()->id.'.png') }}" class="img-promo" alt="" style="
     max-width: 361px;">
-{{--                    <a href="{{route('download_card')}}" class="red-link promo-link">Скачать плакат в PDF</a>--}}
-                    <button class='red-link ml-auto' href='#' onclick='submitplakat()' >Скачать плакат в PDF</button>
+{{--                    <a href="{{route('download_card')}}" class="blue-link promo-link">Скачать плакат в PDF</a>--}}
+                    <button class='blue-link ml-auto' href='#' onclick='submitplakat()' >Скачать плакат в PDF</button>
                 </div>
             </div>
         </div>

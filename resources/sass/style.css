@@ -176,6 +176,15 @@ body {
 
 .main__info-item span:last-child {
     text-align: right;
+    color: var(--color-blue);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 159px;
+}
+
+.refer .main__info-item span:last-child {
+    text-align: right;
     color: var(--color-red);
     text-overflow: ellipsis;
     overflow: hidden;
@@ -199,7 +208,7 @@ body {
 }
 
 .main__nav-item.active .main__nav-link {
-    color: var(--color-red);
+    color: var(--color-blue);
     font-weight: 600;
 }
 
@@ -1615,8 +1624,7 @@ select:invalid option:not(:first-child) {
 }
 
 .main__nav-item.active .main__nav-link {
-    color: var(--color-red);
-    font-weight: 600;
+
     display: flex;
 }
 
