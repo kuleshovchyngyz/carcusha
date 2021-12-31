@@ -59,7 +59,7 @@ class ViewData
             case 'numberOfNewNotifications':
                 $this->response = MessageNotification::where('user_id',auth()->user()->id)->where('seen',0)->count();
                 if($this->response>0){
-                    $this->response = '<span class="notification-head-count">'.$this->response.'</span>';
+                    $this->response = '<span class="notification-head-count blue">'.$this->response.'</span>';
                     break;
                 }
                 $this->response = '';

@@ -783,6 +783,18 @@ td:hover .main__table-dd {
     padding-top: 4px;
     margin-right: 2px;
 }
+.notification-head-count.blue{
+    height: 19px;
+    background: var(--color-blue);
+    color: #fff;
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 20px;
+    line-height: 0.8;
+    font-size: 14px;
+    padding-top: 4px;
+    margin-right: 2px;
+}
 
 .notification-head img {
     max-width: 30px;
