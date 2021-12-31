@@ -50,7 +50,7 @@
                     </div>
 
                         @if(Route::currentRouteName()!='lead.create' && Route::currentRouteName()!='qrform'&& Route::currentRouteName()!='car_application')
-                                <a class="btn header__btn red-btn" href="{{ route('lead.create') }}"> Добавить авто</a>
+                                <a class="btn header__btn blue-btn" href="{{ route('lead.create') }}"> Добавить авто</a>
                         @endif
                     @endauth
                 </div>

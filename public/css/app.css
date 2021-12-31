@@ -653,6 +653,10 @@ td:hover .main__table-dd {
     color: #fff;
     background: var(--color-red);
 }
+.btn.blue-btn {
+    color: #fff;
+    background: var(--color-blue);
+}
 
 .img-promo {
     max-width: 380px;
