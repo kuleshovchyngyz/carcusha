@@ -64,6 +64,9 @@
  <!-- note the end auth -->
 
 
+
+
+
             @yield('content')
 
     <footer class="footer">
