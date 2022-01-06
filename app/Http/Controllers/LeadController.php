@@ -164,12 +164,31 @@ class LeadController extends Controller
         }
 
         $array = [];
+
+
+
         foreach ($data_img as $key=>$ready){
+            $file_type = $this->getB64Type(file_get_contents($data_img[$key]->name));
+
+            switch($file_type) {
+                case 'image/gif':
+                    $file_ext = 'gif';
+                    break;
+                case 'image/png':
+                    $file_ext = 'jpg';
+                    break;
+                case 'image/jpeg':
+                case 'image/jpg':
+                default:
+                    $file_ext = 'jpg';
+                    break;
+            }
+            $data = explode( ',', file_get_contents($data_img[$key]->name) );
+
             $array[$crm_pics_field_name[$key]] = ['fileData'=>[
-                $data_img[$key]->postname,base64_encode(file_get_contents($data_img[$key]->name))
+                $key.'.'.$file_ext,$data[ 1 ]
             ]];
         }
-
 
         $v = isset($vendor)==true ? $vendor :"";
         $car = isset($model)==true ? $model :"";
@@ -191,7 +210,10 @@ class LeadController extends Controller
         $dealData = $bitrix->addLead($array);
         return $dealData;
     }
-
+    public         function getB64Type($str) {
+    // $str should start with 'data:' (= 5 characters long!)
+    return substr($str, 5, strpos($str, ';')-5);
+}
     public function get_status($id){
         $dealData = $this->sendDataToBitrixGuzzle('crm.lead.get', ['id' => $id] );
         $s = Status::where('index',$dealData['result']['STATUS_ID'])->first();
@@ -338,6 +360,7 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $request->validate([
             'phone' => 'required',
         ]);
@@ -350,6 +373,7 @@ class LeadController extends Controller
                 $file = pathinfo($path);
                 $image_names[] =  $file['basename'] ;
             }
+
             $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
         }else{
             $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
@@ -411,6 +435,7 @@ class LeadController extends Controller
 
     }
     public function testimage(Request $request){
+//        return $request->all();
         $images = $request->file;
 
         $folder_name = $request->folder_id;
@@ -424,9 +449,11 @@ class LeadController extends Controller
         $image_names = array();
         if($images && count($files)<10){
             foreach ($images as  $key => $image){
+                //return $image;
                 if($key<10){
-                    $image->move(public_path('uploads/'.$folder_name),$image->getClientOriginalName());
-                    $image_names[]=$image->getClientOriginalName();
+//                    $image->move(public_path('uploads/'.$folder_name),$image->getClientOriginalName());
+                    file_put_contents('uploads/'.$folder_name.'/'.$request->number.'.txt', $image);
+                    $image_names[]=$key;
                 }
             }
         }

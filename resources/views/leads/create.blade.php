@@ -99,6 +99,7 @@
                                     }else{
                                         $('p.error').empty()
                                         btn.disabled = true;
+                                        $('#pictures').removeAttr( "name" );
                                         btn.form.submit();
                                     }
 

@@ -2,34 +2,55 @@ $(document).ready(function() {
     $('#pictures').change(function(e) {
         var folder_id = $("#folder_id").val();
         var l = $('#pictures')[0].files.length;
-        console.log('number of files: ' + l)
+        console.log('number of files: ' + countBusy())
         repeat(folder_id,-1,l)
     });
 });
+
+ async function putImage(file,check,name) {
+
+        $(`#img${check}`).attr("src", file);
+        $(`#img${check}`).attr('data-name', name);
+        $(`#img${check}`).removeClass('d-none');
+        $(`#${check}`).removeClass('d-none');
+        $(`#img${check}`).addClass('d-block');
+        // $('.onlyFour').append('<li><i class="fa fa-times timesicon" id="1" aria-hidden="true"></i><img src = "'+reader.result+'" class="uploadImage d-block"></li>');
+
+}
 function repeat(folder_id,i,l) {
     i++;
-    console.log($('#pictures')[0].files[i])
-    var fd = new FormData();
-    fd.append('folder_id', folder_id)
-    fd.append('_token', $('[name="_token"]').val())
-    fd.append("file[]", $('#pictures')[0].files[i]);
-    image_names(fd).then(v => {
-        var getUrl = window.location;
-        var baseUrl = getUrl.protocol + "//" + getUrl.host + "/uploads/" + folder_id + '/' + v[0];
-        let check = false;
-        check = is_busy(v[1]);
-        if(check!=false){
-            console.log(check);
-            $(`#img${check}`).attr("src", baseUrl);
-            $(`#img${check}`).removeClass('d-none');
-            $(`#${check}`).removeClass('d-none');
-            $(`#img${check}`).addClass('d-block');
-        }
-        if(i<l-1){
-            repeat(folder_id,i,l);
-        }
 
-    });
+    var reader = new FileReader();
+console.log($('#pictures')[0].files[i])
+    reader.readAsDataURL($('#pictures')[0].files[i]);
+    reader.onload = function () {
+        minifyImg(reader.result, 1600, 'image/jpeg', (data)=> {
+            var fd = new FormData();
+            console.log('n=busy : '+countBusy());
+            fd.append('folder_id', folder_id)
+            fd.append('number',$('#pictures')[0].files[i].name )
+            fd.append('_token', $('[name="_token"]').val())
+            fd.append("file[]", data);
+            image_names(fd).then(v => {
+                console.log('sdfsdf: '+v[1]);
+                console.log(v);
+                let check = false;
+                check = is_busy(v[1]);
+                if(check!=false){
+                    putImage(data,check,$('#pictures')[0].files[i].name);
+                }
+                if(i<l-1){
+                    repeat(folder_id,i,l);
+                }
+
+            });
+        });
+
+    };
+    reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+
 
 }
 
@@ -38,7 +59,7 @@ function preview_pic(i,l)
 {
 
     i++;
-    console.log($(`#img1`).attr('src'));
+    //console.log($(`#img1`).attr('src'));
     var reader = new FileReader();
     var filedata = '';
     if(i<l){
@@ -48,7 +69,7 @@ function preview_pic(i,l)
             $(`#img${i+1}`).attr("src", filedata);
             $(`#img${i+1}`).removeClass('d-none');
         };
-        console.log(`#img${i+1}`);
+
         reader.readAsDataURL($('#pictures')[0].files[i]);
 
         preview_pic(i,l);
@@ -61,14 +82,16 @@ $("body").on("click", "a.linky", function() {
 $(document).ready(function () {
     $("body").on("click", ".timesicon", function() {
         $(this).addClass('d-none');
-        let url = $(this).next().attr('src');
-        let name = url.substring(url.lastIndexOf('/')+1);
-        console.log(name);
+        // let url = $(this).next().attr('src');
+        // let name = url.substring(url.lastIndexOf('/')+1);
+        let id = $(this).next().data('name');
+        let name = id+'.txt';
         var folder_id = $("#folder_id").val();
         var fd = new FormData();
         fd.append('_token', $('[name="_token"]').val())
         fd.append("name", name);
         fd.append("folder", folder_id);
+        console.log(name);
         delete_image(fd).then(v => {
             console.log(v);
         });
@@ -104,6 +127,17 @@ function is_busy(l){
     return false;
 
 }
+function countBusy(){
+    let images = $('.uploadImage').length;
+    let count = 0;
+    for (let i=1;i<images+1;i++){
+        if($(`#img${i}`).attr('src')!=''){
+           count++;
+        }
+    }
+
+    return count;
+}
 
 async function delete_image(fd){
     const result = await $.ajax({
@@ -115,3 +149,30 @@ async function delete_image(fd){
     })
     return result;
 }
+var minifyImg = function(dataUrl,newWidth,imageType="image/jpeg",resolve,imageArguments=0.7){
+    var image, oldWidth, oldHeight, newHeight, canvas, ctx, newDataUrl;
+    (new Promise(function(resolve){
+        image = new Image(); image.src = dataUrl;
+        setTimeout(() => {
+            resolve('Done : ');
+        }, 1000);
+
+    })).then((d)=>{
+        oldWidth = image.width; oldHeight = image.height;
+        //console.log([oldWidth,oldHeight]);
+        newHeight = Math.floor(oldHeight / oldWidth * newWidth);
+        //console.log(d+' '+newHeight);
+
+        canvas = document.createElement("canvas");
+        canvas.width = newWidth; canvas.height = newHeight;
+        //console.log(canvas);
+        ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0, newWidth, newHeight);
+        // console.log(ctx);
+
+        newDataUrl = canvas.toDataURL(imageType, imageArguments);
+        resolve(newDataUrl);
+        // console.log(newDataUrl);
+        //
+    });
+};

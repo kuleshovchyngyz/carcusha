@@ -40,7 +40,8 @@
 
 
     <div class="authentication">
-        <img src="{{ asset('img/logo-aut.png') }}" alt="" class="logoauth">
+        <img src="{{ asset('img/logo.png') }}" alt="" class="logoauth">
+
         <div class="tab-wrap">
             <ul class="nav mb-3" id="pills-tab" role="tablist">
                 <li class="nav__tab-item">
@@ -99,7 +100,7 @@
                         @if (Route::has('password.request'))
                             <a  class="red-link" href="{{ route('auth.forgot.password') }}">Забыли пароль?</a>
                         @endif
-                        <button class="btn btn-red">Войти</button>
+                        <button class="btn btn-blue">Войти</button>
                     </form>
                 </div>
 
@@ -158,7 +159,7 @@
 
 {{--                        <input type="button" value="РЕГИСТРАЦИЯ" class="btn btn-red submitRegisterForm" >--}}
 
-                        <button type="button" id="registerButton" class="btn btn-red">
+                        <button type="button" id="registerButton" class="btn btn-blue">
                             РЕГИСТРАЦИЯ
                         </button>
 
