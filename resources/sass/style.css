@@ -520,16 +520,16 @@ td:hover .main__table-dd {
     width: calc(100% / 4 - 14px);
     height: 67px;
     display: inline-block;
-    background: #F0EDED;
-    margin: 7px;
-    background-image: url(/img/img.png);
+    background: #A4AFC1;
+    margin: 7px 7px 7px 7px;
+    /*background-image: url(/img/img.png);*/
     background-size: 40px;
     background-repeat: no-repeat;
     background-position: center;
     vertical-align: top;
 }
 .filelist li img{
-    width: 67px;
+    width: 73px;
     height: 67px;
     object-fit:cover;
 }
@@ -739,7 +739,7 @@ td:hover .main__table-dd {
 
 
 .filelist li img{
-    width: 67px;
+    width: 73px;
     height: 67px;
     object-fit:cover;
 }
@@ -1414,6 +1414,9 @@ select:invalid option:not(:first-child) {
 }
 
 @media screen and (max-width: 768px) {
+    .filelist {
+        max-width: 100%;
+    }
     .logo {
         max-width: 100%;
     }
@@ -1422,13 +1425,16 @@ select:invalid option:not(:first-child) {
         flex-direction: column;
     }
 
-    .filelist li {
-        width: calc(25% - 10px);
-        margin-right: 13px;
-    }
+    /*.filelist li {*/
+    /*    width: calc(25% - 10px);*/
+    /*    margin-right: 13px;*/
+    /*}*/
 
     .filelist li:last-child {
         margin: 0;
+    }
+    .filelist .onlyFour li:last-child {
+        margin: 7px;
     }
 
     .add-new {
