@@ -1,5 +1,5 @@
 <?php
-$updates = \App\Models\Updates::all();
+$updates = \App\Models\Updates::orderBy('created_at', 'DESC')->get();
 ?>
 <div class="col-md-9">
     <div class="main__content">

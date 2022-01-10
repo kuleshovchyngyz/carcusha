@@ -16,7 +16,7 @@
     list-style: none;
     display: flex;
     justify-content: center;
-    color: red;
+    color:  var(--color-blue);
 }
 :root {
     --color-green: #00D87A;
@@ -224,7 +224,8 @@ body {
 
 .main__nav-link:hover {
     text-decoration: none;
-    color: var(--color-red);
+    color: var(--color-blue);
+
 }
 
 .main__nav-count {
@@ -271,7 +272,7 @@ body {
 
 .main__content-title {
     font-size: 32px;
-    color: var(--color-red);
+    color: var(--color-blue);
     margin-bottom: 20px;
     font-family: Open Sans;
 }
@@ -625,7 +626,7 @@ td:hover .main__table-dd {
 }
 
 .red-link {
-    color: var(--color-red);
+    color: var(--color-blue);
     font-size: 18px;
     text-decoration: underline;
 }
@@ -1089,7 +1090,7 @@ span.z-index-3 {
 }
 
 .help-list__item h3 {
-    color: #E3473F;
+    color: var(--color-blue);
 }
 
 .color-red {
@@ -1117,7 +1118,7 @@ h2 {
 h3 {
     font-size: 24px;
     line-height: 27px;
-    color: #E3473F;
+    color: var(--color-blue);
 }
 
 .btn-red:hover,

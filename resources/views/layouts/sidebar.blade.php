@@ -111,7 +111,7 @@ if(!isset($active)){
                         Помощь
                     </a>
                 </li>
-                <li class="main__nav-item @if($active=="help") active @endif">
+                <li class="main__nav-item @if($active=="updates") active @endif">
                     <a href="{{ route('updates') }}" class="main__nav-link">
                         <img src="{{ asset('img/icon-update.png') }} " alt="">
                         Обновления
