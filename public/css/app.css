@@ -618,11 +618,10 @@ td:hover .main__table-dd {
     line-height: 43px;
     color: #E3473F;
 }
-
-.modal__list {
-    font-size: 14px;
-    padding: 0;
-    margin-top: 25px;
+.modal__title__blue {
+    font-size: 32px;
+    line-height: 43px;
+    color: var(--color-blue);
 }
 
 .modal__list li {
@@ -653,11 +652,11 @@ td:hover .main__table-dd {
     color: #fff;
     background: var(--color-red);
 }
+
 .btn.blue-btn {
     color: #fff;
     background: var(--color-blue);
 }
-
 .img-promo {
     max-width: 380px;
     width: 100%;
@@ -704,6 +703,12 @@ td:hover .main__table-dd {
     visibility: hidden;
     opacity: 0;
     transition: all 0.3s;
+}
+
+.modal__list {
+    font-size: 14px;
+    padding: 0;
+    margin-top: 25px;
 }
 
 td:hover .main__table-dd {
@@ -1668,6 +1673,11 @@ td.snowflake svg{
     font-family: "Open Sans";
     font-size: 16px;
     font-weight: bold;
+}
+
+.text-area-type1{
+    width: 320px;
+    height: 60px;
 }
 
 /*!

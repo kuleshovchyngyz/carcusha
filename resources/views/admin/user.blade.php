@@ -140,7 +140,7 @@ $user = $data;
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="text" class="form-control input_type1" name="reason" placeholder="Причина нарушения">
+                            <textarea type="text" class="form-control text-area-type1" name="reason" placeholder="Причина нарушения"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer text-center">

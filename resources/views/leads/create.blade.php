@@ -11,7 +11,7 @@
 
                 <div class="col-md-9">
                     <div class="main__content">
-                        <h2 class="main__content-title">Добавление авто</h2>
+                        <h2 class="main__content-title-blue">Добавление авто</h2>
                         <form method="POST" action="{{ route('lead.store') }}" id ="formdata" enctype="multipart/form-data">
                             @csrf
 
@@ -107,7 +107,7 @@
                             </script>
                             <div class="text-center">
 
-                                <input id="submitButton" class="btn btn-red" type="button" value="ОТПРАВИТЬ" onclick="submitForm(this);" />
+                                <input id="submitButton" class="btn btn-blue" type="button" value="ОТПРАВИТЬ" onclick="submitForm(this);" />
                             </div>
                         </form>
                     </div>
@@ -120,7 +120,7 @@
     <div class="modal fade show" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: block; padding-right: 17px;" aria-modal="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">
             <div class="modal-info">
-                <div class="modal__title">
+                <div class="modal__title__blue">
                     Мы не выкупаем авто, если:
                 </div>
                 <ul class="modal__list">
@@ -128,9 +128,9 @@
                     <li>- Оно размещено на Avito и Auto.Ru;</li>
                     <li>- Продавец не заинтересован в продаже.</li>
                 </ul>
-                <button class="btn btn-red agreed">СОГЛАСИТЬСЯ</button>
+                <button class="btn btn-blue agreed">СОГЛАСИТЬСЯ</button>
                 <div class="text-center">
-                    <a href="{{ url()->previous() }}" class="red-link back">Вернуться назад</a>
+                    <a href="{{ url()->previous() }}" class="blue-link back">Вернуться назад</a>
                 </div>
             </div>
         </div>
