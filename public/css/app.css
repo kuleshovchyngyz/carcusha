@@ -340,7 +340,7 @@ body {
     display: block;
     width: 6px;
     height: 6px;
-    background: var(--color-orange);
+    background: var(--color-blue);
     border-radius: 50%;
     position: absolute;
     left: 0;
