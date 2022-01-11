@@ -40,6 +40,7 @@ $(document).ready(function(){
 
 
 
+
 $(document).ready(function(){
 
     $('#bankcardnumber').on('input', function(){
