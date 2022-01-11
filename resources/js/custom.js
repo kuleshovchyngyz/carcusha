@@ -271,28 +271,36 @@ $(".phone-error").on('keyup', function(){
 
 
 $(document).ready(function(){
-    var element = document.getElementById('phone');
+    var element1 = document.getElementById('phone');
     var maskOptions = {
         mask: '+{7}(000)000-00-00'
     };
-    var mask = IMask(element, maskOptions);
+    var mask = IMask(element1, maskOptions);
 })
 
 
 $(document).ready(function(){
-    var element = document.getElementById('number');
+    var element2 = document.getElementById('number');
     var maskOptions = {
         mask: '+{7}(000)000-00-00'
     };
-    var mask = IMask(element, maskOptions);
+    var mask = IMask(element2, maskOptions);
 })
 
 $(document).ready(function(){
-    var element = document.getElementById('numberRegister');
-    console.log('inininin')
+    var element3 = document.getElementById('numberRegister');
+
     var maskOptions = {
         mask: '+{7}(000)000-00-00'
     };
-    var mask = IMask(element, maskOptions);
+    var mask = IMask(element3, maskOptions);
+})
+$(document).ready(function(){
+    var element4 = document.getElementById('numberLogin');
+
+    var maskOptions = {
+        mask: '+{7}(000)000-00-00'
+    };
+    var mask = IMask(element4, maskOptions);
 })
 

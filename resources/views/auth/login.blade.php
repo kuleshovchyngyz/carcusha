@@ -86,7 +86,7 @@
                             @endif " value="{{ old('email') }}" required autocomplete="email" @if(null !==old('number')) disabled="disabled" @endif>
 
 
-                            <input type="tel" placeholder="Телефон" id="numberRegister" name="number" class="form-control type-phone @if(null ===old('number')) disabled @endif" @if(null ===old('number')) disabled="disabled" @endif
+                            <input type="tel" placeholder="Телефон" id="numberLogin" name="number" class="form-control type-phone @if(null ===old('number')) disabled @endif" @if(null ===old('number')) disabled="disabled" @endif
                             @if($login)
                             @error('number') is-invalid @enderror
                                    @endif  value="{{ old('number') }}" required autocomplete="email">
