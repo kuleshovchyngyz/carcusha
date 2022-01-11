@@ -2463,27 +2463,6 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 $(document).ready(function () {
-  var element = document.getElementById('phone');
-  var maskOptions = {
-    mask: '+{7}(000)000-00-00'
-  };
-  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element, maskOptions);
-});
-$(document).ready(function () {
-  var element = document.getElementById('number');
-  var maskOptions = {
-    mask: '+{7}(000)000-00-00'
-  };
-  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element, maskOptions);
-});
-$(document).ready(function () {
-  var element = document.getElementById('numberRegister');
-  var maskOptions = {
-    mask: '+{7}(000)000-00-00'
-  };
-  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element, maskOptions);
-});
-$(document).ready(function () {
   $('#bankcardnumber').on('input', function () {
     var formattedCreditCardInput = new (credit_card_input_mask__WEBPACK_IMPORTED_MODULE_2___default())({
       element: document.querySelector("#bankcardnumber"),
@@ -2684,6 +2663,28 @@ $(".phone-error").on('keyup', function () {
   if (val.length == 16) {
     $('p.error').empty();
   }
+});
+$(document).ready(function () {
+  var element = document.getElementById('phone');
+  var maskOptions = {
+    mask: '+{7}(000)000-00-00'
+  };
+  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element, maskOptions);
+});
+$(document).ready(function () {
+  var element = document.getElementById('number');
+  var maskOptions = {
+    mask: '+{7}(000)000-00-00'
+  };
+  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element, maskOptions);
+});
+$(document).ready(function () {
+  var element = document.getElementById('numberRegister');
+  console.log('inininin');
+  var maskOptions = {
+    mask: '+{7}(000)000-00-00'
+  };
+  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element, maskOptions);
 });
 
 /***/ }),

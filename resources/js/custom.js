@@ -11,30 +11,7 @@ $(function () {
 
 
 
-$(document).ready(function(){
-    var element = document.getElementById('phone');
-    var maskOptions = {
-        mask: '+{7}(000)000-00-00'
-    };
-    var mask = IMask(element, maskOptions);
-})
 
-
-$(document).ready(function(){
-    var element = document.getElementById('number');
-    var maskOptions = {
-        mask: '+{7}(000)000-00-00'
-    };
-    var mask = IMask(element, maskOptions);
-})
-
-$(document).ready(function(){
-    var element = document.getElementById('numberRegister');
-    var maskOptions = {
-        mask: '+{7}(000)000-00-00'
-    };
-    var mask = IMask(element, maskOptions);
-})
 
 
 
@@ -292,4 +269,30 @@ $(".phone-error").on('keyup', function(){
 })
 
 
+
+$(document).ready(function(){
+    var element = document.getElementById('phone');
+    var maskOptions = {
+        mask: '+{7}(000)000-00-00'
+    };
+    var mask = IMask(element, maskOptions);
+})
+
+
+$(document).ready(function(){
+    var element = document.getElementById('number');
+    var maskOptions = {
+        mask: '+{7}(000)000-00-00'
+    };
+    var mask = IMask(element, maskOptions);
+})
+
+$(document).ready(function(){
+    var element = document.getElementById('numberRegister');
+    console.log('inininin')
+    var maskOptions = {
+        mask: '+{7}(000)000-00-00'
+    };
+    var mask = IMask(element, maskOptions);
+})
 
