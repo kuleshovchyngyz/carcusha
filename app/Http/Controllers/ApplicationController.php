@@ -47,7 +47,7 @@ class ApplicationController extends Controller
         }
         $path = public_path('uploads/'.$folder_name);
         \File::deleteDirectory($path);
-        return redirect()->route('home');
+        return view('leads.thanks');
     }
     public function qrform(){
         $buffer = new DropDown();
@@ -56,6 +56,11 @@ class ApplicationController extends Controller
             'name' => 'qrform',
             'years'=>$buffer->get_car_years()
         ]);
+
+    }
+    public function thanks(){
+
+        return view('leads.thanks');
 
     }
     public function get_car_years(): string

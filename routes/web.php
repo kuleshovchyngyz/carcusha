@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/public-offer', [App\Http\Controllers\ApplicationController::class, 'publicOffer'])->name('public_offer');
 Route::post('/check-promo', [App\Http\Controllers\ApplicationController::class, 'checkPromo']);
 Route::get('/car_application', [App\Http\Controllers\ApplicationController::class, 'qrform'])->name('car_application');
+Route::get('/thanks', [App\Http\Controllers\ApplicationController::class, 'thanks']);
 Route::post('/car_application/store', [App\Http\Controllers\ApplicationController::class, 'store'])->name('car.store');
 Route::get('/calculate_available_amount', [App\Http\Controllers\AdminController::class, 'calculate_available_amount']);
 Route::post('/verification-code', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationCode'])->name('auth.verification-code');
