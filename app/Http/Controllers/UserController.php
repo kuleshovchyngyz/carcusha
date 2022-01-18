@@ -26,7 +26,7 @@ use setasign\Fpdi\Fpdi;
 
 class UserController extends Controller
 {
-public $user_id;
+    public $user_id;
     public function promo(Request $request){
         $QRPics = new QRCodeGenerator(null);
         $QRPics->setCompany(trim($request->company) ?? '');
@@ -34,15 +34,17 @@ public $user_id;
         $QRPics->setEmail(trim($request->email) ?? '');
         $QRPics->setAddress(trim($request->address) ?? '');
         $QRPics->pdf_preview();
-        if($request->has('submitplakat')){
-            $file = public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf');
-            return Response::download($file);
-        }
-        if($request->has('submitVizitki')){
-            $file = public_path('/qrcodes/vizitka'.Auth::user()->id.'.pdf');
-//        dd(4564);
-            return Response::download($file);
-        }
+//        dd($QRPics->big_name);
+
+//        if($request->has('submitplakat')){
+//            $file = public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf');
+//            return Response::download($file);
+//        }
+//        if($request->has('submitVizitki')){
+//            $file = public_path('/qrcodes/vizitka'.Auth::user()->id.'.pdf');
+////        dd(4564);
+//            return Response::download($file);
+//        }
 
     }
     public function notification_setting(Request $request){

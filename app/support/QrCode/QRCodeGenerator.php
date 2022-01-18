@@ -23,8 +23,8 @@ class QRCodeGenerator
 
     const input_image_business_car1 = 'qrcodes/card2.jpg';
     const input_image_simple_card = 'qrcodes/banner.jpg';
-    private  $big_name ;
-    private  $small_name;
+    public  $big_name ;
+    public  $small_name;
     public $card_name;
     public $business_card_name;
     public $text;
@@ -49,6 +49,8 @@ class QRCodeGenerator
             if(!file_exists(public_path('/qrcodes/vizitka'.$this->user_id.'.pdf'))){
                 $this->create_pdf(false);
             }
+
+
         }
     }
     public function saveData(){

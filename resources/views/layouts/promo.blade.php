@@ -1,12 +1,12 @@
 <div class="col-md-9">
-<div class="main__content promo-block">
+    <div class="main__content promo-block">
         <h2 class="main__content-title">Промоматериалы</h2>
         <p>Вы можете скачать и распечатать визитки и плакаты с Вашим QR-кодом.
             Распространите материалы, чтобы продавцы сами нашли нас. А вы получите деньги за их авто!
         </p>
-    <form action="{{ route('user.promo') }}" method="post" id="promoForm">
-        @csrf
-        <div class="row">
+        <form action="{{ route('user.promo') }}" method="post">
+            @csrf
+            <div class="row">
                 <div class="col-md-6">
                     <div class="main__setting-item">
                         <div>Названия компании:
@@ -36,44 +36,32 @@
                         </div>
                     </div>
                 </div>
-            <div class="col-md-6">
+                <div class="col-md-6">
 
+                </div>
+                <div class="col-md-6 pt-1 text-right">
+                    <button class="btn header__btn red-btn" type="submit">Показать</button>
+                </div>
             </div>
-
-        </div>
-    </form>
+        </form>
 
 
         <div class="row no-gutters">
-            <hr class="w-100">
             <div class="col-md-6">
                 <h3>Визитки</h3>
                 <img src="{{ asset('qrcodes/card1.jpg') }}" class="img-promo" alt="">
                 <img src="{{ asset('qrcodes/card_qrsmall_'.\auth()->user()->id.'.png') }}" class="img-promo" alt="">
-{{--                <a href="{{route('download.business.card')}}" class="blue-link promo-link">Скачать визитки в PDF</a>--}}
-                <button class='blue-link ml-auto' href='#' onclick='submitVizitki()' >Скачать визитки в PDF</button>
+                <a href="{{route('download.business.card')}}" class="red-link promo-link">Скачать визитки в PDF</a>
             </div>
             <div class="col-md-6 d-flex">
                 <div class="ml-auto mr-auto">
                     <h3>Плакаты</h3>
                     <img src="{{ asset('qrcodes/card_qr_'.\auth()->user()->id.'.png') }}" class="img-promo" alt="" style="
     max-width: 361px;">
-{{--                    <a href="{{route('download_card')}}" class="blue-link promo-link">Скачать плакат в PDF</a>--}}
-                    <button class='blue-link ml-auto' href='#' onclick='submitplakat()' >Скачать плакат в PDF</button>
+                    <a href="{{route('download_card')}}" class="red-link promo-link">Скачать плакат в PDF</a>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    function submitVizitki() {
-        $( ".main__setting-item" ).append( $( "<input type='hidden'  name = 'submitVizitki' id = 'submitVizitki'>" ) );
-        $('#submitplakat').remove();
-        document.getElementById("promoForm").submit();
-    }
-    function submitplakat() {
-        $( ".main__setting-item" ).append( $( "<input type='hidden'  name = 'submitplakat' id = 'submitplakat'>" ) );
-        $('#submitVizitki').remove();
-        document.getElementById("promoForm").submit();
-    }
-</script>
