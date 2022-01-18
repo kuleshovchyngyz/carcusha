@@ -189,6 +189,18 @@ class QRCodeGenerator
             $pdf->SetTextColor(179,179,179);
             $pdf->text(25.5, 402.3, $reportSubtitle);
 
+            $pdf->AddFont('arial_bold','','arial_bold.php');
+            $pdf->SetFont('arial_bold', '', 14);
+            $reportSubtitle = 'SKYvin.ru';
+            $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+            $pdf->SetTextColor(179,179,179);
+            $pdf->text(94.6, 402.3, $reportSubtitle);
+//            $pdf->SetDrawColor(255,255,255);
+//            $pdf->SetFillColor(255,255,255);
+//            $pdf->Rect(94.6, 390, 50, 20, 'F');
+
+            $pdf->AddFont('arial','','arial.php');
+            $pdf->SetFont('arial', '', 14);
             $reportSubtitle = $this->number.', '.$this->email;
             $x = $pdf->GetPageWidth() - $pdf->GetStringWidth($reportSubtitle) - 25.5;
             $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
