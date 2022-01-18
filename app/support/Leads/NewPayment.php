@@ -13,7 +13,7 @@ class NewPayment
     public function __construct($lead,$new_status)
     {
 
-        echo 'in construct';
+       // echo 'in construct';
         $this->continue = true;
         $this->lead = $lead;
         $this->user = $this->lead->user;
@@ -37,7 +37,7 @@ class NewPayment
     }
 
     protected function defrozePaymentsOfUserWhoReferred(){
-        echo 'in defrozePaymentsOfUserWhoReferred';
+      //  echo 'in defrozePaymentsOfUserWhoReferred';
         if(!$this->continue){
             return $this;
         }
@@ -55,7 +55,7 @@ class NewPayment
     }
 
     public function defroze_initial_lead_payment(){
-        echo 'in defroze_initial_lead_payment';
+       // echo 'in defroze_initial_lead_payment';
         if(!$this->continue){
             return $this;
         }
@@ -80,7 +80,7 @@ class NewPayment
     }
 
     public function payForUser(){
-        echo 'in payForUser';
+       // echo 'in payForUser';
         if($this->typeOfStatus=='nothing'){
             $this->continue = false;
             return $this;
@@ -116,7 +116,7 @@ class NewPayment
         ]);
     }
     public function payForReferredUser(){
-        echo 'in payForReferredUser';
+       // echo 'in payForReferredUser';
         if(!$this->continue){
             return $this;
         }
@@ -144,7 +144,7 @@ class NewPayment
     }
 
     protected function changeBalance(){
-        echo 'in changeBalance';
+       // echo 'in changeBalance';
         if(!$this->continue){
             return $this;
         }
