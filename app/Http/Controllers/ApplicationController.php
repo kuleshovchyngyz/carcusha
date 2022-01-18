@@ -92,19 +92,38 @@ class ApplicationController extends Controller
             "2021" => "45"
         ];
         $data_img=[];
-        //$crm_pics_field_name = ['UF_CRM_1627988390','UF_CRM_1625740903','UF_CRM_1627988418','UF_CRM_1627988441'];//test
         $crm_pics_field_name = ['UF_CRM_1633362445295','UF_CRM_1633362456303','UF_CRM_1633362468187','UF_CRM_1633362478787','UF_CRM_1633362488670','UF_CRM_1637847699599','UF_CRM_1637847730399','UF_CRM_1637847742893','UF_CRM_1637847753241','UF_CRM_1637847764708'];//real
         foreach ($img as $key => $i){
             $data_img[] =
                 curl_file_create(public_path('uploads').'/'.$folder_name.'/'.$img[$key],'image/*',$img[$key]);
         }
+
         $array = [];
+
+
+
         foreach ($data_img as $key=>$ready){
+            $file_type = $this->getB64Type(file_get_contents($data_img[$key]->name));
+
+            switch($file_type) {
+                case 'image/gif':
+                    $file_ext = 'gif';
+                    break;
+                case 'image/png':
+                    $file_ext = 'jpg';
+                    break;
+                case 'image/jpeg':
+                case 'image/jpg':
+                default:
+                    $file_ext = 'jpg';
+                    break;
+            }
+            $data = explode( ',', file_get_contents($data_img[$key]->name) );
+
             $array[$crm_pics_field_name[$key]] = ['fileData'=>[
-                $data_img[$key]->postname,base64_encode(file_get_contents($data_img[$key]->name))
+                $key.'.'.$file_ext,$data[ 1 ]
             ]];
         }
-
 
         $v = isset($vendor)==true ? $vendor :"";
         $car = isset($model)==true ? $model :"";
@@ -119,22 +138,16 @@ class ApplicationController extends Controller
         $array['UF_CRM_1633361973449'] = $v.' '.$car; //real   "ID" => "312"
 
         $array['UF_CRM_1633362091686'] =  isset($year)==true ? [$years[$year]] :""; //real
-        // $array['UF_CRM_1625740869'] = $v.' '.$car;
 
-        // $array['UF_CRM_1625740924'] = isset($year)==true ? $year :"";
         $array['SOURCE_ID'] = "1";
         $array['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
-
         $bitrix = new Bitrix();
         $dealData = $bitrix->addLead($array);
-//        $dealData = $this->sendDataToBitrixGuzzle('crm.lead.add', [
-//            'fields' => $array,
-//            'params' => [
-//                'REGISTER_SONET_EVENT' => 'Y'
-//            ],
-//        ]);
-        // dd($dealData);
         return $dealData;
+    }
+    public         function getB64Type($str) {
+        // $str should start with 'data:' (= 5 characters long!)
+        return substr($str, 5, strpos($str, ';')-5);
     }
     public function checkPromo(Request $request){
         if (User::where('invitation_code', '=', $request->promo)->count() > 0 ) {

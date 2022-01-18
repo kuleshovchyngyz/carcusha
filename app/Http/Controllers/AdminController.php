@@ -33,7 +33,7 @@ class AdminController extends Controller
 
 
         $sort = $request->get('sort', 'desc');
-        $users = User::with(['setting','leads','balance','violations','paids','roles','refers'])
+            $users = User::with(['setting','leads','balance','violations','paids','roles','refers'])
             ->whereHas(
                 'roles', function($q){
                 $q->where('name', 'user');
@@ -57,6 +57,7 @@ class AdminController extends Controller
             $query->where('checked', 0);
         }])
             ->get();
+            
       if($sort == 'asc'){
             $users = $users->sortBy(function ($users) {
                 return $users->leads->where('checked',0)->count();
