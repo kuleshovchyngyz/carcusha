@@ -20,10 +20,6 @@ class DropDown
             $buffer .= '<option value="'.$car_vendor.'">'.$car_vendor.'</option>';
         }
         return $buffer;
-
-
-
-
     }
     public function get_car_years() {
         $buffer='';

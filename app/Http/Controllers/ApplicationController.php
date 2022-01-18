@@ -68,11 +68,8 @@ class ApplicationController extends Controller
     }
     public function addDeal($vendor, $model,$year,$img,$phone,$folder_name) {
         $years = [
-            "2005" => "987",
-            "2006" => "763",
-            "2007" => "759",
-            "2008" => "330",
-            "2009" => "328",
+            "2008" => "295",
+            "2009" => "293",
             "2010" => "67",
             "2011" => "65",
             "2012" => "63",
@@ -84,7 +81,8 @@ class ApplicationController extends Controller
             "2018" => "51",
             "2019" => "49",
             "2020" => "47",
-            "2021" => "45"
+            "2021" => "45",
+            "2022" => "291"
         ];
         $data_img=[];
         $crm_pics_field_name = ['UF_CRM_1633362445295','UF_CRM_1633362456303','UF_CRM_1633362468187','UF_CRM_1633362478787','UF_CRM_1633362488670','UF_CRM_1637847699599','UF_CRM_1637847730399','UF_CRM_1637847742893','UF_CRM_1637847753241','UF_CRM_1637847764708'];//real
