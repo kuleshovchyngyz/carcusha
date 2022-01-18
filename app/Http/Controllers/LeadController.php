@@ -7,6 +7,7 @@ use App\Models\Vendors;
 use App\support\Bitrix\ApiConnect;
 use App\support\Leads\LeadBuilder;
 use App\support\Leads\UpdatingLeadStatus;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
@@ -81,7 +82,7 @@ class LeadController extends Controller
 //        $buffer = '<option value=2006>'.'2006'.' и старше</option>';
 //        $buffer = '<option value=2010>'.'2010'.'</option>';
 
-        for($i = date("Y")-15; $i < date("Y"); $i++){
+        for($i = date("Y"); $i > date("Y")-15; $i--){
             $buffer .= '<option value="'.$i.'">'.$i.'</option>';
         }
         return $buffer;

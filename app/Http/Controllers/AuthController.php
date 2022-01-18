@@ -117,7 +117,7 @@ class AuthController extends Controller
                 $request->validate(['example'=>'not_empty','email' => 'not_empty|email_format|unique:users|max:255','invitation_code'=>
                     ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
             AuthConfirmation::updateOrCreate( $param);
-            Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте CARcusha.shop Код:".$this->code)
+            Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте SKYvin.ru Код:".$this->code)
                 ->markdown('mail.code', ['code' => $this->code,
                     'message' => 'Пожалуйста, введите код для проверки вашего email.',
                     'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'

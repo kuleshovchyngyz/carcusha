@@ -146,7 +146,7 @@ public $user_id;
                 // return view('auth.createPasswordSms', $request->input())->withInput($request->input())->withErrors($validated);
             }
 
-            Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте CARcusha.shop Код:".$this->code)
+            Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте SKYvin.ru Код:".$this->code)
                     ->markdown('mail.code', ['code' => $this->code,
                         'message' => 'Пожалуйста, введите код для проверки вашего email.',
                         'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
