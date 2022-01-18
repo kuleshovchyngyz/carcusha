@@ -58,7 +58,7 @@
                 <li class="main__nav-item  @if($active=="settings") active @endif">
                     <a href="{{ route('settings') }}" class="main__nav-link">
                         <img src="{{ asset('img/icon-settings.png')}}" alt="">
-                        Настройки
+                        Настройки аккаунта
                     </a>
                 </li>
                 <li class="main__nav-item @if($active=="help") active @endif">
