@@ -115,7 +115,7 @@ class ViewData
                 $code = \Auth::user()->user_who_referred()!==false ? \Auth::user()->user_who_referred()->invitation_code : false;
                 $disabled = $code===false ? '' : 'disabled';
                 $mask = $code===false ? 'text' : 'password';
-                $mask = 'text';
+    //                $mask = 'text';
                 $underText = $code===false ?
                     "<button class='red-link activatePromo' id='submitPromo' type='button' >Активировать</button>"
                     :'';
@@ -125,7 +125,7 @@ class ViewData
                                 </div><p class="error text-danger d-none">Такого промокода не существует</p>'.$underText;
             }else{
                 $this->response ='<div class="inv-code success">
-                                    <input type="text" class="form-control" id="invitation-inpup" placeholder="Код приглашения" value="'.$code.'" disabled>
+                                    <input type="'.$mask.'" class="form-control" id="invitation-inpup" placeholder="Код приглашения" value="'.$code.'" disabled>
                                 </div>';
             }
 //                $this->response = '<input type="'.$mask.'" class="form-control" id="invitation-inpup" name = "invitationCode" placeholder="Не указан" value="'.$code.'" '.$disabled.'>

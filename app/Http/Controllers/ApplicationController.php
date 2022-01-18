@@ -7,6 +7,7 @@ use App\Models\Cars;
 use App\Models\PublicOffer;
 use App\Models\User;
 use App\Models\Vendors;
+use App\support\Leads\DropDown;
 use App\support\Leads\LeadBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -49,17 +50,11 @@ class ApplicationController extends Controller
         return redirect()->route('home');
     }
     public function qrform(){
-        $results = Vendors::orderBy('name','ASC')->get();
-        $buffer = '<option value="">Марка авто</option>';
-        foreach($results as $result) {
-            $car_vendor = stripslashes($result->name);
-            $buffer .= '<option value="'.$car_vendor.'">'.$car_vendor.'</option>';
-        }
-        //dd($buffer);
+        $buffer = new DropDown();
         return view('leads.qrcreate', [
-            'buffer'=> $buffer,
+            'buffer'=> $buffer->buffer(),
             'name' => 'qrform',
-            'years'=>$this->get_car_years()
+            'years'=>$buffer->get_car_years()
         ]);
 
     }

@@ -67,7 +67,7 @@ Auth::routes();
 
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('customlogout');
 
-Route::get('/car', [App\Http\Controllers\LeadController::class, 'get_car_models']);
+Route::get('/car', [\App\support\Leads\DropDown::class, 'get_car_models']);
 //Route::get('/test/{id}', [App\Http\Controllers\LeadController::class, 'get_status']);
 //Route::get('/getlist', [App\Http\Controllers\LeadController::class, 'get_status_list']);
 Route::post('/testimage', [App\Http\Controllers\LeadController::class, 'testimage']);
