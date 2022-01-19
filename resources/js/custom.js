@@ -92,7 +92,8 @@ $('.angle_toggle').click(function (){
 });
 
 $('.payment_amount').click(function () {
-    $(this).parent().prev().val($(this).text());
+    $('.input-modal').val($(this).text());
+   // $(this).parent().prev().val($(this).text());
     console.log($(this).text())
 });
 $('.pay_button').click(function () {

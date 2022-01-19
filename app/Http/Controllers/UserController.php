@@ -34,6 +34,7 @@ class UserController extends Controller
         $QRPics->setEmail(trim($request->email) ?? '');
         $QRPics->setAddress(trim($request->address) ?? '');
         $QRPics->pdf_preview();
+        return redirect()->back()->with('success_message', [__('Сгенерировано')]);
 //        dd($QRPics->big_name);
 
 //        if($request->has('submitplakat')){

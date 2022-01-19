@@ -121,7 +121,11 @@ $user = $data;
                         <a href="{{route('admin.user_payment_settings',$user->id)}}" class="btn remove-pass">Оплаты</a>
                     </div>
                     <div class="text-center">
-                        <a href="{{route('admin.user.ban',$user->id)}}" class="btn remove-pass">{{ $user->active==1 ? 'Заблокировать' : 'Активировать' }}</a>
+                        @if($user->active==1)
+                        <a  data-toggle="modal" data-target="#banUser" class="btn remove-pass">Заблокировать</a>
+                        @else
+                        <a href="{{route('admin.user.unban',$user->id)}}" class="btn remove-pass">Активировать</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -129,22 +133,45 @@ $user = $data;
     </div>
     <div class="modal fade" id="reportUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content modal-content-violation">
                 <form method="POST" action="{{ route('admin.user.report',$user->id) }}">
                     @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Сообщить о нарушении</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="modal-header-violation pb-20">
+                        <label class="modal-title-violation" id="exampleModalLabel">Укажите причину нарушения</label>
+                        <button type="button" class="close close-violation" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <textarea type="text" class="form-control text-area-type1" name="reason" placeholder="Причина нарушения"></textarea>
-                        </div>
+                    <div class="modal-body-violation">
+
+                            <textarea type="text" class="form-control text-area-type2 " name="reason" placeholder="Причина нарушения"></textarea>
+
                     </div>
-                    <div class="modal-footer text-center">
-                        <button type="submit" class="btn btn-red">Создать</button>
+
+                    <div class="modal-footer-violation p-40">
+                        <button class="btn-blue btn-violation" type="submit" >Сообщить о нарушении</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="banUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modal-content-violation">
+                <form method="POST" action="{{ route('admin.user.ban',$user->id) }}">
+                    @csrf
+                    <div class="modal-header-violation pb-20">
+                        <label class="modal-title-violation" id="exampleModalLabel">Укажите причину блокировки</label>
+                        <button type="button" class="close close-violation" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body-violation">
+                        <input name="fromModal" type="hidden" value="1">
+                        <textarea type="text" class="form-control text-area-type2 " name="reason" placeholder="Причина нарушения"></textarea>
+                    </div>
+                    <div class="modal-footer-violation p-40">
+                        <button class="btn-blue btn-violation" type="submit" >Заблокировать пользователя</button>
                     </div>
                 </form>
             </div>

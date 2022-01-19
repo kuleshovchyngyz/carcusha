@@ -2174,12 +2174,12 @@ $(document).ready(function () {
     if ($('.checkbox-agree').is(':checked')) {
       $('.submitRegisterForm').disabled = true;
       $('.submitRegisterForm').removeClass('btn-disabled');
-      $('.submitRegisterForm').addClass('btn-red');
+      $('.submitRegisterForm').addClass('btn-blue');
     }
 
     if (!$('.checkbox-agree').is(':checked')) {
       $('.submitRegisterForm').disabled = false;
-      $('.submitRegisterForm').removeClass('btn-red');
+      $('.submitRegisterForm').removeClass('btn-blue');
       $('.submitRegisterForm').addClass('btn-disabled');
     }
   });
@@ -2529,7 +2529,8 @@ $('.angle_toggle').click(function () {
   $(this).find('.fa-angle-up').toggleClass('fa-angle-down');
 });
 $('.payment_amount').click(function () {
-  $(this).parent().prev().val($(this).text());
+  $('.input-modal').val($(this).text()); // $(this).parent().prev().val($(this).text());
+
   console.log($(this).text());
 });
 $('.pay_button').click(function () {

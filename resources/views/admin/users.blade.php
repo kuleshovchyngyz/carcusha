@@ -11,7 +11,8 @@
                 <th>Регистрация</th>
                 <th>Лидов</th>
                 <th>Наруш.</th>
-                <th><a href="{{ route('admin.users') }}@if($data['sort']!='')?sort={{ $data['sort'] }}@endif">Объяв</a></th>
+{{--                <th><a href="{{ route('admin.users') }}@if($data['sort']!='')?sort={{ $data['sort'] }}@endif">Объяв</a></th>--}}
+                <th>Объяв</th>
                 <th>Реф.</th>
                 <th>Начисления</th>
             </tr>

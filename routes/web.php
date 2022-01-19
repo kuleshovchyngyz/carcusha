@@ -121,7 +121,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::get('user/verifyleads/{user}', [App\Http\Controllers\AdminController::class, 'verifyleads'])->name('admin.user.verify_leads');
 
     Route::post('/reset-password-admin', [App\Http\Controllers\AuthController::class, 'adminPasswordReset'])->name('auth.Reset-password');
-    Route::get('user/ban/{user}', [App\Http\Controllers\AdminController::class, 'ban'])->name('admin.user.ban');
+    Route::post('user/ban/{user}', [App\Http\Controllers\AdminController::class, 'ban'])->name('admin.user.ban');
+    Route::get('user/unban/{user}', [App\Http\Controllers\AdminController::class, 'unban'])->name('admin.user.unban');
     Route::post('user/report/{user}', [App\Http\Controllers\AdminController::class, 'report'])->name('admin.user.report');
     Route::get('/settings', [App\Http\Controllers\AdminController::class, 'settings'])->name('admin.settings');
     Route::get('/ads', [App\Http\Controllers\AdminController::class, 'ads'])->name('admin.ads');

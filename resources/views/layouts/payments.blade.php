@@ -4,8 +4,8 @@ $leads = $data;
 
 
 <div class="col-md-9">
-    <div class="main__content-v2"">
-        <div class="d-flex main__content-head">
+    <div class="main__content-v2">
+        <div class="d-flex main__content-head p-20">
             <h2 class="main__content-title">Начисления</h2>
             <button type="button"  class="blue-link ml-auto" data-toggle="modal" data-target="#exampleModal">
                 Заказать  выплату

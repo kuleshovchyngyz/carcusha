@@ -5,7 +5,9 @@ $paids = $data;
 
 <div class="col-md-9">
     <div class="main__content-v2">
-        <h2 class="main__content-title">Выплаты</h2>
+        <div class="p-20">
+            <h2 class="main__content-title">Выплаты</h2>
+        </div>
         <div class="responsive-table" id="payments_table">
             <div class="divTable main__table tabletwo">
                 <div class="divTableBody">

@@ -4,7 +4,7 @@
     <form  method="POST" id="settings" action="{{ route('settings.edit') }}" >
         @csrf
 
-        <div class="d-flex main__content-head">
+        <div class="d-flex main__content-head p-20">
             <h1 class="main__content-title">Настройки</h1>
             <button class='blue-link ml-auto' type="button" id="submitSettings">Сохранить</button>
 

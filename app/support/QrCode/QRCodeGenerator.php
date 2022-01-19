@@ -61,13 +61,15 @@ class QRCodeGenerator
                 'name'=>$this->company,
                 'phone'=>$this->number,
                 'email'=>$this->email,
-                'address'=>$this->address
+                'address'=>$this->address,
+                'generated'=>true
                 ]);
         }else{
             $this->user->promo->name = $this->company;
             $this->user->promo->phone = $this->number;
             $this->user->promo->email = $this->email;
             $this->user->promo->address = $this->address;
+            $this->user->promo->generated = true;
             $this->user->promo->save();
         }
     }

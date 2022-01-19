@@ -1,28 +1,40 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content modal-content-new">
             <form  method="POST" action="{{ route('query_for_payment') }}" >
                 @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Запросить выплату</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+                <div class="d-flex main__content-head modal-head-new">
+                    <span class="modal-title-new" id="exampleModalLabel">Запросить выплату</span>
+                    <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-40">
+                    <ul class="main__info-list">
+                        <li class="main__info-item">
+                            <span class="z-index-3">
+                                <strong>Балланс:</strong>
+                            </span>
+                            <span>
+                                <strong><a class="payment_amount">{{ Auth::user()->availableAmount() }}</a></strong>
+                                <i class="fa fa-rub" aria-hidden="true"></i>
+                          </span>
+                        </li>
+                    </ul>
                     <div class="sum">
-                        <label>Сумма</label>
-                        <input type="text" name="payment_amount" required>
-                        <label>Вывести <a class="payment_amount">{{ Auth::user()->availableAmount() }}</a> руб</label>
-                    </div>
-                    <div class="bankcard">
-                        <label> Куда вывести (номер банковской карты) </label>
-                        <input type="text"  name = "bankcardnumber" id="bankcardnumber"  onfocus=" let value = this.value; this.value = null; this.value=value" required>
+                        <label class="label-modal">Сумма для вывода:</label>
+                        <input type="text" class="input-modal" name="payment_amount" required>
 
                     </div>
+{{--                    <div class="bankcard">--}}
+{{--                        <label> Куда вывести (номер банковской карты) </label>--}}
+{{--                        <input type="text"  name = "bankcardnumber" id="bankcardnumber"  onfocus=" let value = this.value; this.value = null; this.value=value" required>--}}
+
+{{--                    </div>--}}
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-red" type="submit" >Заказать</button>
+                <div class="modal-footer-new p-40">
+                    <button class="btn btn-blue" type="submit" >Заказать</button>
                 </div>
 
             </form>

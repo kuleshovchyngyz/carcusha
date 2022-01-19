@@ -39,14 +39,14 @@
                 <div class="col-md-6">
 
                 </div>
-                <div class="col-md-6 pt-1 text-right">
-                    <button class="btn header__btn red-btn" type="submit">Показать</button>
+                <div class="col-md-11 pt-1 mt-3 text-center">
+                    <button class="btn header__btn blue-btn w-25" type="submit">СГЕНИРИРОВАТЬ</button>
                 </div>
             </div>
         </form>
 
-
-        <div class="row no-gutters">
+        @if( auth()->user()->promo->generated)
+        <div class="row no-gutters mt-5">
             <div class="col-md-6">
                 <h3>Визитки</h3>
                 <img src="{{ asset('qrcodes/card1.jpg') }}" class="img-promo" alt="">
@@ -63,5 +63,6 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </div>

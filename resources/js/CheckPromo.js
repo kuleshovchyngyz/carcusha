@@ -87,12 +87,12 @@ $(document).ready(function(){
         if($('.checkbox-agree').is(':checked')){
             $('.submitRegisterForm').disabled = true;
             $('.submitRegisterForm').removeClass('btn-disabled');
-            $('.submitRegisterForm').addClass('btn-red');
+            $('.submitRegisterForm').addClass('btn-blue');
 
         }
         if(!$('.checkbox-agree').is(':checked')){
             $('.submitRegisterForm').disabled = false;
-            $('.submitRegisterForm').removeClass('btn-red');
+            $('.submitRegisterForm').removeClass('btn-blue');
             $('.submitRegisterForm').addClass('btn-disabled');
         }
     });

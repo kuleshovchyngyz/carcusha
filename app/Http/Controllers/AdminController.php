@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ad;
+use App\Models\Ban;
 use App\Models\MessageNotification;
 use App\Models\Paid;
 use App\Models\Payment;
@@ -57,7 +58,7 @@ class AdminController extends Controller
             $query->where('checked', 0);
         }])
             ->get();
-            
+
       if($sort == 'asc'){
             $users = $users->sortBy(function ($users) {
                 return $users->leads->where('checked',0)->count();
@@ -207,12 +208,26 @@ class AdminController extends Controller
             'data' => ''
         ]);
     }
-    public function ban(User $user)
+    public function ban(Request $request,User $user)
     {
 
+        if($request->has('reason') && $request->reason!==null ){
+            Ban::create(['user_id'=>$user->id,'reason'=>$request->reason]);
+        }else if($request->reason===null){
+
+                return redirect()->back()->with('error_message', ['Укажите причину блокировки']);
+
+        }
         $user->active = !($user->active);
         $user->save();
-        return redirect()->back();
+        return redirect()->back()->with('success_message', ['Заблокировано']);
+
+    }
+    public function unban(User $user)
+    {
+        $user->active = !($user->active);
+        $user->save();
+        return redirect()->back()->with('success_message', ['Разблокировано']);
 
     }
 

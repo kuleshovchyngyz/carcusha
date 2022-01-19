@@ -1,0 +1,126 @@
+.modal-content-new{
+    height: 285px !important;
+    max-width: 400px !important;
+    margin-bottom: 30px !important;
+    border: 0px solid rgba(0,0,0,.2);
+    border-radius: 0;
+    outline: 0;
+}
+.modal-head-new{
+    padding: 10px 20px 0px 40px !important;
+}
+.p-40{
+    padding: 0px 40px 0px 40px !important;
+}
+.modal-title-new{
+    font-size: 24px;
+    color: var(--color-blue);
+}
+.label-modal{
+    font-family: Open Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+.input-modal{
+    width: 100%;
+    background: #F0EDED;
+    height: 40px;
+    border: 1px solid #888888;
+    box-sizing: border-box;
+}
+.payment_amount{
+    color: unset;
+}
+
+.modal-footer-new button {
+    width: 320px;
+
+}
+.modal-footer-new {
+    border-top: 0px solid #dee2e6;
+    position: absolute;
+    bottom: 20px;
+}
+.modal-footer-violation{
+    border-top: 0px solid #dee2e6;
+    position: relative;
+    bottom: 20px;
+}
+
+.modal-title-violation{
+    position: static;
+    width: 213px;
+    height: 66px;
+    left: 53.5px;
+    top: 0px;
+    margin-bottom: unset;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 33px;
+    text-align: center;
+
+    /* Red */
+
+    color: #E3473F;
+}
+.modal-content-admin-violation{
+    max-width: 400px !important;
+}
+
+.modal-content-violation{
+    max-width: 400px !important;
+}
+
+.modal-header-violation{
+    padding-top: 10px;
+    text-align: center;
+}
+
+.close-violation{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+.modal-body-violation{
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 30px;
+}
+
+.text-area-type2{
+   max-width: 320px;
+    height: 100px !important;
+resize: none;
+    /* Gray_Light */
+
+    background: #F0EDED;
+    /* Gray_Dark */
+
+    border: 1px solid #888888;
+    box-sizing: border-box;
+}
+.pb-20{
+    padding-bottom: 20px;
+}
+.btn-violation{
+    height: 50px !important;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
+
+
+    /* White */
+
+    color: #FFFFFF;
+    border: unset   ;
+}

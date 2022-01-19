@@ -1,7 +1,7 @@
 <div class="col-md-9">
 
     <div class="main__content-v2 refer">
-        <h2 class="main__content-title">Реферальная программа</h2>
+        <h2 class="main__content-title p-20">Реферальная программа</h2>
         <div class="main__setting-row">
             <div class="row">
                 <div class="col-md-6">
