@@ -36,40 +36,40 @@
 
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="btn header__btn color-red" href="{{ route('admin.users') }}"> Пользователи
+                            <a class="btn header__btn color-blue" href="{{ route('admin.users') }}"> Пользователи
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn header__btn color-red" href="{{ route('admin.payments') }}"> Выплаты
+                            <a class="btn header__btn color-blue" href="{{ route('admin.payments') }}"> Выплаты
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn header__btn color-red" href="{{ route('admin.statuses') }}"> Статусы
+                            <a class="btn header__btn color-blue" href="{{ route('admin.statuses') }}"> Статусы
                             </a>
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
-                                <a class="btn header__btn color-red dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="btn header__btn color-blue dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Настройки
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="btn header__btn color-red" href="{{ route('admin.payments_settings') }}"> Оплаты
+                                    <a class="btn header__btn color-blue" href="{{ route('admin.payments_settings') }}"> Оплаты
                                     </a>
-                                    <a class="btn header__btn color-red" href="{{ route('admin.settings') }}"> Справки
+                                    <a class="btn header__btn color-blue" href="{{ route('admin.settings') }}"> Справки
                                     </a>
-                                    <a class="btn header__btn color-red" href="{{ route('admin.ads') }}">        Объявления
+                                    <a class="btn header__btn color-blue" href="{{ route('admin.ads') }}">        Объявления
                                     </a>
-                                    <a class="btn header__btn color-red" href="{{ route('admin.offer') }}">Публичная оферта
+                                    <a class="btn header__btn color-blue" href="{{ route('admin.offer') }}">Публичная оферта
                                     </a>
-                                    <a class="btn header__btn color-red" href="{{ route('admin.updates') }}">Обновления
+                                    <a class="btn header__btn color-blue" href="{{ route('admin.updates') }}">Обновления
                                     </a>
-                                    <a data-toggle="modal" data-target="#AddTelegramBot" class="btn header__btn color-red"> Добавить бот</a>
+                                    <a data-toggle="modal" data-target="#AddTelegramBot" class="btn header__btn color-blue"> Добавить бот</a>
 
                                 </div>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="btn header__btn color-red" href="{{ route('logout') }}"> Выйти
+                            <a class="btn header__btn color-blue" href="{{ route('logout') }}"> Выйти
                             </a>
                         </li>
                     </ul>

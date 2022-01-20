@@ -29,10 +29,10 @@ $updates = $data['updates'];
 
         </div>
         <div class="d-flex">
-            <a class="btn header__btn color-red ml-auto add-new" id="addVersion">  <i class="fa fa-plus" aria-hidden="true"></i>Добавить</a>
+            <a class="btn header__btn color-blue ml-auto add-new" id="addVersion">  <i class="fa fa-plus" aria-hidden="true"></i>Добавить</a>
         </div>
         <div class="text-center">
-            <button class="btn btn-red">Сохранить</button>
+            <button class="btn btn-blue">Сохранить</button>
         </div>
     </form>
 </div>

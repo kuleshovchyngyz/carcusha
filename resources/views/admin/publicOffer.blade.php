@@ -8,7 +8,7 @@
             <textarea name="text" id="" class="setting-textarea-admin" >{{ $data[1] }}</textarea>
         </div>
         <div class="text-center">
-            <button class="btn btn-red">Сохранить</button>
+            <button class="btn btn-blue">Сохранить</button>
         </div>
     </form>
 </div>

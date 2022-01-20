@@ -114,7 +114,7 @@ async function image_names(fd){
 }
 function is_busy(l){
     let images = $('.uploadImage').length;
-    if(l>images&&l<11){
+    if(l>images&&l<21){
         for(let i=0;i<l-images;i++){
             $('.onlyFour').append(`<li><i class="fa fa-times timesicon d-none" id="${images+i+1}" aria-hidden="true"></i> <img src="" id="img${images+i+1}" class="uploadImage d-none"></li>`);
         }

@@ -11,7 +11,7 @@
         </div>
     @endif
     <div class="authentication">
-        <img src="{{ asset('img/logo-aut.png') }}" alt="" class="logoauth">
+        <img src="{{ asset('img/logo.png') }}" alt="" class="logoauth">
         <div class="tab-wrap">
             <div class="form-head">
                 <h3 class="form-title">@if(!isset($reset)){{'Подтверждение почты'}}@else{{'Восстановление пароля'}}@endif</h3>
@@ -62,11 +62,12 @@
                                 <label><input type="checkbox" class="password-checkbox"></label>
                             </div>
                         @endif
-                        <button type="submit" class="btn btn-red">Подтвердить</button>
+                        <button type="submit" class="btn btn-blue">Подтвердить</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 
 @endsection

@@ -30,7 +30,7 @@
             <table class="main__table">
                 <thead>
                 <tr>
-                    <th><a href="{{ route('admin.user',$user->id) }}@if($sort!='')?sort={{ $sort }}@endif">Номер</a></th>
+                    <th><a class="no-decor-link" href="{{ route('admin.user',$user->id) }}@if($sort!='')?sort={{ $sort }}@endif">Номер</a></th>
                     <th>Автомобиль</th>
                     <th>Телефон</th>
                     <th>Статус</th>

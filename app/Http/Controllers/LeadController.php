@@ -408,10 +408,10 @@ class LeadController extends Controller
         $files = \File::files('uploads/'.$folder_name);
 
         $image_names = array();
-        if($images && count($files)<10){
+        if($images && count($files)<20){
             foreach ($images as  $key => $image){
                 //return $image;
-                if($key<10){
+                if($key<20){
 //                    $image->move(public_path('uploads/'.$folder_name),$image->getClientOriginalName());
                     file_put_contents('uploads/'.$folder_name.'/'.$request->number.'.txt', $image);
                     $image_names[]=$key;

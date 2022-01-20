@@ -2960,7 +2960,7 @@ function _image_names() {
 function is_busy(l) {
   var images = $('.uploadImage').length;
 
-  if (l > images && l < 11) {
+  if (l > images && l < 21) {
     for (var i = 0; i < l - images; i++) {
       $('.onlyFour').append("<li><i class=\"fa fa-times timesicon d-none\" id=\"".concat(images + i + 1, "\" aria-hidden=\"true\"></i> <img src=\"\" id=\"img").concat(images + i + 1, "\" class=\"uploadImage d-none\"></li>"));
     }
