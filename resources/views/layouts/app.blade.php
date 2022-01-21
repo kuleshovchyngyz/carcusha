@@ -68,7 +68,7 @@
 
     @yield('content')
 
-    <input type="text" id="phone" name="number" class="form-control  @error('number') is-invalid @enderror" placeholder="Не указан" value="{{ auth()->user()->setting->number }}">
+
     <footer class="footer">
         <div class="container d-flex">
 
