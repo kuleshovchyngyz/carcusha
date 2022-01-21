@@ -32,7 +32,7 @@
 
             <div class="d-flex justify-content-center mb-4">
 
-                <button  class="btn btn-red reset-password">Поменять</button>
+                <button  class="btn btn-blue reset-password">Поменять</button>
             </div>
         </div>
     </div>

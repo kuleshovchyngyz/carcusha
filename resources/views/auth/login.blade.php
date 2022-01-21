@@ -157,7 +157,7 @@
 {{--                            </span>--}}
 {{--                        @enderror--}}
 
-{{--                        <input type="button" value="РЕГИСТРАЦИЯ" class="btn btn-red submitRegisterForm" >--}}
+{{--                        <input type="button" value="РЕГИСТРАЦИЯ" class="btn btn-blue submitRegisterForm" >--}}
 
                         <button type="button" id="registerButton" class="btn btn-blue">
                             РЕГИСТРАЦИЯ

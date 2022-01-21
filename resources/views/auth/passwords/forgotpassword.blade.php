@@ -7,7 +7,7 @@
 
     @guest
         <div class="authentication">
-            <img src="{{ asset('img/logo-aut.png') }}" alt="" class="logoauth">
+            <img src="{{ asset('svg/logo_cvet.svg') }}" alt="" class="logoauth">
             <div class="tab-wrap">
                 <div class="form-head"><h3 class="form-title">Восстановить пароль</h3></div>
                 <div class="tab-content tab-content--custom" id="pills-tabContent">
@@ -47,7 +47,7 @@
                                        value="{{ old('number') }}" required autocomplete="email">
                                 @if(null !==old('number'))<span class="form-subbtitle">В формате +7</span>@endif
                             </div>
-                            <button class="btn btn-red">Восстановить пароль</button>
+                            <button class="btn btn-blue">Восстановить пароль</button>
                         </form>
                     </div>
                 </div>

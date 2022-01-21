@@ -35,7 +35,7 @@
             <br>
             <div class="text-center">
 
-                <a href="{{route('admin.user.verify_leads',$user->id)}}" type="button" class="btn btn-red" >
+                <a href="{{route('admin.user.verify_leads',$user->id)}}" type="button" class="btn btn-blue" >
                     ВСЁ В ПОРЯДКЕ
                 </a>
             </div>

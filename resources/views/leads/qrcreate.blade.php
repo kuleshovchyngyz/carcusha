@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="text-center">
-                                <button class="btn btn-red" type="submit">ОТПРАВИТЬ</button>
+                                <button class="btn btn-blue" type="submit">ОТПРАВИТЬ</button>
                             </div>
                         </form>
                     </div>

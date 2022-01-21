@@ -81,7 +81,7 @@ $payment = \App\Models\PaymentAmount::all();
                 {{--        <hr class="bottom-line">--}}
 
                 <div class="text-center">
-                    <button class="btn btn-red">Сохранить</button>
+                    <button class="btn btn-blue">Сохранить</button>
                 </div>
             </form>
         </div>

@@ -5,7 +5,7 @@ $notifications = $data->toArray();
 <div class="col-md-9">
     <div class="main__content">
 {{--        <div class="text-right">--}}
-{{--            <a  class="btn btn-red"  data-toggle="modal" data-target="#notification_setting">--}}
+{{--            <a  class="btn btn-blue"  data-toggle="modal" data-target="#notification_setting">--}}
 {{--                Настройки--}}
 {{--            </a>--}}
 {{--        </div>--}}
