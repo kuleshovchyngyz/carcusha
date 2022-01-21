@@ -32,38 +32,38 @@
 
                 <li class="main__nav-item @if($active=="users") active @endif">
                     <a href="{{ route('users.list') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-lid.png') }}" alt="">
+                        <img src="{{ asset('svg/menu_avto.svg') }}" alt="">
                         Лиды
                     </a>
                 </li>
                 <li class="main__nav-item @if($active=="notifications") active @endif">
                     <a href="{{ route('notification.list') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-alert.png') }}" alt="">
+                        <img src="{{ asset('svg/menu_uved.svg') }}" alt="ss">
                         Уведомления
                         {!! \App\Models\MessageNotification::where('user_id',auth()->user()->id)->where('seen',0)->count()==0 ? "" : '<span class="main__nav-count">' .\App\Models\MessageNotification::where('user_id',auth()->user()->id)->where('seen',0)->count().'</span>'!!}
                     </a>
                 </li>
                 <li class="main__nav-item @if($active=="payments") active @endif">
                     <a href="{{ route('payment.list') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-price.png') }}" alt="">
+                        <img src="{{ asset('svg/menu_viplat.svg') }}" alt="">
                         Выплаты
                     </a>
                 </li>
                 <li class="main__nav-item @if($active=="refer") active @endif">
                     <a href="{{ route('refer.list') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-ref.png')}}" alt="">
+                        <img src="{{ asset('svg/menu_ref.svg')}}" alt="">
                         Реферальная программа
                     </a>
                 </li>
                 <li class="main__nav-item  @if($active=="settings") active @endif">
                     <a href="{{ route('settings') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-settings.png')}}" alt="">
+                        <img src="{{ asset('svg/menu_nastr.svg')}}" alt="">
                         Настройки аккаунта
                     </a>
                 </li>
                 <li class="main__nav-item @if($active=="help") active @endif">
                     <a href="{{ route('help') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-help.png') }} " alt="">
+                        <img src="{{ asset('svg/menu_pomosh.svg') }} " alt="">
                         Помощь
                     </a>
                 </li>

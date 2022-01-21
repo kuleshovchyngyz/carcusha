@@ -11,7 +11,7 @@
         </div>
     @endif
     <div class="authentication">
-        <img src="{{ asset('img/logo.png') }}" alt="" class="logoauth">
+        <img src="{{ asset('svg/logo_cvet.svg') }}" alt="" class="logoauth">
         <div class="tab-wrap">
             <div class="form-head">
                 <h3 class="form-title">@if(!isset($reset)){{'Подтверждение почты'}}@else{{'Восстановление пароля'}}@endif</h3>

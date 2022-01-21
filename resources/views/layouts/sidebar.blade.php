@@ -55,7 +55,7 @@ if(!isset($active)){
             <ul class="main__nav">
                 <li class="main__nav-item @if($active=="leads") active @endif">
                     <a href="{{ route('lead.list') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-lid.png') }}" alt="">
+                        <img src="{{ asset('svg/menu_avto.svg') }}" alt="">
                         Авто
                         <span class="main__nav-count">
                         {{ Auth::user()->leads->count() }}
@@ -64,7 +64,7 @@ if(!isset($active)){
                 </li>
                 <li class="main__nav-item @if($active=="notifications") active @endif">
                     <a href="{{ route('notification.list') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-alert.png') }}" alt="">
+                        <img src="{{ asset('svg/menu_uved.svg') }}" alt="">
                         Уведомления
                         {!! \App\Models\MessageNotification::where('user_id',auth()->user()->id)->where('seen',0)->count()==0 ? "" : '
                         <span class="main__nav-count">' .\App\Models\MessageNotification::where('user_id',auth()->user()->id)->where('seen',0)->count().'
@@ -73,14 +73,14 @@ if(!isset($active)){
                 </li>
                 <li class="main__nav-item @if($active=="paymentqueries") active @endif">
                     <a href="{{ route('payment.paymentqueries') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-price.png') }}" alt="">
+                        <img src="{{ asset('svg/menu_viplat.svg') }}" alt="">
                         Выплаты
                     </a>
                 </li>
 
                 <li class="main__nav-item @if($active=="payments") active @endif">
                     <a href="{{ route('payment.list') }}" class="main__nav-link">
-                        <img src="{{ asset('img/payments.png') }}" alt="">
+                        <img src="{{ asset('svg/menu_nachis.svg') }}" alt="">
                         Начислено
                     </a>
                 </li>
@@ -89,31 +89,31 @@ if(!isset($active)){
 
                 <li class="main__nav-item @if($active=="refer") active @endif">
                     <a href="{{ route('refer.list') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-ref.png')}}" alt="">
+                        <img src="{{ asset('svg/menu_ref.svg')}}" alt="">
                         Реферальная программа
                     </a>
                 </li>
                 <li class="main__nav-item  @if($active=="promo") active @endif">
                     <a href="{{ route('promo') }}" class="main__nav-link">
-                        <img src="{{ asset('img/promo.png')}}" alt="">
+                        <img src="{{ asset('svg/menu_promo.svg')}}" alt="">
                         Промоматериалы
                     </a>
                 </li>
                 <li class="main__nav-item  @if($active=="settings") active @endif">
                     <a href="{{ route('settings') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-settings.png')}}" alt="">
+                        <img src="{{ asset('svg/menu_nastr.svg')}}" alt="">
                         Настройки
                     </a>
                 </li>
                 <li class="main__nav-item @if($active=="help") active @endif">
                     <a href="{{ route('help') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-help.png') }} " alt="">
+                        <img src="{{ asset('svg/menu_pomosh.svg') }} " alt="">
                         Помощь
                     </a>
                 </li>
                 <li class="main__nav-item @if($active=="updates") active @endif">
                     <a href="{{ route('updates') }}" class="main__nav-link">
-                        <img src="{{ asset('img/icon-update.png') }} " alt="">
+                        <img src="{{ asset('svg/menu_obnov.svg') }} " alt="">
                         Обновления
                     </a>
                 </li>

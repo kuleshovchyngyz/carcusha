@@ -28,8 +28,8 @@
             <div class="row align-items-center justify-content-between" style="padding: 0 14px;">
                 <div class="">
                     <a href="{{ route('home') }}">
-                    <img src="{{ asset('img/logo.png') }}" alt="" class="logo">
-                    <img src="{{ asset('img/logo-min.png') }}" alt="" class="logo-min">
+                    <img src="{{ asset('svg/logo_cvet.svg') }}" alt="" class="logo">
+                    <img src="{{ asset('svg/logo_mob.svg') }}" alt="" class="logo-min">
                     </a>
                 </div>
                 <div class="ml-auto d-flex">
@@ -39,7 +39,7 @@
 
 
                                 {!! ViewService::init()->view('numberOfNewNotifications') !!}
-                                <img src="{{ asset('img/icon-alert.png') }}" alt="">
+                                <img src="{{ asset('svg/menu_uved.svg') }}" alt="">
                             </a>
                             <div class="notification-head-dd">
                                 <ul class="notifications">
@@ -72,7 +72,7 @@
     <footer class="footer">
         <div class="container d-flex">
 
-            <img src="{{ asset('img//logo-white.png') }}" alt="" class="footer__logo">
+            <img src="{{ asset('svg/logo_bel.svg') }}" alt="" class="footer__logo">
             <a href="{{ route('public_offer') }}"  class="footer__link ml-auto">Публичная оферта</a>
         </div>
     </footer>

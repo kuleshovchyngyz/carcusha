@@ -40,7 +40,7 @@
 
 
     <div class="authentication">
-        <img src="{{ asset('img/logo.png') }}" alt="" class="logoauth">
+        <img src="{{ asset('svg/logo_cvet.svg') }}" alt="" class="logoauth">
 
         <div class="tab-wrap">
             <ul class="nav mb-3" id="pills-tab" role="tablist">

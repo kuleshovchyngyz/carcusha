@@ -28,7 +28,7 @@
             <div class="row align-items-center">
                 <div class="col-md-4 col-6">
                     <a href="{{ route('admin.users') }}">
-                        <img src="{{ asset('img/logo.png') }}" alt="" class="logo">
+                        <img src="{{ asset('svg/logo_cvet.svg') }}" alt="" class="logo">
                     </a>
                 </div>
 
