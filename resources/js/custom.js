@@ -272,6 +272,7 @@ $(".phone-error").on('keyup', function(){
 
 
 $(document).ready(function(){
+    console.log($('#phone').val().length);
     var element1 = document.getElementById('phone');
     var maskOptions = {
         mask: '+{7}(000)000-00-00'
@@ -281,6 +282,7 @@ $(document).ready(function(){
 
 
 $(document).ready(function(){
+
     var element2 = document.getElementById('number');
     var maskOptions = {
         mask: '+{7}(000)000-00-00'

@@ -35,8 +35,8 @@ class QRCodeGenerator
     private $user;
 
     public function __construct($text){
-            $this->user = \auth()->user();
-            $this->user_id = $this->user->id;
+        $this->user = \auth()->user();
+        $this->user_id = $this->user->id;
         if(isset($text)){
             $this->big_name = 'qr_'.$this->user_id;
             $this->small_name = 'qrsmall_'.$this->user_id;
@@ -63,7 +63,7 @@ class QRCodeGenerator
                 'email'=>$this->email,
                 'address'=>$this->address,
                 'generated'=>true
-                ]);
+            ]);
         }else{
             $this->user->promo->name = $this->company;
             $this->user->promo->phone = $this->number;
@@ -301,7 +301,7 @@ class QRCodeGenerator
         imagepng($image1,'qrcodes/card_'.$name.'.png');
     }
     public function break_into_multi_lines($str='',$length = 30){
-       // $output = substr($string, 0, strpos($string, ' '));
+        // $output = substr($string, 0, strpos($string, ' '));
         if(strlen($str)<$length){
             return [true,$str];
         }

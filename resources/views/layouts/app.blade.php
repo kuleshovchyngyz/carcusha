@@ -33,24 +33,24 @@
                     </a>
                 </div>
                 <div class="ml-auto d-flex">
-                    @auth()
-                    <div class="notification-head">
-                        <a href="#">
+                @auth()
+                        <div class="notification-head">
+                            <a href="#">
 
 
-                            {!! ViewService::init()->view('numberOfNewNotifications') !!}
-                            <img src="{{ asset('img/icon-alert.png') }}" alt="">
-                        </a>
-                        <div class="notification-head-dd">
-                            <ul class="notifications">
+                                {!! ViewService::init()->view('numberOfNewNotifications') !!}
+                                <img src="{{ asset('img/icon-alert.png') }}" alt="">
+                            </a>
+                            <div class="notification-head-dd">
+                                <ul class="notifications">
                                 {!! ViewService::init()->view('headerNotifications') !!}
 
                             </ul>
+                            </div>
                         </div>
-                    </div>
 
-                        @if(Route::currentRouteName()!='lead.create' && Route::currentRouteName()!='qrform'&& Route::currentRouteName()!='car_application')
-                                <a class="btn header__btn blue-btn" href="{{ route('lead.create') }}"> Добавить авто</a>
+                    @if(Route::currentRouteName()!='lead.create' && Route::currentRouteName()!='qrform'&& Route::currentRouteName()!='car_application')
+                            <a class="btn header__btn blue-btn" href="{{ route('lead.create') }}"> Добавить авто</a>
                         @endif
                     @endauth
                 </div>
@@ -61,14 +61,14 @@
     </header>
 
 
- <!-- note the end auth -->
+    <!-- note the end auth -->
 
 
 
 
+    @yield('content')
 
-            @yield('content')
-
+    <input type="text" id="phone" name="number" class="form-control  @error('number') is-invalid @enderror" placeholder="Не указан" value="{{ auth()->user()->setting->number }}">
     <footer class="footer">
         <div class="container d-flex">
 
