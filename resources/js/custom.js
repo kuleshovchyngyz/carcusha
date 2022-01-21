@@ -272,12 +272,16 @@ $(".phone-error").on('keyup', function(){
 
 
 $(document).ready(function(){
-    console.log($('#phone').val().length);
+
+
     var element1 = document.getElementById('phone');
     var maskOptions = {
         mask: '+{7}(000)000-00-00'
     };
-    var mask = IMask(element1, maskOptions);
+    if($('#phone').val().length<18){
+
+        var mask = IMask(element1, maskOptions);
+    }
 })
 
 

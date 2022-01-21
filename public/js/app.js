@@ -2666,12 +2666,14 @@ $(".phone-error").on('keyup', function () {
   }
 });
 $(document).ready(function () {
-  console.log($('#phone').val().length);
   var element1 = document.getElementById('phone');
   var maskOptions = {
     mask: '+{7}(000)000-00-00'
   };
-  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element1, maskOptions);
+
+  if ($('#phone').val().length < 18) {
+    var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element1, maskOptions);
+  }
 });
 $(document).ready(function () {
   var element2 = document.getElementById('number');

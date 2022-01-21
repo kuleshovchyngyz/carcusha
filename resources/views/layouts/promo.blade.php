@@ -18,7 +18,7 @@
                 <div class="col-md-6">
                     <div class="main__setting-item">
                         <div>Телефон:
-                            <input type="text" id="number" name="number" class="form-control" placeholder="Не указан" value="@if(Auth::user()->promo===null){{ Auth::user()->setting->number }}@else {{ Auth::user()->promo->phone }} @endif">
+                            <input type="text" id="number" name="number" class="form-control" placeholder="Не указан" value="{{ ViewService::init()->view('promo_number') }}">
                         </div>
                     </div>
                 </div>

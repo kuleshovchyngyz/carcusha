@@ -103,6 +103,15 @@ class ViewData
                     $this->response = '';
                 }
                 break;
+            case 'promo_number':
+                if(auth()->user()->promo===null)
+                {
+
+                    $this->response = substr(auth()->user()->setting->number, 2, strlen(auth()->user()->setting->number));
+                }else{
+                    $this->response = substr(auth()->user()->promo->phone, 2, strlen(auth()->user()->promo->phone));
+                }
+                break;
             case 'isEmailConfirmed':
                 $this->response = ($this->model->email_verified_at !== null && $this->model->email == $this->model->setting->email) ?
                     'Подтверждён' :
