@@ -82,5 +82,12 @@ class AppServiceProvider extends ServiceProvider
                 return $value;
             }
         });
+        Validator::extend('required_major', function($attribute, $value, $parameters)
+        {
+            $majors = ['Агент','СТО грузовое','СТО легковое','Перевозчик','Эксперт'];
+            if (in_array($value, $majors)) {
+                return $value;
+            }
+        });
     }
 }

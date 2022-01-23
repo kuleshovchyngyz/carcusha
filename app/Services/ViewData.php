@@ -2,6 +2,7 @@
 
 
 namespace App\Services;
+use App\Models\Major;
 use App\Models\MessageNotification;
 use App\Models\Notification;
 use App\Models\PaymentAmount;
@@ -203,6 +204,19 @@ class ViewData
                 $this->method=='' ?
                     $this->defaultAmount('firstPayment') :
                     call_user_func(array($this, $this->method), 'firstPayment');
+                break;
+            case 'majors':
+                $majors = Major::pluck('name','id')->toArray();
+                array_walk($majors,function (&$value, $key) {
+                    if($this->model===null){
+                        $value = '<option>' . $value . '</option>';
+                    }else{
+                        $this->model->setting->major_id==$key ?
+                        $value = '<option selected>' . $value . '</option>':
+                            $value = '<option>' . $value . '</option>';
+                    }
+                });
+                $this->response = implode(PHP_EOL,$majors);
                 break;
         }
         return $this;

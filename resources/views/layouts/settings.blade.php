@@ -56,6 +56,23 @@
                     </div>
                 </div>
 
+                <div class="col-md-6">
+                    <div class="main__setting-item">
+                        <div class="promodiv">Род деятельности:
+                            <select name="major" class="form-control" @if(auth()->user()->setting->major_id!==null) disabled @endif>
+                                <option></option>
+                                {!!    ViewService::init(Auth::user())->view('majors') !!}
+                            </select>
+                            @error('major')
+                            <span class="invalid-feedbackerror" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
+
 {{--                <div class="col-md-6">--}}
 {{--                    <div class="main__setting-item ">--}}
 {{--                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn btn-primary telegram' style="background-color: #e3473f; border-color: #e3473f;">Телеграм уведомление</a>--}}

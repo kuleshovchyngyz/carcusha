@@ -7,6 +7,7 @@ use App\Clients\SmsClient;
 use App\Mail\MailUser;
 use App\Models\AuthConfirmation;
 use App\Models\balance;
+use App\Models\Major;
 use App\Models\Payment;
 use App\Models\PaymentAmount;
 use App\Models\PendingAmount;
@@ -105,7 +106,7 @@ class AuthController extends Controller
         if($this->fieldType=='number'){
             ($type=='reset') ?
                 $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
-                $request->validate(['number' => 'not_empty|unique:users|phone_number','invitation_code'=>
+                $request->validate(['number' => 'not_empty|unique:users|phone_number','major' => 'required_major','invitation_code'=>
                     ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
             $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
             AuthConfirmation::updateOrCreate( $param);
@@ -114,7 +115,7 @@ class AuthController extends Controller
         }else {
             ($type=='reset') ?
                 $request->validate(['email' => 'required|email_format|is_email_in_database|max:255']) :
-                $request->validate(['example'=>'not_empty','email' => 'not_empty|email_format|unique:users|max:255','invitation_code'=>
+                $request->validate(['example'=>'not_empty','major' => 'required_major','email' => 'not_empty|email_format|unique:users|max:255','invitation_code'=>
                     ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
             AuthConfirmation::updateOrCreate( $param);
             Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте SKYvin.ru Код:".$this->code)
@@ -122,6 +123,8 @@ class AuthController extends Controller
                     'message' => 'Пожалуйста, введите код для проверки вашего email.',
                     'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
             ]));
+            $id = Major::wherename($request->major)->first()->id;
+            $request->merge(['major' => $id]);
 
 
             return view('auth.createPasswordEmail',$request->input());
@@ -165,6 +168,7 @@ class AuthController extends Controller
         //dd($request->all());
     }
     public function registerUser(Request $request){
+       // dd($request->all());
         event(new Registered($user = $this->createUser($request->all())));
         $this->guard()->login($user);
         return $request->wantsJson()
@@ -190,6 +194,7 @@ class AuthController extends Controller
     }
     public function EmailVerificationCode(Request $request){
 
+       // dd($request->all());
         $validated = Validator::make($request->all(), [
             'email' => ['required', 'string', 'max:255', (!isset($request->reset)) ? 'unique:users' : ''],
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
@@ -222,7 +227,9 @@ class AuthController extends Controller
      */
     protected function createUser(array $data)
     {
-//        dump($data);
+       // dd($data);
+        $major = $data['major'];
+
 //        dd($this->credentials($data));
         $refer = false;
         if(isset($data['invitation_code'])){
@@ -253,7 +260,7 @@ class AuthController extends Controller
 //            $balance_referred->save();
 //            PendingAmount::create(['payment_id'=>$payment->id,'status'=>0]);
         }
-        Setting::create(['number'=>$user->number,'email'=>$user->email, 'user_id'=>$user->id]);
+        Setting::create(['number'=>$user->number,'email'=>$user->email, 'user_id'=>$user->id,'major_id'=>$major]);
         return $user;
     }
     protected function generateinvitation_code() {

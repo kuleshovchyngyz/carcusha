@@ -63,6 +63,8 @@
                                     </a>
                                     <a class="btn header__btn color-blue" href="{{ route('admin.updates') }}">Обновления
                                     </a>
+                                    <a class="btn header__btn color-blue" href="{{ route('admin.majors') }}">Род деятельности
+                                    </a>
                                     <a data-toggle="modal" data-target="#AddTelegramBot" class="btn header__btn color-blue"> Добавить бот</a>
 
                                 </div>

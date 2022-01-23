@@ -53,6 +53,14 @@ $user = $data;
                      {{ $user->setting->city  }}
                      </span>
                         </li>
+                        <li class="main__info-item">
+                             <span>
+                                 Деятелность:
+                             </span>
+                                    <span title="{{ \App\Models\Major::find($user->setting->major_id)!=null ? \App\Models\Major::find($user->setting->major_id)->name : '' }}">
+                             {{ \App\Models\Major::find($user->setting->major_id)!=null ? \App\Models\Major::find($user->setting->major_id)->name : '' }}
+                             </span>
+                        </li>
                     </ul>
                     <div class="text-center mrg-top-20">
                         <button type="button" class="btn remove-pass" data-toggle="modal" data-target="#resetPassword">

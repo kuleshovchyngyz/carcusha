@@ -15,13 +15,14 @@
             <div class="tab-content tab-content--custom" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
                     @if(!isset($confirmPhone))
-                        <form action="{{ route('auth.SmsVerification-code') }}" method="POST" id="authentication" class="text-center">
+                   <form action="{{ route('auth.SmsVerification-code') }}" method="POST" id="authentication" class="text-center">
                     @else
                         <form action="{{ route('confirm.number') }}" method="POST" id="authentication" class="text-center">
                     @endif
                         @csrf
                         <input type="hidden" name="number" value="{{$number}}">
                         @if(isset($invitation_code))<input type="hidden" name="invitation_code" value="{{$invitation_code}}">@endif
+                        @if(isset($major))<input type="hidden" name="major" value="{{$major}}">@endif
                         @if(isset($reset))<input type="hidden" name="reset" value="{{$reset}}">@endif
                         <input type="number" name="code" placeholder="Код из SMS" class="form-control  @error('code') is-invalid @enderror" value="{{ old('password') }}" >
                         @error('code')

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Major;
 use GuzzleHttp\Stream\Stream;
 use App\Auth\Code;
 use App\Clients\SmsClient;
@@ -111,7 +112,7 @@ class UserController extends Controller
             return redirect()->back()->with('error_message',['Нельзя использовать свой промокод']);
         }
 
-        //dd($request->all());
+       // dd($request->all());
         $user = \auth()->user();
         $code = new Code();
         $sms = new SmsClient();
@@ -156,6 +157,7 @@ class UserController extends Controller
                         'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
                     ]));
                 AuthConfirmation::updateOrCreate( $param);
+
                 return view('auth.createPasswordEmail',$request->input());
 
 
@@ -199,11 +201,15 @@ class UserController extends Controller
 
     }
     public function updateSettings(Request $request){
-
+        $major = null;
+        if($request->major!==null){
+            $major = Major::wherename($request->major)->first()->id;
+        }
         Auth::user()->setting
             ->update([
                 'number_notification'=> $request->has('number_notification') ? 1 : 0,
                 'email_notification'=> $request->has('email_notification') ? 1 : 0,
+                'major_id'=> $major,
                 'number'=>$request['number'],
                 'email'=>$request['email'],
                 'city'=>$request['city']

@@ -128,8 +128,10 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::get('/ads', [App\Http\Controllers\AdminController::class, 'ads'])->name('admin.ads');
     Route::get('/public-offers', [App\Http\Controllers\AdminController::class, 'publicOffers'])->name('admin.offer');
     Route::get('/updates', [App\Http\Controllers\AdminController::class, 'updates'])->name('admin.updates');
+    Route::get('/majors', [App\Http\Controllers\AdminController::class, 'majors'])->name('admin.majors');
     Route::post('/public-offers-store', [App\Http\Controllers\AdminController::class, 'storePublicOffers'])->name('admin.store.offers');
     Route::post('/ads/store', [App\Http\Controllers\AdminController::class, 'storeAds'])->name('admin.store.ads');
+    Route::post('/majors/store', [App\Http\Controllers\AdminController::class, 'storeMajors'])->name('admin.store.majors');
     Route::get('/payment_settings', [App\Http\Controllers\AdminController::class, 'payments_settings'])->name('admin.payments_settings');
     Route::post('/add-bot', [App\Http\Controllers\AdminController::class, 'addBot'])->name('admin.bot.create');
     Route::get('/payments', [App\Http\Controllers\AdminController::class, 'payments'])->name('admin.payments');

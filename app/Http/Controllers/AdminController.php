@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ad;
 use App\Models\Ban;
+use App\Models\Major;
 use App\Models\MessageNotification;
 use App\Models\Paid;
 use App\Models\Payment;
@@ -180,6 +181,14 @@ class AdminController extends Controller
             'data' => ['updates'=>$updates]
         ]);
     }
+    public function majors()
+    {
+
+        return view('admin.major',[
+            'majors' => implode(PHP_EOL,Major::all()->pluck('name')->toArray())
+
+        ]);
+    }
     public function publicOffers()
     {
        $all = PublicOffer::all();
@@ -313,6 +322,23 @@ class AdminController extends Controller
             $str = explode("\r\n", $str);
             return redirect()->back()->with('success_message', ['Сохранено']);
         }
+    }
+
+    public function storeMajors(Request $request){
+
+        Major::truncate();
+        if(isset($request->majors))
+            $arr = explode("\r\n", $request->majors);
+        $majors = array_map(function ($value){
+            return ['name'=>$value];
+        }, $arr);
+
+        Major::insert($majors);
+
+        return redirect()->route('admin.majors',
+            ['majors' => implode(PHP_EOL,Major::all()->pluck('name')->toArray())])
+            ->with('success_message', ['Сохранено']);
+
     }
 
     public function user_payment_settings($id){

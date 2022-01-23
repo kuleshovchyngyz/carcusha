@@ -145,6 +145,22 @@
                             @endif
                             <span class="form-subbtitle disabled">В формате +7</span>
                         </div>
+                        <div class="main__setting-item">
+
+                                <div>
+                                    <select name="major" class="form-control">
+                                        <option>Род деятельности</option>
+                                        {!!    ViewService::init()->view('majors') !!}
+                                    </select>
+                                    @error('major')
+                                        <span class="invalid-feedbackerror" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+
+                        </div>
                         <div class="invitation-code">
                              <input type="text" name="invitation_code" class="form-control" value="{{ isset($_GET['ref']) ? $_GET['ref'] :  old('invitation_code') }}" id="invitation-inpup" placeholder="Промокод (если есть)"  @error('email') is-invalid @enderror>
                         </div>

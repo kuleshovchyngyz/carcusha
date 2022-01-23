@@ -35,6 +35,7 @@
                         <input type="hidden" name="email" value="{{$email}}">
 
                         @if(isset($invitation_code))<input type="hidden" name="invitation_code" value="{{$invitation_code}}">@endif
+                        @if(isset($major))<input type="hidden" name="major" value="{{$major}}">@endif
                         @if(isset($reset))<input type="hidden" name="reset" value="{{$reset}}">@endif
                         <input type="number" name="code" placeholder="Код из письма" class="form-control  @error('code') is-invalid @enderror" value="{{ old('password') }}" >
                         @error('code')
