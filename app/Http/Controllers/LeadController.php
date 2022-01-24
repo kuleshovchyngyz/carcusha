@@ -124,9 +124,6 @@ class LeadController extends Controller
         }
 
         $array = [];
-
-
-
         foreach ($data_img as $key=>$ready){
             $file_type = $this->getB64Type(file_get_contents($data_img[$key]->name));
 
