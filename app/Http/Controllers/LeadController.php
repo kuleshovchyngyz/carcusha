@@ -123,11 +123,8 @@ class LeadController extends Controller
             $data_img[] =
                 curl_file_create(public_path('uploads').'/'.$folder_name.'/'.$img[$key],'image/*',$img[$key]);
         }
-
+//
         $array = [];
-
-
-
         foreach ($data_img as $key=>$ready){
             $file_type = $this->getB64Type(file_get_contents($data_img[$key]->name));
 
