@@ -48,6 +48,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="btn header__btn color-blue" href="{{ route('admin.fantoms') }}"> Фантомны
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <div class="dropdown">
                                 <a class="btn header__btn color-blue dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Настройки
