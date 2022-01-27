@@ -26,7 +26,8 @@ $statuses = $data;
             </thead>
             <tbody>
             @foreach($statuses as $status)
-                    <tr>
+               
+                    <tr  @if($status->index=='deleted') class='d-none' @endif>
                         <td>{{ $status->index.': '.$status->name  }}</td>
                         @if($status->user_statuses==null)
                             <td><input class="status_input" id="status" name="{{'name=='.$status->id}}" type="text" value=""></td>
@@ -37,7 +38,11 @@ $statuses = $data;
                             <td><input class="amount_input" name="{{'color=='.$status->id}}" type="radio" value="{{ $status->color }}"></td>
                             <td><input class="amount_input" name="{{'color=='.$status->id}}" type="radio" value="{{ $status->color }}"></td>
 
-                            <td><input class="notify_input" name="{{'notify=='.$status->id}}" class="form-check-input" type="checkbox"  id="flexCheckDefault"></td>
+                            <td>
+                               
+                                    <input class="notify_input" name="{{'notify=='.$status->id}}" class="form-check-input" type="checkbox"  id="flexCheckDefault">
+                               
+                            </td>
                         @else
                             <td><input class="status_input" name="{{'name=='.$status->id}}" type="text" value="{{ $status->user_statuses->name }}"></td>
                             <td><input class="comments_input" name="{{'comments=='.$status->id}}" type="text" value="{{ $status->user_statuses->comments }}"></td>
@@ -48,9 +53,14 @@ $statuses = $data;
                             <td><input class="green_input" name="{{'color=='.$status->id}}" type="radio" value="#27AE60" {{ selectedColor( $status->color,'green') }}></td>
                             <td><input class="red_input" name="{{'color=='.$status->id}}" type="radio" value="#EB5757" {{ selectedColor( $status->color,'red') }}  ></td>
 
-                            <td><input class="notify_input" name="{{'notify=='.$status->id}}" class="form-check-input" type="checkbox"  id="flexCheckDefault" @if($status->user_statuses->notify==1) checked @endif></td>
+                            <td>
+                               
+                                    <input class="notify_input" name="{{'notify=='.$status->id}}" class="form-check-input" type="checkbox"  id="flexCheckDefault" @if($status->user_statuses->notify==1) checked @endif>
+                               
+                            </td>
                         @endif
                     </tr>
+               
             @endforeach
             </tbody>
         </table>

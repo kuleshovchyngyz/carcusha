@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Clients\Bitrix;
 use App\Models\Ad;
 use App\Models\Ban;
+use App\Models\Fantom;
 use App\Models\Lead;
 use App\Models\Major;
 use App\Models\MessageNotification;
@@ -519,7 +520,9 @@ class AdminController extends Controller
     public function getDeletedLeads(Request $request,Bitrix $bitrix){
         if($request->all()['event'] == "ONCRMLEADDELETE")
         {
+            $lead_id = $request->all()['data']['FIELDS']['ID'];
             \Storage::disk('local')->append('deletedleads.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
+            Fantom::create(['bitrix_lead_id'=>$lead_id]);
 
         }
     }

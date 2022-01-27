@@ -223,7 +223,7 @@ class LeadController extends Controller
                 \Storage::disk('local')->append('sst.txt', $bitrix->getLeadStatus($request->all()['data']['FIELDS']['ID']));
                 $lead_id =$request->all()['data']['FIELDS']['ID'];
                 \Storage::disk('local')->append('ids.txt', $lead_id);
-                new UpdatingLeadStatus($lead_id,$bitrix->getLeadStatus($request->all()['data']['FIELDS']['ID']));
+                new UpdatingLeadStatus($lead_id,$bitrix->getLeadStatus($lead_id));
                 //App\support\Leads\UpdatingLeadStatus
             }
         }
