@@ -272,8 +272,9 @@ class AdminController extends Controller
         ]);
     }
     public function fantoms(){
-        $statuses = Status::all();
-        return view('admin.fantoms');
+       $fantoms = Fantom::with(['lead','user'])->get();
+      
+        return view('admin.fantoms',['fantoms'=>$fantoms]);
     }
      public function store_user_statuses(Request $request){
         $arr = [];
@@ -522,8 +523,11 @@ class AdminController extends Controller
         {
             $lead_id = $request->all()['data']['FIELDS']['ID'];
             \Storage::disk('local')->append('deletedleads.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
-            Fantom::create(['bitrix_lead_id'=>$lead_id]);
-
+            $lead = Lead::where('bitrix_lead_id',$lead_id)->first();
+            if($lead->count()>0){
+                Fantom::create(['lead_id'=>$lead->id]);   
+            }
+            
         }
     }
     /**

@@ -15,7 +15,7 @@ class CreateFantomsTable extends Migration
     {
         Schema::create('fantoms', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('bitrix_lead_id')->unsigned();
+            $table->bigInteger('lead_id')->unsigned();
             $table->timestamps();
         });
     }

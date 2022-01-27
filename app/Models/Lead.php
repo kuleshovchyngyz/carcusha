@@ -107,6 +107,9 @@ class Lead extends Model
 //    public function leadsNotification(){
 //        return $this->belongsToThrough(Notification::class, [User::class]);
 //    }
-
+    public function fantom()
+    {
+        return $this->hasOne(Fantom::class,"bitrix_lead_id","bitrix_lead_id");
+    }
 
 }
