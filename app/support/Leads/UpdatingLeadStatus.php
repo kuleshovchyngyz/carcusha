@@ -22,6 +22,8 @@ class UpdatingLeadStatus
             new NewPayment($this->lead, $this->new_status);
 //            new Pay($this->lead, $this->new_status);
         }
+        $this->deleteFolderOfPics();
+
     }
 
 
@@ -71,5 +73,13 @@ class UpdatingLeadStatus
         return $us->contains($this->new_status->id);
     }
 
-
+    public function deleteFolderOfPics()
+    {
+        if($this->new_status->color=='#27AE60'||$this->new_status->color=='#EB5757')   {
+            $path = public_path('uploads/'.$this->lead->folder);
+            if(file_exists($path)){
+                \File::deleteDirectory($path);    
+            }          
+        }     
+    }
 }

@@ -3,15 +3,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content"  >
             @csrf
-            <div class="modal-header">
-                <span class="main__content-title display-2 new_leads modal-title ml-5" id="exampleModalLabel">Сбросить пароль</span>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+            <div class="modal-header-violation pb-20">
+                <label class="modal-title-violation" id="exampleModalLabel">Сбросить пароль</label>
+                <button type="button" class="close close-violation" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
                 </button>
-
             </div>
             <div class="alert alert-danger" style="display:none"></div>
-            <div class="modal-body m-4">
+            <div class="modal-body ml-4 mr-4">
                 <div class="type-pass mb-4">
 
                     <input id="password" type="text" placeholder="Придумайте пароль" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" name="password" required autocomplete="new-password">

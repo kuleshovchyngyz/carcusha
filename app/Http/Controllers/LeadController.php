@@ -350,8 +350,7 @@ class LeadController extends Controller
             $result['result'],
             0
         );
-        $path = public_path('uploads/'.$folder_name);
-        \File::deleteDirectory($path);
+    
         return redirect()->route('home');
     }
 

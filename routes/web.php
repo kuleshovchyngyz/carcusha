@@ -37,9 +37,9 @@ Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 
 Route::get('/test', function (){
 
-    $imgExt = new Imagick();
-    $imgExt->readImage(public_path('qrcodes').'/vizitka94.pdf');
-    $imgExt->writeImages(public_path().'/pdf_image_doc.jpg', true);
+    // $imgExt = new Imagick();
+    // $imgExt->readImage(public_path('qrcodes').'/vizitka94.pdf');
+    // $imgExt->writeImages(public_path().'/pdf_image_doc.jpg', true);
 
     dd("Document has been converted");
    // new UpdatingLeadStatus(env('LEAD_BITRIX_ID'), env('LEAD_STATUS'));
