@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
-           Fantom::create(['lead_id'=>Carbon::now()->format('Y-m-d')]);
+           Fantom::create(['lead_id'=>1]);
         })->everyMinute();
     }
 
