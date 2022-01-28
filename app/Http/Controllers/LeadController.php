@@ -69,7 +69,7 @@ class LeadController extends Controller
 
     function sendDataToBitrix1($method, $data) {
         //$webhook_url = "https://b24-85lwia.bitrix24.ru/rest/1/s52ljoksktlyj1ed/";//test
-        $webhook_url = "https://rosgroup.bitrix24.ru/rest/52/tvk30z03175k7x2p/";//real
+        $webhook_url = "https://carcusha.bitrix24.ru/rest/1/rrr2v2vfxxbw2jeo/";//real
         $queryUrl = $webhook_url . $method ;
         $queryData = http_build_query($data);
 

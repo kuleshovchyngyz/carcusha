@@ -20,12 +20,16 @@
                         </thead>
 
                         <tbody>
+                            
                         @foreach ($fantoms as $fantom)
+                        <tr>
                             <td>{{ $fantom->created_at->format('Y-m-d') }}</td>
-                            <td>{{ $fantom->id }}</td>
+                            <td>{{ $fantom->user->id }}</td>
+                            <td>{{ $fantom->status->id }}</td>
                             <td></td>
-                            <td></td>
+                        </tr>
                         @endforeach
+                           
                         </tbody>
                     </table>
                 </div>

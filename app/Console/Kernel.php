@@ -27,9 +27,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->call(function () {
-           Fantom::create(['lead_id'=>1]);
-        })->everyMinute();
+//        $schedule->call(function () {
+//           Fantom::create(['lead_id'=>1]);
+//        })->everyMinute();
+//,['id'=>$sh->id,'project_id'=>$sh->project_id]
+        $schedule->call('App\Http\Controllers\FantomLeadController@compareLeads')->timezone('Europe/Moscow')->weeklyOn($date, $sh->time);
     }
 
     /**

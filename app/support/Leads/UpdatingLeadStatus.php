@@ -75,7 +75,7 @@ class UpdatingLeadStatus
 
     public function deleteFolderOfPics()
     {
-        if($this->new_status->color=='#27AE60'||$this->new_status->color=='#EB5757')   {
+        if($this->new_status->status_type == 'finished')   {
             $path = public_path('uploads/'.$this->lead->folder);
             if(file_exists($path)){
                 \File::deleteDirectory($path);    

@@ -15,6 +15,7 @@ class Status extends Model
         'index',
         'color',
         'ID_on_bitrix',
+        'status_type'
 
     ];
 
