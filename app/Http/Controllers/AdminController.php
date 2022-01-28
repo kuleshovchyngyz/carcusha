@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Clients\Bitrix;
 use App\Models\Ad;
 use App\Models\Ban;
+use App\Models\Fantom;
+use App\Models\Lead;
 use App\Models\Major;
 use App\Models\MessageNotification;
 use App\Models\Paid;
@@ -19,6 +22,7 @@ use App\Models\User;
 use App\Models\UserPaymentAmount;
 use App\Models\UserStatuses;
 use App\Models\Violation;
+use App\support\Leads\UpdatingLeadStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -267,6 +271,11 @@ class AdminController extends Controller
             'data' => $statuses
         ]);
     }
+    public function fantoms(){
+       $fantoms = Fantom::with(['lead','user'])->get();
+      
+        return view('admin.fantoms',['fantoms'=>$fantoms]);
+    }
      public function store_user_statuses(Request $request){
         $arr = [];
         $check = [];
@@ -509,6 +518,18 @@ class AdminController extends Controller
 
     }
 
+    public function getDeletedLeads(Request $request,Bitrix $bitrix){
+        if($request->all()['event'] == "ONCRMLEADDELETE")
+        {
+            $lead_id = $request->all()['data']['FIELDS']['ID'];
+            \Storage::disk('local')->append('deletedleads.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
+            $lead = Lead::where('bitrix_lead_id',$lead_id)->first();
+            if($lead->count()>0){
+                Fantom::create(['lead_id'=>$lead->id]);   
+            }
+            
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

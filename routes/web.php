@@ -2,6 +2,7 @@
 
 
 use App\Models\User;
+use App\support\Bitrix\ApiConnect;
 use App\support\Leads\UpdatingLeadStatus;
 use Illuminate\Support\Facades\Route;
 
@@ -34,22 +35,47 @@ Route::get('/generate', [App\Http\Controllers\UserController::class, 'send_to_tg
 Route::get('/g', [App\Http\Controllers\LeadController::class, 'get_status_list1']);
 Route::get('/send', [App\Http\Controllers\LeadController::class, 'send']);
 Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
-
+Route::get('/list', [App\Http\Controllers\FantomLeadController::class, 'compareLeads']);
 Route::get('/test', function (){
-
-    $imgExt = new Imagick();
-    $imgExt->readImage(public_path('qrcodes').'/vizitka94.pdf');
-    $imgExt->writeImages(public_path().'/pdf_image_doc.jpg', true);
+    
+    // $dealData = new ApiConnect('crm.lead.list', ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]]);
+    // dd($dealData);
+    // dd(sendDataToBitrix1('crm.lead.list', ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]]));
+    // $imgExt = new Imagick();
+    // $imgExt->readImage(public_path('qrcodes').'/vizitka94.pdf');
+    // $imgExt->writeImages(public_path().'/pdf_image_doc.jpg', true);
 
     dd("Document has been converted");
    // new UpdatingLeadStatus(env('LEAD_BITRIX_ID'), env('LEAD_STATUS'));
 });
+ function sendDataToBitrix1($method, $data) {
+    //$webhook_url = "https://b24-85lwia.bitrix24.ru/rest/1/s52ljoksktlyj1ed/";//test
+    $webhook_url = "https://carcusha.bitrix24.ru/rest/1/rrr2v2vfxxbw2jeo/";//real
+    $queryUrl = $webhook_url . $method ;
+    $queryData = http_build_query($data);
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_SSL_VERIFYPEER => 0,
+        CURLOPT_POST => 1,
+        CURLOPT_HEADER => 0,
+        CURLOPT_HTTPHEADER => array("Content-Type:multipart/form-data"),
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => $queryUrl,
+        CURLOPT_POSTFIELDS => $queryData,
+
+    ));
+
+    $result = curl_exec($curl);
+    curl_close($curl);
+    return json_decode($result, 1);
+}
 Route::get('/delete', function (){
-    \App\Models\PendingAmount::latest()->first()->delete();
-    \App\Models\Payment::latest()->first()->delete();
-    \App\Models\Reason::latest()->first()->delete();
-    \App\Models\Notification::latest()->first()->delete();
-    \App\Models\MessageNotification::latest()->first()->delete();
+    // \App\Models\PendingAmount::latest()->first()->delete();
+    // \App\Models\Payment::latest()->first()->delete();
+    // \App\Models\Reason::latest()->first()->delete();
+    // \App\Models\Notification::latest()->first()->delete();
+    // \App\Models\MessageNotification::latest()->first()->delete();
 });
 
 
@@ -136,6 +162,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::post('/add-bot', [App\Http\Controllers\AdminController::class, 'addBot'])->name('admin.bot.create');
     Route::get('/payments', [App\Http\Controllers\AdminController::class, 'payments'])->name('admin.payments');
     Route::get('/statuses', [App\Http\Controllers\AdminController::class, 'statuses'])->name('admin.statuses');
+    
+    Route::get('/fantoms', [App\Http\Controllers\FantomLeadController::class, 'fantoms'])->name('admin.fantoms');
+  
     Route::post('/store_user_statuses', [App\Http\Controllers\AdminController::class, 'store_user_statuses'])->name('admin.store_user_statuses');
     Route::post('/settings/store', [App\Http\Controllers\AdminController::class, 'store_settings'])->name('admin.store_settings');
     Route::post('/updates/store', [App\Http\Controllers\AdminController::class, 'store_updates'])->name('admin.store_updates');

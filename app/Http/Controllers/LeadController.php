@@ -69,7 +69,7 @@ class LeadController extends Controller
 
     function sendDataToBitrix1($method, $data) {
         //$webhook_url = "https://b24-85lwia.bitrix24.ru/rest/1/s52ljoksktlyj1ed/";//test
-        $webhook_url = "https://rosgroup.bitrix24.ru/rest/52/tvk30z03175k7x2p/";//real
+        $webhook_url = "https://carcusha.bitrix24.ru/rest/1/rrr2v2vfxxbw2jeo/";//real
         $queryUrl = $webhook_url . $method ;
         $queryData = http_build_query($data);
 
@@ -117,16 +117,15 @@ class LeadController extends Controller
         ];
 
         $data_img=[];
-        $crm_pics_field_name = ['UF_CRM_1633362445295','UF_CRM_1633362456303','UF_CRM_1633362468187','UF_CRM_1633362478787','UF_CRM_1633362488670','UF_CRM_1637847699599','UF_CRM_1637847730399','UF_CRM_1637847742893','UF_CRM_1637847753241','UF_CRM_1637847764708'];//real
+        $crm_pics_field_name = ['UF_CRM_1633362445295','UF_CRM_1633362456303','UF_CRM_1633362468187','UF_CRM_1633362478787','UF_CRM_1633362488670','UF_CRM_1637847699599','UF_CRM_1637847730399','UF_CRM_1637847742893','UF_CRM_1637847753241','UF_CRM_1637847764708',
+            'UF_CRM_1642672762','UF_CRM_1642673006','UF_CRM_1642673046','UF_CRM_1642673077','UF_CRM_1642673107','UF_CRM_1642673125','UF_CRM_1642673174','UF_CRM_1642673190','UF_CRM_1642673211','UF_CRM_1642673231'];//real
         foreach ($img as $key => $i){
             $data_img[] =
                 curl_file_create(public_path('uploads').'/'.$folder_name.'/'.$img[$key],'image/*',$img[$key]);
         }
-
+//
+        //
         $array = [];
-
-
-
         foreach ($data_img as $key=>$ready){
             $file_type = $this->getB64Type(file_get_contents($data_img[$key]->name));
 
@@ -224,7 +223,7 @@ class LeadController extends Controller
                 \Storage::disk('local')->append('sst.txt', $bitrix->getLeadStatus($request->all()['data']['FIELDS']['ID']));
                 $lead_id =$request->all()['data']['FIELDS']['ID'];
                 \Storage::disk('local')->append('ids.txt', $lead_id);
-                new UpdatingLeadStatus($lead_id,$bitrix->getLeadStatus($request->all()['data']['FIELDS']['ID']));
+                new UpdatingLeadStatus($lead_id,$bitrix->getLeadStatus($lead_id));
                 //App\support\Leads\UpdatingLeadStatus
             }
         }
@@ -351,8 +350,7 @@ class LeadController extends Controller
             $result['result'],
             0
         );
-        $path = public_path('uploads/'.$folder_name);
-        \File::deleteDirectory($path);
+    
         return redirect()->route('home');
     }
 

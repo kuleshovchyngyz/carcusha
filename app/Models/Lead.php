@@ -46,11 +46,11 @@ class Lead extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
-        $status = Status::find($this->attributes['status_id']);
-        if($status){
-            return $status;
-        }
-        return false;
+
+    }
+    public function user_statuses()
+    {
+        return $this->belongsToThrough(UserStatuses::class,Status::class);
     }
     public function payment_by_status(){
         return  $this->status==null ? 0 : $this->status->user_statuses->amount();
@@ -107,6 +107,9 @@ class Lead extends Model
 //    public function leadsNotification(){
 //        return $this->belongsToThrough(Notification::class, [User::class]);
 //    }
-
+    public function fantom()
+    {
+        return $this->hasOne(Fantom::class,"bitrix_lead_id","bitrix_lead_id");
+    }
 
 }

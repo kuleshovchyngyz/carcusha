@@ -5,20 +5,24 @@ namespace App\support\Bitrix;
 use Illuminate\Support\Facades\Http;
 
 class ApiConnect
+
 {
     protected $webhook_url;
+    const crmLeadList = 'crm.lead.list';
+    const crmLeadListData = ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]];
     const fields = [
           'isInAvito.ru' => 'UF_CRM_1633362412350',
           'isInAuto.ru' => 'UF_CRM_1633362418776',
         ];
     private $method, $data;
     public $result;
-    public function __construct ($method,$data)
+    public function __construct ($method="",$data=[])
     {
         $this->method = $method;
         $this->webhook_url = env('BITRIX_CARCUSHA_WEBHOOK_URL');
         $this->data = $data;
-        $this->execute();
+        if($method!="")
+            $this->execute();
 
     }
     public function execute ()
@@ -42,5 +46,20 @@ class ApiConnect
         }
         return $this->result['result'][self::fields[$fieldName]];
     }
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+    public function getLeadList(){
+        $this->setMethod(self::crmLeadList);
+        $this->setData(self::crmLeadListData);
+        $this->execute();
+        return $this->getResponse();
+    }
+
 
 }

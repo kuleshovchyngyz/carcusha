@@ -59,7 +59,8 @@
                 <div class="col-md-6">
                     <div class="main__setting-item">
                         <div class="promodiv">Род деятельности:
-                            <select name="major" class="form-control" @if(auth()->user()->setting->major_id!==null) disabled @endif>
+{{--                            @if(auth()->user()->setting->major_id!==null) disabled @endif--}}
+                            <select name="major" class="form-control">
                                 <option></option>
                                 {!!    ViewService::init(Auth::user())->view('majors') !!}
                             </select>
@@ -71,13 +72,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                    <div class="main__setting-item  ml-55">
+                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn btn-blue telegram'>Телеграм уведомление</a>
+                    </div>
+                </div>
 
-{{--                <div class="col-md-6">--}}
-{{--                    <div class="main__setting-item ">--}}
-{{--                        <a href="{{route('settings.telegramNotification')}}" target="_blank" class='btn btn-primary telegram' style="background-color: #e3473f; border-color: #e3473f;">Телеграм уведомление</a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+
             </div>
         </div>
 {{--        <div class="main__setting-row">--}}
