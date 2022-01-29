@@ -14,15 +14,13 @@ class Fantom extends Model
  *
  * @var array
  */
-    protected $fillable = ['lead_id'];
+    protected $fillable = ['bitrix_lead_id'];
 
-    public function user(){
-        return $this->belongsToThrough(User::class,  Lead::class);
-    }
-  
+
+
     public function lead()
     {
-        return $this->belongsTo(Lead::class);
+        return $this->belongsTo(Lead::class,'bitrix_lead_id','bitrix_lead_id');
     }
-   
+
 }
