@@ -31,7 +31,8 @@ class Kernel extends ConsoleKernel
 //           Fantom::create(['lead_id'=>1]);
 //        })->everyMinute();
 //,['id'=>$sh->id,'project_id'=>$sh->project_id]
-        $schedule->call('App\Http\Controllers\FantomLeadController@compareLeads')->timezone('Europe/Moscow')->weeklyOn($date, $sh->time);
+        $schedule->call('App\Http\Controllers\FantomLeadController@compareLeads')->timezone('Europe/Moscow')->everyMinute();
+//            ->weeklyOn($date, $sh->time);
     }
 
     /**

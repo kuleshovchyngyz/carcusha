@@ -123,7 +123,7 @@ class Bitrix
         // $str should start with 'data:' (= 5 characters long!)
         return substr($str, 5, strpos($str, ';')-5);
     }
-    public function addDeal($vendor, $model,$year,$img,$phone,$folder_name){
+    public function addDeal($vendor, $model,$year,$img,$phone,$folder_name,$status='NEW'){
 
 
         $data_img=[];
@@ -171,6 +171,7 @@ class Bitrix
         $this->bitrix_data['UF_CRM_1633362091686'] =  isset($year)==true ? [self::years[$year]] :""; //real
 
         $this->bitrix_data['SOURCE_ID'] = "1";
+        $this->bitrix_data['STATUS_ID'] = $status;
         $this->bitrix_data['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
     }
 }
