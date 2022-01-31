@@ -127,7 +127,7 @@ class Bitrix
 
 
         $data_img=[];
-
+////
         foreach ($img as $key => $i){
             $data_img[] =
                 curl_file_create(public_path('uploads').'/'.$folder_name.'/'.$img[$key],'image/*',$img[$key]);
