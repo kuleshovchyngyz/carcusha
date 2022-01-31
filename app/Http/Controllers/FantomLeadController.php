@@ -13,11 +13,11 @@ class FantomLeadController extends Controller
 {
     public function backToBirix(Lead $lead){
         $bitrix = new Bitrix();
-        $bitrix->addDeal($lead->vendor??'',$lead->vendor_model??'',$lead->vendor_year??"",$lead->phonenumber,$lead->folder,2);
+        $bitrix->addDeal($lead->vendor??'',$lead->vendor_model??'',$lead->vendor_year??"",$lead->phonenumber,$lead->folder,$lead->status->index);
         $result = $bitrix->addLead();
         $lead->bitrix_lead_id = $result['result'];
         $lead->save();
-        dd($lead);
+
     }
     public function fantoms()
     {
