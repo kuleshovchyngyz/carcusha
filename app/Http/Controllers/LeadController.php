@@ -167,10 +167,7 @@ class LeadController extends Controller
         $array['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
 
     }
-    public         function getB64Type($str) {
-        // $str should start with 'data:' (= 5 characters long!)
-        return substr($str, 5, strpos($str, ';')-5);
-    }
+
     public function get_status($id){
         $dealData = $this->sendDataToBitrixGuzzle('crm.lead.get', ['id' => $id] );
         $s = Status::where('index',$dealData['result']['STATUS_ID'])->first();

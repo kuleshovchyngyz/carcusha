@@ -119,6 +119,10 @@ class Bitrix
     {
 
     }
+    public function getB64Type($str) {
+        // $str should start with 'data:' (= 5 characters long!)
+        return substr($str, 5, strpos($str, ';')-5);
+    }
     public function addDeal($vendor, $model,$year,$img,$phone,$folder_name){
 
 
