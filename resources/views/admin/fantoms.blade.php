@@ -17,6 +17,7 @@
                             <th>Логин</th>
                             <th>Статус CRM </th>
                             <th>Статус</th>
+                            <th>operation</th>
                         </tr>
                         </thead>
 
@@ -31,6 +32,15 @@
                             </td>
                             <td>{{ $fantom->status->name }}</td>
                             <td>{{ $statuses[$fantom->status->id]  }}</td>
+                            <td>
+                                <select class="form-control w-50 d-inline" onchange="location = this.value;">
+                                    <option selected="" value="" disabled>Опции</option>
+                                    <option value="{{ route('admin.back.bitrix', $fantom->id) }}">Обратно на Битрикс</option>
+                                    <option value="year-2018">Удалить</option>
+
+                                </select>
+                            </td>
+
                         </tr>
                         @endforeach
 

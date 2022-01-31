@@ -165,14 +165,12 @@ class LeadController extends Controller
 
         $array['SOURCE_ID'] = "1";
         $array['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
-        $bitrix = new Bitrix();
-        $dealData = $bitrix->addLead($array);
-        return $dealData;
+
     }
     public         function getB64Type($str) {
-    // $str should start with 'data:' (= 5 characters long!)
-    return substr($str, 5, strpos($str, ';')-5);
-}
+        // $str should start with 'data:' (= 5 characters long!)
+        return substr($str, 5, strpos($str, ';')-5);
+    }
     public function get_status($id){
         $dealData = $this->sendDataToBitrixGuzzle('crm.lead.get', ['id' => $id] );
         $s = Status::where('index',$dealData['result']['STATUS_ID'])->first();
@@ -326,17 +324,19 @@ class LeadController extends Controller
         ]);
         $image_names = array();
         $folder_name = $request->folder_id;
-
+        $bitrix = new Bitrix();
         if(\File::exists('uploads/'.$folder_name)) {
             $filesInFolder = \File::files('uploads/'.$folder_name);
             foreach($filesInFolder as $path) {
                 $file = pathinfo($path);
                 $image_names[] =  $file['basename'] ;
             }
+            $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
+            $result = $bitrix->addLead();
 
-            $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
         }else{
-            $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
+            $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
+            $result = $bitrix->addLead();
         }
 
 
@@ -350,7 +350,7 @@ class LeadController extends Controller
             $result['result'],
             0
         );
-    
+
         return redirect()->route('home');
     }
 

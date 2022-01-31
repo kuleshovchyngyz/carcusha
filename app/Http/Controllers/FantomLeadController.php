@@ -10,10 +10,14 @@ use Illuminate\Http\Request;
 
 class FantomLeadController extends Controller
 {
+    public function backToBirix(Lead $lead){
+
+        dd($lead);
+    }
     public function fantoms()
     {
         $bitrix_lead_ids = Fantom::pluck("bitrix_lead_id");
-        $fantoms = Lead::with(["user", "status"])
+        $fantoms = Lead::with(["user", "status","fantom"])
             ->whereIn("bitrix_lead_id", $bitrix_lead_ids)
             ->get();
         $user_statuses = UserStatuses::pluck("name", "id")->toArray();

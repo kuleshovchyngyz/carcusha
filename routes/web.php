@@ -37,7 +37,7 @@ Route::get('/send', [App\Http\Controllers\LeadController::class, 'send']);
 Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 Route::get('/list', [App\Http\Controllers\FantomLeadController::class, 'compareLeads']);
 Route::get('/test', function (){
-    
+
     // $dealData = new ApiConnect('crm.lead.list', ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]]);
     // dd($dealData);
     // dd(sendDataToBitrix1('crm.lead.list', ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]]));
@@ -162,9 +162,10 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::post('/add-bot', [App\Http\Controllers\AdminController::class, 'addBot'])->name('admin.bot.create');
     Route::get('/payments', [App\Http\Controllers\AdminController::class, 'payments'])->name('admin.payments');
     Route::get('/statuses', [App\Http\Controllers\AdminController::class, 'statuses'])->name('admin.statuses');
-    
+
     Route::get('/fantoms', [App\Http\Controllers\FantomLeadController::class, 'fantoms'])->name('admin.fantoms');
-  
+    Route::get('/fantoms/back-to-bitrix/{lead}', [App\Http\Controllers\FantomLeadController::class, 'backToBirix'])->name('admin.back.bitrix');
+
     Route::post('/store_user_statuses', [App\Http\Controllers\AdminController::class, 'store_user_statuses'])->name('admin.store_user_statuses');
     Route::post('/settings/store', [App\Http\Controllers\AdminController::class, 'store_settings'])->name('admin.store_settings');
     Route::post('/updates/store', [App\Http\Controllers\AdminController::class, 'store_updates'])->name('admin.store_updates');
