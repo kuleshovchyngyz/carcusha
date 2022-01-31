@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Clients\Bitrix;
 use App\Models\Fantom;
 use App\Models\Lead;
 use App\Models\Status;
@@ -11,7 +12,11 @@ use Illuminate\Http\Request;
 class FantomLeadController extends Controller
 {
     public function backToBirix(Lead $lead){
-
+        $bitrix = new Bitrix();
+        $bitrix->addDeal($lead->vendor??'',$lead->vendor_model??'',$lead->vendor_year??"",$lead->phonenumber,$lead->folder,2);
+        $result = $bitrix->addLead();
+        $lead->bitrix_lead_id = $result['result'];
+        $lead->save();
         dd($lead);
     }
     public function fantoms()

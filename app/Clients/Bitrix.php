@@ -123,8 +123,16 @@ class Bitrix
         // $str should start with 'data:' (= 5 characters long!)
         return substr($str, 5, strpos($str, ';')-5);
     }
-    public function addDeal($vendor, $model,$year,$img,$phone,$folder_name,$status='NEW'){
+    public function addDeal($vendor, $model,$year,$phone,$folder_name,$status='NEW'){
 
+        $img = [];
+        if(\File::exists('uploads/'.$folder_name)) {
+            $filesInFolder = \File::files('uploads/'.$folder_name);
+            foreach($filesInFolder as $path) {
+                $file = pathinfo($path);
+                $img[] =  $file['basename'] ;
+            }
+        }
 
         $data_img=[];
 ////

@@ -250,23 +250,11 @@ class LeadController extends Controller
         $request->validate([
             'phone' => 'required',
         ]);
-        $image_names = array();
+
         $folder_name = $request->folder_id;
         $bitrix = new Bitrix();
-        if(\File::exists('uploads/'.$folder_name)) {
-            $filesInFolder = \File::files('uploads/'.$folder_name);
-            foreach($filesInFolder as $path) {
-                $file = pathinfo($path);
-                $image_names[] =  $file['basename'] ;
-            }
-            $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
-            $result = $bitrix->addLead();
-
-        }else{
-            $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
-            $result = $bitrix->addLead();
-        }
-
+        $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$request->phone,$folder_name);
+        $result = $bitrix->addLead();
 
         new LeadBuilder(
             isset($request->car_vendor) == true ? $request->car_vendor : '',
