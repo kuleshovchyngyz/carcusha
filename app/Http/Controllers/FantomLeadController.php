@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Clients\Bitrix;
 use App\Models\Fantom;
 use App\Models\Lead;
+use App\Models\MessageNotification;
+use App\Models\Notification;
+use App\Models\Payment;
+use App\Models\PendingAmount;
+use App\Models\Reason;
 use App\Models\Status;
 use App\Models\UserStatuses;
 use App\support\Bitrix\ApiConnect;
+use App\support\Leads\Pay;
 use App\support\Leads\UpdatingLeadStatus;
 use Illuminate\Http\Request;
 
@@ -20,7 +26,26 @@ class FantomLeadController extends Controller
         return redirect()->back()->with('success_message', [__('Закрыто')]);
     }
     public function delete(Lead $lead){
-        dd($lead);
+
+        $s = Status::where('ID_on_bitrix','close')->first();
+        Fantom::where('bitrix_lead_id',$lead->bitrix_lead_id)->delete();
+        //new UpdatingLeadStatus($lead->bitrix_lead_id,$s);
+
+        $reason_ids = Reason::where('reason_name','lead')->where('table_id',$lead->bitrix_lead_id)->pluck('id');
+        $payment_ids = Payment::whereIn('reason_id',$reason_ids)->pluck('id');
+        $pending_amount_ids = PendingAmount::whereIn('payment_id',$payment_ids)->delete();
+        Payment::whereIn('id',$payment_ids)->delete();
+        Reason::whereIn('id',$reason_ids)->delete();
+        Notification::where('f_lead_id',$lead->id)->delete();
+        MessageNotification::where('lead_id',$lead->bitrix_lead_id)->delete();
+        $lead->delete();
+        return redirect()->back()->with('success_message', [__('Удалено')]);
+
+        // \App\Models\PendingAmount::latest()->first()->delete();
+        // \App\Models\Payment::latest()->first()->delete();
+        // \App\Models\Reason::latest()->first()->delete();
+        // \App\Models\Notification::latest()->first()->delete();
+        // \App\Models\MessageNotification::latest()->first()->delete();
     }
     public function backToBirix(Lead $lead)
     {
