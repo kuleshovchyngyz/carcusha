@@ -1,4 +1,4 @@
-    @extends('admin.app')
+@extends('admin.app')
 
 @section('content')
     <main class="main">
@@ -15,33 +15,42 @@
                             <th>Автомобиль</th>
                             <th>Дата</th>
                             <th>Логин</th>
-                            <th>Статус CRM </th>
+                            <th>Статус CRM</th>
                             <th>Статус</th>
-                            <th>operation</th>
+                            <th>Operation</th>
                         </tr>
                         </thead>
 
                         <tbody>
 
                         @foreach ($fantoms as $fantom)
-                        <tr>
-                            <td>{{ $fantom->vendor }} {{ $fantom->vendor_model }}, {{ $fantom->vendor_year }}</td>
-                            <td>{{ $fantom->created_at->format('Y-m-d') }}</td>
-                            <td>
-                                <a href="{{ route('admin.user', $fantom->user->id) }}" class="main__table-link">User #{{ $fantom->user->id  }}</a>
-                            </td>
-                            <td>{{ $fantom->status->name }}</td>
-                            <td>{{ $statuses[$fantom->status->id]  }}</td>
-                            <td>
-                                <select class="form-control w-50 d-inline" onchange="location = this.value;">
-                                    <option selected="" value="" disabled>Опции</option>
-                                    <option value="{{ route('admin.back.bitrix', $fantom->id) }}">Обратно на Битрикс</option>
-                                    <option value="year-2018">Удалить</option>
+                            <tr>
+                                <td>{{ $fantom->vendor }} {{ $fantom->vendor_model }}, {{ $fantom->vendor_year }}</td>
+                                <td>{{ $fantom->created_at->format('Y-m-d') }}</td>
+                                <td>
+                                    <a href="{{ route('admin.user', $fantom->user->id) }}" class="main__table-link">User
+                                        #{{ $fantom->user->id  }}</a>
+                                </td>
+                                <td>{{ $fantom->status->name }}</td>
+                                <td>{{ $statuses[$fantom->status->id]  }}</td>
+                                <td>
+                                    <select class="form-control w-50 d-inline" onchange="location = this.value;">
+                                        <option selected="" value="" disabled>Опции</option>
+                                        <option value="{{ route('admin.fantom.back.bitrix', $fantom->id) }}">Обратно в
+                                            Битрикс
+                                        </option>
+                                        <option
+                                            value="{{ route('admin.fantom.close', $fantom->id) }}">Закрыть
+                                        </option>
+                                        <option
+                                            value="{{ route('admin.fantom.delete', $fantom->id ) }}">Удалить
+                                        </option>
 
-                                </select>
-                            </td>
 
-                        </tr>
+                                    </select>
+                                </td>
+
+                            </tr>
                         @endforeach
 
                         </tbody>

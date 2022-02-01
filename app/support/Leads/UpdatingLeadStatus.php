@@ -16,7 +16,8 @@ class UpdatingLeadStatus
         $this->lead = Lead::where('bitrix_lead_id',$id)->first();
         $this->user = $this->lead->user;
         $this->checkForAds();
-        $this->new_status = Status::find($status);
+        $this->new_status = (gettype($status)=='object') ?  $status : Status::find($status);
+//        $this->new_status = Status::find($status);
         $notify = new Notify($this->lead,$this->new_status);
         if($notify->notify()){
             new NewPayment($this->lead, $this->new_status);
@@ -78,8 +79,8 @@ class UpdatingLeadStatus
         if($this->new_status->status_type == 'finished')   {
             $path = public_path('uploads/'.$this->lead->folder);
             if(file_exists($path)){
-                \File::deleteDirectory($path);    
-            }          
-        }     
+                \File::deleteDirectory($path);
+            }
+        }
     }
 }

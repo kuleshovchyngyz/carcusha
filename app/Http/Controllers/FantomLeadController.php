@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Clients\Bitrix;
@@ -7,22 +8,40 @@ use App\Models\Lead;
 use App\Models\Status;
 use App\Models\UserStatuses;
 use App\support\Bitrix\ApiConnect;
+use App\support\Leads\UpdatingLeadStatus;
 use Illuminate\Http\Request;
 
 class FantomLeadController extends Controller
 {
-    public function backToBirix(Lead $lead){
-        $bitrix = new Bitrix();
-        $bitrix->addDeal($lead->vendor??'',$lead->vendor_model??'',$lead->vendor_year??"",$lead->phonenumber,$lead->folder,$lead->status->index);
-        $result = $bitrix->addLead();
-        $lead->bitrix_lead_id = $result['result'];
-        $lead->save();
-
+    public function close(Lead $lead){
+        $s = Status::where('ID_on_bitrix','close')->first();
+        Fantom::where('bitrix_lead_id',$lead->bitrix_lead_id)->delete();
+        new UpdatingLeadStatus($lead->bitrix_lead_id,$s);
+        return redirect()->back()->with('success_message', [__('Закрыто')]);
     }
+    public function delete(Lead $lead){
+        dd($lead);
+    }
+    public function backToBirix(Lead $lead)
+    {
+        $bitrix = new Bitrix();
+        $bitrix->addDeal(
+            $lead->vendor ?? "",
+            $lead->vendor_model ?? "",
+            $lead->vendor_year ?? "",
+            $lead->phonenumber,
+            $lead->folder,
+            $lead->status->index
+        );
+        $result = $bitrix->addLead();
+        $lead->bitrix_lead_id = $result["result"];
+        $lead->save();
+    }
+
     public function fantoms()
     {
         $bitrix_lead_ids = Fantom::pluck("bitrix_lead_id");
-        $fantoms = Lead::with(["user", "status","fantom"])
+        $fantoms = Lead::with(["user", "status", "fantom"])
             ->whereIn("bitrix_lead_id", $bitrix_lead_ids)
             ->get();
         $user_statuses = UserStatuses::pluck("name", "id")->toArray();
@@ -32,6 +51,7 @@ class FantomLeadController extends Controller
             "statuses" => $user_statuses,
         ]);
     }
+
     public function compareLeads()
     {
         $b = new ApiConnect();

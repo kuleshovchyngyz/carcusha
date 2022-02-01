@@ -164,7 +164,9 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::get('/statuses', [App\Http\Controllers\AdminController::class, 'statuses'])->name('admin.statuses');
 
     Route::get('/fantoms', [App\Http\Controllers\FantomLeadController::class, 'fantoms'])->name('admin.fantoms');
-    Route::get('/fantoms/back-to-bitrix/{lead}', [App\Http\Controllers\FantomLeadController::class, 'backToBirix'])->name('admin.back.bitrix');
+    Route::get('/fantoms/back-to-bitrix/{lead}', [App\Http\Controllers\FantomLeadController::class, 'backToBirix'])->name('admin.fantom.back.bitrix');
+    Route::get('/fantoms/close/{lead}', [App\Http\Controllers\FantomLeadController::class, 'close'])->name('admin.fantom.close');
+    Route::get('/fantoms/delete/{lead}', [App\Http\Controllers\FantomLeadController::class, 'delete'])->name('admin.fantom.delete');
 
     Route::post('/store_user_statuses', [App\Http\Controllers\AdminController::class, 'store_user_statuses'])->name('admin.store_user_statuses');
     Route::post('/settings/store', [App\Http\Controllers\AdminController::class, 'store_settings'])->name('admin.store_settings');
