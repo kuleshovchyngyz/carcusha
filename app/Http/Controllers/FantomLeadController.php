@@ -29,7 +29,7 @@ class FantomLeadController extends Controller
 
         $s = Status::where('ID_on_bitrix','close')->first();
         Fantom::where('bitrix_lead_id',$lead->bitrix_lead_id)->delete();
-        //new UpdatingLeadStatus($lead->bitrix_lead_id,$s);
+        new UpdatingLeadStatus($lead->bitrix_lead_id,$s->id);
 
         $reason_ids = Reason::where('reason_name','lead')->where('table_id',$lead->bitrix_lead_id)->pluck('id');
         $payment_ids = Payment::whereIn('reason_id',$reason_ids)->pluck('id');
@@ -102,7 +102,7 @@ class FantomLeadController extends Controller
             })
             ->pluck("ID");
 
-        $acception_users = [94];
+        $acception_users = [];
         $acception_lead_ids = Fantom::pluck("bitrix_lead_id")->toArray();
 
         $leads = Lead::with(["status", "user"]);
