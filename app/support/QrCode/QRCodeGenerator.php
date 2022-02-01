@@ -58,8 +58,8 @@ class QRCodeGenerator
             Promo::firstOrCreate([
                 'user_id'=>$user->id,
                 'name'=>'',
-                'phone'=>'',
-                'email'=>'',
+                'phone'=>$user->setting->number,
+                'email'=>$user->setting->email,
                 'address'=>'',
                 'generated'=>false
             ]);

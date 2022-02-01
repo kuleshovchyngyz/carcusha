@@ -8,6 +8,7 @@ use App\Models\MessageNotification;
 use App\Models\Paid;
 use App\Models\Payment;
 use App\Models\PaymentAmount;
+use App\Models\Promo;
 use App\Models\Question;
 use App\Models\Status;
 use App\Models\Notification;
@@ -100,7 +101,19 @@ class HomeController extends Controller
 
 
     public function promo(){
-        $user_id = Auth::user()->id;
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        if($user->promo===null){
+            Promo::firstOrCreate([
+                'user_id'=>$user->id,
+                'name'=>'',
+                'phone'=>$user->setting->number,
+                'email'=>$user->setting->email,
+                'address'=>'',
+                'generated'=>false
+            ]);
+        }
 
         $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
         $QRPics->touchPromo(Auth::user());
