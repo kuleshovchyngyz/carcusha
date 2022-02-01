@@ -53,6 +53,18 @@ class QRCodeGenerator
 
         }
     }
+    public function touchPromo($user){
+        if($user->promo===null){
+            Promo::firstOrCreate([
+                'user_id'=>$user->setting->user_id,
+                'name'=>'',
+                'phone'=>$user->setting->number,
+                'email'=>$user->setting->email,
+                'address'=>'',
+                'generated'=>false
+            ]);
+        }
+    }
     public function saveData(){
 
         if($this->user->promo===null){
