@@ -24,7 +24,11 @@ $leads = $data;
                             <div class="divTableCell" style="width: 145px;">{{ $lead->created_at->format('d-m-Y') }}</div>
                             <div class="divTableCell" style="width: 213px;" data-lead-id="{{ $lead->id }}">
                                 <span>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</span>
-                                @if($lead->checked())
+                                <span class="icon-group">
+                                    <button type="button" id="leadPoto" class="gall-icon tb-icon" data-lead-id="{{ $lead->folder }}" data-toggle="modal" data-target="#gallModalCenter">
+                                    </button>
+                                    </span>
+                                @if(!$lead->checked())
                                 <span class="danger-icon tb-icon dd-btn">
                                                     <div class="dd-btn__info">
                                                         Данный автомобиль обнаружен
@@ -32,6 +36,7 @@ $leads = $data;
                                                     </div>
                                 </span>
                                 @endif
+
                             </div>
                             <div class="divTableCell" style="width: 157px;">{{ $lead->phonenumber }}</div>
                         </div>
@@ -86,5 +91,6 @@ $leads = $data;
     </div>
 
 </div>
+@include('layouts.photomodal')
 
 
