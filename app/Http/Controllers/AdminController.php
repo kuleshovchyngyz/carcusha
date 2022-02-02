@@ -524,7 +524,7 @@ class AdminController extends Controller
             $lead_id = $request->all()['data']['FIELDS']['ID'];
             \Storage::disk('local')->append('deletedleads.txt', json_encode($request->all(),JSON_UNESCAPED_UNICODE));
             $lead = Lead::where('bitrix_lead_id',$lead_id)->first();
-            if($lead->count()>0){
+            if($lead){
                 Fantom::firstOrCreate(['bitrix_lead_id'=>$lead->id]);
             }
         }

@@ -15,7 +15,9 @@ use App\Models\UserStatuses;
 use App\support\Bitrix\ApiConnect;
 use App\support\Leads\Pay;
 use App\support\Leads\UpdatingLeadStatus;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FantomLeadController extends Controller
 {
@@ -79,6 +81,8 @@ class FantomLeadController extends Controller
 
     public function compareLeads()
     {
+
+        Storage::disk('local')->append('cronworking.txt',Carbon::now()->format('Y-h-m g:ia'));
         $b = new ApiConnect();
         $fantoms_ids = [];
         $result = $b->getLeadList();
