@@ -27,7 +27,7 @@ class FantomLeadController extends Controller
     }
     public function delete(Lead $lead){
 
-        $s = Status::where('ID_on_bitrix','close')->first();
+        $s = Status::where('ID_on_bitrix','delete')->first();
         Fantom::where('bitrix_lead_id',$lead->bitrix_lead_id)->delete();
         new UpdatingLeadStatus($lead->bitrix_lead_id,$s->id);
 
