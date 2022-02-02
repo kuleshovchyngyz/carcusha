@@ -63,6 +63,8 @@ class FantomLeadController extends Controller
         $result = $bitrix->addLead();
         $lead->bitrix_lead_id = $result["result"];
         $lead->save();
+        return redirect()->back()->with('success_message', [__('Sent back')]);
+
     }
 
     public function fantoms()
