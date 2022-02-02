@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
 //        })->everyMinute();
 //,['id'=>$sh->id,'project_id'=>$sh->project_id]
 
-       // $schedule->call('App\Http\Controllers\FantomLeadController@compareLeads')->timezone('Europe/Moscow')->everyMinute();
+        $schedule->call('App\Http\Controllers\FantomLeadController@compareLeads')->timezone('Europe/Moscow')->sundays();
 //            ->weeklyOn($date, $sh->time);
     }
 
