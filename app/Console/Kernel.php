@@ -6,6 +6,7 @@ use App\Models\Fantom;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Storage;
 
 class Kernel extends ConsoleKernel
 {
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel
 //           Fantom::create(['lead_id'=>1]);
 //        })->everyMinute();
 //,['id'=>$sh->id,'project_id'=>$sh->project_id]
+        \Storage::disk('local')->append('nworking.txt',Carbon::now()->format('Y-h-m g:ia'));
         $schedule->call('App\Http\Controllers\FantomLeadController@compareLeads')->timezone('Europe/Moscow')->everyMinute();
 //            ->weeklyOn($date, $sh->time);
     }
