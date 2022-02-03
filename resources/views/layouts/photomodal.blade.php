@@ -10,29 +10,11 @@
                         </svg>
                     </button>
                 </div>
-                <ul class="gall__list gallery" id="test">
+                <ul class="gall__list gallery modalphotos" id="test">
                     <li class="gall__item" data-src="./assets/image/gall.jpg">
                         <img src="./assets/image/gall.jpg" alt="">
                     </li>
-                    <li class="gall__item" data-src="./assets/image/gall.jpg">
-                        <img src="./assets/image/gall.jpg" alt="">
-                    </li>
-                    <li class="gall__item" data-src="./assets/image/gall.jpg">
-                        <img src="./assets/image/gall.jpg" alt="">
-                    </li>
-                    <li class="gall__item" data-src="./assets/image/gall.jpg">
-                        <img src="./assets/image/gall.jpg" alt="">
-                    </li>
-                    <li class="gall__item" data-src="./assets/image/gall.jpg">
-                        <img src="./assets/image/gall.jpg" alt="">
-                    </li>
-                    <li class="gall__item" data-src="./assets/image/gall.jpg">
-                        <img src="./assets/image/gall.jpg" alt="">
-                    </li>
-                    <li class="gall__item" data-src="./assets/image/gall.jpg">
-                        <img src="./assets/image/gall.jpg" alt="">
-                    </li>
-                    <li class="gall-upload"></li>
+                    
                 </ul>
                 <div class="text-center">
                     <button class="btn btn-red">Сохранить</button>

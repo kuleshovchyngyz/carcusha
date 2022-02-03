@@ -14,30 +14,25 @@ const imageUpload = {
             self.updateBlopFiles(self.dt.files);
 
         });
-        $(`#images`).on('click', `.transfer__delete`, {self:this}, function (e) {
-            let self = e.data.self;
-            let parent = $(this).parents(`.transfer`);
-            let i = parent.index() - (($(`.page-file-item:not(.transfer)`).length > 0) ? ($(`.page-file-item:not(.transfer)`).length +1) : 1);
-
-            self.dt.items.remove(i);
-            parent.remove();
-            self.updateBlopFiles(self.dt.files);
-        } );
+     
     },
     updateBlopFiles(files) {
         $(`#uploader`).prop('files', files);
     },
     writeHtml(file){
 
-        let html = `<div class="page-file-item transfer">
-                    <img src="${URL.createObjectURL(file)}" alt="">
-                    <div class="page-file__option">
-                        <button type="button" class="page-file__zoom"></button>
-                        <button type="button" class="page-file__delete transfer__delete"></button>
-                    </div>
-                </div>`;
-        $(`#images`).append(html);
+        let html = `<li class="gall__item" data-src="./assets/image/gall.jpg">
+                        <img src="${file}" alt="">
+                   </li>`;
+        $(`.modalphotos`).append(html);
 
+    },
+    async pay_to_partner(folder){
+        const result = await $.ajax({
+            type: 'GET',
+            url: `/lead/photo/${folder}`
+        })
+        return result;
     }
 
 }

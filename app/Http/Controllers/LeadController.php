@@ -39,15 +39,25 @@ class LeadController extends Controller
      */
     public function index()
     {
+        $image_names = [];
         $leads = Lead::with('status','leadHistory')
             ->where('user_id',Auth::user()->id)
             ->orderBy('updated_at','DESC')
-            ->get();
-        //dd($leads);
+            ->get()
+            ->each(function($item) use (&$image_names){
+              if(\File::exists('uploads/'.$item->folder)) {
+                  $filesInFolder = \File::files('uploads/'.$item->folder);
+                  foreach($filesInFolder as $path) {
+                      $file = pathinfo($path);
+                      $image_names[$item->folder][] =  $file['basename'] ;
+                  }
+              }
+            })
+            ;
 
-        return view('home',[
-            'name' => 'leads',
-            'data' => $leads
+        return view('layouts.leads',[
+            'images'=>$image_names,
+            'leads' => $leads
         ]);
     }
 
