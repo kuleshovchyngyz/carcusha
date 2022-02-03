@@ -110,8 +110,8 @@ Route::post('/deleteimage', [App\Http\Controllers\LeadController::class, 'delete
 //Route::get('/tester', [App\Http\Controllers\LeadController::class, 'tester']);
 Route::group(['prefix'=>'leads', 'middleware' => ['auth', 'role:user']], function () {
     Route::get('/', [App\Http\Controllers\LeadController::class, 'index'])->name('lead.list');
-
     Route::get('/create', [App\Http\Controllers\LeadController::class, 'create'])->name('lead.create');
+    Route::post('/photo', [App\Http\Controllers\LeadController::class, 'photo'])->name('lead.photo');
     Route::post('/store', [App\Http\Controllers\LeadController::class, 'store'])->name('lead.store');
 });
 

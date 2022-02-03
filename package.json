@@ -28,6 +28,8 @@
         "credit-card-input-mask": "^3.0.0",
         "imask": "^6.2.0",
         "jquery-confirm": "^3.3.4",
-        "jquery-input-mask-phone-number": "^1.0.15"
+        "jquery-input-mask-phone-number": "^1.0.15",
+        "lightbox2": "^2.11.3",
+        "lightgallery": "^2.3.0"
     }
 }

@@ -1688,3 +1688,17 @@ td.snowflake svg{
 }
 
 
+
+.lightbox{
+    display: flex;
+    flex-direction: column;
+}
+.lb-outerContainer{
+    order: 2;
+}
+.lb-dataContainer {
+    order: 1;
+}
+.lb-details{
+    display: none;
+}

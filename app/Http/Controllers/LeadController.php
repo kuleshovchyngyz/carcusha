@@ -75,6 +75,15 @@ class LeadController extends Controller
         ]);
 
     }
+    public function photo(Request $request)
+    {
+
+        $file = file_get_contents( public_path('uploads').'/'.$request->folder.'/'.$request->file);
+
+        //return 'uploads'.'/'.$request->folder.'/'.$request->file;
+        return $file;
+
+    }
 
 
     function sendDataToBitrix1($method, $data) {

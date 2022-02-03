@@ -1,5 +1,6 @@
 
 <div class="modal fade show" id="gallModalCenter" tabindex="-1" aria-labelledby="gallModalCenterTitle" style="display: none;" aria-modal="true" role="dialog">
+    @csrf
         <div class="modal-dialog modal-dialog-centered" style="max-width: 880px">
             <div class="modal-gall">
                 <div class="modal-head">
@@ -11,10 +12,12 @@
                     </button>
                 </div>
                 <ul class="gall__list gallery modalphotos" id="test">
-                    <li class="gall__item" data-src="./assets/image/gall.jpg">
-                        <img src="./assets/image/gall.jpg" alt="">
-                    </li>
-                    
+                   <a class="gall-upload">
+                   </a>
+                    <input type="file" name="image[]" id="pictures" multiple="" >
+                    <input type="file" id="img" name="img" accept="image/*">
+
+
                 </ul>
                 <div class="text-center">
                     <button class="btn btn-red">Сохранить</button>

@@ -1,4 +1,4 @@
-@dump($images)
+
 
 @extends('layouts.app')
 
@@ -29,9 +29,11 @@
                                         <div class="divTableCell" style="width: 213px;" data-lead-id="{{ $lead->id }}">
                                             <span>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</span>
                                             <span class="icon-group">
-                                                <button type="button" id="leadPoto" class="gall-icon tb-icon" data-lead-id="{{ $lead->folder }}"
-                                                    data-image-names=""
-                                                    data-toggle="modal" data-target="#gallModalCenter">
+                                                <button type="button" id="leadPoto" class="gall-icon tb-icon leadPoto"
+                                                        data-lead-folder="{{ $lead->folder }}"
+                                                        data-image-names="{{ implode('||',$images[$lead->folder] ?? []) }}"
+                                                        data-toggle="modal"
+                                                        data-target="#gallModalCenter">
                                                 </button>
                                                 </span>
                                             @if(!$lead->checked())

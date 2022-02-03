@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
 </head>
 <body>
 
@@ -76,5 +78,6 @@
             <a href="{{ route('public_offer') }}"  class="footer__link ml-auto">Публичная оферта</a>
         </div>
     </footer>
+
 </body>
 </html>

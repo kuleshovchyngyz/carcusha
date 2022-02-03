@@ -1,19 +1,16 @@
 import {trim} from "lodash/string";
 import CreditCardInputMask from "credit-card-input-mask";
 
-import IMask from 'imask';
+import lightGallery from 'lightgallery';
+
+// Plugins
+import lgThumbnail from 'lightgallery/plugins/thumbnail'
+import lgZoom from 'lightgallery/plugins/zoom'
 
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
-
-
-
-
-
-
-
 
 
 
