@@ -182,6 +182,6 @@ class Bitrix
 
         $this->bitrix_data['SOURCE_ID'] = "1";
         $this->bitrix_data['STATUS_ID'] = $status;
-        $this->bitrix_data['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
+        $phone ?: $this->bitrix_data['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
     }
 }
