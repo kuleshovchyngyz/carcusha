@@ -2724,21 +2724,32 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+$('#gallModalCenter').on('hidden.bs.modal', function () {
+  var folder = $('#current_folder_id').val();
+  var images = $(".".concat(folder)).data('image-names'); //  $('#myElementID').data('myvalue',38);
+
+  console.log('closed');
+  console.log(images);
+});
 var imageLoad = {
   image_names: [],
   folder: '',
   init: function init() {
     $(".gall-upload").on('click', function (e) {
+      console.log('gall clicked');
       $("#pictures").trigger('click');
     });
     $(".leadPoto").on('click', {
       self: this
     }, function (e) {
-      $('.modalphotos').find('*').not('.gall-upload').remove();
+      $('.lead__name').text('');
+      $('.modalphotos').find('*').not('.const').remove();
       var self = e.data.self;
       self.image_names = $(this).data('image-names').split('||');
       self.folder = $(this).data('lead-folder');
+      $('.lead__name').text($(this).data('lead-name'));
       self.getImages();
+      $('#current_folder_id').val(self.folder);
     });
   },
   getImages: function getImages() {
@@ -2905,6 +2916,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 $(document).ready(function () {
   $('#pictures').change(function (e) {
     var folder_id = $("#folder_id").val();
+
+    if ($('.modalphotos').length) {
+      folder_id = $('#current_folder_id').val();
+      console.log('folderrrrrr ' + folder_id);
+    }
+
     var l = $('#pictures')[0].files.length;
     console.log('number of files: ' + countBusy());
     repeat(folder_id, -1, l);
@@ -2917,17 +2934,24 @@ function putImage(_x, _x2, _x3) {
 
 function _putImage() {
   _putImage = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(file, check, name) {
+    var html;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            $("#img".concat(check)).attr("src", file);
-            $("#img".concat(check)).attr('data-name', name);
-            $("#img".concat(check)).removeClass('d-none');
-            $("#".concat(check)).removeClass('d-none');
-            $("#img".concat(check)).addClass('d-block'); // $('.onlyFour').append('<li><i class="fa fa-times timesicon" id="1" aria-hidden="true"></i><img src = "'+reader.result+'" class="uploadImage d-block"></li>');
+            if ($('.modalphotos').length) {
+              html = "\n     <a class=\"gall__item example-image-link\"   href=\"".concat(file, "\" data-lightbox=\"example-set\" data-title=\"Click the right half of the image to move forward.\">\n                     <img class=\"example-image\" src=\"").concat(file, "\" alt=\"\">\n                </a>");
+              $(".modalphotos").prepend(html);
+            } else {
+              $("#img".concat(check)).attr("src", file);
+              $("#img".concat(check)).attr('data-name', name);
+              $("#img".concat(check)).removeClass('d-none');
+              $("#".concat(check)).removeClass('d-none');
+              $("#img".concat(check)).addClass('d-block');
+            } // $('.onlyFour').append('<li><i class="fa fa-times timesicon" id="1" aria-hidden="true"></i><img src = "'+reader.result+'" class="uploadImage d-block"></li>');
 
-          case 5:
+
+          case 1:
           case "end":
             return _context.stop();
         }
@@ -2951,13 +2975,15 @@ function repeat(folder_id, i, l) {
       fd.append('number', $('#pictures')[0].files[i].name);
       fd.append('_token', $('[name="_token"]').val());
       fd.append("file[]", data);
+      console.log(fd);
       image_names(fd).then(function (v) {
         console.log('sdfsdf: ' + v[1]);
         console.log(v);
         var check = false;
         check = is_busy(v[1]);
 
-        if (check != false) {
+        if (check != false || $('.modalphotos').length) {
+          addImageNames($('#pictures')[0].files[i].name);
           putImage(data, check, $('#pictures')[0].files[i].name);
         }
 
@@ -2971,6 +2997,14 @@ function repeat(folder_id, i, l) {
   reader.onerror = function (error) {
     console.log('Error: ', error);
   };
+}
+
+function addImageNames(file) {
+  if ($('.modalphotos').length) {
+    var folder = $('#current_folder_id').val();
+    var images = $(".".concat(folder)).data('image-names') + '||' + file + '.txt';
+    $(".".concat(folder)).data('image-names', images);
+  }
 }
 
 function preview_pic(i, l) {

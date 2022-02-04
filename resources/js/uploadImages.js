@@ -1,6 +1,11 @@
 $(document).ready(function() {
     $('#pictures').change(function(e) {
-        var folder_id = $("#folder_id").val();
+      var folder_id = $("#folder_id").val();
+       if($('.modalphotos').length){
+         folder_id = $('#current_folder_id').val();
+         console.log('folderrrrrr '+folder_id);
+       }
+
         var l = $('#pictures')[0].files.length;
         console.log('number of files: ' + countBusy())
         repeat(folder_id,-1,l)
@@ -8,35 +13,45 @@ $(document).ready(function() {
 });
 
  async function putImage(file,check,name) {
-
-        $(`#img${check}`).attr("src", file);
-        $(`#img${check}`).attr('data-name', name);
-        $(`#img${check}`).removeClass('d-none');
-        $(`#${check}`).removeClass('d-none');
-        $(`#img${check}`).addClass('d-block');
+   if($('.modalphotos').length){
+     let html = `
+     <a class="gall__item example-image-link"   href="${file}" data-lightbox="example-set" data-title="Click the right half of the image to move forward.">
+                     <img class="example-image" src="${file}" alt="">
+                </a>`;
+     $(`.modalphotos`).prepend(html);
+   }else{
+     $(`#img${check}`).attr("src", file);
+     $(`#img${check}`).attr('data-name', name);
+     $(`#img${check}`).removeClass('d-none');
+     $(`#${check}`).removeClass('d-none');
+     $(`#img${check}`).addClass('d-block');
+   }
         // $('.onlyFour').append('<li><i class="fa fa-times timesicon" id="1" aria-hidden="true"></i><img src = "'+reader.result+'" class="uploadImage d-block"></li>');
 
 }
 function repeat(folder_id,i,l) {
     i++;
-
     var reader = new FileReader();
-console.log($('#pictures')[0].files[i])
+    console.log($('#pictures')[0].files[i])
     reader.readAsDataURL($('#pictures')[0].files[i]);
     reader.onload = function () {
         minifyImg(reader.result, 1600, 'image/jpeg', (data)=> {
+
             var fd = new FormData();
             console.log('n=busy : '+countBusy());
             fd.append('folder_id', folder_id)
             fd.append('number',$('#pictures')[0].files[i].name )
             fd.append('_token', $('[name="_token"]').val())
             fd.append("file[]", data);
+            console.log(fd);
             image_names(fd).then(v => {
                 console.log('sdfsdf: '+v[1]);
                 console.log(v);
                 let check = false;
                 check = is_busy(v[1]);
-                if(check!=false){
+
+                if(check!=false || $('.modalphotos').length){
+                    addImageNames($('#pictures')[0].files[i].name);
                     putImage(data,check,$('#pictures')[0].files[i].name);
                 }
                 if(i<l-1){
@@ -54,7 +69,13 @@ console.log($('#pictures')[0].files[i])
 
 }
 
-
+function addImageNames(file){
+  if($('.modalphotos').length){
+    let folder = $('#current_folder_id').val();
+    let images = $(`.${folder}`).data('image-names')+'||'+file+'.txt';
+    $(`.${folder}`).data('image-names',images);
+  }
+}
 function preview_pic(i,l)
 {
 

@@ -69,7 +69,7 @@
                                         <div class="form-control " id="fileuploader">
                                             Прикрепить фото <i class="fa fa-upload" aria-hidden="true"></i>
                                         </div>
-                                            <input type="file" name="image[]" id="pictures" multiple="" hidden="" >
+                                            <input type="file" name="image[]" id="pictures" multiple="" hidden >
 
                                     </label>
                                 </div>
@@ -137,6 +137,3 @@
     </div>
     @endif
 @endsection
-
-
-

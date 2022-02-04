@@ -29,8 +29,10 @@
                                         <div class="divTableCell" style="width: 213px;" data-lead-id="{{ $lead->id }}">
                                             <span>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</span>
                                             <span class="icon-group">
-                                                <button type="button" id="leadPoto" class="gall-icon tb-icon leadPoto"
+
+                                                <button type="button" id="leadPoto" class="gall-icon tb-icon leadPoto {{ $lead->folder }}"
                                                         data-lead-folder="{{ $lead->folder }}"
+                                                        data-lead-name="{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}"
                                                         data-image-names="{{ implode('||',$images[$lead->folder] ?? []) }}"
                                                         data-toggle="modal"
                                                         data-target="#gallModalCenter">
