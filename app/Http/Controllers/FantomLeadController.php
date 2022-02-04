@@ -61,8 +61,11 @@ class FantomLeadController extends Controller
             $lead->status->index
         );
         $result = $bitrix->addLead();
+        Reason::where('reason_name','lead')->where('table_id',$lead->bitrix_lead_id)->update(['table_id'=>$result["result"]]);
+        MessageNotification::where('lead_id',$lead->bitrix_lead_id)->update(['lead_id'=>$result["result"]]);
         $lead->bitrix_lead_id = $result["result"];
         $lead->save();
+
         return redirect()->back()->with('success_message', [__('Sent back')]);
 
     }
