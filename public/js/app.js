@@ -2734,6 +2734,7 @@ $('#gallModalCenter').on('hidden.bs.modal', function () {
 var imageLoad = {
   image_names: [],
   folder: '',
+  lead_id: '',
   init: function init() {
     $(".gall-upload").on('click', function (e) {
       console.log('gall clicked');
@@ -2747,7 +2748,10 @@ var imageLoad = {
       var self = e.data.self;
       self.image_names = $(this).data('image-names').split('||');
       self.folder = $(this).data('lead-folder');
+      self.lead_id = $(this).data('lead-id');
       $('.lead__name').text($(this).data('lead-name'));
+      console.log(self);
+      $('#sendToBitrixButton').attr("data-lead-id", self.lead_id);
       self.getImages();
       $('#current_folder_id').val(self.folder);
     });
@@ -2914,6 +2918,23 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 $(document).ready(function () {
+  $("#sendToBitrixButton").on('click', function (e) {
+    console.log('sendToBitrixButton' + $(this).data('lead-id'));
+    var res = AddToBitrix($(this).data('lead-id'));
+    console.log(res);
+    $(".close").trigger('click');
+  });
+});
+
+function AddToBitrix(lead) {
+  var result = $.ajax({
+    type: 'GET',
+    url: "/leads/update/".concat(lead)
+  });
+  return result;
+}
+
+$(document).ready(function () {
   $('#pictures').change(function (e) {
     var folder_id = $("#folder_id").val();
 
@@ -3003,7 +3024,9 @@ function addImageNames(file) {
   if ($('.modalphotos').length) {
     var folder = $('#current_folder_id').val();
     var images = $(".".concat(folder)).data('image-names') + '||' + file + '.txt';
+    var new_images = $("#new_images").val() + '||' + file + '.txt';
     $(".".concat(folder)).data('image-names', images);
+    $("#new_images").val(new_images);
   }
 }
 

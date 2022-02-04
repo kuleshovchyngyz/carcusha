@@ -75,6 +75,14 @@ class LeadController extends Controller
         ]);
 
     }
+
+    public function update(Lead $lead)
+    {
+        $bitrix = new Bitrix();
+        $bitrix->addDeal($lead->vendor,$lead->vendor_model,$lead->vendor_year,$lead->phonenumber,$lead->folder);
+        $result = $bitrix->updateLead($lead->bitrix_lead_id);
+        return $result;
+    }
     public function photo(Request $request)
     {
 
@@ -408,17 +416,7 @@ class LeadController extends Controller
         return redirect()->back();
 
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Lead  $lead
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Lead $lead)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.

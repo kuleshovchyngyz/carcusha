@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Clients\Bitrix;
+use App\Models\Lead;
 use App\Models\User;
 use App\support\Bitrix\ApiConnect;
 use App\support\Leads\UpdatingLeadStatus;
@@ -38,6 +40,13 @@ Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 Route::get('/list', [App\Http\Controllers\FantomLeadController::class, 'compareLeads']);
 Route::get('/test', function (){
 
+        $lead = Lead::find(259);
+       // dd($lead);
+
+        $bitrix = new Bitrix();
+        $bitrix->addDeal($lead->vendor,$lead->vendor_model,$lead->vendor_year,$lead->phonenumber,$lead->folder);
+        $result = $bitrix->updateLead($lead->bitrix_lead_id);
+        dd($result);
     // $dealData = new ApiConnect('crm.lead.list', ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]]);
     // dd($dealData);
     // dd(sendDataToBitrix1('crm.lead.list', ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]]));
@@ -48,28 +57,7 @@ Route::get('/test', function (){
     dd("Document has been converted");
    // new UpdatingLeadStatus(env('LEAD_BITRIX_ID'), env('LEAD_STATUS'));
 });
- function sendDataToBitrix1($method, $data) {
-    //$webhook_url = "https://b24-85lwia.bitrix24.ru/rest/1/s52ljoksktlyj1ed/";//test
-    $webhook_url = "https://carcusha.bitrix24.ru/rest/1/rrr2v2vfxxbw2jeo/";//real
-    $queryUrl = $webhook_url . $method ;
-    $queryData = http_build_query($data);
 
-    $curl = curl_init();
-    curl_setopt_array($curl, array(
-        CURLOPT_SSL_VERIFYPEER => 0,
-        CURLOPT_POST => 1,
-        CURLOPT_HEADER => 0,
-        CURLOPT_HTTPHEADER => array("Content-Type:multipart/form-data"),
-        CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => $queryUrl,
-        CURLOPT_POSTFIELDS => $queryData,
-
-    ));
-
-    $result = curl_exec($curl);
-    curl_close($curl);
-    return json_decode($result, 1);
-}
 Route::get('/delete', function (){
     // \App\Models\PendingAmount::latest()->first()->delete();
     // \App\Models\Payment::latest()->first()->delete();
@@ -111,6 +99,7 @@ Route::post('/deleteimage', [App\Http\Controllers\LeadController::class, 'delete
 Route::group(['prefix'=>'leads', 'middleware' => ['auth', 'role:user']], function () {
     Route::get('/', [App\Http\Controllers\LeadController::class, 'index'])->name('lead.list');
     Route::get('/create', [App\Http\Controllers\LeadController::class, 'create'])->name('lead.create');
+    Route::get('/update/{lead}', [App\Http\Controllers\LeadController::class, 'update'])->name('lead.update');
     Route::post('/photo', [App\Http\Controllers\LeadController::class, 'photo'])->name('lead.photo');
     Route::post('/store', [App\Http\Controllers\LeadController::class, 'store'])->name('lead.store');
 });

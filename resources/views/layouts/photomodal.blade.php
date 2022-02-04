@@ -18,8 +18,10 @@
 
                 </ul>
                   <input type="hidden"  id="current_folder_id" value="">
+                  <input type="hidden"  id="new_images" value="">
+
                 <div class="text-center">
-                    <button class="btn btn-blue">Сохранить</button>
+                    <button class="btn btn-blue" id="sendToBitrixButton" data-lead-id="0">Сохранить</button>
                 </div>
             </div>
         </div>

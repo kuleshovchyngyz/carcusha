@@ -33,10 +33,10 @@ class Bitrix
         return false;
     }
 
-    public function updateLead($id=0,$array = []){
+    public function updateLead($id=0){
         $this->result = $this->connect('crm.lead.update', [
             'id'=>$id,
-            'fields' => $array,
+            'fields' =>$this->bitrix_data,
             'params' => [
                 'REGISTER_SONET_EVENT' => 'Y'
             ],
@@ -140,6 +140,7 @@ class Bitrix
             $data_img[] =
                 curl_file_create(public_path('uploads').'/'.$folder_name.'/'.$img[$key],'image/*',$img[$key]);
         }
+
 
 
         foreach ($data_img as $key=>$ready){

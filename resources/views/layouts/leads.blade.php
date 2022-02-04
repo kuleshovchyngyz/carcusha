@@ -29,16 +29,18 @@
                                         <div class="divTableCell" style="width: 213px;" data-lead-id="{{ $lead->id }}">
                                             <span>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</span>
                                             <span class="icon-group">
-
+                                                @if($lead->status->status_type!="finished")
                                                 <button type="button" id="leadPoto" class="gall-icon tb-icon leadPoto {{ $lead->folder }}"
                                                         data-lead-folder="{{ $lead->folder }}"
                                                         data-lead-name="{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}"
                                                         data-image-names="{{ implode('||',$images[$lead->folder] ?? []) }}"
                                                         data-toggle="modal"
+                                                        data-lead-id="{{ $lead->id }}"
                                                         data-target="#gallModalCenter">
                                                 </button>
+                                                @endif
                                                 </span>
-                                            @if(!$lead->checked())
+                                            @if($lead->checked())
                                             <span class="danger-icon tb-icon dd-btn">
                                                                 <div class="dd-btn__info">
                                                                     Данный автомобиль обнаружен

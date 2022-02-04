@@ -10,6 +10,7 @@ $('#gallModalCenter').on('hidden.bs.modal', function () {
 const imageLoad = {
     image_names:[],
     folder:'',
+    lead_id:'',
     init() {
 
 
@@ -24,7 +25,12 @@ const imageLoad = {
             let self = e.data.self;
             self.image_names = $(this).data('image-names').split('||');
             self.folder = $(this).data('lead-folder');
+            self.lead_id = $(this).data('lead-id');
             $('.lead__name').text($(this).data('lead-name'));
+
+            console.log(self)
+
+            $('#sendToBitrixButton').attr("data-lead-id",self.lead_id);
             self.getImages();
 
             $('#current_folder_id').val(self.folder);

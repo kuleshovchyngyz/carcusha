@@ -1,4 +1,22 @@
 $(document).ready(function() {
+    $(`#sendToBitrixButton`).on('click',  function (e) {
+        console.log('sendToBitrixButton'+$(this).data('lead-id'));
+        let res = AddToBitrix($(this).data('lead-id'));
+        console.log(res);
+        $(`.close`).trigger('click');
+
+    });
+});
+function AddToBitrix(lead){
+    const result = $.ajax({
+        type: 'GET',
+        url: `/leads/update/${lead}`
+
+    })
+    return result;
+}
+
+$(document).ready(function() {
     $('#pictures').change(function(e) {
       var folder_id = $("#folder_id").val();
        if($('.modalphotos').length){
@@ -73,7 +91,9 @@ function addImageNames(file){
   if($('.modalphotos').length){
     let folder = $('#current_folder_id').val();
     let images = $(`.${folder}`).data('image-names')+'||'+file+'.txt';
+    let new_images = $(`#new_images`).val()+'||'+file+'.txt';
     $(`.${folder}`).data('image-names',images);
+    $(`#new_images`).val(new_images);
   }
 }
 function preview_pic(i,l)
