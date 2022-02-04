@@ -1,6 +1,6 @@
 import {trim} from "lodash/string";
 import CreditCardInputMask from "credit-card-input-mask";
-
+import IMask from 'imask';
 import lightGallery from 'lightgallery';
 
 // Plugins
