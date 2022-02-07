@@ -1,3 +1,41 @@
+
+import Toastr from 'toastr2';
+
+import 'toastr2/dist/toastr.min.css';
+
+const toastr = new Toastr();
+$(document).ready(function() {
+    $(`#button`).on('click',  function (e) {
+       toastr.options.timeOut = 0;
+        // {
+        //     "closeButton": false,
+        //     "debug": false,
+        //     "newestOnTop": true,
+        //     "progressBar": false,
+        //     "positionClass": "toast-top-center",
+        //     "preventDuplicates": false,
+        //     "onclick": null,
+        //     "showDuration": "300",
+        //     "hideDuration": "1000",
+        //     "timeOut": 0,
+        //     "extendedTimeOut": 0,
+        //     "showEasing": "swing",
+        //     "hideEasing": "linear",
+        //     "showMethod": "fadeIn",
+        //     "hideMethod": "fadeOut",
+        //     "tapToDismiss": false
+        //   }
+        toastr.options.closeButton = true;
+         toastr.info("<span class='ant-modal-confirm-title'>Доступно обновление</span> Вы можете принять обновление, тогда произойдёт перезагрузка страницы и вы будете продолжать работать уже в новой версии приложения, либо вы можете отклонить обновление, тогда вам нужно будет обновить страницу вручную, когда это будет удобно.<br /><br /><button type='button' class='btn clear'>Yes</button>")
+        
+        //   toastr["info"]("Clear itself?<br /><br /><button type='button' class='btn clear'>Yeds</button>")
+
+
+
+
+  });
+  });
+
 $(document).ready(function() {
     $(`#sendToBitrixButton`).on('click',  function (e) {
         console.log('sendToBitrixButton'+$(this).data('lead-id'));
@@ -5,7 +43,9 @@ $(document).ready(function() {
         console.log(res);
         $(`.close`).trigger('click');
 
+
     });
+
 });
 function AddToBitrix(lead){
     const result = $.ajax({

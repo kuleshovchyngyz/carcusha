@@ -30,6 +30,8 @@
         "jquery-confirm": "^3.3.4",
         "jquery-input-mask-phone-number": "^1.0.15",
         "lightbox2": "^2.11.3",
-        "lightgallery": "^2.3.0"
+        "lightgallery": "^2.3.0",
+        "toastr": "^2.1.4",
+        "toastr2": "^3.0.0-alpha.18"
     }
 }

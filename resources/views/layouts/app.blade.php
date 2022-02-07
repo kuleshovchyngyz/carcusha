@@ -19,6 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -69,6 +70,7 @@
 
 
     @yield('content')
+@include('modals.update')
 
 {{--    <input type="text" id="number" name="number" class="form-control" placeholder="Не указан" value="{{ ViewService::init()->view('promo_number') }}">--}}
     <footer class="footer">

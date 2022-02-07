@@ -11,10 +11,6 @@ require('./newtable.js');
 require('./CheckPromo')
 require('./leadPhotforModal')
 require('./submitButtons')
+
 require('lightbox2/dist/js/lightbox-plus-jquery.min.js')
-
-
-
-
-
-
+require('toastr');
