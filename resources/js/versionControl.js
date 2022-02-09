@@ -1,4 +1,4 @@
-console.log(5555)
+console.log(8888888888888)
 //setCookie('maksat','updated',1);
 let js;
 $('script').filter(function(){

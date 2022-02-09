@@ -3228,7 +3228,7 @@ var minifyImg = function minifyImg(dataUrl, newWidth) {
   \****************************************/
 /***/ (() => {
 
-console.log(5555); //setCookie('maksat','updated',1);
+console.log(8888888888888); //setCookie('maksat','updated',1);
 
 var js;
 $('script').filter(function () {
