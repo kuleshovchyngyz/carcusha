@@ -101,11 +101,11 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateProjectModal">
-                  updateProjectModal
-                </button>
+{{--                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateProjectModal">--}}
+{{--                  updateProjectModal--}}
+{{--                </button>--}}
             </div>
-            @include('layouts.photomodal')
+
 
 
 
@@ -114,5 +114,5 @@
 
     </div>
 </main>
-
+@include('layouts.photomodal')
 @endsection

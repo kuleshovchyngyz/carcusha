@@ -1,0 +1,27 @@
+.modal-dialog-carcusha{
+    max-width: 400px;
+    margin: 1.75rem auto;
+}
+.modal-content-carcusha{
+padding: 10px 40px;
+
+}
+.modal-header-carcusha {
+    border-bottom: none;
+
+
+}
+
+.modal-footer-carcusha{
+    border-top: none;
+}
+.modal-body-carcusha{
+    padding: 0px;
+}
+.btn-modal-update{
+    max-width: unset;
+    width: auto;
+    border-radius: 0.25rem;
+    margin-top: unset;
+    margin-bottom: unset;
+}
