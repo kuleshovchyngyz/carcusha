@@ -20,7 +20,7 @@ $(document).ready(function () {
         fd.append("password_confirmation", password_confirmation);
 
         submit_form(fd).then(result => {
-            console.log(result);
+
             if(result.errors)
             {
                 jQuery('.alert-danger').html('');

@@ -2256,8 +2256,6 @@ $(document).ready(function () {
     fd.append("user_id", user_id);
     fd.append("password_confirmation", password_confirmation);
     submit_form(fd).then(function (result) {
-      console.log(result);
-
       if (result.errors) {
         jQuery('.alert-danger').html('');
         jQuery.each(result.errors, function (key, value) {
@@ -2684,8 +2682,10 @@ $(document).ready(function () {
     mask: '+{7}(000)000-00-00'
   };
 
-  if ($('#phone').val().length < 18) {
-    var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element1, maskOptions);
+  if (element1 != null) {
+    if ($('#phone').val().length < 18) {
+      var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element1, maskOptions);
+    }
   }
 });
 $(document).ready(function () {
@@ -2693,21 +2693,30 @@ $(document).ready(function () {
   var maskOptions = {
     mask: '+{7}(000)000-00-00'
   };
-  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element2, maskOptions);
+
+  if (element2 != null) {
+    var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element2, maskOptions);
+  }
 });
 $(document).ready(function () {
   var element3 = document.getElementById('numberRegister');
   var maskOptions = {
     mask: '+{7}(000)000-00-00'
   };
-  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element3, maskOptions);
+
+  if (element3 != null) {
+    var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element3, maskOptions);
+  }
 });
 $(document).ready(function () {
   var element4 = document.getElementById('numberLogin');
   var maskOptions = {
     mask: '+{7}(000)000-00-00'
   };
-  var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element4, maskOptions);
+
+  if (element4 != null) {
+    var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element4, maskOptions);
+  }
 });
 
 /***/ }),
