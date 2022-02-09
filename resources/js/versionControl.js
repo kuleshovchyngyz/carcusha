@@ -24,7 +24,6 @@ $('link').filter(function(){
 
 if(getCookie('js')===null||getCookie('js')!=js){
     setCookie('js',js,5);
-    console.log(getCookie('js'))
     location.reload(true);
 }
 
