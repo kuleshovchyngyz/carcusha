@@ -1,7 +1,5 @@
 console.log(5555)
 //setCookie('maksat','updated',1);
-
-
 let js;
 $('script').filter(function(){
     if(typeof $(this).attr('src') !== "undefined"&&$(this).attr('src').includes("/js/app.js"))

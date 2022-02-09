@@ -3256,10 +3256,9 @@ if (getCookie('js') === null || getCookie('js') != js) {
 if (getCookie('css') === null || getCookie('css') != css) {
   setCookie('css', css, 5);
   location.reload(true);
-}
+} // console.log(js)
+// console.log(css)
 
-console.log(js);
-console.log(css);
 
 function setCookie(name, value, days) {
   var expires = "";
