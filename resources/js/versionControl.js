@@ -1,4 +1,4 @@
-console.log(8888888888888)
+
 //setCookie('maksat','updated',1);
 let js;
 $('script').filter(function(){
@@ -20,8 +20,7 @@ $('link').filter(function(){
     }
 
 })
-console.log(getCookie('js'))
-console.log(getCookie('css'))
+
 
 if(getCookie('js')===null||getCookie('js')!=js){
     setCookie('js',js,5);
