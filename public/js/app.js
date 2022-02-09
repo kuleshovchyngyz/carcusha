@@ -3228,8 +3228,7 @@ var minifyImg = function minifyImg(dataUrl, newWidth) {
   \****************************************/
 /***/ (() => {
 
-console.log(8888888888888); //setCookie('maksat','updated',1);
-
+//setCookie('maksat','updated',1);
 var js;
 $('script').filter(function () {
   if (typeof $(this).attr('src') !== "undefined" && $(this).attr('src').includes("/js/app.js")) {
@@ -3244,8 +3243,6 @@ $('link').filter(function () {
     css = $(this).attr('href'); //alert("Hi. Variable is defined.");
   }
 });
-console.log(getCookie('js'));
-console.log(getCookie('css'));
 
 if (getCookie('js') === null || getCookie('js') != js) {
   setCookie('js', js, 5);
