@@ -48,7 +48,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn header__btn color-blue" href="{{ route('admin.fantoms') }}"> Фантомны
+                            <a class="btn header__btn color-blue" href="{{ route('admin.fantoms') }}"> Фантомы
                             </a>
                         </li>
                         <li class="nav-item">
