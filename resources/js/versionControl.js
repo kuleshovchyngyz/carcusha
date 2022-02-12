@@ -1,5 +1,6 @@
 
 //setCookie('maksat','updated',1);
+console.log('version control working')
 let js;
 $('script').filter(function(){
     if(typeof $(this).attr('src') !== "undefined"&&$(this).attr('src').includes("/js/app.js"))

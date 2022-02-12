@@ -3238,6 +3238,7 @@ var minifyImg = function minifyImg(dataUrl, newWidth) {
 /***/ (() => {
 
 //setCookie('maksat','updated',1);
+console.log('version control working');
 var js;
 $('script').filter(function () {
   if (typeof $(this).attr('src') !== "undefined" && $(this).attr('src').includes("/js/app.js")) {
