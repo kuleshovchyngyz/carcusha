@@ -7,7 +7,7 @@
 
     @guest
         <div class="authentication">
-            <img src="{{ asset('svg/logo_cvet.svg') }}" alt="" class="logoauth">
+            <img src="{{ asset('svg/logo_head_desk.svg') }}" alt="" class="logoauth">
             <div class="tab-wrap">
                 <div class="form-head"><h3 class="form-title">Восстановить пароль</h3></div>
                 <div class="tab-content tab-content--custom" id="pills-tabContent">

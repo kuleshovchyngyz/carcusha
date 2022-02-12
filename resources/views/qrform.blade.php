@@ -4,8 +4,6 @@
     <main class="main">
         <div class="container">
             <div class="row">
-
-
                 @include('leads.'.$name,['data'=>$data])
             </div>
         </div>

@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('svg/favicon.ico') }}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -28,7 +28,7 @@
             <div class="row align-items-center">
                 <div class="col-md-4 col-6">
                     <a href="{{ route('admin.users') }}">
-                        <img src="{{ asset('svg/logo_cvet.svg') }}" alt="" class="logo">
+                        <img src="{{ asset('svg/logo_head_desk.svg') }}" alt="" class="logo">
                     </a>
                 </div>
 
