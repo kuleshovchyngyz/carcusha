@@ -2474,6 +2474,12 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 $(document).ready(function () {
+  $('.qrcodeSvg').click(function () {
+    $('#userQrCode').modal('toggle');
+    console.log('clicked');
+  });
+});
+$(document).ready(function () {
   $('#bankcardnumber').on('input', function () {
     var formattedCreditCardInput = new (credit_card_input_mask__WEBPACK_IMPORTED_MODULE_2___default())({
       element: document.querySelector("#bankcardnumber"),
@@ -2538,6 +2544,10 @@ $('.angle_toggle').click(function () {
   $(this).parent().find('.paid').removeClass('d-none');
   $(this).parent().find('.paid').slideToggle();
   $(this).find('.fa-angle-up').toggleClass('fa-angle-down');
+});
+$('.angle_toggle_media').click(function () {
+  console.log(65656565);
+  $("ul.main__nav li:nth-child(3)").css("background-color", "yellow");
 });
 $('.payment_amount').click(function () {
   $('.input-modal').val($(this).text()); // $(this).parent().prev().val($(this).text());

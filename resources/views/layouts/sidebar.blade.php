@@ -7,7 +7,22 @@ if(!isset($active)){
     <div class="main__aside">
 
         <div class="main__info">
-            <div class="main_user-name">User # {{ Auth::user()->id }}
+            <div class="d-flex justify-content-between">
+                <div class="main_user-name">User # {{ Auth::user()->id }}
+                </div>
+                <div class="icons">
+                    <span class="info-icon tb-icon dd-btn">
+                                                    <div class="dd-btn__info">
+                                                        <div class="dd-btn__info-content">
+                                                            Сумма за добавление авто - 50 ₽.
+                        Сумма за завершение сделки - 10000 ₽
+                                                        </div>
+                                                    </div>
+                                                </span>
+                    <img src="http://partnersonserver/svg/qrcode.svg" class="qrcodeSvg" alt="">
+
+                </div>
+
             </div>
             <ul class="main__info-list">
                 <li class="main__info-item">
@@ -52,7 +67,7 @@ if(!isset($active)){
 
         </div>
         <div class="aside-dd">
-            <ul class="main__nav">
+            <ul class="main__nav d-flex flex-column">
                 <li class="main__nav-item @if($active=="leads") active @endif">
                     <a href="{{ route('lead.list') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_avto.svg') }}" alt="">
@@ -117,10 +132,16 @@ if(!isset($active)){
                         Обновления
                     </a>
                 </li>
+                <li  class="main__nav-item">
+                    <a  href="{{ route('customlogout') }}" style="color:var(--color-blue);"> Выход из аккаунта
+                    </a>
+                </li>
             </ul>
-            <div class="text-center">
-                <a  href="{{ route('customlogout') }}" style="color:var(--color-blue);"> Выход из аккаунта
-                </a>
+
+
+            <div class="text-center angle_toggle_media">
+                <i class="fa fa-angle-up fa-angle-down">
+                </i>
             </div>
         </div>
     </div>

@@ -39,6 +39,13 @@ class LeadController extends Controller
      */
     public function index()
     {
+        $user_id = auth()->user()->id;
+        if(!\File::exists('qrcodes/qrqr_'.$user_id.'.png')){
+            $text = route('car_application').'?id='.$user_id;
+            \QrCode::size(440)
+                ->format('png')
+                ->generate($text, public_path('qrcodes/qrqr_'.$user_id.'.png'));
+        }
         $image_names = [];
         $leads = Lead::with('status','leadHistory')
             ->where('user_id',Auth::user()->id)

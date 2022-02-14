@@ -15,6 +15,14 @@ $(function () {
 
 
 
+$(document).ready(function() {
+    $('.qrcodeSvg').click( function(){
+    $('#userQrCode').modal('toggle');
+        console.log('clicked')
+
+    });
+});
+
 $(document).ready(function(){
 
     $('#bankcardnumber').on('input', function(){
@@ -85,6 +93,12 @@ $('.angle_toggle').click(function (){
     $(this).parent().find('.paid').removeClass('d-none');
     $(this).parent().find('.paid').slideToggle();
     $(this).find('.fa-angle-up').toggleClass('fa-angle-down');
+
+});
+$('.angle_toggle_media').click(function (){
+    console.log(65656565)
+    $("ul.main__nav li:nth-child(3)").css("background-color", "yellow");
+
 
 });
 

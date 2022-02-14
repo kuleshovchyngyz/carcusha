@@ -70,7 +70,7 @@
 
 
     @yield('content')
-@include('modals.update')
+@include('modals.qr')
 
 {{--    <input type="text" id="number" name="number" class="form-control" placeholder="Не указан" value="{{ ViewService::init()->view('promo_number') }}">--}}
     <footer class="footer">
