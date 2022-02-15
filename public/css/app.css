@@ -1362,7 +1362,7 @@ select:invalid option:not(:first-child) {
         display: none;
     }
     .paid{
-        display: block !important;
+        display: flex !important;
     }
     .logo {
         display: none;
