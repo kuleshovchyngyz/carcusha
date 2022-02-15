@@ -22,17 +22,13 @@ class ApplicationController extends Controller
         $image_names = array();
         $folder_name = $request->folder_id;
 
-        if(\File::exists('uploads/'.$folder_name)) {
-            $filesInFolder = \File::files('uploads/'.$folder_name);
-            foreach($filesInFolder as $path) {
-                $file = pathinfo($path);
-                $image_names[] =  $file['basename'] ;
-            }
-            $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
-        }else{
-            $result = $this->addDeal($request->car_vendor,$request->car_model,$request->car_year,$image_names,$request->phone,$folder_name);
-        }
-//        dd($result);
+
+        $folder_name = $request->folder_id;
+        $bitrix = new Bitrix();
+        $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$request->phone,$folder_name);
+        $result = $bitrix->addLead();
+
+
         if(isset($request->user_id)){
             new LeadBuilder(
                 isset($request->car_vendor) == true ? $request->car_vendor : '',
@@ -45,8 +41,7 @@ class ApplicationController extends Controller
                 1
             );
         }
-        $path = public_path('uploads/'.$folder_name);
-        \File::deleteDirectory($path);
+
         return view('leads.thanks');
     }
     public function qrform(){
