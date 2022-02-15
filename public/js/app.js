@@ -2547,7 +2547,9 @@ $('.angle_toggle').click(function () {
 });
 $('.angle_toggle_media').click(function () {
   console.log(65656565);
-  $("ul.main__nav li:nth-child(3)").css("background-color", "yellow");
+  $('.main__nav-item').hasClass('order') ? $('.main__nav-item').removeClass('order') : $('.main__nav-item').addClass('order');
+  $(".mobile").slideToggle();
+  $(this).find('.fa-angle-up').toggleClass('fa-angle-down');
 });
 $('.payment_amount').click(function () {
   $('.input-modal').val($(this).text()); // $(this).parent().prev().val($(this).text());

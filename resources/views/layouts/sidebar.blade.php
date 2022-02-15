@@ -11,15 +11,8 @@ if(!isset($active)){
                 <div class="main_user-name">User # {{ Auth::user()->id }}
                 </div>
                 <div class="icons">
-                    <span class="info-icon tb-icon dd-btn">
-                                                    <div class="dd-btn__info">
-                                                        <div class="dd-btn__info-content">
-                                                            Сумма за добавление авто - 50 ₽.
-                        Сумма за завершение сделки - 10000 ₽
-                                                        </div>
-                                                    </div>
-                                                </span>
-                    <img src="http://partnersonserver/svg/qrcode.svg" class="qrcodeSvg" alt="">
+
+                    <img src="{{ asset('svg/qrcode.svg') }}" class="qrcodeSvg" alt="">
 
                 </div>
 
@@ -77,7 +70,7 @@ if(!isset($active)){
                         </span>
                     </a>
                 </li>
-                <li class="main__nav-item @if($active=="notifications") active @endif">
+                <li class="main__nav-item mobile  @if($active=="notifications") active @endif">
                     <a href="{{ route('notification.list') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_uved.svg') }}" alt="">
                         Уведомления
@@ -86,14 +79,14 @@ if(!isset($active)){
                         </span>'!!}
                     </a>
                 </li>
-                <li class="main__nav-item @if($active=="paymentqueries") active @endif">
+                <li class="main__nav-item mobile  @if($active=="paymentqueries") active @endif">
                     <a href="{{ route('payment.paymentqueries') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_viplat.svg') }}" alt="">
                         Выплаты
                     </a>
                 </li>
 
-                <li class="main__nav-item @if($active=="payments") active @endif">
+                <li class="main__nav-item mobile  @if($active=="payments") active @endif">
                     <a href="{{ route('payment.list') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_nachis.svg') }}" alt="">
                         Начислено
@@ -102,47 +95,56 @@ if(!isset($active)){
 
 
 
-                <li class="main__nav-item @if($active=="refer") active @endif">
+                <li class="main__nav-item mobile  @if($active=="refer") active @endif">
                     <a href="{{ route('refer.list') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_ref.svg')}}" alt="">
                         Реферальная программа
                     </a>
                 </li>
-                <li class="main__nav-item  @if($active=="promo") active @endif">
+                <li class="main__nav-item mobile  @if($active=="promo") active @endif">
                     <a href="{{ route('promo') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_promo.svg')}}" alt="">
                         Промоматериалы
                     </a>
                 </li>
-                <li class="main__nav-item  @if($active=="settings") active @endif">
+                <li class="main__nav-item  settings @if($active=="settings") active @endif">
                     <a href="{{ route('settings') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_nastr.svg')}}" alt="">
                         Настройки
                     </a>
                 </li>
-                <li class="main__nav-item @if($active=="help") active @endif">
+                <li class="main__nav-item mobile  @if($active=="help") active @endif">
                     <a href="{{ route('help') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_pomosh.svg') }} " alt="">
                         Помощь
                     </a>
                 </li>
-                <li class="main__nav-item @if($active=="updates") active @endif">
+                <li class="main__nav-item mobile  @if($active=="updates") active @endif">
                     <a href="{{ route('updates') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_obnov.svg') }} " alt="">
                         Обновления
                     </a>
                 </li>
-                <li  class="main__nav-item">
-                    <a  href="{{ route('customlogout') }}" style="color:var(--color-blue);"> Выход из аккаунта
+                <li  class="main__nav-item mobile ">
+                    <a  href="{{ route('customlogout') }}" style="color:var(--color-blue);"> Выход
                     </a>
                 </li>
             </ul>
 
+            <div class="logo-min">
+                <div class="text-center angle_toggle_media" style="margin-bottom: 65px;">
+                    <i class="fa fa-angle-up fa-angle-down">
+                    </i>
+                </div>
 
-            <div class="text-center angle_toggle_media">
-                <i class="fa fa-angle-up fa-angle-down">
-                </i>
+                <div class="d-flex justify-content-center" style="margin-bottom: 60px">
+                    @if(@auth()->user())
+                        <img src="{{ asset( 'qrcodes/qrqr_'.auth()->user()->id.'.png') }}" style="width: 80%;" alt="">
+                    @endif
+                </div>
+
             </div>
+
         </div>
     </div>
 </div>
