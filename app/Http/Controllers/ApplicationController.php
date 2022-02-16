@@ -19,10 +19,6 @@ class ApplicationController extends Controller
         $request->validate([
             'phone' => 'required',
         ]);
-        $image_names = array();
-        $folder_name = $request->folder_id;
-
-
         $folder_name = $request->folder_id;
         $bitrix = new Bitrix();
         $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$request->phone,$folder_name);
