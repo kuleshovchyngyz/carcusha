@@ -6,6 +6,9 @@ body{
 .success_code{
     color: #27AE60 !important;
 }
+.error_code{
+    color: var(--color-red) !important;
+}
 p.error{
     font-size: 80%;
     font-weight: bolder;
@@ -54,6 +57,9 @@ p.error{
 
 .invitation-code.success::after{
     background-color: #27AE60;
+}
+.invitation-code.error::after{
+    background-color: var(--color-red);
 }
 
 .checkbox-form{

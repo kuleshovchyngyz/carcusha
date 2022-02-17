@@ -20,10 +20,12 @@ $(document).ready(function(){
                     $('p.error').addClass('d-none')
                 }
                 if(v=='no'){
+
                     $('div.invitation-code').removeClass('success')
                     $('div.invitation-code input').removeClass('success_code')
                     $('p.error').removeClass('d-none')
                 }
+
             });
         }
     }
@@ -43,8 +45,13 @@ $(document).ready(function(){
                     $('div.invitation-code input').addClass('success_code')
                     $('p.error').addClass('d-none')
                     $('.activatePromo').removeClass('d-none')
+                    $('div.invitation-code').removeClass('error')
+                    $('div.invitation-code input').removeClass('error_code')
                 }
                 if (v == 'no') {
+                    $('div.invitation-code').addClass('error')
+                    $('div.invitation-code input').addClass('error_code')
+                    $('p.error').addClass('d-none')
                     $('div.invitation-code').removeClass('success')
                     $('div.invitation-code input').removeClass('success_code')
                     $('p.error').removeClass('d-none')
