@@ -33,6 +33,7 @@ class QRCodeGenerator
     private $number;
     private $email;
     private $address;
+
     private $user;
 
     public function __construct($text){
