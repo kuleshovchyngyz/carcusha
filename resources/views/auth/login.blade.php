@@ -56,14 +56,14 @@
                 </li>
             </ul>
             <div class="tab-content tab-content--custom" id="pills-tabContent">
-
                 <div class="tab-pane fade  {{ $login ? 'active show' : ''}}" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
                     <form method="POST" id="authentication" action="{{ route('login') }}" class="text-center">
                         @csrf
                         <div class="type-field d-flex">
                             <span class="phone @if(null !==old('number')||(null ===old('number')&&null ===old('email')))  active @endif">Телефон</span>
-                            <label class="type-field-select @if(null ===old('email')&&null ===old('number')) number @else mail @endif">
+                            <label class="logintab type-field-select @if(null !==old('number')||(null ===old('number')&&null ===old('email')))  number @else mail @endif">
                                 <input type="checkbox" name="type-field" id="type_field" checked>
+
                             </label>
                             <span class="mail @if(null ===old('number')&&null !==old('email')) active @endif">E-Mail</span>
                         </div>
@@ -115,9 +115,10 @@
                     <form id="registration" method="POST" action="{{ route('auth.verification-code') }}" class="text-center">
                         @csrf
                         <div class="type-field d-flex">
-                                <span class="phone @if(null !==old('number'))  active @endif">Телефон</span>
-                            <label class="type-field-select @if(null ===old('email')) number @else phone @endif">
+                                <span class="phone @if(null !==old('number')||(null ===old('number')&&null ===old('email')))  active @endif">Телефон</span>
+                            <label class="registertab type-field-select @if(null !==old('number')||(null ===old('number')&&null ===old('email')))  number @else mail @endif">
                                 <input type="checkbox" name="type-field" id="type_field" checked>
+
                             </label>
                             <span class="mail @if(null ===old('number')) active @endif">E-Mail</span>
 
@@ -166,7 +167,7 @@
 
 
                         </div>
-                        <div class="invitation-code">
+                        <div class="" id="invitation-code">
                              <input type="text" name="invitation_code" class="form-control" value="{{ isset($_GET['ref']) ? $_GET['ref'] :  old('invitation_code') }}" id="invitation-inpup" placeholder="Промокод (если есть)"  @error('email') is-invalid @enderror>
                         </div>
 

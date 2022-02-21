@@ -10,6 +10,7 @@ $(document).ready(function(){
     if(result){
         let value = $('#invitation-inpup').val();
         if(value!=''){
+            $('#invitation-code').addClass('invitation-code');
             var fd = new FormData();
             fd.append('_token', $('[name="_token"]').val())
             fd.append("promo", value);
@@ -32,8 +33,10 @@ $(document).ready(function(){
 
 
     $("#invitation-inpup").on('keyup', function(){
+
         let value = $(this).val();
         if(value!='') {
+            $('#invitation-code').addClass('invitation-code');
             console.log(value)
             var fd = new FormData();
 
@@ -60,6 +63,7 @@ $(document).ready(function(){
             });
         }
         if(value==''){
+            $('#invitation-code').removeClass('invitation-code');
             $('p.error').addClass('d-none')
         }
     });
