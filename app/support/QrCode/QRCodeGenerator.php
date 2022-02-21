@@ -48,7 +48,7 @@ class QRCodeGenerator
             $this->create_simple_card();
             $this->card_name = 'qrcodes/card_'.$this->big_name.'.png';
             $this->business_card_name = 'qrcodes/card_'.$this->small_name.'.png';
-            if(!file_exists(public_path('/qrcodes/vizitka'.$this->user_id.'.pdf'))){
+            if(!file_exists(public_path('/qrcodes/vizitka_'.$this->user_id.'.pdf'))){
                 $this->create_pdf(false);
             }
 
@@ -250,10 +250,10 @@ class QRCodeGenerator
         $pdf = $this->pdf_part_one($pdf);
         if(!$preview){
 
-            $pdf->Output('F', public_path('/qrcodes/vizitka'.Auth::user()->id.'.pdf'));
+            $pdf->Output('F', public_path('/qrcodes/vizitka_'.Auth::user()->id.'.pdf'));
 
             $imagick = new \Imagick();
-            $imagick->readImage(public_path('/qrcodes/vizitka'.Auth::user()->id.'.pdf'));
+            $imagick->readImage(public_path('/qrcodes/vizitka_'.Auth::user()->id.'.pdf'));
         }else{
             $this->pdf_part_two($pdf);
             $pdf->Output();
