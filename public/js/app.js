@@ -2381,14 +2381,19 @@ $('.main__dd-btn').click(function () {
   }
 });
 $('.type-field-select').on("click", function () {
-  if (!$('input', this).is(":checked")) {
+  console.log(this);
+
+  if ($('input', this).is(":checked")) {
+    console.log('clicked 1');
     $('input', this).parents('form').find($('.type-mail')).removeClass('disabled').removeAttr('disabled');
     $('input', this).parents('form').find($('.type-phone')).addClass('disabled').attr('disabled', 'disabled');
     $('input', this).parents('form').find($('.form-subbtitle')).addClass('disabled');
     $(this).addClass('mail');
     $(this).siblings('.phone').removeClass('active');
     $(this).siblings('.mail').addClass('active');
+    $('span.form-subbtitle').empty();
   } else {
+    $('span.form-subbtitle').text('В формате +7');
     $('input', this).parents('form').find($('.type-mail')).addClass('disabled').attr('disabled', 'disabled');
     $('input', this).parents('form').find($('.type-phone')).removeClass('disabled').removeAttr('disabled');
     $('input', this).parents('form').find($('.form-subbtitle')).removeClass('disabled');

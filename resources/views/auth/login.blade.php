@@ -1,6 +1,8 @@
-{{--@if($errors->any())--}}
-{{--    {{ implode('', $errors->all(':message')) }}--}}
-{{--@endif--}}
+@if($errors->any())
+    @dump(old('email'))
+    @dump(old('number'))
+    {{ implode('', $errors->all(':message')) }}
+@endif
 
 @extends('layouts.app')
 @include('layouts.message')
@@ -59,11 +61,11 @@
                     <form method="POST" id="authentication" action="{{ route('login') }}" class="text-center">
                         @csrf
                         <div class="type-field d-flex">
-                            <span class="phone @if(null !==old('number'))  active @endif">Телефон</span>
-                            <label class="type-field-select @if(null ===old('mail')) number @else phone @endif">
+                            <span class="phone @if(null !==old('number')||(null ===old('number')&&null ===old('email')))  active @endif">Телефон</span>
+                            <label class="type-field-select @if(null ===old('email')&&null ===old('number')) number @else mail @endif">
                                 <input type="checkbox" name="type-field" id="type_field" checked>
                             </label>
-                            <span class="mail @if(null ===old('number')) active @endif">E-Mail</span>
+                            <span class="mail @if(null ===old('number')&&null !==old('email')) active @endif">E-Mail</span>
                         </div>
                         @if($login)
                             @error('email')
@@ -80,17 +82,20 @@
                             @enderror
                         @endif
                         <div class="pos-r">
-                            <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail @if(null ===old('mail')) disabled @endif
+                            <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail @if(null ===old('email')) disabled @endif
                             @if($login)
                             @error('email') is-invalid @enderror
-                            @endif " value="{{ old('email') }}" required autocomplete="email" @if(null ===old('mail')) disabled="disabled" @endif>
+                            @endif " value="{{ old('email') }}" required autocomplete="email" @if(null ===old('email')) disabled="disabled" @endif>
 
 
-                            <input type="tel" placeholder="Телефон" id="numberLogin" name="number" class="form-control type-phone @if(null !==old('mail')) disabled @endif" @if(null !==old('mail')) disabled="disabled" @endif
+                            <input type="tel" placeholder="Телефон" id="numberLogin" name="number" class="form-control type-phone @if(null !==old('email')) disabled @endif" @if(null !==old('email')) disabled="disabled" @endif
                             @if($login)
                             @error('number') is-invalid @enderror
                                    @endif  value="{{ old('number') }}" required autocomplete="email">
-                            <span class="form-subbtitle">В формате +7</span>
+                            <span class="form-subbtitle">
+                            @if(null!==old('number')&&null===old('email')||null===old('number')&&null===old('email'))В формате +7
+                            @endif
+                            </span>
                         </div>
                         <div class="type-pass">
 
@@ -111,7 +116,7 @@
                         @csrf
                         <div class="type-field d-flex">
                                 <span class="phone @if(null !==old('number'))  active @endif">Телефон</span>
-                            <label class="type-field-select @if(null ===old('mail')) number @else phone @endif">
+                            <label class="type-field-select @if(null ===old('email')) number @else phone @endif">
                                 <input type="checkbox" name="type-field" id="type_field" checked>
                             </label>
                             <span class="mail @if(null ===old('number')) active @endif">E-Mail</span>
@@ -119,13 +124,13 @@
                         </div>
 
                         <div class="pos-r">
-                            <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail @if(null ===old('mail')) disabled @endif
+                            <input type="mail" placeholder="E-Mail" name="email" class="form-control type-mail @if(null ===old('email')) disabled @endif
                             @if($register)
                             @error('email') is-invalid @enderror
-                            @endif " value="{{ old('email') }}" required autocomplete="email" @if(null ===old('mail')) disabled="disabled" @endif>
+                            @endif " value="{{ old('email') }}" required autocomplete="email" @if(null ===old('email')) disabled="disabled" @endif>
 
 
-                            <input type="tel" placeholder="Телефон" id="numberRegister" name="number" class="form-control type-phone @if(null !==old('mail')) disabled @endif" @if(null !==old('mail')) disabled="disabled" @endif
+                            <input type="tel" placeholder="Телефон" id="numberRegister" name="number" class="form-control type-phone @if(null !==old('email')) disabled @endif" @if(null !==old('email')) disabled="disabled" @endif
                             @if($register)
                                    @error('number') is-invalid @enderror
                             @endif  value="{{ old('number') }}" required autocomplete="email">
