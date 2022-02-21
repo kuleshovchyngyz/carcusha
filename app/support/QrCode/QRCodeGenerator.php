@@ -23,6 +23,7 @@ class QRCodeGenerator
 
     const input_image_business_car1 = 'qrcodes/card2.jpg';
     const input_image_simple_card = 'qrcodes/banner.jpeg';
+
     public  $big_name ;
     public  $small_name;
     public $card_name;
