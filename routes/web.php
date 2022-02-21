@@ -116,7 +116,7 @@ Route::group([ 'middleware' => ['auth', 'role:user']], function () {
     Route::post('/confirm-email', [App\Http\Controllers\AuthController::class, 'confirmEmail'])->name('confirm.email');
     Route::post('/confirm-number', [App\Http\Controllers\AuthController::class, 'confirmNumber'])->name('confirm.number');
     Route::get('/download_card', [App\Http\Controllers\HomeController::class, 'downloadСard'])->name('download_card');
-    Route::get('/download-business-card', [App\Http\Controllers\HomeController::class, 'downloadBusinessCard'])->name('download.business.card');
+    Route::get('/download-business-card-new', [App\Http\Controllers\HomeController::class, 'downloadBusinessCard'])->name('download.business.card');
 
     Route::post('/settings/edit', [App\Http\Controllers\UserController::class, 'edit_settings'])->name('settings.edit');
     Route::get('/settings/telegramNotification', [App\Http\Controllers\UserController::class, 'telegramNotification'])->name('settings.telegramNotification');
