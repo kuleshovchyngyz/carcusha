@@ -138,6 +138,7 @@ class QRCodeGenerator
 
         $newtext = wordwrap($text, 24, "==", false);
         $arr = explode('==',$newtext);
+
         foreach ($arr as $item){
             $item = iconv('UTF-8', 'cp1251', $item);
             $pdf->text($x,$y += 7, $item);
@@ -179,6 +180,40 @@ class QRCodeGenerator
 
         $pdf->useTemplate($template, 0, 0,$size['width'], $size['height'],true);
         $pdf->Image( public_path('qrcodes/qrqrsmall_'.Auth::user()->id.'.png'),52.65, 15.44, 23.1, 23.1);
+
+        $pdf->SetDrawColor(255,221,24);
+        $pdf->SetFillColor(255,221,24   );
+        $pdf->Rect(4.6, 28, 30, 30, 'F');
+
+        $pdf->AddFont('arial','','arial.php');
+        $pdf->SetFont('arial', '', 9);
+        $reportSubtitle = '1. Наведите камеру';
+        $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+        $pdf->SetTextColor(36,28,36);
+        $pdf->text(6.6, 32, $reportSubtitle);
+
+        $pdf->AddFont('OpenSans','','Calibri.php');
+        $pdf->SetFont('OpenSans', '', 9);
+        $reportSubtitle = 'телефона на QR-код';
+        $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+        $pdf->SetTextColor(36,28,36);
+        $pdf->text(6.6, 35.7, $reportSubtitle);
+
+        $pdf->AddFont('OpenSans','','Calibri.php');
+        $pdf->SetFont('OpenSans', '', 9);
+        $reportSubtitle = '2. Заполните заявку';
+        $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+        $pdf->SetTextColor(36,28,36);
+        $pdf->text(6.6, 39.6, $reportSubtitle);
+
+        $pdf->AddFont('OpenSans','','Calibri.php');
+        $pdf->SetFont('OpenSans', '', 9);
+        $reportSubtitle = 'и получите оценку';
+        $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+        $pdf->SetTextColor(36,28,36);
+        $pdf->text(6.6, 43.5, $reportSubtitle);
+
+
         return $pdf;
 
     }
@@ -202,6 +237,40 @@ class QRCodeGenerator
             $pdf->SetDrawColor(255,255,255);
             $pdf->SetFillColor(255,255,255);
             $pdf->Rect(130, 396, 230, 10, 'F');
+
+            $pdf->SetDrawColor(255,255,255);
+            $pdf->SetFillColor(255,255,255);
+            $pdf->Rect(50, 310, 230, 50, 'F');
+            //и получите оценку
+
+            $pdf->AddFont('arial','','arial.php');
+            $pdf->SetFont('arial', '', 28);
+            $reportSubtitle = '1. Наведите камеру';
+            $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+            $pdf->SetTextColor(36,28,36);
+            $pdf->text(50, 335, $reportSubtitle);
+
+                $pdf->AddFont('arial','','arial.php');
+                $pdf->SetFont('arial', '', 28);
+                $reportSubtitle = 'телефона на QR-код';
+                $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+                $pdf->SetTextColor(36,28,36);
+                $pdf->text(50, 346, $reportSubtitle);
+
+            $pdf->AddFont('arial','','arial.php');
+            $pdf->SetFont('arial', '', 28);
+            $reportSubtitle = '2. Заполните заявку';
+            $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+            $pdf->SetTextColor(36,28,36);
+            $pdf->text(160, 335, $reportSubtitle);
+
+            $pdf->AddFont('arial','','arial.php');
+            $pdf->SetFont('arial', '', 28);
+            $reportSubtitle = 'и получите оценку';
+            $reportSubtitle = iconv('UTF-8', 'cp1251', $reportSubtitle);
+            $pdf->SetTextColor(36,28,36);
+            $pdf->text(160, 346, $reportSubtitle);
+
 
             $pdf->AddFont('arial','','arial.php');
             $pdf->SetFont('arial', '', 15);
