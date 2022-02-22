@@ -117,7 +117,7 @@ class HomeController extends Controller
 
         $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
         $QRPics->touchPromo(Auth::user());
-        if(!file_exists(public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf'))){
+        if(!file_exists(public_path('/qrcodes/plakat_'.Auth::user()->id.'.pdf'))){
             $QRPics->pdf_part_two();
         }
 //        if(!file_exists(public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf'))){
@@ -132,7 +132,7 @@ class HomeController extends Controller
     }
     public function downloadСard(){
 
-        $file = public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf');
+        $file = public_path('/qrcodes/plakat_'.Auth::user()->id.'.pdf');
         return Response::download($file);
     }
     public function downloadBusinessCard(){
