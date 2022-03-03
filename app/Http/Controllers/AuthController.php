@@ -227,8 +227,9 @@ class AuthController extends Controller
      */
     protected function createUser(array $data)
     {
-        dd($data);
-        $major = $data['major'];
+
+        $major = Major::where('name',$data['major'])->first()->id;
+
 
 //        dd($this->credentials($data));
         $refer = false;
