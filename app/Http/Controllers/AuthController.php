@@ -227,7 +227,7 @@ class AuthController extends Controller
      */
     protected function createUser(array $data)
     {
-       // dd($data);
+        dd($data);
         $major = $data['major'];
 
 //        dd($this->credentials($data));
