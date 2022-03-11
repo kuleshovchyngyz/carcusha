@@ -35,6 +35,7 @@ Route::post('/password-create-sms', [App\Http\Controllers\AuthController::class,
 
 Route::get('/generate', [App\Http\Controllers\UserController::class, 'send_to_tg_bot']);
 Route::get('/g', [App\Http\Controllers\LeadController::class, 'get_status_list1']);
+Route::get('/userfield', [App\Http\Controllers\LeadController::class, 'get_userfield_list1']);
 Route::get('/send', [App\Http\Controllers\LeadController::class, 'send']);
 Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 Route::get('/list', [App\Http\Controllers\FantomLeadController::class, 'compareLeads']);

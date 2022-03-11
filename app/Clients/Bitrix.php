@@ -8,7 +8,7 @@ class Bitrix
 {
     const years = ["2008" => "295", "2009" => "293","2010" => "67","2011" => "65","2012" => "63","2013" => "61","2014" => "59","2015" => "57","2016" => "55","2017" => "53","2018" => "51","2019" => "49","2020" => "47","2021" => "45","2022" => "291"];
     const  crm_pics_field_name = ['UF_CRM_1633362445295','UF_CRM_1633362456303','UF_CRM_1633362468187','UF_CRM_1633362478787','UF_CRM_1633362488670','UF_CRM_1637847699599','UF_CRM_1637847730399','UF_CRM_1637847742893','UF_CRM_1637847753241','UF_CRM_1637847764708',
-            'UF_CRM_1642672762','UF_CRM_1642673006','UF_CRM_1642673046','UF_CRM_1642673077','UF_CRM_1642673107','UF_CRM_1642673125','UF_CRM_1642673174','UF_CRM_1642673190','UF_CRM_1642673211','UF_CRM_1642673231'];//real
+        'UF_CRM_1642672762','UF_CRM_1642673006','UF_CRM_1642673046','UF_CRM_1642673077','UF_CRM_1642673107','UF_CRM_1642673125','UF_CRM_1642673174','UF_CRM_1642673190','UF_CRM_1642673211','UF_CRM_1642673231'];//real
     protected $http;
     protected $debug;
     protected $error = true;
@@ -125,6 +125,7 @@ class Bitrix
     }
     public function addDeal($vendor, $model,$year,$phone,$folder_name,$status='NEW'){
 
+//        dd($phone);
         $img = [];
         if(\File::exists('uploads/'.$folder_name)) {
             $filesInFolder = \File::files('uploads/'.$folder_name);
@@ -182,6 +183,6 @@ class Bitrix
 
         $this->bitrix_data['SOURCE_ID'] = "1";
         $this->bitrix_data['STATUS_ID'] = $status;
-        $phone ?: $this->bitrix_data['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
+        $this->bitrix_data['PHONE'] =  [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
     }
 }

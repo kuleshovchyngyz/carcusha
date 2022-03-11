@@ -103,7 +103,8 @@ class LeadController extends Controller
 
     function sendDataToBitrix1($method, $data) {
         //$webhook_url = "https://b24-85lwia.bitrix24.ru/rest/1/s52ljoksktlyj1ed/";//test
-        $webhook_url = "https://carcusha.bitrix24.ru/rest/1/rrr2v2vfxxbw2jeo/";//real
+//        $webhook_url = "https://carcusha.bitrix24.ru/rest/1/2dnfzer1t8dmyzt9/";//real
+        $webhook_url = "https://rosgroup.bitrix24.ru/rest/52/abex7bx2vynnymu6/";//real
         $queryUrl = $webhook_url . $method ;
         $queryData = http_build_query($data);
 
@@ -231,6 +232,13 @@ class LeadController extends Controller
             'filter'=> ["ENTITY_ID"=> "STATUS"]
         ]);
         //dump($dealData);
+        //return  json_encode($dealData,JSON_UNESCAPED_UNICODE);
+    }
+    public function get_userfield_list1(){
+        $dealData = $this->sendDataToBitrix1("crm.lead.fields",[
+
+        ]);
+        dump($dealData);
         //return  json_encode($dealData,JSON_UNESCAPED_UNICODE);
     }
 
