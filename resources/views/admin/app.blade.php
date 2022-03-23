@@ -22,7 +22,7 @@
 <body>
 @auth
     @include('layouts.message')
-    <header class="header">
+    <header class="header"> 
 
         <div class="container">
             <div class="row align-items-center">

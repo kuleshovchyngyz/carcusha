@@ -70,9 +70,10 @@ class ViewData
                     $this->response = '';
                     foreach ($notifications as $notification){
                         if(!$notification->seen){
-                            $this->response .= '<li class="notifications__item notifications__new">'.$notification->message.'</li>'. PHP_EOL;
-                        }else{
                             $this->response .= '<li class="notifications__item">'.$notification->message.'</li>'. PHP_EOL;
+                            // $this->response .= '<li class="notifications__item notifications__new">'.$notification->message.'</li>'. PHP_EOL;
+                        }else{
+                            // $this->response .= '<li class="notifications__item">'.$notification->message.'</li>'. PHP_EOL;
                         }
                     }
                 break;

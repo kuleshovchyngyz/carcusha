@@ -98,7 +98,7 @@ if(!isset($active)){
                 <li class="main__nav-item mobile  @if($active=="refer") active @endif">
                     <a href="{{ route('refer.list') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_ref.svg')}}" alt="">
-                        Реферальная программа
+                        Рефферальная программа
                     </a>
                 </li>
                 <li class="main__nav-item mobile  @if($active=="promo") active @endif">

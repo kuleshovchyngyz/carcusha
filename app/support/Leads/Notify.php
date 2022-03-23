@@ -12,7 +12,7 @@ use function Symfony\Component\Translation\t;
 
 class Notify
 {
-    public $lead, $new_status, $message, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses,$typeOfStatus,$vendor,$vendor_model,$vendor_year,$old_color,$new_color;
+    public $lead, $new_status, $message,$tmessage, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses,$typeOfStatus,$vendor,$vendor_model,$vendor_year,$old_color,$new_color;
 
     public function __construct($lead, $new_status){
         $this->lead = $lead;
@@ -66,25 +66,29 @@ class Notify
                 $time = date('H:i', strtotime($this->history_of_lead->first()->updated_at));
             }
             //03.11.2020 в 14:59 у авто Volkswagen Gold, 2015 изменился статус с "Добавлен" на "В работе". Вам начислено 50 ₽.
+            $strtelegram = "";
             if($this->old_status!=null){
-                $str = $date.' в '.$time.' у авто '.
-                    '<span class="statusRed">'.
+                $str = $date.' в '.$time.' у авто ';
+                $strtelegram =    '<span class="statusRed">'.
                     $this->vendor.' '.$this->vendor_model.', '.
                     $this->vendor_year.
                     '</span>'.
                     ' изменился статус с "'.
                     '<span class="'.$this->new_color.'">'.str_replace('.','',$this->old_status->user_statuses->name).'</span>" на "'.
                     '<span class="'.$this->new_color.'">'.str_replace('.','',$this->new_status->user_statuses->name).'</span>".';
+                $str = $str.$strtelegram;
             }else{
-                $str = $date.' в '.$time.' "'.
-                    '<span class="statusBlue">'.str_replace('.','',$this->new_status->user_statuses->name).'</span>"'.
+                $str = $date.' в '.$time.' "';
+                $strtelegram = '<span class="statusBlue">'.str_replace('.','',$this->new_status->user_statuses->name).'</span>"'.
                     '<span class="statusRed">'.
                     ' авто '.$this->vendor.' '.$this->vendor_model.', '.$this->vendor_year.
                     '</span>'.'. ';
+                $str = $str.$strtelegram;
             }
 
            // $str = 'Авто #'.$this->lead->bitrix_lead_id.': ';
             $this->message = $str.$this->message;
+            $this->tmessage = $strtelegram.$this->message;
             $this->create_message_notification();
         }
 
@@ -153,7 +157,7 @@ class Notify
         return true;
     }
     public function sendTelegramNotication(){
-        $str = $this->message;
+        $str = $this->tmessage;
         $str = str_replace(['<span class="statusBlue">','<span class="statusRed">','</span>'],'',$str);
         if($this->user->setting->telegram_id!=null){
             new TelegramBot($str,$this->user);

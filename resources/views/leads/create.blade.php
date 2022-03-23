@@ -128,7 +128,7 @@
                     <li>- Оно размещено на Avito и Auto.Ru;</li>
                     <li>- Продавец не заинтересован в продаже.</li>
                 </ul>
-                <button class="btn btn-blue agreed">СОГЛАСИТЬСЯ</button>
+                <button class="btn btn-blue agreed">СОГЛАСИТЬСЯ и добавить</button>
                 <div class="text-center">
                     <a href="{{ url()->previous() }}" class="blue-link back">Вернуться назад</a>
                 </div>

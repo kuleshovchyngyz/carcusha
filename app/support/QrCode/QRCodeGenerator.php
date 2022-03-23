@@ -366,6 +366,15 @@ class QRCodeGenerator
     public function create_simple_card(){
         $this->generate_qr_code(950,$this->big_name);
         $this->imagecopymerge( self::input_image_simple_card,'qrcodes/qr'.$this->big_name.'.png',self::dst_big_x,self::dst_big_y,$this->big_name);
+
+        // $img = imagecreatetruecolor(1500, 120);
+        // $bg = imagecolorallocate ( $img, 255, 255, 255 );
+        // imagefilledrectangle($img,0,0,1500,120,$bg);
+        // imagejpeg($img,"qrcodes/myimg.jpg",100);
+
+        // $this->imagecopymerge( self::input_image_simple_card,"qrcodes/myimg.jpg",397    ,140,$this->big_name,$this->big_name);
+        // //logo_head_desk.png
+        // $this->imagecopymerge( self::input_image_simple_card,"qrcodes/logo.png",397    ,140,$this->big_name,$this->big_name);
     }
 
 

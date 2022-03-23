@@ -169,7 +169,11 @@
         </div>
     </div>
 
+    <div class="d-flex main__content-head pr-20 pb-20">
+        <h1 class="main__content-title"></h1>
+        <button class='blue-link ml-auto' type="button" id="submitSettings">Сохранить</button>
 
+    </div>
     </form>
 </div>
 </div>
