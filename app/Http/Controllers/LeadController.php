@@ -221,7 +221,7 @@ class LeadController extends Controller
     public function send(){
         $sms = new SmsClient();
         $code = new Code();
-        $sms->sendSms(+996708277186, "Ваш код: ".$code->generate(CODE::VERIFICATION));
+        $sms->sendSms(+79111897638, "Ваш код: ".$code->generate(CODE::VERIFICATION));
         return $code->generate(CODE::VERIFICATION);
         //$this->send_to_tg_bot('maksat');
     }

@@ -48,7 +48,7 @@
             <ul class="nav mb-3" id="pills-tab" role="tablist">
                 <li class="nav__tab-item">
                     <a class="nav-link nav-link-aut {{$login ? 'active' : ''}}" id="authentication-tab" data-toggle="pill" href="#authenticationtab" role="tab"
-                       aria-controls="authentication-tab" aria-selected="true">Авторизация</a>
+                       aria-controls="authentication-tab" aria-selected="true">Вход</a>
                 </li>
                 <li class="nav__tab-item">
                     <a class="nav-link nav-link-aut {{ ($register) ? 'active' : ''}}" id="registration-tab" data-toggle="pill" href="#registrationtab" role="tab"
