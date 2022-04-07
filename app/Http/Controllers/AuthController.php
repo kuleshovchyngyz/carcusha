@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Auth\Code;
 use App\Clients\SmsClient;
+use App\Clients\CallAuth;
 use App\Mail\MailUser;
 use App\Models\AuthConfirmation;
 use App\Models\balance;
@@ -90,7 +91,7 @@ class AuthController extends Controller
 
         $code = new Code();
         $sms = new SmsClient();
-
+        $call = new CallAuth();
         \Session::put('last_auth_attempt', 'register');
         $this->fieldType = isset($request['email'])  ? 'email' : 'number';
 
@@ -108,7 +109,8 @@ class AuthController extends Controller
                 $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
                 $request->validate(['number' => 'not_empty|unique:users|phone_number','major' => 'required_major','invitation_code'=>
                     ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
-            $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
+            // $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
+            $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
             AuthConfirmation::updateOrCreate( $param);
            // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
             return view('auth.createPasswordSms',$request->input());

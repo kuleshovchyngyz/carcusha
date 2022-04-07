@@ -7,7 +7,7 @@ use App\Models\User;
 use App\support\Bitrix\ApiConnect;
 use App\support\Leads\UpdatingLeadStatus;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Http;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,24 +39,74 @@ Route::get('/userfield', [App\Http\Controllers\LeadController::class, 'get_userf
 Route::get('/send', [App\Http\Controllers\LeadController::class, 'send']);
 Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 Route::get('/list', [App\Http\Controllers\FantomLeadController::class, 'compareLeads']);
+Route::get('/call',function(){
+    $data = json_encode([
+     //   'callerId' => '79111897638',
+        'dstNumber' => '79675738928',
+     //   'srcNumber' => '996708277186',
+        'timeout' => 30,
+        "pin"=> "1234"
+        // 'callDetails'=>[
+     //       "callId"=> "2096093321622464437",
+     //       "pin"=> "1234"  
+        // ]
+        ]);
+        var_dump($data);
+        $time = time();
+        $resId = curl_init();
+        $key = getKey('call-password/start-password-call',
+        $time,'d873b55e666537e839b8c892d2565a47985a360e278c7804',
+        $data,'825b89ddb65a590608ee96d2e4f973ad762d94fad9b800a1');
+        curl_setopt_array($resId, [
+        CURLINFO_HEADER_OUT => true,
+        CURLOPT_HEADER => 0,
+        CURLOPT_HTTPHEADER => [
+        'Authorization: Bearer '.$key ,
+        'Content-Type: application/json' ,
+        ],
+        CURLOPT_POST => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_URL => 'https://api.new-tel.net/call-password/start-password-call',
+        CURLOPT_POSTFIELDS => $data,
+        ]);
+        $response = curl_exec($resId);
+        $curlInfo = curl_getinfo($resId);
+        echo $response;
+});
+function getKey ($methodName , $time , $keyNewtel , $params , $writeKey)
+{
+ return $keyNewtel.$time.hash( 'sha256' ,
+ $methodName."\n".$time."\n".$keyNewtel."\n".
+ $params."\n".$writeKey);
+ }
 Route::get('/test', function (){
 
-        $lead = Lead::find(259);
-       // dd($lead);
+    $data = [
+        'callerId' => '74951112233',
+        "dstNumber"=> '996708277186',
+        "pin"=>"1234",
+        "timeout"=> '20'
+    ];
+    $time = time();
+    $key = getKey('call-password/get-password-call-status ',
+    $time,'d873b55e666537e839b8c892d2565a47985a360e278c7804',
+    json_encode($data),'825b89ddb65a590608ee96d2e4f973ad762d94fad9b800a1');
 
-        $bitrix = new Bitrix();
-        $bitrix->addDeal($lead->vendor,$lead->vendor_model,$lead->vendor_year,$lead->phonenumber,$lead->folder);
-        $result = $bitrix->updateLead($lead->bitrix_lead_id);
-        dd($result);
-    // $dealData = new ApiConnect('crm.lead.list', ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]]);
-    // dd($dealData);
-    // dd(sendDataToBitrix1('crm.lead.list', ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]]));
-    // $imgExt = new Imagick();
-    // $imgExt->readImage(public_path('qrcodes').'/vizitka94.pdf');
-    // $imgExt->writeImages(public_path().'/pdf_image_doc.jpg', true);
-
-    dd("Document has been converted");
+    // post($this->http.$method ,$data)
+    // $res = $this->http = Http::baseUrl('https://voice.mobilgroup.ru/api/voice-password/send/')
+    $res = $this->http = Http::withHeaders([
+            'Authorization'=>'Bearer '.$key,
+            'Content-Type'=> 'application/json'
+        ])->post('https://api.new-tel.net/call-password/start-password-call',$data);
+        dd($res->body());
    // new UpdatingLeadStatus(env('LEAD_BITRIX_ID'), env('LEAD_STATUS'));
+
+   
+
+
+
+
 });
 
 Route::get('/delete', function (){
