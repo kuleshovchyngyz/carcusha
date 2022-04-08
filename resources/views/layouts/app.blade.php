@@ -80,6 +80,6 @@
             <a href="{{ route('public_offer') }}"  class="footer__link ml-auto">Публичная оферта</a>
         </div>
     </footer>
-
+    @include('layouts.whatsapp')
 </body>
 </html>

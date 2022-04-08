@@ -2779,6 +2779,17 @@ $(document).ready(function () {
       var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element1, maskOptions);
     }
   }
+
+  var element2 = document.getElementById('whatsapp');
+  var maskOptions = {
+    mask: '+{7}(000)000-00-00'
+  };
+
+  if (element2 != null) {
+    if ($('#whatsapp').val().length < 18) {
+      var mask = (0,imask__WEBPACK_IMPORTED_MODULE_3__.default)(element2, maskOptions);
+    }
+  }
 });
 $(document).ready(function () {
   var element2 = document.getElementById('number');

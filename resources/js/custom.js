@@ -299,6 +299,17 @@ $(document).ready(function(){
         }
     }
 
+    var element2 = document.getElementById('whatsapp');
+    var maskOptions = {
+        mask: '+{7}(000)000-00-00'
+    };
+
+    if( element2 !=null){
+        if($('#whatsapp').val().length<18 ){
+
+            var mask = IMask(element2, maskOptions);
+        }
+    }
 })
 
 

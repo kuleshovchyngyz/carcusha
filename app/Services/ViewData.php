@@ -79,8 +79,16 @@ class ViewData
                 break;
             case 'telegramBot':
                    $s = SiteSetting::where('name','telegramBotToken');
-                    $this->response = ($s->exists() ? $s->first()->value : '');
+                    $this->response = ($s->exists() ? str_replace('+7','',$s->first()->value) : '');
                 break;
+            case 'whatsapp':
+                    $s = SiteSetting::where('name','whatsapp');
+                     $this->response = ($s->exists() ? $s->first()->value : '');
+                 break;
+            case 'whatsappNumber':
+                    $s = SiteSetting::where('name','whatsapp');
+                     $this->response = ($s->exists() ? preg_replace('/[^0-9]/', '', $s->first()->value) : '');
+                 break;
             case 'total_payments_by_lead':
                     call_user_func(array($this, 'totalPaymentByLead'), '');
                 break;

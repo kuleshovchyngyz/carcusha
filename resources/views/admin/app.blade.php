@@ -70,7 +70,7 @@
                                     <a class="btn header__btn color-blue" href="{{ route('admin.majors') }}">Род деятельности
                                     </a>
                                     <a data-toggle="modal" data-target="#AddTelegramBot" class="btn header__btn color-blue"> Добавить бот</a>
-
+                                    <a data-toggle="modal" data-target="#AddWhatsapp" class="btn header__btn color-blue">Вотсап тел</a>
                                 </div>
                             </div>
                         </li>

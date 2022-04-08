@@ -153,12 +153,17 @@ class AdminController extends Controller
             ]
         ]);
     }
-
+    
     public function addBot(Request $request){
-       SiteSetting::truncate();
+       SiteSetting::where('name','telegramBotToken')->delete();
         SiteSetting::create(['value'=>$request->token,'name'=>'telegramBotToken']);
         return redirect()->back()->with('success_message', [__('Сохранено')]);
     }
+    public function addWhatsapp(Request $request){
+        SiteSetting::where('name','whatsapp')->delete();
+         SiteSetting::create(['value'=>$request->whatsapp,'name'=>'whatsapp']);
+         return redirect()->back()->with('success_message', [__('Сохранено')]);
+     }
     public function payments_settings(){
 
         $question = Question::all();

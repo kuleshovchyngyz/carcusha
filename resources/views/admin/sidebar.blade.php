@@ -52,7 +52,7 @@
                 <li class="main__nav-item @if($active=="refer") active @endif">
                     <a href="{{ route('refer.list') }}" class="main__nav-link">
                         <img src="{{ asset('svg/menu_ref.svg')}}" alt="">
-                        Рефферальная программа
+                        Пригласи друга
                     </a>
                 </li>
                 <li class="main__nav-item  @if($active=="settings") active @endif">

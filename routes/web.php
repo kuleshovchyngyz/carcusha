@@ -200,6 +200,7 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::post('/majors/store', [App\Http\Controllers\AdminController::class, 'storeMajors'])->name('admin.store.majors');
     Route::get('/payment_settings', [App\Http\Controllers\AdminController::class, 'payments_settings'])->name('admin.payments_settings');
     Route::post('/add-bot', [App\Http\Controllers\AdminController::class, 'addBot'])->name('admin.bot.create');
+    Route::post('/add-whatsapp', [App\Http\Controllers\AdminController::class, 'addWhatsapp'])->name('admin.whatsapp.create');
     Route::get('/payments', [App\Http\Controllers\AdminController::class, 'payments'])->name('admin.payments');
     Route::get('/statuses', [App\Http\Controllers\AdminController::class, 'statuses'])->name('admin.statuses');
 

@@ -113,6 +113,10 @@ class AuthController extends Controller
             $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
             AuthConfirmation::updateOrCreate( $param);
            // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
+           if($type!='reset'){
+                $id = Major::wherename($request->major)->first()->id;
+                $request->merge(['major' => $id]);    
+            }
             return view('auth.createPasswordSms',$request->input());
         }else {
             ($type=='reset') ?
@@ -125,8 +129,11 @@ class AuthController extends Controller
                     'message' => 'Пожалуйста, введите код для проверки вашего email.',
                     'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
             ]));
-            $id = Major::wherename($request->major)->first()->id;
-            $request->merge(['major' => $id]);
+            if($type!='reset'){
+                $id = Major::wherename($request->major)->first()->id;
+                $request->merge(['major' => $id]);    
+            }
+            
 
 
             return view('auth.createPasswordEmail',$request->input());
