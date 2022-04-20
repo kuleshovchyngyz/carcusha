@@ -26,10 +26,15 @@ Route::get('/thanks', [App\Http\Controllers\ApplicationController::class, 'thank
 Route::post('/car_application/store', [App\Http\Controllers\ApplicationController::class, 'store'])->name('car.store');
 Route::get('/calculate_available_amount', [App\Http\Controllers\AdminController::class, 'calculate_available_amount']);
 Route::post('/verification-code', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationCode'])->name('auth.verification-code');
+Route::get('/verification-voice', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationVoice'])->name('auth.verification-voice');
 Route::get('/forgot-password', [App\Http\Controllers\AuthController::class, 'forgotPassword'])->name('auth.forgot.password');
 Route::post('/change-password', [App\Http\Controllers\AuthController::class, 'changePassword'])->name('auth.reset-password-code');
 Route::post('/password-create-email', [App\Http\Controllers\AuthController::class, 'EmailVerificationCode'])->name('auth.EmailVerification-code');
 Route::post('/password-create-sms', [App\Http\Controllers\AuthController::class, 'SmsVerificationCode'])->name('auth.SmsVerification-code');
+Route::post('/voice-code-validator', [App\Http\Controllers\AuthController::class, 'VoiceVerificationCode'])->name('auth.VoiceVerification-code');
+Route::get('/send-sms', function(){
+    return view('auth.createPasswordBySms');
+})->name('auth.verify-by-sms');
 
 
 
@@ -40,6 +45,63 @@ Route::get('/send', [App\Http\Controllers\LeadController::class, 'send']);
 Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 Route::get('/list', [App\Http\Controllers\FantomLeadController::class, 'compareLeads']);
 Route::get('/call',function(){
+    $data = json_encode([
+        "security"=> [ "apiKey"=> "31a68137ab1af6bebbc666895eb7d3a8" ],
+        'number' => '79675738928',
+        'capacity'=>'4',
+        "flashcall"=> ["code"=> "1234"]  ,
+        ]);
+        
+        $url = 'https://vp.voicepassword.ru/api/voice-password/send/';
+        $apiKey = '31a68137ab1af6bebbc666895eb7d3a8';
+        var_dump($data); 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+         "Content-Type: application/json",
+         "Authorization: $apiKey"
+        ));
+        $outData = curl_exec($ch);
+        curl_close($ch);
+        print($outData);
+       
+});
+Route::get('/sms',function(){
+    $data = json_encode([
+     //   'callerId' => '79111897638',
+        'numbers' => ['79675738928'],
+        
+     //   'srcNumber' => '996708277186',
+        'message' => '1223'
+        // 'callDetails'=>[
+     //       "callId"=> "2096093321622464437",
+     //       "pin"=> "1234"  
+        // ]
+        ]);
+        
+        $url = 'https://vp.voicepassword.ru/api/sms/send/';
+        $apiKey = '31a68137ab1af6bebbc666895eb7d3a8';
+        var_dump($data); 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+         "Content-Type: application/json",
+         "Authorization: $apiKey"
+        ));
+        $outData = curl_exec($ch);
+        curl_close($ch);
+        print($outData);
+       
+});
+Route::get('/call1',function(){
     $data = json_encode([
      //   'callerId' => '79111897638',
         'dstNumber' => '79675738928',

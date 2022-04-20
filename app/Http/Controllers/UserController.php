@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Major;
 use GuzzleHttp\Stream\Stream;
 use App\Auth\Code;
+use App\Clients\CallAuth;
 use App\Clients\SmsClient;
 use App\Mail\MailUser;
 use App\Models\AuthConfirmation;
@@ -119,6 +120,7 @@ class UserController extends Controller
         $user = \auth()->user();
         $code = new Code();
         $sms = new SmsClient();
+        $call = new CallAuth();
         $this->code = $code->generate(CODE::VERIFICATION);
         $param = array();
         ($request->has('confirmEmail')) ?
@@ -178,10 +180,11 @@ class UserController extends Controller
                 ])->withInput($request->input())->withErrors($validated);
                 // return view('auth.createPasswordSms', $request->input())->withInput($request->input())->withErrors($validated);
             }
-            $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
+
+            $call->call('+'.preg_replace('/[^0-9]/', '', $request->number),$this->code);
             //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
             AuthConfirmation::updateOrCreate( $param);
-            return view('auth.createPasswordSms',$request->input());
+            return view('auth.createPasswordVoice',$request->input());
         }
 
 

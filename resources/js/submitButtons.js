@@ -23,6 +23,17 @@ $(document).ready(function() {
         document.getElementById("settings").submit();
     });
 })
+$(document).ready(function() {
+    $("#timer").on('click', function(){
+        if(!$(this).hasClass('btn-disabled-sms')){
+            let tel = $(this).data('tel'); 
+            console.log(tel);
+            $( "#authentication" ).append( $( `<input type='hidden'  name = 'verifyBytel' value=${tel} >` ) );
+            document.getElementById("authentication").submit();
+        }
+
+    });
+})
 // require("fs").writeFile("demo.txt", "Foo bar!");
 
 

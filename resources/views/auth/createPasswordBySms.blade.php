@@ -8,7 +8,9 @@
                 <h3 class="form-title">@if(!isset($reset)){{'Подтверждение телефона'}}@else{{'Восстановление пароля'}}@endif</h3>
             </div>
             <div class="confirm-info">
-            
+                Мы отправили SMS с кодом
+                подтверждения на Ваш номер
+                <strong>{{$number}}.</strong>
             </div>
             <div class="tab-content tab-content--custom" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
@@ -22,7 +24,12 @@
                         @if(isset($invitation_code))<input type="hidden" name="invitation_code" value="{{$invitation_code}}">@endif
                         @if(isset($major))<input type="hidden" name="major" value="{{$major}}">@endif
                         @if(isset($reset))<input type="hidden" name="reset" value="{{$reset}}">@endif
-                        @if(isset($code))<input type="hidden" name="code" value="{{$code}}">@endif
+                        <input type="number" name="code" placeholder="Код из SMS" class="form-control  @error('code') is-invalid @enderror" value="{{ old('password') }}" >
+                        @error('code')
+                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                        @enderror
                             @if(!isset($confirmPhone))
                         <div class="type-pass">
 

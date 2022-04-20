@@ -107,7 +107,39 @@ $(document).ready(function(){
             $('.submitRegisterForm').addClass('btn-disabled');
         }
     });
+    startTimer();
 
+    function startTimer() {
+      var presentTime = document.getElementById('timer').innerHTML;
+      presentTime = presentTime.replace('Подтвердить по SMS ', '')
+      var timeArray = presentTime.split(/[:]+/);
+      var m = timeArray[0];
+      var s = checkSecond((timeArray[1] - 1));
+      if(s==59){m=m-1}
+      if((m + '').length == 1){
+        m = '0' + m;
+      }
+      console.log(m)
+      if(m < 0){
+        $('#timer').prop('disabled', false);
+        // $(':input[type="submit"]').prop('disabled', true);
+        $('#timer').removeClass('btn-disabled-sms');
+         document.getElementById('timer').innerHTML = 'Подтвердить по SMS';
+      }else{
+        // $('#timer').disabled = true;
+        $('#timer').prop('disabled', true);
+        document.getElementById('timer').innerHTML =  'Подтвердить по SMS ' +m + ":" + s;
+        setTimeout(startTimer, 1000);
+      }
+      
+    }
+    
+    function checkSecond(sec) {
+      if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
+      if (sec < 0) {sec = "59"};
+      return sec;
+    }
+    
 
 });
 

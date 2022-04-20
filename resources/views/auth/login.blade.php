@@ -217,7 +217,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="text-center">
-                                    <a href="{{ url()->previous() }}" class="red-link back">Вернуться назад</a>
+                                    <a href="{{ route('login') }}" class="red-link back">Вернуться назад</a>
                                 </div>
                             </div>
                         </div>

@@ -85,9 +85,12 @@ class AuthController extends Controller
         $request->request->remove('confirmEmail');
        return redirect()->route('settings');
     }
+    
+  
+
     public function RegisterWithVerificationCode(Request $request, $type = '')
     {
-//$request->dd();
+// $request->dd();
 
         $code = new Code();
         $sms = new SmsClient();
@@ -117,7 +120,7 @@ class AuthController extends Controller
                 $id = Major::wherename($request->major)->first()->id;
                 $request->merge(['major' => $id]);    
             }
-            return view('auth.createPasswordSms',$request->input());
+            return view('auth.createPasswordVoice',$request->input());
         }else {
             ($type=='reset') ?
                 $request->validate(['email' => 'required|email_format|is_email_in_database|max:255']) :
@@ -140,6 +143,71 @@ class AuthController extends Controller
         }
     }
     public function SmsVerificationCode(Request $request){
+        
+        $this->fieldType = 'number';
+        $validated = Validator::make($request->all(), [
+            'code' => ['required', 'integer', new CheckEmailVerificationCode()],
+            
+        ], [], [
+            'password' => 'Пароль'
+        ]);
+
+        if ($validated->fails()) {
+            return view('auth.createPasswordVoice', $request->input())->withInput($request->input())->withErrors($validated);
+        }
+        if(isset($request->reset)){
+            return $this->resetUserPassword($request);
+        }else{
+            return $this->registerUser($request);
+        }
+
+    }
+    public function SendSms(Request $request, $type = '')
+    {
+        $code = new Code();
+        $sms = new SmsClient();
+        $call = new CallAuth();
+        $this->email = $request->email ?? '';
+        $this->code = $code->generate(CODE::VERIFICATION);
+        $param = array();
+        ($request->email != '') ?
+            $param['email'] = $this->email :
+            $param['phone'] = $request->number;
+        $param['code'] =$this->code;
+        $call->sms(preg_replace('/[^0-9]/', '', $request->number),$this->code);
+        AuthConfirmation::updateOrCreate( $param);
+        // dump(2324);
+        // return 34343;
+        return view('auth.createPasswordBySms',$request->input());
+    }
+    
+    public function VoiceVerificationCode(Request $request){
+        if($request->has('verifyBytel')){
+            
+            return $this->SendSms($request);
+        }else{
+            $this->fieldType = 'number';
+            $validated = Validator::make($request->all(), [
+                'code' => ['required', 'integer', new CheckEmailVerificationCode()],
+                
+            ], [], [
+                'password' => 'Пароль'
+            ]);
+    
+            if ($validated->fails()) {
+                return view('auth.createPasswordVoice', $request->input())->withInput($request->input())->withErrors($validated);
+            }
+            if(isset($request->reset)){
+                // return $this->resetUserPassword($request);
+            }else{
+                // return $this->registerUser($request);
+                return view('auth.createPasswordSms',$request->input());
+            }
+        }
+     
+
+    }
+    public function VerificationPassword(Request $request){
         $this->fieldType = 'number';
         $validated = Validator::make($request->all(), [
             'number' => ['required','phone_number',  (!isset($request->reset)) ? 'unique:users' : ''],
@@ -177,7 +245,7 @@ class AuthController extends Controller
         //dd($request->all());
     }
     public function registerUser(Request $request){
-       // dd($request->all());
+    //    dd($request->all());
         event(new Registered($user = $this->createUser($request->all())));
         $this->guard()->login($user);
         return $request->wantsJson()
@@ -236,8 +304,8 @@ class AuthController extends Controller
      */
     protected function createUser(array $data)
     {
-
-        $major = Major::where('name',$data['major'])->first()->id;
+        // dd($data);
+        $major = Major::where('id',$data['major'])->first()->id;
 
 
 //        dd($this->credentials($data));

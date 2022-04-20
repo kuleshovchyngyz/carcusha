@@ -82,7 +82,17 @@ body {
     margin-top: 20px;
     margin-bottom: 10px;
 }
-
+.btn-disabled-sms{
+    max-width: 320px;
+    width: 100%;
+    background: #afc5d1 !important;
+    color: #fff !important;
+    font-size: 22px;
+    padding: 5px 10px;
+    border-radius: 0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
 .header {
     background: #fff;
     padding: 10px 0;
