@@ -23,7 +23,7 @@
                     @if(!isset($confirmPhone))
                    <form action="{{ route('auth.VoiceVerification-code') }}" method="POST" id="authentication" class="text-center">
                     @else
-                        <form action="{{ route('confirm.number') }}" method="POST" id="authentication" class="text-center">
+                        <form action="{{ route('auth.VoiceVerification-code') }}" method="POST" id="authentication" class="text-center">
                     @endif
                         @csrf
                         <input type="hidden" name="number" value="{{$number}}">
