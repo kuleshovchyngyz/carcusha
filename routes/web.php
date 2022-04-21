@@ -44,19 +44,32 @@ Route::get('/userfield', [App\Http\Controllers\LeadController::class, 'get_userf
 Route::get('/send', [App\Http\Controllers\LeadController::class, 'send']);
 Route::get('/fields', [App\Http\Controllers\LeadController::class, 'fields']);
 Route::get('/list', [App\Http\Controllers\FantomLeadController::class, 'compareLeads']);
+Route::get('/dd',function(){
+    $data = json_encode([
+        "security"=> [ "apiKey"=> "31a68137ab1af6bebbc666895eb7d3a8" ],
+        'number' => '79282061760',
+//        'capacity'=>'4',
+//        "flashcall"=> ["code"=> "3434"],
+        "voice"=> []
+    ]);
+
+    var_dump(json_decode($data,true)['security']);
+
+});
 Route::get('/call',function(){
     $data = json_encode([
         "security"=> [ "apiKey"=> "31a68137ab1af6bebbc666895eb7d3a8" ],
-        'number' => '79675738928',
+        'number' => '79282061760',
 //        'capacity'=>'4',
 //        "flashcall"=> ["code"=> "3434"],
-        "voice"=> [ "code"=> '3434', "repeat"=> "2" ]
+        "voice"=> []
         ]);
+
 
 
         $url = 'https://vp.voicepassword.ru/api/voice-password/send/';
         $apiKey = '31a68137ab1af6bebbc666895eb7d3a8';
-        var_dump($data);
+//        dd($data);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -69,7 +82,8 @@ Route::get('/call',function(){
         ));
         $outData = curl_exec($ch);
         curl_close($ch);
-        print($outData);
+//    dd($outData);
+        dd(json_decode($outData,true)['code']);
 
 });
 Route::get('/sms',function(){

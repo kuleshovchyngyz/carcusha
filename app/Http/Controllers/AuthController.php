@@ -85,8 +85,8 @@ class AuthController extends Controller
         $request->request->remove('confirmEmail');
        return redirect()->route('settings');
     }
-    
-  
+
+
 
     public function RegisterWithVerificationCode(Request $request, $type = '')
     {
@@ -113,14 +113,14 @@ class AuthController extends Controller
                 $request->validate(['number' => 'not_empty|unique:users|phone_number','major' => 'required_major','invitation_code'=>
                     ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
             // $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
-           
+
             // $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
-            $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
+            $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
             AuthConfirmation::updateOrCreate( $param);
            // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
            if($type!='reset'){
                 $id = Major::wherename($request->major)->first()->id;
-                $request->merge(['major' => $id]);    
+                $request->merge(['major' => $id]);
             }
             // dd($request->input());
             return view('auth.createPasswordVoice',$request->input());
@@ -137,20 +137,20 @@ class AuthController extends Controller
             ]));
             if($type!='reset'){
                 $id = Major::wherename($request->major)->first()->id;
-                $request->merge(['major' => $id]);    
+                $request->merge(['major' => $id]);
             }
-            
+
 
 
             return view('auth.createPasswordEmail',$request->input());
         }
     }
     public function SmsVerificationCode(Request $request){
-        
+
         $this->fieldType = 'number';
         $validated = Validator::make($request->all(), [
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
-            
+
         ], [], [
             'password' => 'Пароль'
         ]);
@@ -183,20 +183,20 @@ class AuthController extends Controller
         // return 34343;
         return view('auth.createPasswordBySms',$request->input());
     }
-    
+
     public function VoiceVerificationCode(Request $request){
         if($request->has('verifyBytel')){
-            
+
             return $this->SendSms($request);
         }else{
             $this->fieldType = 'number';
             $validated = Validator::make($request->all(), [
                 'code' => ['required', 'integer', new CheckEmailVerificationCode()],
-                
+
             ], [], [
                 'password' => 'Пароль'
             ]);
-    
+
             if ($validated->fails()) {
                 return view('auth.createPasswordVoice', $request->input())->withInput($request->input())->withErrors($validated);
             }
@@ -208,7 +208,7 @@ class AuthController extends Controller
                 return view('auth.createPasswordSms',$request->input());
             }
         }
-     
+
 
     }
     public function VerificationPassword(Request $request){

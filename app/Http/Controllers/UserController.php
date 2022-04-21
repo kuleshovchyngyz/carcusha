@@ -181,7 +181,7 @@ class UserController extends Controller
                 // return view('auth.createPasswordSms', $request->input())->withInput($request->input())->withErrors($validated);
             }
 
-            $call->call('+'.preg_replace('/[^0-9]/', '', $request->number),$this->code);
+            $param['code'] = $call->call('+'.preg_replace('/[^0-9]/', '', $request->number));
             //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
             AuthConfirmation::updateOrCreate( $param);
             return view('auth.createPasswordVoice',$request->input());
