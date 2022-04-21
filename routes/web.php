@@ -48,14 +48,15 @@ Route::get('/call',function(){
     $data = json_encode([
         "security"=> [ "apiKey"=> "31a68137ab1af6bebbc666895eb7d3a8" ],
         'number' => '79675738928',
-        'capacity'=>'4',
-        "flashcall"=> ["code"=> "1234"]  ,
-     
+//        'capacity'=>'4',
+//        "flashcall"=> ["code"=> "3434"],
+        "voice"=> [ "code"=> '3434', "repeat"=> "2" ]
         ]);
-        
+
+
         $url = 'https://vp.voicepassword.ru/api/voice-password/send/';
         $apiKey = '31a68137ab1af6bebbc666895eb7d3a8';
-        var_dump($data); 
+        var_dump($data);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -69,21 +70,21 @@ Route::get('/call',function(){
         $outData = curl_exec($ch);
         curl_close($ch);
         print($outData);
-       
+
 });
 Route::get('/sms',function(){
     $data = json_encode([
      //   'callerId' => '79111897638',
-        'numbers' => ['79282061760'],
-        
+        'numbers' => ['79254772779'],
+
      //   'srcNumber' => '996708277186',
         'message' => '1223'
         // 'callDetails'=>[
      //       "callId"=> "2096093321622464437",
-     //       "pin"=> "1234"  
+     //       "pin"=> "1234"
         // ]
         ]);
-        
+
         $url = 'https://vp.voicepassword.ru/api/sms/send/';
         $apiKey = '31a68137ab1af6bebbc666895eb7d3a8';
         $ch = curl_init();
@@ -98,19 +99,19 @@ Route::get('/sms',function(){
         ));
         $outData = curl_exec($ch);
         curl_close($ch);
-       
-       
+
+
 });
 Route::get('/call1',function(){
     $data = json_encode([
-     //   'callerId' => '79111897638',
+     //   'callerId' => '79111897777',
         'dstNumber' => '79675738928',
-     //   'srcNumber' => '996708277186',
+     //   'srcNumber' => '79111897777',
         'timeout' => 30,
         "pin"=> "1234"
         // 'callDetails'=>[
      //       "callId"=> "2096093321622464437",
-     //       "pin"=> "1234"  
+     //       "pin"=> "1234"
         // ]
         ]);
         var_dump($data);
@@ -164,7 +165,7 @@ Route::get('/test', function (){
         dd($res->body());
    // new UpdatingLeadStatus(env('LEAD_BITRIX_ID'), env('LEAD_STATUS'));
 
-   
+
 
 
 
