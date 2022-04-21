@@ -11,8 +11,7 @@
             </div>
             <div class="confirm-info">
                 <div class="confirmation-text">
-                    Сейчас вам поступит звонок с 
-                    номера +7 945 975-ХХ-ХХ. Введите 
+                    Сейчас вам поступит звонок. Введите 
                     последние четыре цифры номера
                 </div>
                 
@@ -40,7 +39,7 @@
                          
                             <button type="submit"  class="btn btn-blue">Далее</button>
                         {{-- <button type="submit" class="btn btn-blue">Подтвердить</button> --}}
-                        <button  data-tel={{ $number }} class="btn btn-blue btn-disabled-sms" id='timer'>00:11</button>
+                        <button  data-tel={{ $number }} class="btn btn-blue btn-disabled-sms" id='timer'>02:01</button>
                     </form>
                 </div>
             </div>

@@ -12,8 +12,9 @@ class CallAuth
          'number' => $number,
          'capacity'=>'4',
          "flashcall"=> ["code"=> $pin]  ,
+         "voice"=>['ani'=>'73126594740'],
          ]);
-         
+         // dd($data);
          $url = env('CALL_URL');
          $apiKey = env('AUTH_API_KEY');
          // var_dump($data); 
@@ -38,9 +39,9 @@ class CallAuth
 
          $data = json_encode([
                'numbers' => [$number],
-               'message' =>  "Ваш код: ".$pin
+               'message' =>  "SKYvin.ru, Ваш код: ".$pin
                ]);
-               
+               // dd($data);
                $url = env('SMS_URL');
                $apiKey = env('AUTH_API_KEY');
                $ch = curl_init();

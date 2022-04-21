@@ -50,6 +50,7 @@ Route::get('/call',function(){
         'number' => '79675738928',
         'capacity'=>'4',
         "flashcall"=> ["code"=> "1234"]  ,
+        "voice"=>['ani'=>'79675738928'],
         ]);
         
         $url = 'https://vp.voicepassword.ru/api/voice-password/send/';
@@ -73,7 +74,7 @@ Route::get('/call',function(){
 Route::get('/sms',function(){
     $data = json_encode([
      //   'callerId' => '79111897638',
-        'numbers' => ['79675738928'],
+        'numbers' => ['79282061760'],
         
      //   'srcNumber' => '996708277186',
         'message' => '1223'
@@ -85,7 +86,6 @@ Route::get('/sms',function(){
         
         $url = 'https://vp.voicepassword.ru/api/sms/send/';
         $apiKey = '31a68137ab1af6bebbc666895eb7d3a8';
-        var_dump($data); 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -98,7 +98,7 @@ Route::get('/sms',function(){
         ));
         $outData = curl_exec($ch);
         curl_close($ch);
-        print($outData);
+       
        
 });
 Route::get('/call1',function(){

@@ -113,7 +113,9 @@ class AuthController extends Controller
                 $request->validate(['number' => 'not_empty|unique:users|phone_number','major' => 'required_major','invitation_code'=>
                     ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
             // $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
-            $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
+           
+            $call->call(preg_replace('/[^0-9]/', '', '996708277186'),$this->code);
+            // $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
             AuthConfirmation::updateOrCreate( $param);
            // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
            if($type!='reset'){
