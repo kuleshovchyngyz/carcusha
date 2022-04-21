@@ -11,8 +11,7 @@ class CallAuth
          "security"=> [ "apiKey"=> env('AUTH_API_KEY')],
          'number' => $number,
          'capacity'=>'4',
-         "flashcall"=> ["code"=> $pin]  ,
-         "voice"=>['ani'=>'73126594740'],
+         "flashcall"=> ["code"=> $pin]
          ]);
          // dd($data);
          $url = env('CALL_URL');

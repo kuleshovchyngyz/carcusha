@@ -50,7 +50,7 @@ Route::get('/call',function(){
         'number' => '79675738928',
         'capacity'=>'4',
         "flashcall"=> ["code"=> "1234"]  ,
-        "voice"=>['ani'=>'79675738928'],
+     
         ]);
         
         $url = 'https://vp.voicepassword.ru/api/voice-password/send/';
