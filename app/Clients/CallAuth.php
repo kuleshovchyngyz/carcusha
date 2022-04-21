@@ -13,7 +13,7 @@ class CallAuth
          'capacity'=>'4',
          "flashcall"=> ["code"=> $pin]
          ]);
-         // dd($data);
+        //  dd($data);
          $url = env('CALL_URL');
          $apiKey = env('AUTH_API_KEY');
          // var_dump($data); 
