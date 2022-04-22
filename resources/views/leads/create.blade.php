@@ -117,23 +117,23 @@
         </div>
     </main>
     @if(!$errors->any())
-    <div class="modal fade show" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: block; padding-right: 17px;" aria-modal="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">
-            <div class="modal-info">
-                <div class="modal__title__blue">
-                    Мы не выкупаем авто, если:
-                </div>
-                <ul class="modal__list">
-                    <li>- Оно старше 15 лет (2006 года и ранее);</li>
-                    <li>- Оно размещено на Avito и Auto.Ru;</li>
-                    <li>- Продавец не заинтересован в продаже.</li>
-                </ul>
-                <button class="btn btn-blue agreed">СОГЛАСИТЬСЯ и добавить</button>
-                <div class="text-center">
-                    <a href="{{ url()->previous() }}" class="blue-link back">Вернуться назад</a>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--    <div class="modal fade show" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: block; padding-right: 17px;" aria-modal="true" role="dialog">--}}
+{{--        <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">--}}
+{{--            <div class="modal-info">--}}
+{{--                <div class="modal__title__blue">--}}
+{{--                    Мы не выкупаем авто, если:--}}
+{{--                </div>--}}
+{{--                <ul class="modal__list">--}}
+{{--                    <li>- Оно старше 15 лет (2006 года и ранее);</li>--}}
+{{--                    <li>- Оно размещено на Avito и Auto.Ru;</li>--}}
+{{--                    <li>- Продавец не заинтересован в продаже.</li>--}}
+{{--                </ul>--}}
+{{--                <button class="btn btn-blue agreed">СОГЛАСИТЬСЯ и добавить</button>--}}
+{{--                <div class="text-center">--}}
+{{--                    <a href="{{ url()->previous() }}" class="blue-link back">Вернуться назад</a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     @endif
 @endsection
