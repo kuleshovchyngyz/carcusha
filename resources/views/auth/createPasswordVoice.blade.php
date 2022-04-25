@@ -11,19 +11,20 @@
             </div>
             <div class="confirm-info">
                 <div class="confirmation-text">
-                    Сейчас вам поступит звонок. Введите 
+                    Сейчас вам поступит звонок. Введите
                     последние четыре цифры номера
                 </div>
-                
+
                 {{-- <strong>{{$number}}.</strong> --}}
-                
+
             </div>
             <div class="tab-content tab-content--custom" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
                     @if(!isset($confirmPhone))
                    <form action="{{ route('auth.VoiceVerification-code') }}" method="POST" id="authentication" class="text-center">
                     @else
-                        <form action="{{ route('auth.VoiceVerification-code') }}" method="POST" id="authentication" class="text-center">
+
+                        <form action="{{ route('confirm.number') }}" method="POST" id="authentication" class="text-center">
                     @endif
                         @csrf
                         <input type="hidden" name="number" value="{{$number}}">
@@ -36,7 +37,7 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                         @enderror
-                         
+
                             <button type="submit"  class="btn btn-blue">Далее</button>
                         {{-- <button type="submit" class="btn btn-blue">Подтвердить</button> --}}
                         <button  data-tel={{ $number }} class="btn btn-blue btn-disabled-sms" id='timer'>02:01</button>

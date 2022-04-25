@@ -30,7 +30,10 @@ class UserController extends Controller
 {
     public $user_id;
     public function promo(Request $request){
-        $QRPics = new QRCodeGenerator(null);
+        $user = Auth::user();
+        $user_id = $user->id;
+        $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
+//        $QRPics = new QRCodeGenerator(null);
         $QRPics->setCompany(trim($request->company) ?? '');
         $QRPics->setNumber(trim($request->number) ?? '');
         $QRPics->setEmail(trim($request->email) ?? '');
@@ -184,7 +187,7 @@ class UserController extends Controller
 //            $param['code'] = $call->call('+'.preg_replace('/[^0-9]/', '', $request->number));
             $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
             //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
-            AuthConfirmation::updateOrCreate( $param);
+//            AuthConfirmation::updateOrCreate( $param);
             return view('auth.createPasswordVoice',$request->input());
         }
 

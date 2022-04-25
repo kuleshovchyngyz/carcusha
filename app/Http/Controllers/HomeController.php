@@ -101,6 +101,7 @@ class HomeController extends Controller
 
 
     public function promo(){
+
         $user = Auth::user();
         $user_id = $user->id;
 
@@ -115,16 +116,13 @@ class HomeController extends Controller
             ]);
         }
 
-        $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
+//        $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
+        $QRPics = new QRCodeGenerator(route('promo'));
         $QRPics->touchPromo(Auth::user());
         if(!file_exists(public_path('/qrcodes/plakat_'.Auth::user()->id.'.pdf'))){
             $QRPics->pdf_part_two();
         }
-//        if(!file_exists(public_path('/qrcodes/plakat'.Auth::user()->id.'.pdf'))){
-//            $QRPics->pdf_part_two();
-//        }
 
-        //$pdf->Output();
         return view('home',[
             'name' => 'promo',
             'data' => ''
