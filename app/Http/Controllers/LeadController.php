@@ -29,6 +29,8 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Http;
 use App\Clients\SmsClient;
 use App\Auth\Code;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 class LeadController extends Controller
 {
     use HasRoles;
@@ -37,9 +39,13 @@ class LeadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($origin=null)
     {
-        $user_id = auth()->user()->id;
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            $user_id= 94;
+        }else{
+            $user_id = auth()->user()->id;
+        }
         if(!\File::exists('qrcodes/qrqr_'.$user_id.'.png')){
             $text = route('car_application').'?id='.$user_id;
             \QrCode::size(440)
@@ -48,7 +54,7 @@ class LeadController extends Controller
         }
         $image_names = [];
         $leads = Lead::with('status','leadHistory')
-            ->where('user_id',Auth::user()->id)
+            ->where('user_id',$user_id)
             ->orderBy('updated_at','DESC')
             ->get()
             ->each(function($item) use (&$image_names){
@@ -61,6 +67,9 @@ class LeadController extends Controller
               }
             })
             ;
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return  json_encode($leads->toArray());
+        }
 
         return view('layouts.leads',[
             'images'=>$image_names,
@@ -297,7 +306,7 @@ class LeadController extends Controller
         $bitrix = new Bitrix();
         $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$request->phone,$folder_name);
         $result = $bitrix->addLead();
-        
+
         new LeadBuilder(
             isset($request->car_vendor) == true ? $request->car_vendor : '',
             isset($request->car_model) == true ? $request->car_model : '',

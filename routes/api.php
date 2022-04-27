@@ -23,3 +23,6 @@ Route::post('/getstatuses', [App\Http\Controllers\LeadController::class, 'getsta
 Route::post('/getdeletedleads', [App\Http\Controllers\AdminController::class, 'getDeletedLeads'])->middleware('throttle:10,1')->name('apigetdeletedleads');
 Route::post('/telegram', [App\Http\Controllers\UserController::class, 'registerTuser'])->middleware('throttle:10,1')->name('apiforpartnerstelegram');
 Route::post('/updateuserfields', [App\Http\Controllers\LeadController::class, 'updateuserfields'])->middleware('throttle:10,1');
+
+
+Route::get('/leads', [App\Http\Controllers\LeadController::class, 'index'])->middleware('throttle:10,1')->name('api.leads');
