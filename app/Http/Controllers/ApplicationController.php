@@ -63,7 +63,8 @@ class ApplicationController extends Controller
         return $buffer;
     }
     public function addDeal($vendor, $model,$year,$img,$phone,$folder_name) {
-        $years = [
+            $years = [
+            "other" => "309",
             "2008" => "295",
             "2009" => "293",
             "2010" => "67",

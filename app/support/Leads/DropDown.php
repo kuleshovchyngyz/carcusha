@@ -25,10 +25,12 @@ class DropDown
         $buffer='';
 //        $buffer = '<option value=2006>'.'2006'.' и старше</option>';
 //        $buffer = '<option value=2010>'.'2010'.'</option>';
+//        $buffer = '<option value=other>'.'другое'.'</option>';
 
         for($i = date("Y"); $i > date("Y")-15; $i--){
             $buffer .= '<option value="'.$i.'">'.$i.'</option>';
         }
+        $buffer .= '<option value=other>'.'другое'.'</option>';
         return $buffer;
     }
     public function get_car_models()
