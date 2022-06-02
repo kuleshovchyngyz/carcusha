@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Major;
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -84,7 +85,8 @@ class AppServiceProvider extends ServiceProvider
         });
         Validator::extend('required_major', function($attribute, $value, $parameters)
         {
-            $majors = ['Агент','СТО грузовое','СТО легковое','Перевозчик','Эксперт'];
+
+            $majors = Major::pluck('name')->toArray();
             if (in_array($value, $majors)) {
                 return $value;
             }
