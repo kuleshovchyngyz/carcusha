@@ -26,3 +26,5 @@ Route::post('/updateuserfields', [App\Http\Controllers\LeadController::class, 'u
 
 
 Route::get('/leads', [App\Http\Controllers\LeadController::class, 'index'])->middleware('throttle:10,1')->name('api.leads');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->middleware('throttle:10,1')->name('api.login');
+Route::get('/notifications', [App\Http\Controllers\HomeController::class, 'notifications'])->middleware('throttle:10,1')->name('api.notification.list');

@@ -1,8 +1,7 @@
-{{--@if($errors->any())--}}
-{{--    @dump(old('email'))--}}
-{{--    @dump(old('number'))--}}
-{{--    {{ implode('', $errors->all(':message')) }}--}}
-{{--@endif--}}
+@if($errors->any())
+    {{ implode('', $errors->all(':message')) }}
+
+@endif
 
 @extends('layouts.app')
 @include('layouts.message')

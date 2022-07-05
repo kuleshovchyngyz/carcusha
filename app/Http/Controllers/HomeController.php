@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
 
 class HomeController extends Controller
@@ -48,7 +50,10 @@ class HomeController extends Controller
     {
 		//dd(888);
         $messages = MessageNotification::where('user_id',Auth::user()->id)->get();
-
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            dd(111);
+            return  $messages;
+        }
         return view('home',[
             'name' => 'notifications',
             'data' => $messages

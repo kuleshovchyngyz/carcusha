@@ -68,7 +68,7 @@ class LeadController extends Controller
             })
             ;
         if(Str::contains(Route::currentRouteName(), 'api')){
-            return  json_encode($leads->toArray());
+            return  ($leads->toArray());
         }
 
         return view('layouts.leads',[
