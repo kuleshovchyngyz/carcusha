@@ -151,12 +151,7 @@ Route::get('/call1',function(){
         $curlInfo = curl_getinfo($resId);
         echo $response;
 });
-function getKey ($methodName , $time , $keyNewtel , $params , $writeKey)
-{
- return $keyNewtel.$time.hash( 'sha256' ,
- $methodName."\n".$time."\n".$keyNewtel."\n".
- $params."\n".$writeKey);
- }
+
 Route::get('/test', function (){
 
     $data = [

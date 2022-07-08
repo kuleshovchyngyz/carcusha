@@ -41,11 +41,8 @@ class LeadController extends Controller
      */
     public function index($origin=null)
     {
-        if(Str::contains(Route::currentRouteName(), 'api')){
-            $user_id= 94;
-        }else{
             $user_id = auth()->user()->id;
-        }
+
         if(!\File::exists('qrcodes/qrqr_'.$user_id.'.png')){
             $text = route('car_application').'?id='.$user_id;
             \QrCode::size(440)
@@ -68,6 +65,7 @@ class LeadController extends Controller
             })
             ;
         if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['leads' => $leads],200);
             return  json_encode($leads->toArray());
         }
 

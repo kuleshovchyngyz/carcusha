@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasRoles;
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
@@ -46,6 +47,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
     public function new_leads_quantity(){
         $count = 0;
         $count = Lead::where('user_id',$this->attributes['id'])->where('checked',false)->count();
@@ -128,8 +148,8 @@ class User extends Authenticatable
     public function set_as_paid()
     {
         foreach ($this->payments as $payment){
-           $payment->status = 1;
-           $payment->save();
+            $payment->status = 1;
+            $payment->save();
         }
     }
     public function numberOfLeads(){
@@ -206,7 +226,7 @@ class User extends Authenticatable
         return $paids->sum();
     }
     public function availableAmount(){
-       return $this->balance->balance - $this->SumOfPendingAmount() - $this->sumOfPendingPaidAmount();
+        return $this->balance->balance - $this->SumOfPendingAmount() - $this->sumOfPendingPaidAmount();
     }
 
     public function number_of_violations(){

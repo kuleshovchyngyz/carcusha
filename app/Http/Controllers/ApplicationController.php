@@ -11,6 +11,8 @@ use App\support\Leads\DropDown;
 use App\support\Leads\LeadBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class ApplicationController extends Controller
 {
@@ -140,8 +142,16 @@ class ApplicationController extends Controller
         return substr($str, 5, strpos($str, ';')-5);
     }
     public function checkPromo(Request $request){
+//        return $request->header('Accept');
+//        return response()->json(['mk'=>Route::currentRouteName()],200);
         if (User::where('invitation_code', '=', $request->promo)->count() > 0 ) {
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(true,200);
+            }
             return 'yes';
+        }
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(false,200);
         }
         return 'no';
     }

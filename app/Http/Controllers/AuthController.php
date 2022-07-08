@@ -28,7 +28,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -90,7 +92,7 @@ class AuthController extends Controller
 
     public function RegisterWithVerificationCode(Request $request, $type = '')
     {
-// $request->dd();
+
 
         $code = new Code();
         $sms = new SmsClient();
@@ -108,39 +110,54 @@ class AuthController extends Controller
         ($type=='reset') ? $request->request->add(['reset' => true]) : "";
 
         if($this->fieldType=='number'){
-            ($type=='reset') ?
+            ($request->has('reset')) ?
                 $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
                 $request->validate(['number' => 'not_empty|unique:users|phone_number','major' => 'required_major','invitation_code'=>
                     ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
             // $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
 
             // $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
-            $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
+//            $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
             AuthConfirmation::updateOrCreate( $param);
            // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
-           if($type!='reset'){
+           if(!$request->has('reset')){
                 $id = Major::wherename($request->major)->first()->id;
                 $request->merge(['major' => $id]);
             }
             // dd($request->input());
+
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json([
+                                        'next_url'=> \route('api.auth.VoiceVerification-code'),
+                                        'nex_method'=>'post',
+                                        'expected_inputs'=>'number,major,code,invitation_code',
+                                        'createPasswordVoice' => $request->input()],
+                    200);
+            }
+
             return view('auth.createPasswordVoice',$request->input());
         }else {
-            ($type=='reset') ?
+
+            ($request->has('reset')) ?
                 $request->validate(['email' => 'required|email_format|is_email_in_database|max:255']) :
-                $request->validate(['example'=>'not_empty','major' => 'required_major','email' => 'not_empty|email_format|unique:users|max:255','invitation_code'=>
+                $request->validate(['major' => 'required_major','email' => 'not_empty|email_format|unique:users|max:255','invitation_code'=>
                     ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
+//            return response()->json(['createPasswordEmail' => $request->all()],200);
             AuthConfirmation::updateOrCreate( $param);
             Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте SKYvin.ru Код:".$this->code)
                 ->markdown('mail.code', ['code' => $this->code,
                     'message' => 'Пожалуйста, введите код для проверки вашего email.',
                     'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
             ]));
-            if($type!='reset'){
+
+            if(!$request->has('reset')){
                 $id = Major::wherename($request->major)->first()->id;
                 $request->merge(['major' => $id]);
             }
 
-
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(['createPasswordEmail' => $request->input()],200);
+            }
 
             return view('auth.createPasswordEmail',$request->input());
         }
@@ -156,6 +173,9 @@ class AuthController extends Controller
         ]);
 
         if ($validated->fails()) {
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 400);
+            }
             return view('auth.createPasswordVoice', $request->input())->withInput($request->input())->withErrors($validated);
         }
         if(isset($request->reset)){
@@ -185,6 +205,7 @@ class AuthController extends Controller
     }
 
     public function VoiceVerificationCode(Request $request){
+
         if($request->has('verifyBytel')){
 
             return $this->SendSms($request);
@@ -198,13 +219,18 @@ class AuthController extends Controller
             ]);
 
             if ($validated->fails()) {
+                if(Str::contains(Route::currentRouteName(), 'api')){
+                    return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 400);
+                }
                 return view('auth.createPasswordVoice', $request->input())->withInput($request->input())->withErrors($validated);
             }
             if(isset($request->reset)){
                 // return $this->resetUserPassword($request);
                 return view('auth.createPasswordSms',$request->input());
             }else{
-                // return $this->registerUser($request);
+                if(Str::contains(Route::currentRouteName(), 'api')){
+                    return response()->json(['next_url'=>'api/password-create-sms','old_values'=>$request->input()], 400);
+                }
                 return view('auth.createPasswordSms',$request->input());
             }
         }
@@ -249,12 +275,33 @@ class AuthController extends Controller
         //dd($request->all());
     }
     public function registerUser(Request $request){
-    //    dd($request->all());
+
         event(new Registered($user = $this->createUser($request->all())));
+        if(Str::contains(Route::currentRouteName(), 'api')) {
+//            return 3443433443;
+            if($request->has('email')){
+                if ($token = auth()->guard('api')->attempt(['email' => $request->email, 'password' => $request->password])) {
+                    return $this->respondWithToken($token);
+                }
+            }else{
+                if ($token = auth()->guard('api')->attempt(['number' => $request->number, 'password' => $request->password])) {
+                    return $this->respondWithToken($token);
+                }
+            }
+        }
         $this->guard()->login($user);
         return $request->wantsJson()
             ? new JsonResponse([], 201)
             : redirect($this->redirectPath());
+    }
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+
+            'expires_in' => auth('api')->factory()->getTTL()
+        ]);
     }
     public function resetUserPassword(Request $request){
         AuthConfirmation::where('email',$request->email)->delete();
@@ -275,7 +322,7 @@ class AuthController extends Controller
     }
     public function EmailVerificationCode(Request $request){
 
-       // dd($request->all());
+//        dd($request->all());
         $validated = Validator::make($request->all(), [
             'email' => ['required', 'string', 'max:255', (!isset($request->reset)) ? 'unique:users' : ''],
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
@@ -284,6 +331,10 @@ class AuthController extends Controller
             'password' => 'Пароль'
         ]);
         if ($validated->fails()) {
+
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 400);
+            }
             return view('auth.createPasswordEmail', $request->input())->withInput($request->input())->withErrors($validated);
         }
         if(isset($request->reset)){
@@ -343,6 +394,7 @@ class AuthController extends Controller
 //            PendingAmount::create(['payment_id'=>$payment->id,'status'=>0]);
         }
         Setting::create(['number'=>$user->number,'email'=>$user->email, 'user_id'=>$user->id,'major_id'=>$major]);
+
         return $user;
     }
     protected function generateinvitation_code() {
