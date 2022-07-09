@@ -41,6 +41,7 @@ class LeadController extends Controller
      */
     public function index($origin=null)
     {
+
             $user_id = auth()->user()->id;
 
         if(!\File::exists('qrcodes/qrqr_'.$user_id.'.png')){

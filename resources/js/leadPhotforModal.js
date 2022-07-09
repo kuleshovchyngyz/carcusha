@@ -13,8 +13,6 @@ const imageLoad = {
     lead_id:'',
     init() {
 
-
-
         $(`.gall-upload`).on('click', function (e) {
             console.log('gall clicked');
             $(`#pictures`).trigger('click');

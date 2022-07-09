@@ -25,7 +25,7 @@ class JWTController extends Controller
     }
     public function showRegisterForm(){
         $majors = Major::pluck('name','id')->toArray();
-        return response()->json(['majors' => $majors],200);
+        return response()->json(['next_url'=>\route('api.auth.verification-code'),'nex_method'=>'post','expected_inputs'=>'number,major,code,invitation_code','majors' => $majors],200);
     }
     /**
      * Register user.

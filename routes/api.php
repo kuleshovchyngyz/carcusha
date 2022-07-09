@@ -43,5 +43,8 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::post('/logout', [JWTController::class, 'logout']);
     Route::post('/refresh', [JWTController::class, 'refresh']);
     Route::post('/profile', [JWTController::class, 'profile']);
-
+    Route::get('/notifications', [App\Http\Controllers\HomeController::class, 'notifications'])->middleware(['middleware' => 'api'])->name('api.notification.list');
+    Route::get('/paymentqueries', [App\Http\Controllers\HomeController::class, 'paymentqueries'])->name('api.payment.paymentqueries');
+    Route::get('/payments', [App\Http\Controllers\HomeController::class, 'payments'])->name('api.payment.list');
+    Route::get('/refer', [App\Http\Controllers\HomeController::class, 'refer'])->name('api.refer.list');
 });

@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
 
 class HomeController extends Controller
@@ -32,7 +34,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -47,8 +49,10 @@ class HomeController extends Controller
     public function notifications()
     {
 		//dd(888);
-        $messages = MessageNotification::where('user_id',Auth::user()->id)->get();
-
+        $messages = MessageNotification::where('user_id', auth()->user()->id)->get();
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['notifications'=>$messages->toArray()], 200);
+        }
         return view('home',[
             'name' => 'notifications',
             'data' => $messages
@@ -60,7 +64,18 @@ class HomeController extends Controller
             ->where('user_id',Auth::user()->id)
 			 ->orderBy('updated_at','DESC')
             ->get();
-        //dd($leads);
+
+        $payments = [];
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            foreach (auth()->user()->lead_payments() as $payment){
+                $payments[$payment->id]['date'] = $payment->created_at->format('d-m-Y');
+                $payments[$payment->id]['vendor'] = $payment->reasons->lead()->vendor;
+                $payments[$payment->id]['vendor_model'] = $payment->reasons->lead()->vendor_model;
+                $payments[$payment->id]['vendor_year'] = $payment->reasons->lead()->vendor_year;
+                $payments[$payment->id]['amount'] = $payment->amount;
+            }
+            return response()->json(['payments'=>$payments], 200);
+        }
         return view('home',[
             'name' => 'payments',
             'data' => $leads
@@ -69,6 +84,9 @@ class HomeController extends Controller
     public function paymentqueries(){
         $paid = Paid::where('user_id',\auth()->user()->id)->get();
         //dd($leads);
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['paymentqueries'=>$paid->toArray()], 200);
+        }
         return view('home',[
             'name' => 'paymentqueries',
             'data' => $paid
@@ -84,6 +102,26 @@ class HomeController extends Controller
             $val = isset($partners[$payment->reasons->table_id]) ? $partners[$payment->reasons->table_id] : 0;
             $partners[$payment->reasons->table_id] = $payment->amount +  $val;
         }
+
+        $refer=[];
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            $refer['referral_link'] =\route('login').'?ref='.Auth::user()->invitation_code;
+            $refer['promocode'] = Auth::user()->invitation_code;
+            $refer['total_number_of_partners'] = Auth::user()->partners()->count();
+            $refer['number_of_partner_leads'] = Auth::user()->number_of_partner_leads();
+            $refer['total_money_amount_from_referral'] = Auth::user()->total_amount_from_referral();
+            foreach( Auth::user()->partners() as $partner){
+                $refer['partners'][$partner->id]['phone']=$partner->setting->number;
+                $refer['partners'][$partner->id]['email']=$partner->setting->email;
+                $refer['partners'][$partner->id]['total_number_of_leads']=$partner->numberOfLeads();
+                $refer['partners'][$partner->id]['pending_leads']=$partner->pending();
+                $refer['partners'][$partner->id]['successful_leads']=$partner->successful() ;
+                $refer['partners'][$partner->id]['rejected_leads']=$partner->rejected();
+                $refer['partners'][$partner->id]['funded_money']=$partners[$partner->id];
+            }
+            return response()->json($refer, 200);
+        }
+
         return view('home',[
             'name' => 'refer',
             'data' => $partners

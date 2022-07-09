@@ -166,7 +166,9 @@ class AuthController extends Controller
 
         $this->fieldType = 'number';
         $validated = Validator::make($request->all(), [
-            'code' => ['required', 'integer', new CheckEmailVerificationCode()],
+            'number' => ['required', 'string', 'max:255', (!isset($request->reset)) ? 'unique:users' : ''],
+
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
 
         ], [], [
             'password' => 'Пароль'
@@ -229,7 +231,7 @@ class AuthController extends Controller
                 return view('auth.createPasswordSms',$request->input());
             }else{
                 if(Str::contains(Route::currentRouteName(), 'api')){
-                    return response()->json(['next_url'=>'api/password-create-sms','old_values'=>$request->input()], 400);
+                    return response()->json(['next_url'=>\route('api.auth.SmsVerification-code'),'expected_inputs'=>'number,major,code,invitation_code,password,password_confirmation','old_values'=>$request->input()], 400);
                 }
                 return view('auth.createPasswordSms',$request->input());
             }
