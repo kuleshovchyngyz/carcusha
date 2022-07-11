@@ -65,9 +65,47 @@ class LeadController extends Controller
               }
             })
             ;
+        $leadApi=[];
         if(Str::contains(Route::currentRouteName(), 'api')){
-            return response()->json(['leads' => $leads],200);
-            return  json_encode($leads->toArray());
+            foreach($leads as $key=>$lead){
+                $leadApi[$lead->id]['created_at']=$lead->created_at->format('d-m-Y');
+                $leadApi[$lead->id]['vendor']=$lead->vendor;
+                $leadApi[$lead->id]['vendor_model']=$lead->vendor_model;
+                $leadApi[$lead->id]['vendor_year']=$lead->vendor_year;
+                if($lead->status->status_type!="finished"){
+                    $leadApi[$lead->id]['lead-folder']=$lead->folder;
+                    $leadApi[$lead->id]['lead-name']=$lead->vendor.' '.$lead->vendor_model.', '.$lead->vendor_year;
+                    $leadApi[$lead->id]['image-names']=implode('||',$images[$lead->folder] ?? []);
+                    $leadApi[$lead->id]['lead-id']=$lead->id;
+                }
+                if($lead->checked()){
+                    $leadApi[$lead->id]['danger']='Данный автомобиль обнаружен
+                                                    на досках объявлений.';
+                }
+                $leadApi[$lead->id]['phonenumber']=$lead->phonenumber;
+                $leadApi[$lead->id]['status_color']=$lead->color();
+                $leadApi[$lead->id]['status']=$lead->status->user_statuses->name;
+                if($lead->status->user_statuses->comments!=''){
+                    $leadApi[$lead->id]['info-icon']= shortCodeParse($lead->status->user_statuses->comments);
+                }
+                $leadApi[$lead->id]['total_money']=\ViewService::init($lead)->view('total_payments_by_lead');
+                if(!$lead->is_on_pending() && $lead->all_amount()>0){
+                    $leadApi[$lead->id]['phonenumber']='Сумма заморожена, пока не
+                                                       не завершаться переговоры';
+
+                }
+                foreach($lead->leadHistory as $key=>$history){
+                    $leadApi[$lead->id]['history'][$key]['created_at']=$history->created_at->format('d-m-Y H:i');
+                    $leadApi[$lead->id]['history'][$key]['status_color']=color($history->event);
+                    $leadApi[$lead->id]['history'][$key]['status']=$history->userStatus->name;
+                    if($history->userStatus->comments!=''){
+                        $leadApi[$lead->id]['history'][$key]['info-icon']=shortCodeParse($history->userStatus->comments);
+                    }
+
+                }
+            }
+            return response()->json([$leadApi],200);
+
         }
 
         return view('layouts.leads',[

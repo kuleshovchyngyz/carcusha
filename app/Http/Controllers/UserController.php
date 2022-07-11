@@ -23,7 +23,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use setasign\Fpdi\Fpdi;
 
 class UserController extends Controller
@@ -39,6 +41,11 @@ class UserController extends Controller
         $QRPics->setEmail(trim($request->email) ?? '');
         $QRPics->setAddress(trim($request->address) ?? '');
         $QRPics->pdf_preview();
+
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['success_message'=>'Сгенерировано'], 200);
+        }
+
         return redirect()->back()->with('success_message', [__('Сгенерировано')]);
 
 //        dd($QRPics->big_name);
@@ -82,14 +89,23 @@ class UserController extends Controller
         $min_amount = PaymentAmount::where('reason_of_payment','MinAmountOfPayment')->first()->amount;
 
         if( $request->payment_amount > (Auth::user()->availableAmount())){
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(['error_message'=>'Сумма вывода не может быть больше чем на балансе'], 200);
+            }
             return redirect()->back()->with('error_message', [__('Сумма вывода не может быть больше чем на балансе')]);
         }
         if($request->payment_amount < $min_amount ){
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(['error_message'=>'Меньше чем минимальная сумма('.$min_amount.' руб)'.' для вывода'], 200);
+            }
             return redirect()->back()->with('error_message', [__('Меньше чем минимальная сумма('.$min_amount.' руб)'.' для вывода')]);
 
         }else{
             Setting::where('user_id',\auth()->user()->id)->update(['card_number'=>$request->bankcardnumber]);
             Paid::create(['user_id'=>\auth()->user()->id,'status'=>'pending','amount'=>$request->payment_amount,'cardnumber'=>$request->bankcardnumber]);
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(['success_message'=>'Заказано'], 200);
+            }
             return redirect()->back()->with('success_message', [__('Заказано')]);
         }
     }

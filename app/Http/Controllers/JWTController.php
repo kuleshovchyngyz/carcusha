@@ -113,7 +113,19 @@ class JWTController extends Controller
      */
     public function profile()
     {
-        return response()->json(auth()->user());
+        $info=[];
+        $info['numberOfNewNotifications']=\ViewService::init()->view('numberOfNewNotifications');
+        $info['headerNotifications']=\ViewService::init()->view('headerNotifications');
+        $info['user_id']=auth()->user()->id;
+        $info['qr_code']=asset('svg/qrcode.svg');
+        $info['paymentAmountsDetailInfo']=\ViewService::init()->view('paymentAmountsDetail');
+        $info['balance']=auth()->user()->balance->balance;
+        $info['freezed']=auth()->user()->SumOfPendingAmount();
+        $info['paid']=auth()->user()->sum_of_paids();
+
+
+
+        return response()->json($info);
     }
 
     /**

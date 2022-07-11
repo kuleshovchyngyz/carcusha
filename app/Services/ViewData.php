@@ -11,6 +11,8 @@ use App\Models\SiteSetting;
 use App\Models\UserPaymentAmount;
 use Carbon\Carbon;
 use http\Client\Curl\User;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class ViewData
 {
@@ -61,36 +63,42 @@ class ViewData
                 $this->response = MessageNotification::where('user_id',auth()->user()->id)->where('seen',0)->count();
                 if($this->response>0){
                     $this->response = '<span class="notification-head-count blue">'.$this->response.'</span>';
+                    if(Str::contains(Route::currentRouteName(), 'api')){
+                        $this->response=$this->response;
+                    }
                     break;
                 }
                 $this->response = '';
                 break;
             case 'headerNotifications':
-                    $notifications = MessageNotification::where('user_id',auth()->user()->id)->latest()->limit(10)->get();
-                    $this->response = '';
-                    foreach ($notifications as $notification){
-                        if(!$notification->seen){
-                            $this->response .= '<li class="notifications__item">'.$notification->message.'</li>'. PHP_EOL;
-                            // $this->response .= '<li class="notifications__item notifications__new">'.$notification->message.'</li>'. PHP_EOL;
-                        }else{
-                            // $this->response .= '<li class="notifications__item">'.$notification->message.'</li>'. PHP_EOL;
+                $notifications = MessageNotification::where('user_id',auth()->user()->id)->latest()->limit(10)->get();
+                $this->response = '';
+                foreach ($notifications as $notification){
+                    if(!$notification->seen){
+                        $this->response .= '<li class="notifications__item">'.$notification->message.'</li>'. PHP_EOL;
+                        if(Str::contains(Route::currentRouteName(), 'api')){
+                            $this->response[]=$notification->message;
                         }
+                        // $this->response .= '<li class="notifications__item notifications__new">'.$notification->message.'</li>'. PHP_EOL;
+                    }else{
+                        // $this->response .= '<li class="notifications__item">'.$notification->message.'</li>'. PHP_EOL;
                     }
+                }
                 break;
             case 'telegramBot':
-                   $s = SiteSetting::where('name','telegramBotToken');
-                    $this->response = ($s->exists() ? str_replace('+7','',$s->first()->value) : '');
+                $s = SiteSetting::where('name','telegramBotToken');
+                $this->response = ($s->exists() ? str_replace('+7','',$s->first()->value) : '');
                 break;
             case 'whatsapp':
-                    $s = SiteSetting::where('name','whatsapp');
-                     $this->response = ($s->exists() ? $s->first()->value : '');
-                 break;
+                $s = SiteSetting::where('name','whatsapp');
+                $this->response = ($s->exists() ? $s->first()->value : '');
+                break;
             case 'whatsappNumber':
-                    $s = SiteSetting::where('name','whatsapp');
-                     $this->response = ($s->exists() ? preg_replace('/[^0-9]/', '', $s->first()->value) : '');
-                 break;
+                $s = SiteSetting::where('name','whatsapp');
+                $this->response = ($s->exists() ? preg_replace('/[^0-9]/', '', $s->first()->value) : '');
+                break;
             case 'total_payments_by_lead':
-                    call_user_func(array($this, 'totalPaymentByLead'), '');
+                call_user_func(array($this, 'totalPaymentByLead'), '');
                 break;
             case 'qr':
                 $this->response =  '<img src="{{ asset(`img/qr.png`) }}" alt="">';
@@ -134,19 +142,27 @@ class ViewData
                 $code = \Auth::user()->user_who_referred()!==false ? \Auth::user()->user_who_referred()->invitation_code : false;
                 $disabled = $code===false ? '' : 'disabled';
                 $mask = $code===false ? 'text' : 'password';
-    //                $mask = 'text';
+                //                $mask = 'text';
                 $underText = $code===false ?
                     "<button class='red-link activatePromo' id='submitPromo' type='button' >Активировать</button>"
                     :'';
-            if($code===false){
-                $this->response ='<div class="inv-code red">
+
+                if($code===false){
+
+                    $this->response ='<div class="inv-code red">
                                     <input type="text" class="form-control" id="invitation-inpup" name="invitationCode" placeholder="Код приглашения" value="'.$code.'">
                                 </div><p class="error text-danger d-none">Такого промокода не существует</p>'.$underText;
-            }else{
-                $this->response ='<div class="inv-code success">
+                    if(Str::contains(Route::currentRouteName(), 'api')){
+                        $this->response='Такого промокода не существует';
+                    }
+                }else{
+                    $this->response ='<div class="inv-code success">
                                     <input type="'.$mask.'" class="form-control" id="invitation-inpup" placeholder="Код приглашения" value="'.$code.'" disabled>
                                 </div>';
-            }
+                    if(Str::contains(Route::currentRouteName(), 'api')){
+                        $this->response=$code;
+                    }
+                }
 //                $this->response = '<input type="'.$mask.'" class="form-control" id="invitation-inpup" name = "invitationCode" placeholder="Не указан" value="'.$code.'" '.$disabled.'>
 //                                        <p class="error text-danger d-none">Такого промокода не существует</p>';
 
@@ -176,7 +192,7 @@ class ViewData
                     call_user_func(array($this, $this->method), 'refer');
                 break;
             case 'leadStatusName':
-                    call_user_func(array($this, $this->method),'' );
+                call_user_func(array($this, $this->method),'' );
                 break;
 
             case 'amount_of_percentage_payment':
@@ -221,7 +237,7 @@ class ViewData
                         $value = '<option>' . $value . '</option>';
                     }else{
                         $this->model->setting->major_id==$key ?
-                        $value = '<option selected>' . $value . '</option>':
+                            $value = '<option selected>' . $value . '</option>':
                             $value = '<option>' . $value . '</option>';
                     }
                 });

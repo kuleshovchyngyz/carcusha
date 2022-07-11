@@ -45,6 +45,11 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::post('/profile', [JWTController::class, 'profile']);
     Route::get('/notifications', [App\Http\Controllers\HomeController::class, 'notifications'])->middleware(['middleware' => 'api'])->name('api.notification.list');
     Route::get('/paymentqueries', [App\Http\Controllers\HomeController::class, 'paymentqueries'])->name('api.payment.paymentqueries');
+    Route::post('/query_for_payment', [App\Http\Controllers\UserController::class, 'query_for_payment'])->name('api.query_for_payment');
     Route::get('/payments', [App\Http\Controllers\HomeController::class, 'payments'])->name('api.payment.list');
     Route::get('/refer', [App\Http\Controllers\HomeController::class, 'refer'])->name('api.refer.list');
+    Route::get('/promo', [App\Http\Controllers\HomeController::class, 'promo'])->name('api.promo');
+    Route::post('/promo', [App\Http\Controllers\UserController::class, 'promo'])->name('api.user.promo');
+    Route::get('/settings', [App\Http\Controllers\HomeController::class, 'settings'])->name('api.settings');
+
 });

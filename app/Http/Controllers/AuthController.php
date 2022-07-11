@@ -214,7 +214,7 @@ class AuthController extends Controller
         }else{
             $this->fieldType = 'number';
             $validated = Validator::make($request->all(), [
-                'code' => ['required', 'integer', new CheckEmailVerificationCode()],
+                'code' => ['required', 'integer', Str::contains(Route::currentRouteName(), 'api') ? '': new CheckEmailVerificationCode()],
 
             ], [], [
                 'password' => 'Пароль'

@@ -129,8 +129,22 @@ class HomeController extends Controller
 
     }
     public function settings(){
+        $settings=[];
+        $settings['email']='';
+        $settings['number']='';
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            if( \ViewService::init()->view('number') !== null){
+                $settings['number']=\ViewService::init()->view('number');
+            }
+            if(ViewService::init()->view('email')!==null){
+                $settings['email']=\ViewService::init()->view('email');
+            }
+            $settings['city']=auth()->user()->setting->city;
+            $settings['invitationCode']=ViewService::init()->view('InvitationCode');
+            $settings['major']=ViewService::init()->view('InvitationCode');
 
-       // dd($files);
+            return response()->json(['error_message'=>''], 200);
+        }
         return view('home',[
             'name' => 'settings',
             'data' => ''
@@ -159,6 +173,29 @@ class HomeController extends Controller
         $QRPics->touchPromo(Auth::user());
         if(!file_exists(public_path('/qrcodes/plakat_'.Auth::user()->id.'.pdf'))){
             $QRPics->pdf_part_two();
+        }
+
+        $promo = [];
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            $promo['number'] = \ViewService::init()->view('promo_number');
+
+            if(Auth::user()->promo===null){
+                $promo['email'] = auth()->user()->setting->email;
+                $promo['address'] = '';
+                $promo['company'] = '';
+            }else {
+                $promo['company'] = auth()->user()->promo->name;
+                $promo['email'] = auth()->user()->promo->email;
+                $promo['address'] = auth()->user()->promo->address;
+            }
+            if(auth()->user()->promo!==null && auth()->user()->promo->generated){
+                $promo['vizitki']['image_link1']=asset('qrcodes/card1.jpg') ;
+                $promo['vizitki']['image_link2']=asset('qrcodes/card_qrsmall_'.auth()->user()->id.'.png') ;
+                $promo['vizitki']['download_link']=route('download.business.card');
+                $promo['plakaty']['image_link']=asset('qrcodes/card_qr_'.auth()->user()->id.'.png');
+                $promo['plakaty']['download_link']=route('download.business.card');
+            }
+            return response()->json($promo, 200);
         }
 
         return view('home',[
