@@ -85,6 +85,7 @@ class LeadController extends Controller
                 }
                 $leadApi[$key]['phonenumber']=$lead->phonenumber;
                 $leadApi[$key]['status_color']=$lead->color();
+                $leadApi[$key]['status_color_number']=$lead->status->color;
                 $leadApi[$key]['status']=$lead->status->user_statuses->name;
                 if($lead->status->user_statuses->comments!=''){
                     $leadApi[$key]['info-icon']= shortCodeParse($lead->status->user_statuses->comments);
