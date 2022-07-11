@@ -68,38 +68,39 @@ class LeadController extends Controller
         $leadApi=[];
         if(Str::contains(Route::currentRouteName(), 'api')){
             foreach($leads as $key=>$lead){
-                $leadApi[$lead->id]['created_at']=$lead->created_at->format('d-m-Y');
-                $leadApi[$lead->id]['vendor']=$lead->vendor;
-                $leadApi[$lead->id]['vendor_model']=$lead->vendor_model;
-                $leadApi[$lead->id]['vendor_year']=$lead->vendor_year;
+                $leadApi[$key]['created_at']=$lead->created_at->format('d-m-Y');
+                $leadApi[$key]['vendor']=$lead->vendor;
+                $leadApi[$key]['vendor_model']=$lead->vendor_model;
+                $leadApi[$key]['vendor_year']=$lead->vendor_year;
+                $leadApi[$key]['lead_id']=$lead->id;
                 if($lead->status->status_type!="finished"){
-                    $leadApi[$lead->id]['lead-folder']=$lead->folder;
-                    $leadApi[$lead->id]['lead-name']=$lead->vendor.' '.$lead->vendor_model.', '.$lead->vendor_year;
-                    $leadApi[$lead->id]['image-names']=implode('||',$images[$lead->folder] ?? []);
-                    $leadApi[$lead->id]['lead-id']=$lead->id;
+                    $leadApi[$key]['lead-folder']=$lead->folder;
+                    $leadApi[$key]['lead-name']=$lead->vendor.' '.$lead->vendor_model.', '.$lead->vendor_year;
+                    $leadApi[$key]['image-names']=implode('||',$images[$lead->folder] ?? []);
+                    $leadApi[$key]['lead-id']=$lead->id;
                 }
                 if($lead->checked()){
-                    $leadApi[$lead->id]['danger']='Данный автомобиль обнаружен
+                    $leadApi[$key]['danger']='Данный автомобиль обнаружен
                                                     на досках объявлений.';
                 }
-                $leadApi[$lead->id]['phonenumber']=$lead->phonenumber;
-                $leadApi[$lead->id]['status_color']=$lead->color();
-                $leadApi[$lead->id]['status']=$lead->status->user_statuses->name;
+                $leadApi[$key]['phonenumber']=$lead->phonenumber;
+                $leadApi[$key]['status_color']=$lead->color();
+                $leadApi[$key]['status']=$lead->status->user_statuses->name;
                 if($lead->status->user_statuses->comments!=''){
-                    $leadApi[$lead->id]['info-icon']= shortCodeParse($lead->status->user_statuses->comments);
+                    $leadApi[$key]['info-icon']= shortCodeParse($lead->status->user_statuses->comments);
                 }
-                $leadApi[$lead->id]['total_money']=\ViewService::init($lead)->view('total_payments_by_lead');
+                $leadApi[$key]['total_money']=\ViewService::init($lead)->view('total_payments_by_lead');
                 if(!$lead->is_on_pending() && $lead->all_amount()>0){
-                    $leadApi[$lead->id]['phonenumber']='Сумма заморожена, пока не
+                    $leadApi[$key]['phonenumber']='Сумма заморожена, пока не
                                                        не завершаться переговоры';
 
                 }
-                foreach($lead->leadHistory as $key=>$history){
-                    $leadApi[$lead->id]['history'][$key]['created_at']=$history->created_at->format('d-m-Y H:i');
-                    $leadApi[$lead->id]['history'][$key]['status_color']=color($history->event);
-                    $leadApi[$lead->id]['history'][$key]['status']=$history->userStatus->name;
+                foreach($lead->leadHistory as $key1=>$history){
+                    $leadApi[$key]['history'][$key1]['created_at']=$history->created_at->format('d-m-Y H:i');
+                    $leadApi[$key]['history'][$key1]['status_color']=color($history->event);
+                    $leadApi[$key]['history'][$key1]['status']=$history->userStatus->name;
                     if($history->userStatus->comments!=''){
-                        $leadApi[$lead->id]['history'][$key]['info-icon']=shortCodeParse($history->userStatus->comments);
+                        $leadApi[$key]['history'][$key1]['info-icon']=shortCodeParse($history->userStatus->comments);
                     }
 
                 }
