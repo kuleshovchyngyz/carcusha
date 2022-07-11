@@ -106,7 +106,7 @@ class LeadController extends Controller
                 }
             }
 //            return response()->json(['leads'=>$leads->toArray()],200);
-            return response()->json(['leads'=>$leadApi],200);
+            return response()->json(['length'=>count($leadApi),'leads'=>$leadApi],200);
 
         }
 
