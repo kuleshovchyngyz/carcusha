@@ -85,7 +85,7 @@ class LeadController extends Controller
                 }
                 $leadApi[$key]['phonenumber']=$lead->phonenumber;
                 $leadApi[$key]['status_color']=$lead->color();
-                $leadApi[$key]['status_color_number']=$lead->status->color;
+                $leadApi[$key]['status_color_code']=$lead->status->color;
                 $leadApi[$key]['status']=$lead->status->user_statuses->name;
                 if($lead->status->user_statuses->comments!=''){
                     $leadApi[$key]['info-icon']= shortCodeParse($lead->status->user_statuses->comments);
@@ -99,6 +99,7 @@ class LeadController extends Controller
                 foreach($lead->leadHistory as $key1=>$history){
                     $leadApi[$key]['history'][$key1]['created_at']=$history->created_at->format('d-m-Y H:i');
                     $leadApi[$key]['history'][$key1]['status_color']=color($history->event);
+                    $leadApi[$key]['history'][$key1]['status_color_code']=$history->event;
                     $leadApi[$key]['history'][$key1]['status']=$history->userStatus->name;
                     if($history->userStatus->comments!=''){
                         $leadApi[$key]['history'][$key1]['info-icon']=shortCodeParse($history->userStatus->comments);
