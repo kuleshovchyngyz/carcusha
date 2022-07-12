@@ -239,9 +239,13 @@ class ViewData
                         $this->model->setting->major_id==$key ?
                             $value = '<option selected>' . $value . '</option>':
                             $value = '<option>' . $value . '</option>';
+
                     }
                 });
                 $this->response = implode(PHP_EOL,$majors);
+//                if(Str::contains(Route::currentRouteName(), 'api') && $this->model!==null){
+//                    $this->response =
+//                }
                 break;
         }
         return $this;

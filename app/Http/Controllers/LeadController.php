@@ -92,7 +92,7 @@ class LeadController extends Controller
                 }
                 $leadApi[$key]['total_money']=\ViewService::init($lead)->view('total_payments_by_lead');
                 if(!$lead->is_on_pending() && $lead->all_amount()>0){
-                    $leadApi[$key]['phonenumber']='Сумма заморожена, пока не
+                    $leadApi[$key]['freezed_info']='Сумма заморожена, пока не
                                                        не завершаться переговоры';
 
                 }

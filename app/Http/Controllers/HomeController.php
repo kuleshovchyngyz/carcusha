@@ -67,12 +67,12 @@ class HomeController extends Controller
 
         $payments = [];
         if(Str::contains(Route::currentRouteName(), 'api')){
-            foreach (auth()->user()->lead_payments() as $payment){
-                $payments[$payment->id]['date'] = $payment->created_at->format('d-m-Y');
-                $payments[$payment->id]['vendor'] = $payment->reasons->lead()->vendor;
-                $payments[$payment->id]['vendor_model'] = $payment->reasons->lead()->vendor_model;
-                $payments[$payment->id]['vendor_year'] = $payment->reasons->lead()->vendor_year;
-                $payments[$payment->id]['amount'] = $payment->amount;
+            foreach (auth()->user()->lead_payments() as $key =>$payment){
+                $payments[$key]['date'] = $payment->created_at->format('d-m-Y');
+                $payments[$key]['vendor'] = $payment->reasons->lead()->vendor;
+                $payments[$key]['vendor_model'] = $payment->reasons->lead()->vendor_model;
+                $payments[$key]['vendor_year'] = $payment->reasons->lead()->vendor_year;
+                $payments[$key]['amount'] = $payment->amount;
             }
             return response()->json(['payments'=>$payments], 200);
         }
@@ -136,14 +136,14 @@ class HomeController extends Controller
             if( \ViewService::init()->view('number') !== null){
                 $settings['number']=\ViewService::init()->view('number');
             }
-            if(ViewService::init()->view('email')!==null){
+            if(\ViewService::init()->view('email')!==null){
                 $settings['email']=\ViewService::init()->view('email');
             }
             $settings['city']=auth()->user()->setting->city;
-            $settings['invitationCode']=ViewService::init()->view('InvitationCode');
-            $settings['major']=ViewService::init()->view('InvitationCode');
+            $settings['invitationCode']=\ViewService::init()->view('InvitationCode');
+            $settings['major']=\ViewService::init()->view('InvitationCode');
 
-            return response()->json(['error_message'=>''], 200);
+            return response()->json(['error_message'=>$settings], 200);
         }
         return view('home',[
             'name' => 'settings',
