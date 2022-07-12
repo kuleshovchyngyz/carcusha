@@ -217,14 +217,21 @@ class HomeController extends Controller
 
 
     public function help(){
-
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            $questions = \App\Models\Question::select(['id','question','answer'])->get()->toArray();
+            return response()->json($questions, 200);
+        }
         return view('home',[
             'name' => 'help',
             'data' => ''
         ]);
     }
     public function updates(){
+        if(Str::contains(Route::currentRouteName(), 'api')){
 
+            $updates = \App\Models\Updates::select(['id','version','changes'])->orderBy('created_at', 'DESC')->get();
+            return response()->json($updates, 200);
+        }
         return view('home',[
             'name' => 'updates',
             'data' => ''

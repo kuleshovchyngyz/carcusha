@@ -51,5 +51,7 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::get('/promo', [App\Http\Controllers\HomeController::class, 'promo'])->name('api.promo');
     Route::post('/promo', [App\Http\Controllers\UserController::class, 'promo'])->name('api.user.promo');
     Route::get('/settings', [App\Http\Controllers\HomeController::class, 'settings'])->name('api.settings');
+    Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name('api.help');
+    Route::get('/updates', [App\Http\Controllers\HomeController::class, 'updates'])->name('api.updates');
 
 });
