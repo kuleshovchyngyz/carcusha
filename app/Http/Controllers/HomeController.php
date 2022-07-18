@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cars;
 use App\Models\Lead;
+use App\Models\Major;
 use App\Models\MessageNotification;
 use App\Models\Paid;
 use App\Models\Payment;
@@ -141,9 +142,18 @@ class HomeController extends Controller
             }
             $settings['city']=auth()->user()->setting->city;
             $settings['invitationCode']=\ViewService::init()->view('InvitationCode');
-            $settings['major']=\ViewService::init()->view('InvitationCode');
-
-            return response()->json(['error_message'=>$settings], 200);
+            $settings['major']=\ViewService::init()->view('majors');
+            $majors= Major::select(['id', 'name'])->get()->toArray();
+            $paymentSettings=( auth()->user()->paymentSetting==null ) ? [] : auth()->user()->paymentSetting->makeHidden(['id','user_id','created_at','updated_at'])->toArray() ;
+            $telegramLink =  app('App\Http\Controllers\UserController')->telegramNotification();
+            $settings['saving_data_url']=\route('api.settings.edit');
+            return response()->json([
+                'input_data'=>array_merge($settings,$paymentSettings),
+                'majors'=>$majors,
+                'telegramLink'=>$telegramLink,
+                'confirm_email_post_method_url'=>\route('api.sendCodeToEmail'),
+                'confirm_number_post_method_url'=>\route('api.sendCodeToPhone')
+            ], 200);
         }
         return view('home',[
             'name' => 'settings',

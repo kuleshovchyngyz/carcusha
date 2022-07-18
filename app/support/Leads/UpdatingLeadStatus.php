@@ -13,12 +13,15 @@ class UpdatingLeadStatus
 
     protected $new_status, $old_status, $user, $lead,  $statuses;
     public function __construct($id,$status){
+
         $this->lead = Lead::where('bitrix_lead_id',$id)->first();
         $this->user = $this->lead->user;
         $this->checkForAds();
         $this->new_status = (gettype($status)=='object') ?  $status : Status::find($status);
 //        $this->new_status = Status::find($status);
         $notify = new Notify($this->lead,$this->new_status);
+
+
         if($notify->notify()){
             new NewPayment($this->lead, $this->new_status);
 //            new Pay($this->lead, $this->new_status);

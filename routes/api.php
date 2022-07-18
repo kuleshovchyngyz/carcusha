@@ -51,6 +51,12 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::get('/promo', [App\Http\Controllers\HomeController::class, 'promo'])->name('api.promo');
     Route::post('/promo', [App\Http\Controllers\UserController::class, 'promo'])->name('api.user.promo');
     Route::get('/settings', [App\Http\Controllers\HomeController::class, 'settings'])->name('api.settings');
+    Route::post('/settings/confirm-promo', [App\Http\Controllers\ApiSettings::class, 'edit_api_settings_confirmPromo']);
+    Route::post('/settings/confirm-email', [App\Http\Controllers\ApiSettings::class, 'edit_api_settings_confirmEmail'])->name('api.sendCodeToEmail');
+    Route::post('/settings/confirm-number', [App\Http\Controllers\ApiSettings::class, 'edit_api_settings_confirmNumber'])->name('api.sendCodeToPhone');
+    Route::post('/settings/edit', [App\Http\Controllers\ApiSettings::class, 'edit_settings'])->name('api.settings.edit');
+    Route::post('/confirm-email', [App\Http\Controllers\AuthController::class, 'confirmEmail'])->name('api.confirm.email');
+    Route::post('/confirm-number', [App\Http\Controllers\AuthController::class, 'confirmNumber'])->name('api.confirm.number');
     Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name('api.help');
     Route::get('/updates', [App\Http\Controllers\HomeController::class, 'updates'])->name('api.updates');
 

@@ -54,6 +54,9 @@ class AuthController extends Controller
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
         ], [], []);
         if ($validated->fails()) {
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 400);
+            }
             return view('auth.createPasswordEmail',$request->input())->withInput($request->input())->withErrors($validated);
         }
         $user = auth()->user();
@@ -63,6 +66,9 @@ class AuthController extends Controller
         $user->phone_verified_at = Carbon::now();
         $user->number = $user->setting->number;
         $user->save();
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['success_message'=>'confirmed'], 200);
+        }
         $request->request->remove('confirmPhone');
         return redirect()->route('settings');
     }
@@ -73,6 +79,9 @@ class AuthController extends Controller
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
         ], [], []);
         if ($validated->fails()) {
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 400);
+            }
             return view('auth.createPasswordEmail',$request->input())->withInput($request->input())->withErrors($validated);
         }
 
@@ -83,6 +92,9 @@ class AuthController extends Controller
        $user->email_verified_at = Carbon::now();
        $user->email = $user->setting->email;
        $user->save();
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['success_message'=>'confirmed'], 200);
+        }
         //$request->flashExcept('code');
         $request->request->remove('confirmEmail');
        return redirect()->route('settings');

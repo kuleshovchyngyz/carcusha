@@ -243,9 +243,9 @@ class ViewData
                     }
                 });
                 $this->response = implode(PHP_EOL,$majors);
-//                if(Str::contains(Route::currentRouteName(), 'api') && $this->model!==null){
-//                    $this->response =
-//                }
+                if(Str::contains(Route::currentRouteName(), 'api') && $this->model!==null){
+                    $this->response = Major::find($this->model->setting->major_id)->id;
+                }
                 break;
         }
         return $this;

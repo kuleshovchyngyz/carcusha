@@ -15,6 +15,7 @@ class Notify
     public $lead, $new_status, $message,$tmessage, $user, $history_of_lead, $old_status, $statuses, $rejected_statuses,$typeOfStatus,$vendor,$vendor_model,$vendor_year,$old_color,$new_color;
 
     public function __construct($lead, $new_status){
+
         $this->lead = $lead;
 
         $this->vendor = $this->lead->vendor ?? '';
@@ -122,12 +123,14 @@ class Notify
             $s = Status::whereIn('index',$n)->pluck('id');
         }
 
-        //dump($s);
-        //dump($this->rejected_statuses);
-        if( $s->contains(14) ){
+
+//        dump($s);
+        if( $s->contains(15) ){
             return false;
         }
+//        dump($this->new_status);
         if( in_array($this->new_status->id, $this->rejected_statuses) ){
+
             if($this->checkForRejectedStatuses($s)){
                 $this->NotificationCreate();
                 return true;

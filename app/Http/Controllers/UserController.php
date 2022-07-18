@@ -119,11 +119,15 @@ class UserController extends Controller
         $username = $res->object()->username;
         $username = str_replace('@','',$username);
         $str = $s->value.'['.\auth()->user()->id.']';
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return 'https://t.me/'.$username.'?start='.base64_encode($str);
+        }
         return Redirect::to('https://t.me/'.$username.'?start='.base64_encode($str));
     }
 
-    public function edit_settings(Request $request){
 
+    public function edit_settings(Request $request){
+    $request->dd();
         if($request->has('confirmPromo')){
 
             $user = User::where('invitation_code',$request->invitationCode)->where('id','!=',Auth::user()->id)->first();
