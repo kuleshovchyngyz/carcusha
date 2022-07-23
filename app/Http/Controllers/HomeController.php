@@ -49,7 +49,7 @@ class HomeController extends Controller
     }
     public function notifications()
     {
-		//dd(888);
+        //dd(888);
         $messages = MessageNotification::where('user_id', auth()->user()->id)->get();
         if(Str::contains(Route::currentRouteName(), 'api')){
             return response()->json(['notifications'=>$messages->toArray()], 200);
@@ -63,7 +63,7 @@ class HomeController extends Controller
     public function payments(){
         $leads = Lead::select('*')
             ->where('user_id',Auth::user()->id)
-			 ->orderBy('updated_at','DESC')
+            ->orderBy('updated_at','DESC')
             ->get();
 
         $payments = [];
@@ -111,17 +111,20 @@ class HomeController extends Controller
             $refer['total_number_of_partners'] = Auth::user()->partners()->count();
             $refer['number_of_partner_leads'] = Auth::user()->number_of_partner_leads();
             $refer['total_money_amount_from_referral'] = Auth::user()->total_amount_from_referral();
-            foreach( Auth::user()->partners() as $partner){
-                $refer['partners'][$partner->id]['phone']=$partner->setting->number;
-                $refer['partners'][$partner->id]['email']=$partner->setting->email;
-                $refer['partners'][$partner->id]['total_number_of_leads']=$partner->numberOfLeads();
-                $refer['partners'][$partner->id]['pending_leads']=$partner->pending();
-                $refer['partners'][$partner->id]['successful_leads']=$partner->successful() ;
-                $refer['partners'][$partner->id]['rejected_leads']=$partner->rejected();
-                $refer['partners'][$partner->id]['funded_money']=$partners[$partner->id];
+            foreach( Auth::user()->partners() as $key2=>$partner){
+                $refer['partners'][$key2]['id']=$partner->id;
+                $refer['partners'][$key2]['phone']=$partner->setting->number;
+                $refer['partners'][$key2]['email']=$partner->setting->email;
+                $refer['partners'][$key2]['total_number_of_leads']=$partner->numberOfLeads();
+                $refer['partners'][$key2]['pending_leads']=$partner->pending();
+                $refer['partners'][$key2]['successful_leads']=$partner->successful() ;
+                $refer['partners'][$key2]['rejected_leads']=$partner->rejected();
+                $refer['partners'][$key2]['funded_money']=$partners[$partner->id];
+//                $refer['partners'][$key2]['funded_money']=$partners[$partner->id];
+
             }
             return response()->json($refer, 200);
-        }
+        } //maksat
 
         return view('home',[
             'name' => 'refer',
@@ -220,7 +223,7 @@ class HomeController extends Controller
     }
     public function downloadBusinessCard(){
         $file = public_path('/qrcodes/vizitka_'.Auth::user()->id.'.pdf');
-      //  dd($file);
+        //  dd($file);
 //        dd(4564);
         return Response::download($file);
     }
