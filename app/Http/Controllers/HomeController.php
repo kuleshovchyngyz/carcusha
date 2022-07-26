@@ -85,8 +85,18 @@ class HomeController extends Controller
     public function paymentqueries(){
         $paid = Paid::where('user_id',\auth()->user()->id)->get();
         //dd($leads);
+
+
         if(Str::contains(Route::currentRouteName(), 'api')){
-            return response()->json(['paymentqueries'=>$paid->toArray()], 200);
+            $paids = $paid->toArray();
+            foreach ($paids as $key=>$paid){
+                if($paid['status']=='complete'){
+                    $paids[$key]['status'] = 'переведено';
+                }else{
+                    $paids[$key]['status'] = 'в ожидании';
+                }
+            }
+            return response()->json(['paymentqueries'=>$paids], 200);
         }
         return view('home',[
             'name' => 'paymentqueries',

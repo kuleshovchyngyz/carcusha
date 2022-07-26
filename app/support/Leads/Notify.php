@@ -52,9 +52,9 @@ class Notify
         $notify = true;
         if( $this->user->notifier!==null ){
             $notify = false;
-            if( $this->new_status->id == 14 && $this->user->notifier->bought ){
+            if( $this->new_status->id == 15 && $this->user->notifier->bought ){
                 $notify = true;
-            }else if($this->new_status->id != 14 && $this->user->notifier->on_work ){
+            }else if($this->new_status->id != 15 && $this->user->notifier->on_work ){
                 $notify = true;
             }
         }

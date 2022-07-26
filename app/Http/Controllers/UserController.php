@@ -127,7 +127,6 @@ class UserController extends Controller
 
 
     public function edit_settings(Request $request){
-    $request->dd();
         if($request->has('confirmPromo')){
 
             $user = User::where('invitation_code',$request->invitationCode)->where('id','!=',Auth::user()->id)->first();

@@ -72,7 +72,7 @@ class ApiSettings extends Controller
 //        $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
         //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
 //            AuthConfirmation::updateOrCreate( $param);
-        return response()->json(['next_url'=> route('api.confirm.email'),'expected_inputs'=>'code'], 200);
+        return response()->json(['next_url'=> route('api.confirm.number'),'expected_inputs'=>'code'], 200);
     }
     public function edit_api_settings_confirmEmail(Request $request){
         $user = \auth()->user();
