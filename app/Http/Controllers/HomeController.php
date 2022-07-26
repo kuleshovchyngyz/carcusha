@@ -47,6 +47,25 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    public function available_balance()
+    {
+        $min_amount = PaymentAmount::where('reason_of_payment','MinAmountOfPayment')->first()->amount;
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['available_balance'=> auth()->user()->availableAmount(),'min_amount'=>$min_amount], 200);
+        }
+
+    }
+    public function seen()
+    {
+        MessageNotification::where('user_id',auth()->user()->id)->update([
+            'seen' => true
+        ]);
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['changed'], 200);
+        }
+
+    }
+
     public function notifications()
     {
         //dd(888);
