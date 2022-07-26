@@ -50,9 +50,10 @@ class HomeController extends Controller
     public function notifications()
     {
         //dd(888);
+
         $messages = MessageNotification::where('user_id', auth()->user()->id)->get();
         if(Str::contains(Route::currentRouteName(), 'api')){
-            return response()->json(['notifications'=>$messages->toArray()], 200);
+            return response()->json(['notifications'=>array_reverse($messages->toArray())], 200);
         }
         return view('home',[
             'name' => 'notifications',
