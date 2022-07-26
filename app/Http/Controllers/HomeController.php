@@ -91,9 +91,9 @@ class HomeController extends Controller
             $paids = $paid->toArray();
             foreach ($paids as $key=>$paid){
                 if($paid['status']=='complete'){
-                    $paids[$key]['status'] = 'переведено';
+                    $paids[$key]['status_text'] = 'переведено';
                 }else{
-                    $paids[$key]['status'] = 'в ожидании';
+                    $paids[$key]['status_text'] = 'в ожидании';
                 }
             }
             return response()->json(['paymentqueries'=>$paids], 200);
