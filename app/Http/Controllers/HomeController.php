@@ -233,9 +233,9 @@ class HomeController extends Controller
             if(auth()->user()->promo!==null && auth()->user()->promo->generated){
                 $promo['vizitki']['image_link1']=asset('qrcodes/card1.jpg') ;
                 $promo['vizitki']['image_link2']=asset('qrcodes/card_qrsmall_'.auth()->user()->id.'.png') ;
-                $promo['vizitki']['download_link']=route('api.download.business.card','user_id');
+                $promo['vizitki']['download_link']=str_replace('user_id','',route('api.download.business.card','user_id'));
                 $promo['plakaty']['image_link']=asset('qrcodes/card_qr_'.auth()->user()->id.'.png');
-                $promo['plakaty']['download_link']=route('api.download_card','user_id');
+                $promo['plakaty']['download_link']=str_replace('user_id','',route('api.download_card','user_id'));
             }
             return response()->json($promo, 200);
         }
