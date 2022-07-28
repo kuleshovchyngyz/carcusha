@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -100,5 +101,15 @@ class ApiSettings extends Controller
         AuthConfirmation::updateOrCreate( $param);
 //        route('confirm.email')
 
+    }
+    public function downloadСard($id){
+        $file = public_path('/qrcodes/plakat_'.$id.'.pdf');
+        return Response::download($file);
+    }
+    public function downloadBusinessCard($id){
+        $file = public_path('/qrcodes/vizitka_'.$id.'.pdf');
+        //  dd($file);
+//        dd(4564);
+        return Response::download($file);
     }
 }
