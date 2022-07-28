@@ -53,7 +53,6 @@ class HomeController extends Controller
         if(Str::contains(Route::currentRouteName(), 'api')){
             return response()->json(['available_balance'=> auth()->user()->availableAmount(),'min_amount'=>$min_amount], 200);
         }
-
     }
     public function seen()
     {
@@ -236,7 +235,7 @@ class HomeController extends Controller
                 $promo['vizitki']['image_link2']=asset('qrcodes/card_qrsmall_'.auth()->user()->id.'.png') ;
                 $promo['vizitki']['download_link']=route('download.business.card');
                 $promo['plakaty']['image_link']=asset('qrcodes/card_qr_'.auth()->user()->id.'.png');
-                $promo['plakaty']['download_link']=route('download.business.card');
+                $promo['plakaty']['download_link']=route('download_card');
             }
             return response()->json($promo, 200);
         }
