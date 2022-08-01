@@ -125,13 +125,16 @@ class LeadController extends Controller
     public function create()
     {
         $buffer = new DropDown();
-        return view('leads.create', [
+        $data = [
+            'folder_id'=>uniqid(),
             'buffer'=> $buffer->buffer(),
             'years'=>$buffer->get_car_years()
-        ]);
-
+        ];
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json($data, 200);
+        }
+        return view('leads.create', $data);
     }
-
     public function update(Lead $lead)
     {
         $bitrix = new Bitrix();
@@ -141,12 +144,9 @@ class LeadController extends Controller
     }
     public function photo(Request $request)
     {
-
         $file = file_get_contents( public_path('uploads').'/'.$request->folder.'/'.$request->file);
-
         //return 'uploads'.'/'.$request->folder.'/'.$request->file;
         return $file;
-
     }
 
 
@@ -337,16 +337,18 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+//        dd($request->all());
         $request->validate([
             'phone' => 'required',
         ]);
-
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            $this->uploadImage($request);
+        }
         $folder_name = $request->folder_id;
         $bitrix = new Bitrix();
         $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$request->phone,$folder_name);
         $result = $bitrix->addLead();
-
+//        $result['result']=23232323;
         new LeadBuilder(
             isset($request->car_vendor) == true ? $request->car_vendor : '',
             isset($request->car_model) == true ? $request->car_model : '',
@@ -357,6 +359,9 @@ class LeadController extends Controller
             $result['result'],
             0
         );
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            return response()->json(['lead'=>'added'], 200);
+        }
 
         return redirect()->route('home');
     }
@@ -400,35 +405,53 @@ class LeadController extends Controller
         return  $request->folder;
 
     }
+    public function uploadImage(Request $request){
+        $result = ['',0];
+        $folder = $request->folder_id;
+        foreach ($request->data as $images){
+//            if(strpos($images['file'][0], 'base64')){
+                $result =  $this->moveImages($images['file'],$folder,$images['name']);
+//            }else{
+//                $data = "data:image/png;base64,".$images['file'][0];
+//                $result =  $this->moveImages([$data],$folder,$images['name']);
+//            }
+        }
+        if(!isset($request->phone)){
+            return response()->json("uploaded", 200);
+        }
+        return true;
+
+    }
     public function testimage(Request $request){
-//        return $request->all();
-        $images = $request->file;
+            $images = $request->file;
+            $folder_name = $request->folder_id;
+            return $this->moveImages($images,$folder_name,$request->name);
 
-        $folder_name = $request->folder_id;
+    }
+    public function moveImages($images,$folder_name,$number){
 
-        if (!file_exists('uploads/'.$folder_name)) {
-            \File::makeDirectory('uploads/'.$folder_name, $mode = 0777, true, true);
+        if (!file_exists('uploads/' . $folder_name)) {
+            \File::makeDirectory('uploads/' . $folder_name, $mode = 0777, true, true);
             // path does not exist
         }
-        $files = \File::files('uploads/'.$folder_name);
+        $files = \File::files('uploads/' . $folder_name);
 
         $image_names = array();
-        if($images && count($files)<20){
-            foreach ($images as  $key => $image){
+        if ($images && count($files) < 20) {
+            foreach ($images as $key => $image) {
                 //return $image;
-                if($key<20){
+                if ($key < 20) {
 //                    $image->move(public_path('uploads/'.$folder_name),$image->getClientOriginalName());
-                    file_put_contents('uploads/'.$folder_name.'/'.$request->number.'.txt', $image);
-                    $image_names[]=$key;
+                    file_put_contents('uploads/' . $folder_name . '/' . $number . '.txt', $image);
+                    $image_names[] = $key;
                 }
             }
         }
 //        return $image_names;
 
-        $path = public_path('uploads/'.$folder_name);
+        $path = public_path('uploads/' . $folder_name);
         $files = \File::files($path);
-        return [$image_names,count($files) ];
-        // return [$image_names,count($files)];
+        return [$image_names, count($files)];
     }
     public function lead_status(Request $request)
     {

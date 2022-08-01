@@ -23,7 +23,7 @@ Route::post('/getstatuses', [App\Http\Controllers\LeadController::class, 'getsta
 Route::post('/getdeletedleads', [App\Http\Controllers\AdminController::class, 'getDeletedLeads'])->middleware('throttle:10,1')->name('apigetdeletedleads');
 Route::post('/telegram', [App\Http\Controllers\UserController::class, 'registerTuser'])->middleware('throttle:10,1')->name('apiforpartnerstelegram');
 Route::post('/updateuserfields', [App\Http\Controllers\LeadController::class, 'updateuserfields'])->middleware('throttle:10,1');
-
+Route::post('/uploadimage', [App\Http\Controllers\LeadController::class, 'uploadImage']);
 
 
 //Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->middleware('throttle:10,1')->name('api.login');
@@ -39,8 +39,10 @@ Route::post('/voice-code-validator', [App\Http\Controllers\AuthController::class
 Route::get('/download-card-csssss/{id}', [App\Http\Controllers\ApiSettings::class, 'downloadСard'])->name('api.download_card');
 Route::get('/download-business-card-ssssss/{id}', [App\Http\Controllers\ApiSettings::class, 'downloadBusinessCard'])->name('api.download.business.card');
 //Route::post('/login', [JWTController::class, 'login']);
-
+Route::post('/car', [\App\support\Leads\DropDown::class, 'api_get_car_models']);
 Route::group(['middleware' => 'jwt.verify'], function($router) {
+    Route::post('/lead/store', [App\Http\Controllers\LeadController::class, 'store'])->name('api.lead.store');
+    Route::get('/lead/create', [App\Http\Controllers\LeadController::class, 'create'])->name('api.lead.create');
     Route::get('/leads', [App\Http\Controllers\LeadController::class, 'index'])->middleware(['middleware' => 'api'])->name('api.leads');
     Route::post('/logout', [JWTController::class, 'logout']);
     Route::post('/refresh', [JWTController::class, 'refresh']);

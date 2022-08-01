@@ -15,7 +15,7 @@
                         <form method="POST" action="{{ route('lead.store') }}" id ="formdata" enctype="multipart/form-data">
                             @csrf
 
-                            <input type="hidden" name="folder_id" id="folder_id" value="{{  uniqid() }}">
+                            <input type="hidden" name="folder_id" id="folder_id" value="{{  $folder_id }}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="main__setting-item">

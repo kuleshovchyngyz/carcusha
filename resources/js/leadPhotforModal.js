@@ -2,8 +2,6 @@ $('#gallModalCenter').on('hidden.bs.modal', function () {
   let folder = $('#current_folder_id').val();
   let images = $(`.${folder}`).data('image-names');
 //  $('#myElementID').data('myvalue',38);
-    console.log('closed');
-    console.log(images);
 })
 
 
@@ -14,7 +12,6 @@ const imageLoad = {
     init() {
 
         $(`.gall-upload`).on('click', function (e) {
-            console.log('gall clicked');
             $(`#pictures`).trigger('click');
         });
         $(`.leadPoto`).on('click', {self:this}, function (e) {
@@ -25,8 +22,6 @@ const imageLoad = {
             self.folder = $(this).data('lead-folder');
             self.lead_id = $(this).data('lead-id');
             $('.lead__name').text($(this).data('lead-name'));
-
-            console.log(self)
 
             $('#sendToBitrixButton').attr("data-lead-id",self.lead_id);
             self.getImages();
@@ -41,6 +36,7 @@ const imageLoad = {
     getImages() {
         this.image_names.forEach((item) => {
             this.getImage(this.folder,item).then( v => {
+                console.log(v)
               this.writeHtml(v);
             });
         });

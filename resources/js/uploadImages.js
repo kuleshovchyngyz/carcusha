@@ -1,6 +1,4 @@
 
-
-
 $(document).ready(function() {
     $(`#sendToBitrixButton`).on('click',  function (e) {
         console.log('sendToBitrixButton'+$(this).data('lead-id'));
@@ -25,11 +23,10 @@ $(document).ready(function() {
       var folder_id = $("#folder_id").val();
        if($('.modalphotos').length){
          folder_id = $('#current_folder_id').val();
-         console.log('folderrrrrr '+folder_id);
        }
 
         var l = $('#pictures')[0].files.length;
-        console.log('number of files: ' + countBusy())
+
         repeat(folder_id,-1,l)
     });
 });
@@ -54,21 +51,17 @@ $(document).ready(function() {
 function repeat(folder_id,i,l) {
     i++;
     var reader = new FileReader();
-    console.log($('#pictures')[0].files[i])
     reader.readAsDataURL($('#pictures')[0].files[i]);
     reader.onload = function () {
-        minifyImg(reader.result, 1600, 'image/jpeg', (data)=> {
-
+            minifyImg(reader.result, 1600, 'image/jpeg', (data)=> {
             var fd = new FormData();
-            console.log('n=busy : '+countBusy());
             fd.append('folder_id', folder_id)
-            fd.append('number',$('#pictures')[0].files[i].name )
+            fd.append('name',$('#pictures')[0].files[i].name )
             fd.append('_token', $('[name="_token"]').val())
             fd.append("file[]", data);
-            console.log(fd);
+            console.log("data:"+data)
             image_names(fd).then(v => {
-                console.log('sdfsdf: '+v[1]);
-                console.log(v);
+                console.log(v)
                 let check = false;
                 check = is_busy(v[1]);
 
@@ -102,9 +95,7 @@ function addImageNames(file){
 }
 function preview_pic(i,l)
 {
-
     i++;
-    //console.log($(`#img1`).attr('src'));
     var reader = new FileReader();
     var filedata = '';
     if(i<l){
@@ -136,7 +127,6 @@ $(document).ready(function () {
         fd.append('_token', $('[name="_token"]').val())
         fd.append("name", name);
         fd.append("folder", folder_id);
-        console.log(name);
         delete_image(fd).then(v => {
             console.log(v);
         });
@@ -204,20 +194,14 @@ var minifyImg = function(dataUrl,newWidth,imageType="image/jpeg",resolve,imageAr
 
     })).then((d)=>{
         oldWidth = image.width; oldHeight = image.height;
-        //console.log([oldWidth,oldHeight]);
         newHeight = Math.floor(oldHeight / oldWidth * newWidth);
-        //console.log(d+' '+newHeight);
 
         canvas = document.createElement("canvas");
         canvas.width = newWidth; canvas.height = newHeight;
-        //console.log(canvas);
         ctx = canvas.getContext("2d");
         ctx.drawImage(image, 0, 0, newWidth, newHeight);
-        // console.log(ctx);
 
         newDataUrl = canvas.toDataURL(imageType, imageArguments);
         resolve(newDataUrl);
-        // console.log(newDataUrl);
-        //
     });
 };

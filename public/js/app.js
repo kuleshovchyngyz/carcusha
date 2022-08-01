@@ -2889,9 +2889,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 $('#gallModalCenter').on('hidden.bs.modal', function () {
   var folder = $('#current_folder_id').val();
   var images = $(".".concat(folder)).data('image-names'); //  $('#myElementID').data('myvalue',38);
-
-  console.log('closed');
-  console.log(images);
 });
 var imageLoad = {
   image_names: [],
@@ -2899,7 +2896,6 @@ var imageLoad = {
   lead_id: '',
   init: function init() {
     $(".gall-upload").on('click', function (e) {
-      console.log('gall clicked');
       $("#pictures").trigger('click');
     });
     $(".leadPoto").on('click', {
@@ -2912,7 +2908,6 @@ var imageLoad = {
       self.folder = $(this).data('lead-folder');
       self.lead_id = $(this).data('lead-id');
       $('.lead__name').text($(this).data('lead-name'));
-      console.log(self);
       $('#sendToBitrixButton').attr("data-lead-id", self.lead_id);
       self.getImages();
       $('#current_folder_id').val(self.folder);
@@ -2923,6 +2918,8 @@ var imageLoad = {
 
     this.image_names.forEach(function (item) {
       _this.getImage(_this.folder, item).then(function (v) {
+        console.log(v);
+
         _this.writeHtml(v);
       });
     });
@@ -3126,11 +3123,9 @@ $(document).ready(function () {
 
     if ($('.modalphotos').length) {
       folder_id = $('#current_folder_id').val();
-      console.log('folderrrrrr ' + folder_id);
     }
 
     var l = $('#pictures')[0].files.length;
-    console.log('number of files: ' + countBusy());
     repeat(folder_id, -1, l);
   });
 });
@@ -3171,20 +3166,17 @@ function _putImage() {
 function repeat(folder_id, i, l) {
   i++;
   var reader = new FileReader();
-  console.log($('#pictures')[0].files[i]);
   reader.readAsDataURL($('#pictures')[0].files[i]);
 
   reader.onload = function () {
     minifyImg(reader.result, 1600, 'image/jpeg', function (data) {
       var fd = new FormData();
-      console.log('n=busy : ' + countBusy());
       fd.append('folder_id', folder_id);
-      fd.append('number', $('#pictures')[0].files[i].name);
+      fd.append('name', $('#pictures')[0].files[i].name);
       fd.append('_token', $('[name="_token"]').val());
       fd.append("file[]", data);
-      console.log(fd);
+      console.log("data:" + data);
       image_names(fd).then(function (v) {
-        console.log('sdfsdf: ' + v[1]);
         console.log(v);
         var check = false;
         check = is_busy(v[1]);
@@ -3217,8 +3209,7 @@ function addImageNames(file) {
 }
 
 function preview_pic(i, l) {
-  i++; //console.log($(`#img1`).attr('src'));
-
+  i++;
   var reader = new FileReader();
   var filedata = '';
 
@@ -3249,7 +3240,6 @@ $(document).ready(function () {
     fd.append('_token', $('[name="_token"]').val());
     fd.append("name", name);
     fd.append("folder", folder_id);
-    console.log(name);
     delete_image(fd).then(function (v) {
       console.log(v);
     });
@@ -3371,20 +3361,15 @@ var minifyImg = function minifyImg(dataUrl, newWidth) {
     }, 1000);
   }).then(function (d) {
     oldWidth = image.width;
-    oldHeight = image.height; //console.log([oldWidth,oldHeight]);
-
-    newHeight = Math.floor(oldHeight / oldWidth * newWidth); //console.log(d+' '+newHeight);
-
+    oldHeight = image.height;
+    newHeight = Math.floor(oldHeight / oldWidth * newWidth);
     canvas = document.createElement("canvas");
     canvas.width = newWidth;
-    canvas.height = newHeight; //console.log(canvas);
-
+    canvas.height = newHeight;
     ctx = canvas.getContext("2d");
-    ctx.drawImage(image, 0, 0, newWidth, newHeight); // console.log(ctx);
-
+    ctx.drawImage(image, 0, 0, newWidth, newHeight);
     newDataUrl = canvas.toDataURL(imageType, imageArguments);
-    resolve(newDataUrl); // console.log(newDataUrl);
-    //
+    resolve(newDataUrl);
   });
 };
 

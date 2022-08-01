@@ -26,7 +26,6 @@ class LeadBuilder extends UpdatingLeadStatus
     private $reason_id;
     private $reason;
     private $payment;
-
     public function __construct($vendor = '', $vendor_model = '', $vendor_year = '', $phone = '', $folder = '', $user_id = '', $bitrix_lead_id = '', $from = 0)
     {
         $this->vendor = $vendor;
@@ -41,10 +40,7 @@ class LeadBuilder extends UpdatingLeadStatus
         $this->from = $from;
         $this->create_lead();
         parent::__construct($bitrix_lead_id, 1);
-
-
     }
-
     public function create_lead()
     {
         Lead::create([
