@@ -148,7 +148,16 @@ class LeadController extends Controller
         //return 'uploads'.'/'.$request->folder.'/'.$request->file;
         return $file;
     }
-
+    public function getFiles(Request $request){
+        $filesInFolder = \File::files(public_path('uploads').'/'.$request->folder_id);
+        $photos=[];
+        foreach($filesInFolder as $path) {
+            $file = pathinfo($path);
+            $content = file_get_contents( public_path('uploads').'/'.$request->folder_id.'/'.$file['filename'].'.txt');
+            $photos[$file['filename']] =  $content;
+        }
+        return ['length'=>count($filesInFolder),'photos'=>$photos];
+    }
 
     function sendDataToBitrix1($method, $data) {
         //$webhook_url = "https://b24-85lwia.bitrix24.ru/rest/1/s52ljoksktlyj1ed/";//test

@@ -40,9 +40,11 @@ Route::get('/download-card-csssss/{id}', [App\Http\Controllers\ApiSettings::clas
 Route::get('/download-business-card-ssssss/{id}', [App\Http\Controllers\ApiSettings::class, 'downloadBusinessCard'])->name('api.download.business.card');
 //Route::post('/login', [JWTController::class, 'login']);
 Route::post('/car', [\App\support\Leads\DropDown::class, 'api_get_car_models']);
+Route::post('/upload', [App\Http\Controllers\LeadController::class, 'uploadImage']);
 Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::post('/lead/store', [App\Http\Controllers\LeadController::class, 'store'])->name('api.lead.store');
     Route::get('/lead/create', [App\Http\Controllers\LeadController::class, 'create'])->name('api.lead.create');
+    Route::post('/lead/photos', [App\Http\Controllers\LeadController::class, 'getFiles']);
     Route::get('/leads', [App\Http\Controllers\LeadController::class, 'index'])->middleware(['middleware' => 'api'])->name('api.leads');
     Route::post('/logout', [JWTController::class, 'logout']);
     Route::post('/refresh', [JWTController::class, 'refresh']);

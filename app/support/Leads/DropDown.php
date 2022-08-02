@@ -39,7 +39,7 @@ class DropDown
         $buffer .= '<option value=other>'.'другое'.'</option>';
         if(Str::contains(Route::currentRouteName(), 'api')){
             for($i = date("Y"); $i > date("Y")-15; $i--){
-                $arr[] = $i;
+                $arr[] =  (string)$i;
             }
             $arr[] = 'другое';
             return $arr;
