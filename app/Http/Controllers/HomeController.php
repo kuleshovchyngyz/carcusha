@@ -172,6 +172,9 @@ class HomeController extends Controller
             if(\ViewService::init()->view('email')!==null){
                 $settings['email']=\ViewService::init()->view('email');
             }
+            $settings['isEmailConfirmed']=\ViewService::init()->view('isEmailConfirmed');
+            $settings['isPhoneConfirmed']=\ViewService::init()->view('isPhoneConfirmed');
+
             $settings['city']=auth()->user()->setting->city;
             $settings['invitationCode']=\ViewService::init()->view('InvitationCode');
             $settings['major']=\ViewService::init()->view('majors');

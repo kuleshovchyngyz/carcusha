@@ -120,6 +120,7 @@ class ViewData
                 }else{
                     $this->response = '';
                 }
+
                 break;
             case 'promo_number':
                 if(auth()->user()->promo===null)
@@ -136,6 +137,11 @@ class ViewData
                     "<button class='red-link' type='button' id='submitEmail' >Подтвердить</button>";
                 if(old('email')){
                     $this->response = '';
+                }
+                if(Str::contains(Route::currentRouteName(), 'api')){
+                    $this->response = ($this->model->email_verified_at !== null && $this->model->email == $this->model->setting->email) ?
+                        'confirmed' :
+                        'notconfirmed';
                 }
                 break;
             case 'InvitationCode':
@@ -174,6 +180,11 @@ class ViewData
                     "<button class='red-link' id='submitPhone' type='button'>Подтвердить</button>";
                 if(old('number')){
                     $this->response = '';
+                }
+                if(Str::contains(Route::currentRouteName(), 'api')){
+                    $this->response = ($this->model->phone_verified_at !== null && $this->model->number ==$this->model->setting->number) ?
+                        'confirmed' :
+                        'notconfirmed';
                 }
                 break;
             case 'isUniquePaymentChecked':

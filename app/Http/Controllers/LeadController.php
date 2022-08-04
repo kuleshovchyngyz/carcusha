@@ -149,6 +149,9 @@ class LeadController extends Controller
         return $file;
     }
     public function getFiles(Request $request){
+        if(!File::exists(public_path('uploads').'/'.$request->folder_id)) {
+            File::makeDirectory(public_path('uploads').'/'.$request->folder_id);
+        }
         $filesInFolder = \File::files(public_path('uploads').'/'.$request->folder_id);
         $photos=[];
         foreach($filesInFolder as $path) {
