@@ -149,17 +149,19 @@ class LeadController extends Controller
         return $file;
     }
     public function getFiles(Request $request){
-        if(!File::exists(public_path('uploads').'/'.$request->folder_id)) {
-            File::makeDirectory(public_path('uploads').'/'.$request->folder_id);
+        if(File::exists(public_path('uploads').'/'.$request->folder_id)) {
+            $filesInFolder = \File::files(public_path('uploads').'/'.$request->folder_id);
+            $photos=[];
+            foreach($filesInFolder as $path) {
+                $file = pathinfo($path);
+                $content = file_get_contents( public_path('uploads').'/'.$request->folder_id.'/'.$file['filename'].'.txt');
+                $photos[$file['filename']] =  $content;
+            }
+            return ['length'=>count($filesInFolder),'photos'=>$photos];
+        }else{
+            return ['length'=>0,'photos'=>[]];
         }
-        $filesInFolder = \File::files(public_path('uploads').'/'.$request->folder_id);
-        $photos=[];
-        foreach($filesInFolder as $path) {
-            $file = pathinfo($path);
-            $content = file_get_contents( public_path('uploads').'/'.$request->folder_id.'/'.$file['filename'].'.txt');
-            $photos[$file['filename']] =  $content;
-        }
-        return ['length'=>count($filesInFolder),'photos'=>$photos];
+
     }
 
     function sendDataToBitrix1($method, $data) {
