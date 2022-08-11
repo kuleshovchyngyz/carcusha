@@ -78,7 +78,7 @@ class ApiSettings extends Controller
     public function edit_api_settings_confirmEmail(Request $request){
         $user = \auth()->user();
         $code = new Code();
-        $sms = new SmsClient();
+//        $sms = new SmsClient();
         $call = new CallAuth();
         $this->code = $code->generate(CODE::VERIFICATION);
         $param = array();
@@ -99,6 +99,7 @@ class ApiSettings extends Controller
                 'not' => 'Если вы не создавали аккаунт, не нужно ничего делать.'
             ]));
         AuthConfirmation::updateOrCreate( $param);
+        return response()->json(['status'=>'code is sent','next_url'=>\route('api.confirm.email')], 200);
 //        route('confirm.email')
 
     }

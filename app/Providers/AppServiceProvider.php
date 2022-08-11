@@ -85,9 +85,8 @@ class AppServiceProvider extends ServiceProvider
         });
         Validator::extend('required_major', function($attribute, $value, $parameters)
         {
-
             $majors = Major::pluck('name')->toArray();
-            if (in_array($value, $majors)) {
+            if ($value!==null&&in_array($value, $majors)) {
                 return $value;
             }
         });

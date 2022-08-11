@@ -104,7 +104,9 @@ class AuthController extends Controller
 
     public function RegisterWithVerificationCode(Request $request, $type = '')
     {
-
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            (!$request->has('major')) ? $request->request->add(['major' => 'СТО легковое']) : "";
+        }
 
         $code = new Code();
         $sms = new SmsClient();
@@ -122,13 +124,15 @@ class AuthController extends Controller
         ($type=='reset') ? $request->request->add(['reset' => true]) : "";
 
         if($this->fieldType=='number'){
-            ($request->has('reset')) ?
-                $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
-                $request->validate(['number' => 'not_empty|unique:users|phone_number','major' => 'required_major','invitation_code'=>
-                    ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
-            // $sms->sendSms('+'.preg_replace('/[^0-9]/', '', $request->number), "Ваш код: ".$this->code);
-
-            // $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
+            try {
+                ($request->has('reset')) ?
+                    $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
+                    $request->validate(['number' => 'not_empty|unique:users|phone_number','major' => 'required_major','invitation_code'=>
+                        ($request->invitation_code!==null) ? 'is_promocode_in_database' : '']);
+            } catch (\Illuminate\Validation\ValidationException $th) {
+                return $th->validator->errors();
+            }
+             $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);
 //            $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
             AuthConfirmation::updateOrCreate( $param);
            // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
@@ -175,7 +179,9 @@ class AuthController extends Controller
         }
     }
     public function SmsVerificationCode(Request $request){
-
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            (!$request->has('major')) ? $request->request->add(['major' => 3]) : "";
+        }
         $this->fieldType = 'number';
         $validated = Validator::make($request->all(), [
             'number' => ['required', 'string', 'max:255', (!isset($request->reset)) ? 'unique:users' : ''],
@@ -219,7 +225,9 @@ class AuthController extends Controller
     }
 
     public function VoiceVerificationCode(Request $request){
-
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            (!$request->has('major')) ? $request->request->add(['major' => 3]) : "";
+        }
         if($request->has('verifyBytel')){
 
             return $this->SendSms($request);
@@ -227,7 +235,6 @@ class AuthController extends Controller
             $this->fieldType = 'number';
             $validated = Validator::make($request->all(), [
                 'code' => ['required', 'integer', Str::contains(Route::currentRouteName(), 'api') ? '': new CheckEmailVerificationCode()],
-
             ], [], [
                 'password' => 'Пароль'
             ]);
@@ -335,7 +342,9 @@ class AuthController extends Controller
             : redirect($this->redirectPath());
     }
     public function EmailVerificationCode(Request $request){
-
+        if(Str::contains(Route::currentRouteName(), 'api')){
+            (!$request->has('major')) ? $request->request->add(['major' => 3]) : "";
+        }
 //        dd($request->all());
         $validated = Validator::make($request->all(), [
             'email' => ['required', 'string', 'max:255', (!isset($request->reset)) ? 'unique:users' : ''],
