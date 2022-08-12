@@ -105,7 +105,7 @@ class AuthController extends Controller
     public function RegisterWithVerificationCode(Request $request, $type = '')
     {
         if(Str::contains(Route::currentRouteName(), 'api')){
-            (!$request->has('major')) ? $request->request->add(['major' => 'СТО легковое']) : "";
+            (!$request->has('major')) ? $request->request->add(['major' => 'sds']) : "";
         }
 
         $code = new Code();
@@ -180,7 +180,8 @@ class AuthController extends Controller
     }
     public function SmsVerificationCode(Request $request){
         if(Str::contains(Route::currentRouteName(), 'api')){
-            (!$request->has('major')) ? $request->request->add(['major' => 3]) : "";
+            $id = Major::wherename($request->major)->first()->id;
+            $request->merge(['major' => $id]);
         }
         $this->fieldType = 'number';
         $validated = Validator::make($request->all(), [
@@ -226,8 +227,10 @@ class AuthController extends Controller
 
     public function VoiceVerificationCode(Request $request){
         if(Str::contains(Route::currentRouteName(), 'api')){
-            (!$request->has('major')) ? $request->request->add(['major' => 3]) : "";
+            $id = Major::wherename($request->major)->first()->id;
+            $request->merge(['major' => $id]);
         }
+
         if($request->has('verifyBytel')){
 
             return $this->SendSms($request);
@@ -343,7 +346,8 @@ class AuthController extends Controller
     }
     public function EmailVerificationCode(Request $request){
         if(Str::contains(Route::currentRouteName(), 'api')){
-            (!$request->has('major')) ? $request->request->add(['major' => 3]) : "";
+            $id = Major::wherename($request->major)->first()->id;
+            $request->merge(['major' => $id]);
         }
 //        dd($request->all());
         $validated = Validator::make($request->all(), [
