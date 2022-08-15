@@ -34,7 +34,7 @@ Route::post('/password-create-sms', [App\Http\Controllers\AuthController::class,
 //Route::post('/register', [JWTController::class, 'register']);
 Route::get('/register', [JWTController::class, 'showRegisterForm']);
 Route::post('/login', [JWTController::class, 'login']);
-Route::post('/verification-code', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationCode'])->name('api.auth.verification-code');
+Route::post('/verification-by-code', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationCode'])->name('api.auth.verification-code');
 Route::post('/voice-code-validator', [App\Http\Controllers\AuthController::class, 'VoiceVerificationCode'])->name('api.auth.VoiceVerification-code');
 Route::get('/download-card-csssss/{id}', [App\Http\Controllers\ApiSettings::class, 'downloadСard'])->name('api.download_card');
 Route::get('/download-business-card-ssssss/{id}', [App\Http\Controllers\ApiSettings::class, 'downloadBusinessCard'])->name('api.download.business.card');
