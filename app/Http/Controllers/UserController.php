@@ -204,7 +204,7 @@ class UserController extends Controller
             }
 
 //            $param['code'] = $call->call('+'.preg_replace('/[^0-9]/', '', $request->number));
-            $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
+           // $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));//Needs to change
             //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
 //            AuthConfirmation::updateOrCreate( $param);
             return view('auth.createPasswordVoice',$request->input());
