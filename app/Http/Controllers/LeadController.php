@@ -351,7 +351,6 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
         $request->validate([
             'phone' => 'required',
         ]);
@@ -362,7 +361,6 @@ class LeadController extends Controller
         $bitrix = new Bitrix();
         $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$request->phone,$folder_name);
         $result = $bitrix->addLead();
-//        $result['result']=23232323;
         new LeadBuilder(
             isset($request->car_vendor) == true ? $request->car_vendor : '',
             isset($request->car_model) == true ? $request->car_model : '',
