@@ -62,7 +62,7 @@ class AuthController extends Controller
         ], [], []);
         if ($validated->fails()) {
             if (Str::contains(Route::currentRouteName(), 'api')) {
-                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 200);
+                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 422);
             }
             return view('auth.createPasswordEmail', $request->input())->withInput($request->input())->withErrors($validated);
         }
@@ -89,7 +89,7 @@ class AuthController extends Controller
         ], [], []);
         if ($validated->fails()) {
             if (Str::contains(Route::currentRouteName(), 'api')) {
-                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 200);
+                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 422);
             }
             return view('auth.createPasswordEmail', $request->input())->withInput($request->input())->withErrors($validated);
         }
@@ -208,7 +208,7 @@ class AuthController extends Controller
 
         if ($validated->fails()) {
             if (Str::contains(Route::currentRouteName(), 'api')) {
-                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 200);
+                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 422);
             }
             if ($request->has('validatecode')) {
                 return view('auth.createPasswordBySms', $request->input())->withInput($request->input())->withErrors($validated);
@@ -271,7 +271,7 @@ class AuthController extends Controller
 
             if ($validated->fails()) {
                 if (Str::contains(Route::currentRouteName(), 'api')) {
-                    return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 200);
+                    return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 422);
                 }
                 return view('auth.createPasswordVoice', $request->input())->withInput($request->input())->withErrors($validated);
             }
@@ -398,7 +398,7 @@ class AuthController extends Controller
         if ($validated->fails()) {
 
             if (Str::contains(Route::currentRouteName(), 'api')) {
-                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 200);
+                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 422);
             }
             return view('auth.createPasswordEmail', $request->input())->withInput($request->input())->withErrors($validated);
         }

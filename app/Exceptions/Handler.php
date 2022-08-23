@@ -46,6 +46,6 @@ class Handler extends ExceptionHandler
         return response()->json([
             'message' => $exception->getMessage(),
             'errors' => $exception->errors(),
-        ], 200); //parent method return 422
+        ], 422); //parent method return 422
     }
 }

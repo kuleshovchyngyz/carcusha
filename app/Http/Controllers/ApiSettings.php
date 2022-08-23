@@ -64,7 +64,7 @@ class ApiSettings extends Controller
         ], [], []);
         if ($validated->fails()) {
             if ($validated->fails()) {
-                return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 200);
+                return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 422);
             }
             // return view('auth.createPasswordSms', $request->input())->withInput($request->input())->withErrors($validated);
         }
@@ -90,7 +90,7 @@ class ApiSettings extends Controller
             'email' => ['email_format','required','confirm_email_settings'],
         ], [], []);
         if ($validated->fails()) {
-            return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 200);
+            return response()->json(['old_values' => $request->input(), 'errors' => $validated->errors()], 422);
         }
 
         Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте SKYvin.ru Код:".$this->code)
