@@ -72,7 +72,7 @@ class JWTController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json($validator->errors(), 200);
         }
 //        $token = auth()->guard('api')->attempt($credentials);
 
