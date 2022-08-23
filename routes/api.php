@@ -31,6 +31,7 @@ Route::get('/notifications', [App\Http\Controllers\HomeController::class, 'notif
 Route::post('/check-promo', [App\Http\Controllers\ApplicationController::class, 'checkPromo'])->name('api.checkPromo');
 Route::post('/password-create-email', [App\Http\Controllers\AuthController::class, 'EmailVerificationCode'])->name('api.auth.EmailVerification-code');
 Route::post('/password-create-sms', [App\Http\Controllers\AuthController::class, 'SmsVerificationCode'])->name('api.auth.SmsVerification-code');
+Route::post('/send-sms-code', [App\Http\Controllers\AuthController::class, 'registerBySmsCode'])->name('api.auth.SmsRegistration');
 //Route::post('/register', [JWTController::class, 'register']);
 Route::get('/register', [JWTController::class, 'showRegisterForm']);
 Route::post('/login', [JWTController::class, 'login']);
@@ -60,11 +61,12 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::post('/promo', [App\Http\Controllers\UserController::class, 'promo'])->name('api.user.promo');
     Route::get('/settings', [App\Http\Controllers\HomeController::class, 'settings'])->name('api.settings');
     Route::post('/settings/confirm-promo', [App\Http\Controllers\ApiSettings::class, 'edit_api_settings_confirmPromo']);
-    Route::post('/settings/confirm-email', [App\Http\Controllers\ApiSettings::class, 'edit_api_settings_confirmEmail'])->name('api.sendCodeToEmail');
-    Route::post('/settings/confirm-number', [App\Http\Controllers\ApiSettings::class, 'edit_api_settings_confirmNumber'])->name('api.sendCodeToPhone');
+    Route::post('/settings/email-send-code', [App\Http\Controllers\ApiSettings::class, 'edit_api_settings_confirmEmail'])->name('api.sendCodeToEmail');
+    Route::post('/settings/number-send-code-voice', [App\Http\Controllers\ApiSettings::class, 'edit_api_settings_confirmNumber'])->name('api.sendCodeToPhone');
+
     Route::post('/settings/edit', [App\Http\Controllers\ApiSettings::class, 'edit_settings'])->name('api.settings.edit');
-    Route::post('/confirm-email-code', [App\Http\Controllers\AuthController::class, 'confirmEmail'])->name('api.confirm.email');
-    Route::post('/confirm-number-code', [App\Http\Controllers\AuthController::class, 'confirmNumber'])->name('api.confirm.number');
+    Route::post('/settings/confirm-email', [App\Http\Controllers\AuthController::class, 'confirmEmail'])->name('api.confirm.email');
+    Route::post('/settings/confirm-number', [App\Http\Controllers\AuthController::class, 'confirmNumber'])->name('api.confirm.number');
     Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name('api.help');
     Route::get('/updates', [App\Http\Controllers\HomeController::class, 'updates'])->name('api.updates');
 

@@ -41,7 +41,7 @@ class JWTController extends Controller
         ]);
 
         if($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json($validator->errors(), 200);
         }
 
         $user = User::create([

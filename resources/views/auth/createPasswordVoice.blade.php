@@ -20,10 +20,10 @@
             </div>
             <div class="tab-content tab-content--custom" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
-                    @if(!isset($confirmPhone))
-                   <form action="{{ route('auth.VoiceVerification-code') }}" method="POST" id="authentication" class="text-center">
-                    @else
 
+                    @if(!isset($confirmPhone))
+                        <form action="{{ route('auth.VoiceVerification-code') }}" method="POST" id="authentication" class="text-center">
+                    @else
                         <form action="{{ route('confirm.number') }}" method="POST" id="authentication" class="text-center">
                     @endif
                         @csrf

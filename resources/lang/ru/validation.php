@@ -97,7 +97,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
+    'required' => 'Пожалуйста заполните поле :attribute',
     'phone_number' => 'Пожалуйста введите правильный номер телефона.',
     'email_format' => 'Пожалуйста введите правильный e-mail.',
     'is_email_in_database' => 'Пользователя с таким e-mail адресом не существует.',
@@ -160,7 +160,7 @@ return [
     */
 
     'attributes' => [
-        'number' => 'номер'
+        'number' => 'телефон'
     ],
 
 ];

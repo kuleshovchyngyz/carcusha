@@ -16,6 +16,7 @@
                 <div class="tab-pane fade show active" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
                     @if(!isset($confirmPhone))
                    <form action="{{ route('auth.SmsVerification-code') }}" method="POST" id="authentication" class="text-center">
+                       <input type="hidden" name="validatecode" value="true">
                     @else
                         <form action="{{ route('confirm.number') }}" method="POST" id="authentication" class="text-center">
                     @endif

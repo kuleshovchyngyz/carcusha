@@ -127,6 +127,7 @@ class UserController extends Controller
 
 
     public function edit_settings(Request $request){
+
         if($request->has('confirmPromo')){
 
             $user = User::where('invitation_code',$request->invitationCode)->where('id','!=',Auth::user()->id)->first();
@@ -164,6 +165,7 @@ class UserController extends Controller
         }
 
         if($request->has('confirmEmail') && !$request->has('submitSettings')){
+            dd('email');
             $request->request->add(['confirmEmail' => true]);
                      //$request->validate(['email' => 'required|email_format|is_email_in_database|max:255']);
             $validated = Validator::make($request->all(), [
@@ -190,6 +192,7 @@ class UserController extends Controller
 
 
         }else if($request->has('confirmPhone') && !$request->has('submitSettings')){
+
             $request->request->add(['confirmPhone' => true]);
             $validated = Validator::make($request->all(), [
                 'number' => ['phone_number','confirm_email_settings'],
@@ -207,6 +210,7 @@ class UserController extends Controller
            // $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));//Needs to change
             //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
 //            AuthConfirmation::updateOrCreate( $param);
+
             return view('auth.createPasswordVoice',$request->input());
         }
 

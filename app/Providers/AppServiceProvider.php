@@ -66,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
         });
         Validator::extend('not_empty', function($attribute, $value, $parameters)
         {
-            if ( $value != '') {
+            if ( $value != ''||$value===null) {
                 return $value;
             }
 

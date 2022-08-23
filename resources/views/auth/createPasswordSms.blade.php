@@ -8,12 +8,13 @@
                 <h3 class="form-title">@if(!isset($reset)){{'Подтверждение телефона'}}@else{{'Восстановление пароля'}}@endif</h3>
             </div>
             <div class="confirm-info">
-            
+
             </div>
             <div class="tab-content tab-content--custom" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
                     @if(!isset($confirmPhone))
-                   <form action="{{ route('auth.SmsVerification-code') }}" method="POST" id="authentication" class="text-center">
+                   <form action="{{ route('auth.SmsVerification-code') }}" method="POST" id="authentication" class="text-center mkmkmkmk">
+                       <input type="hidden" name="validatecode" value="true">
                     @else
                         <form action="{{ route('confirm.number') }}" method="POST" id="authentication" class="text-center">
                     @endif

@@ -55,7 +55,7 @@ class ApiSettings extends Controller
             Refer::create(['user_id'=>$user->id,'referred_user_id'=>Auth::user()->id]);
             return response()->json(['success_message'=>'Активировано'], 200);
         }
-        return response()->json(['error_message'=>'Нельзя использовать свой промокод'], 406);
+        return response()->json(['error_message'=>'Нельзя использовать свой промокод'], 200);
     }
     public function edit_api_settings_confirmNumber(Request $request){
         $request->request->add(['confirmPhone' => true]);
@@ -64,16 +64,16 @@ class ApiSettings extends Controller
         ], [], []);
         if ($validated->fails()) {
             if ($validated->fails()) {
-                return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 400);
+                return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 200);
             }
             // return view('auth.createPasswordSms', $request->input())->withInput($request->input())->withErrors($validated);
         }
 
 //            $param['code'] = $call->call('+'.preg_replace('/[^0-9]/', '', $request->number));
-//        $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
+//        $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number)); //needs to change
         //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
 //            AuthConfirmation::updateOrCreate( $param);
-        return response()->json(['next_url'=> route('api.confirm.number'),'expected_inputs'=>'code'], 200);
+        return response()->json(['next_url'=> route('api.confirm.number'),'expected_inputs'=>'code,number'], 200);
     }
     public function edit_api_settings_confirmEmail(Request $request){
         $user = \auth()->user();
@@ -90,7 +90,7 @@ class ApiSettings extends Controller
             'email' => ['email_format','required','confirm_email_settings'],
         ], [], []);
         if ($validated->fails()) {
-            return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 400);
+            return response()->json(['old_values'=>$request->input(),'errors'=>$validated->errors()], 200);
         }
 
         Mail::to($request->email)->send((new MailUser())->subject("Регистрация на сайте SKYvin.ru Код:".$this->code)
