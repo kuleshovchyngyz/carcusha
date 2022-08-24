@@ -117,7 +117,7 @@ class JWTController extends Controller
         $info['numberOfNewNotifications']=\ViewService::init()->view('numberOfNewNotifications');
         $info['headerNotifications']=\ViewService::init()->view('headerNotifications');
         $info['user_id']=auth()->user()->id;
-        $info['qr_code']=asset('svg/qrcode.svg');
+        $info['qr_code']=asset( 'qrcodes/qrqr_'.auth()->user()->id.'.png');
         $info['paymentAmountsDetailInfo']=\ViewService::init()->view('paymentAmountsDetail');
         $info['balance']=auth()->user()->balance->balance;
         $info['freezed']=auth()->user()->SumOfPendingAmount();
