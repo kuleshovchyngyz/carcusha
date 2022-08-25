@@ -115,7 +115,7 @@ class UserController extends Controller
         $data = ["companycode" => $s->value, "webhook" => route('apiforpartnerstelegram')];
 
 
-        $res = Http::post(env('TELEGRAM_WEB_HOOK_LINK'),$data);
+        $res = Http::post(env('TELEGRAM_WEB_HOOK_LINK','https://t.kuleshov.studio/api/webhook-link'),$data);
 
         $username = $res->object()->username;
         $username = str_replace('@','',$username);
