@@ -166,6 +166,7 @@ class HomeController extends Controller
         $settings['email']='';
         $settings['number']='';
         if(Str::contains(Route::currentRouteName(), 'api')){
+            return 234234;
             if( \ViewService::init()->view('number') !== null){
                 $settings['number']=\ViewService::init()->view('number');
             }
