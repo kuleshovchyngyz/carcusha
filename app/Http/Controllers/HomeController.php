@@ -183,11 +183,11 @@ class HomeController extends Controller
             $telegramLink =  app('App\Http\Controllers\UserController')->telegramNotification();
             $settings['saving_data_url']=\route('api.settings.edit');
             return response()->json([
-//                'input_data'=>array_merge($settings,$paymentSettings),
+                'input_data'=>array_merge($settings,$paymentSettings),
                 'majors'=>$majors,
                 'telegramLink'=>$telegramLink,
-                'confirm_email_post_method_url'=>\route('api.sendCodeToEmail'),
-                'confirm_number_post_method_url'=>\route('api.sendCodeToPhone')
+//                'confirm_email_post_method_url'=>\route('api.sendCodeToEmail'),
+//                'confirm_number_post_method_url'=>\route('api.sendCodeToPhone')
             ], 200);
         }
         return view('home',[
