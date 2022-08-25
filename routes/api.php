@@ -31,8 +31,12 @@ Route::get('/notifications', [App\Http\Controllers\HomeController::class, 'notif
 Route::post('/check-promo', [App\Http\Controllers\ApplicationController::class, 'checkPromo'])->name('api.checkPromo');
 Route::post('/password-create-email', [App\Http\Controllers\AuthController::class, 'EmailVerificationCode'])->name('api.auth.EmailVerification-code');
 Route::post('/password-create-sms', [App\Http\Controllers\AuthController::class, 'SmsVerificationCode'])->name('api.auth.SmsVerification-code');
-Route::post('/send-sms-code', [App\Http\Controllers\AuthController::class, 'registerBySmsCode'])->name('api.auth.SmsRegistration');
+Route::post('/send-sms-code', [App\Http\Controllers\AuthController::class, 'SendSmsCode'])->name('api.auth.SmsRegistration');
+Route::post('/send-voice-code', [App\Http\Controllers\AuthController::class, 'SendVoiceCode'])->name('api.auth.SmsRegistration');
 //Route::post('/register', [JWTController::class, 'register']);
+Route::post('/send-email-code', [App\Http\Controllers\ApiAuthController::class, 'sendEmailCode']);
+Route::post('/confirm-email-code-change-password', [App\Http\Controllers\ApiAuthController::class, 'confirmEmailCode']);
+Route::post('/confirm-number-code-change-password', [App\Http\Controllers\ApiAuthController::class, 'conNumberCode']);
 Route::get('/register', [JWTController::class, 'showRegisterForm']);
 Route::post('/login', [JWTController::class, 'login']);
 Route::post('/verification-by-code', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationCode'])->name('api.auth.verification-code');

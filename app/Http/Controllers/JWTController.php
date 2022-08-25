@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 class JWTController extends Controller
 {
 
@@ -74,8 +76,7 @@ class JWTController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 200);
         }
-//        $token = auth()->guard('api')->attempt($credentials);
-
+        JWTAuth::factory()->setTTL(1440000);
         if (!$token = auth()->guard('api')->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
@@ -140,8 +141,6 @@ class JWTController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-
-            'expires_in' => auth('api')->factory()->getTTL()
         ]);
     }
     public function guard()

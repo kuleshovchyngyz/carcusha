@@ -54,8 +54,6 @@ class AuthController extends Controller
 
     public function confirmNumber(Request $request)
     {
-        dd($request->all());
-
         $request->request->add(['confirmPhone' => true]);
         $validated = Validator::make($request->all(), [
             'code' => ['required', 'integer', new CheckEmailVerificationCode()],
@@ -106,6 +104,7 @@ class AuthController extends Controller
         }
         //$request->flashExcept('code');
         $request->request->remove('confirmEmail');
+        \Session::flash('success_message', ['Обновлено']);
         return redirect()->route('settings');
     }
 
@@ -223,6 +222,23 @@ class AuthController extends Controller
 
     }
 
+    public function SendVoice(Request $request)
+    {
+
+        $code = new Code();
+        $sms = new SmsClient();
+        $call = new CallAuth();
+
+        $this->code = $code->generate(CODE::VERIFICATION);
+        $param = array();
+        $param['phone'] = $request->number;
+        $param['code'] = $this->code;
+//        $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
+        AuthConfirmation::updateOrCreate($param);
+        return response()->noContent();
+
+    }
+
     public function SendSms(Request $request, $type = '')
     {
         $code = new Code();
@@ -246,10 +262,22 @@ class AuthController extends Controller
         return view('auth.createPasswordBySms', $request->input());
     }
 
-    public function registerBySmsCode(Request $request)
+    public function SendSmsCode(Request $request)
     {
+        $request->has('change_password') ?
+            $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
+            $request->validate(['number' => 'required|phone_number']);
         return $this->SendSms($request);
     }
+
+    public function SendVoiceCode(Request $request)
+    {
+        $request->has('change_password') ?
+            $request->validate(['number' => 'required|phone_number|is_number_in_database']) :
+            $request->validate(['number' => 'required|phone_number']);
+        return $this->SendVoice($request);
+    }
+
 
     public function VoiceVerificationCode(Request $request)
     {

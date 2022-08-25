@@ -32,6 +32,7 @@ Route::post('/change-password', [App\Http\Controllers\AuthController::class, 'ch
 Route::post('/password-create-email', [App\Http\Controllers\AuthController::class, 'EmailVerificationCode'])->name('auth.EmailVerification-code');
 Route::post('/password-create-sms', [App\Http\Controllers\AuthController::class, 'SmsVerificationCode'])->name('auth.SmsVerification-code');
 Route::post('/voice-code-validator', [App\Http\Controllers\AuthController::class, 'VoiceVerificationCode'])->name('auth.VoiceVerification-code');
+
 Route::get('/send-sms', function(){
     return view('auth.createPasswordBySms');
 })->name('auth.verify-by-sms');

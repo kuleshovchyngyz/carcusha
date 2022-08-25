@@ -167,7 +167,6 @@ class UserController extends Controller
         }
 
         if($request->has('confirmEmail') && !$request->has('submitSettings')){
-            dd('email');
             $request->request->add(['confirmEmail' => true]);
                      //$request->validate(['email' => 'required|email_format|is_email_in_database|max:255']);
             $validated = Validator::make($request->all(), [
@@ -213,7 +212,7 @@ class UserController extends Controller
             //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
 //            AuthConfirmation::updateOrCreate( $param);
 
-            return view('auth.createPasswordVoice',$request->input());
+            return view('auth.confirmPhone',$request->input());
         }
 
 

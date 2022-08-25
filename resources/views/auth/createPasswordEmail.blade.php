@@ -19,7 +19,7 @@
             <div class="confirm-info">
                 Мы отправили письмо с кодом
                 подтверждения на Вашу почту
-                <strong> {{ $email }}.</strong>
+                <strong> {{ $email ?? '' }}.</strong>
                 Не забудьте проверить папку
                         <strong>"СПАМ"</strong>
             </div>
@@ -32,7 +32,7 @@
                         @endif
                         @csrf
 
-                        <input type="hidden" name="email" value="{{$email}}">
+                        <input type="hidden" name="email" value="{{$email ?? ''}}">
 
                         @if(isset($invitation_code))<input type="hidden" name="invitation_code" value="{{$invitation_code}}">@endif
                         @if(isset($major))<input type="hidden" name="major" value="{{$major}}">@endif

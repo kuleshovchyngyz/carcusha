@@ -7,7 +7,7 @@
         <img src="{{ asset('svg/logo_head_desk.svg') }}" alt="" class="logoauth">
         <div class="tab-wrap">
             <div class="form-head">
-                <h3 class="form-title">@if(!isset($reset)){{'Подтверждение телефона'}}@else{{'Восстановление пароля'}}@endif</h3>
+                <h3 class="form-title">{{'Восстановление пароля'}}</h3>
             </div>
             <div class="confirm-info">
                 <div class="confirmation-text">
@@ -21,11 +21,10 @@
             <div class="tab-content tab-content--custom" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="authenticationtab" role="tabpanel" aria-labelledby="authentication-tab">
 
-                    @if(!isset($confirmPhone))
+
                         <form action="{{ route('auth.VoiceVerification-code') }}" method="POST" id="authentication" class="text-center">
-                    @else
-                        <form action="{{ route('confirm.number') }}" method="POST" id="authentication" class="text-center">
-                    @endif
+
+
                         @csrf
                         <input type="hidden" name="number" value="{{$number}}">
                         @if(isset($invitation_code))<input type="hidden" name="invitation_code" value="{{$invitation_code}}">@endif
