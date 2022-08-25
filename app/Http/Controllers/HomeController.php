@@ -182,7 +182,7 @@ class HomeController extends Controller
             $majors= Major::select(['id', 'name'])->get()->toArray();
             $paymentSettings=( auth()->user()->paymentSetting==null ) ? [] : auth()->user()->paymentSetting->makeHidden(['id','user_id','created_at','updated_at'])->toArray() ;
             $telegramLink =  app('App\Http\Controllers\UserController')->telegramNotification();
-            $settings['saving_data_url']=\route('api.settings.edit');
+//            $settings['saving_data_url']=\route('api.settings.edit');
             return response()->json([
                 'input_data'=>array_merge($settings,$paymentSettings),
                 'majors'=>$majors,
