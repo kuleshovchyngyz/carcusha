@@ -111,14 +111,16 @@ class UserController extends Controller
     }
     public function telegramNotification(){
         $s = SiteSetting::where('name','telegramBotToken')->first();
+//        $data = ["companycode" => 'codbffe856297fe', "webhook" => route('apiforpartnerstelegram')];
         $data = ["companycode" => $s->value, "webhook" => route('apiforpartnerstelegram')];
-       // dd($s);
+
 
         $res = Http::post(env('TELEGRAM_WEB_HOOK_LINK'),$data);
 
         $username = $res->object()->username;
         $username = str_replace('@','',$username);
         $str = $s->value.'['.\auth()->user()->id.']';
+
         if(Str::contains(Route::currentRouteName(), 'api')){
             return 'https://t.me/'.$username.'?start='.base64_encode($str);
         }
