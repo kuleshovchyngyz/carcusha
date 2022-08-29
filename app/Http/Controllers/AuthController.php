@@ -140,7 +140,7 @@ class AuthController extends Controller
 //                return $th->validator->errors();
 //            }
 
-//             $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
+             $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
 //            $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
             AuthConfirmation::updateOrCreate($param);
             // $sms->sendSms(+996708277186, "Ваш код: ".$this->code);
@@ -233,7 +233,7 @@ class AuthController extends Controller
         $param = array();
         $param['phone'] = $request->number;
         $param['code'] = $this->code;
-//        $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
+        $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
         AuthConfirmation::updateOrCreate($param);
         return response()->noContent();
 
@@ -251,7 +251,7 @@ class AuthController extends Controller
             $param['email'] = $this->email :
             $param['phone'] = $request->number;
         $param['code'] = $this->code;
-//        $call->sms(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
+        $call->sms(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
         AuthConfirmation::updateOrCreate($param);
         // dump(2324);
         // return 34343;

@@ -106,7 +106,7 @@ class ApiAuthController extends Controller
         $param = array();
         $param['phone'] = $request->number;
         $param['code'] = $this->code;
-        //$call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
+        $call->call(preg_replace('/[^0-9]/', '', $request->number),$this->code);//Needs to change
         //$param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number));
         AuthConfirmation::updateOrCreate($param);
         return response()->json([

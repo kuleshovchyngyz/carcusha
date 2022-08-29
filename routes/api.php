@@ -13,7 +13,6 @@ use App\Http\Controllers\JWTController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -24,7 +23,6 @@ Route::post('/getdeletedleads', [App\Http\Controllers\AdminController::class, 'g
 Route::post('/telegram', [App\Http\Controllers\UserController::class, 'registerTuser'])->middleware('throttle:10,1')->name('apiforpartnerstelegram');
 Route::post('/updateuserfields', [App\Http\Controllers\LeadController::class, 'updateuserfields'])->middleware('throttle:10,1');
 Route::post('/uploadimage', [App\Http\Controllers\LeadController::class, 'uploadImage']);
-
 
 //Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->middleware('throttle:10,1')->name('api.login');
 Route::get('/notifications', [App\Http\Controllers\HomeController::class, 'notifications'])->middleware('throttle:10,1')->name('api.notification.list');

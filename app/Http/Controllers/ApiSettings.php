@@ -58,6 +58,7 @@ class ApiSettings extends Controller
         return response()->json(['error_message'=>'Нельзя использовать свой промокод'], 200);
     }
     public function edit_api_settings_confirmNumber(Request $request){
+        $call = new CallAuth();
         $request->request->add(['confirmPhone' => true]);
         $validated = Validator::make($request->all(), [
             'number' => ['phone_number','confirm_email_settings'],
@@ -70,7 +71,7 @@ class ApiSettings extends Controller
         }
 
 //            $param['code'] = $call->call('+'.preg_replace('/[^0-9]/', '', $request->number));
-//        $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number)); //needs to change
+        $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number)); //needs to change
         //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
 //            AuthConfirmation::updateOrCreate( $param);
         return response()->json(['next_url'=> route('api.confirm.number'),'expected_inputs'=>'code,number'], 200);
