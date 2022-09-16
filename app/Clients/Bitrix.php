@@ -27,7 +27,6 @@ class Bitrix
 
     public function connect($method, $data)
     {
-        $this->http =  "https://rosgroup.bitrix24.ru/rest/52/t6jwgqobgwc1rqyz/";
         $res = Http::timeout(10)->post($this->http . $method, $data);
         $this->result = json_decode($res->body(), 1);
         return $this->result;
