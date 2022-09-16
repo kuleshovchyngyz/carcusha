@@ -11,8 +11,8 @@ class ApiConnect
     const crmLeadList = 'crm.lead.list';
     const crmLeadListData = ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]];
     const fields = [
-          'isInAvito.ru' => 'UF_CRM_1633362412350',
-          'isInAuto.ru' => 'UF_CRM_1633362418776',
+          'isInAvito.ru' => 'UF_CRM_1526732622',
+          'isInAuto.ru' => 'UF_CRM_1526733011',
         ];
     private $method, $data;
     public $result;
