@@ -99,7 +99,7 @@ class LeadController extends Controller
                     $leadApi[$key]['history'][$key1]['created_at']=$history->created_at->format('d-m-Y H:i');
                     $leadApi[$key]['history'][$key1]['status_color']=color($history->event);
                     $leadApi[$key]['history'][$key1]['status_color_code']=$history->event;
-                    $leadApi[$key]['history'][$key1]['status']=$history->userStatus->name;
+                    $leadApi[$key]['history'][$key1]['status']=$optional(history->userStatus)->name;
                     if($history->userStatus->comments!=''){
                         $leadApi[$key]['history'][$key1]['info-icon']=shortCodeParse($history->userStatus->comments);
                     }
