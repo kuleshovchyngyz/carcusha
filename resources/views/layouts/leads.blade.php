@@ -83,7 +83,7 @@
                                     <div class="d-flex dd-body__item" style="width: 100%;">
                                         <div class="table-time">{{ $history->created_at->format('d-m-Y H:i') }}</div>
                                         <div class="table-i text-right">
-                                            <span class="{{color($history->event)}}"> {{ $optional(history->userStatus)->name }} </span>
+                                            <span class="{{color($history->event)}}"> {{ optional($history->userStatus)->name }} </span>
                                             @if($history->userStatus->comments!='')
                                             <span class="info-icon tb-icon dd-btn">
                                                                 <div class="dd-btn__info">
