@@ -19,14 +19,9 @@ class Bitrix
     protected $result;
     protected $bitrix_data = [];
 
-    public function __construct($url = '')
+    public function __construct()
     {
-        if ($url !== '') {
-            $this->http = $url;
-        } else {
-            $this->http = env('BITRIX_CARCUSHA_WEBHOOK_URL');
-        }
-
+        $this->http = env('BITRIX_CARCUSHA_WEBHOOK_URL');
         $this->result = array();
     }
 
