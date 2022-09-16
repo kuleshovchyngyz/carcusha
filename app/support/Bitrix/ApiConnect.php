@@ -27,6 +27,7 @@ class ApiConnect
     }
     public function execute ()
     {
+        $this->webhook_url =  "https://rosgroup.bitrix24.ru/rest/52/t6jwgqobgwc1rqyz/";
         $res = Http::timeout(10)->post($this->webhook_url.$this->method ,$this->data);
         $this->result = json_decode($res->body(), 1);
     }
