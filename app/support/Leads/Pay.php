@@ -11,6 +11,7 @@ use App\Models\Reason;
 class Pay
 {
     protected $new_status,  $user, $lead, $amount, $amount_id, $reasons, $percent, $type, $user_who_referred,$percentAmount;
+    public static $SUCCESS = 16;
     public function __construct($lead,$new_status){
 
         $this->lead = $lead;
@@ -22,7 +23,7 @@ class Pay
         $this->amount = $this->new_status->user_statuses->amount($this->user);
 
         $this->percent = PaymentAmount::where('reason_of_payment','percentage')->first()->amount;
-        if($this->new_status->id==15){
+        if($this->new_status->id==$this::$SUCCESS){
             $this->type = 'success';
             $this->amount_id = 2;
         }else{
