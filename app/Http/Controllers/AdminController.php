@@ -269,7 +269,7 @@ class AdminController extends Controller
         return redirect()->back()->with('success_message', ['Сохранено']);
     }
     public function all_leads(){
-        $leads = Lead::with(['status','user'])->get();
+        $leads = Lead::with(['status','user'])->get()->sortBy('created_at');
         $statuses = UserStatuses::pluck("name", "id")->toArray();
         return view("admin.allCars", compact('leads','statuses'));
     }
