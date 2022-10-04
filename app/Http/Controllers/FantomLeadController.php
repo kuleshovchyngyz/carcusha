@@ -58,7 +58,7 @@ class FantomLeadController extends Controller
             $lead->vendor_year ?? "",
             $lead->phonenumber,
             $lead->folder,
-            $lead->status->index
+            'NEW'
         );
         $result = $bitrix->addLead();
         Reason::where('reason_name','lead')->where('table_id',$lead->bitrix_lead_id)->update(['table_id'=>$result["result"]]);
