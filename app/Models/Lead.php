@@ -66,8 +66,7 @@ class Lead extends Model
         return $n;
     }
     public function leadHistory(){
-        return $this->hasMany(Notification::class,'lead_id','bitrix_lead_id');
-//        return Notification::where('lead_id',$this->attributes['bitrix_lead_id'])->orderBy('created_at','ASC')->get();
+        return $this->hasMany(Notification::class,'f_lead_id','bitrix_lead_id');
     }
 
     public function is_on_pending(){
