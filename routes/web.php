@@ -273,6 +273,8 @@ Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], functi
     Route::get('/payments', [App\Http\Controllers\AdminController::class, 'payments'])->name('admin.payments');
     Route::get('/statuses', [App\Http\Controllers\AdminController::class, 'statuses'])->name('admin.statuses');
 
+    Route::get('/all-leads', [App\Http\Controllers\AdminController::class, 'all_leads'])->name('admin.all_leads');
+
     Route::get('/fantoms', [App\Http\Controllers\FantomLeadController::class, 'fantoms'])->name('admin.fantoms');
     Route::get('/fantoms/back-to-bitrix/{lead}', [App\Http\Controllers\FantomLeadController::class, 'backToBirix'])->name('admin.fantom.back.bitrix');
     Route::get('/fantoms/close/{lead}', [App\Http\Controllers\FantomLeadController::class, 'close'])->name('admin.fantom.close');

@@ -22,7 +22,7 @@
 <body>
 @auth
     @include('layouts.message')
-    <header class="header"> 
+    <header class="header">
 
         <div class="container">
             <div class="row align-items-center">
@@ -49,6 +49,10 @@
                         </li>
                         <li class="nav-item">
                             <a class="btn header__btn color-blue" href="{{ route('admin.fantoms') }}"> Фантомы
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn header__btn color-blue" href="{{ route('admin.all_leads') }}"> Список лидов
                             </a>
                         </li>
                         <li class="nav-item">

@@ -182,9 +182,9 @@ class Pay
                 $reason_id = $this->create_reason('percent');
                 $id = $this->create_payment($reason_id,'percent');
                 $pending_amount = $this->create_pending_amount($id,0);
-
+                $initial = PaymentAmount::find(1)->amount;
                 $balance = balance::where('user_id',$this->user->user_who_referred()->id)->first();
-                $balance->balance = $balance->balance +  $this->amount*$this->percent/100;
+                $balance->balance = $balance->balance +  ($initial + $this->amount)*$this->percent/100;
                 return $pending_amount;
             }
 

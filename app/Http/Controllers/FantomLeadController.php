@@ -70,6 +70,8 @@ class FantomLeadController extends Controller
 
     }
 
+
+
     public function fantoms()
     {
         $bitrix_lead_ids = Fantom::pluck("bitrix_lead_id");

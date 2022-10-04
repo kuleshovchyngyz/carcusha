@@ -153,7 +153,7 @@ class AdminController extends Controller
             ]
         ]);
     }
-    
+
     public function addBot(Request $request){
        SiteSetting::where('name','telegramBotToken')->delete();
         SiteSetting::create(['value'=>$request->token,'name'=>'telegramBotToken']);
@@ -267,6 +267,11 @@ class AdminController extends Controller
             ]);
         }
         return redirect()->back()->with('success_message', ['Сохранено']);
+    }
+    public function all_leads(){
+        $leads = Lead::with(['status','user'])->get();
+        $statuses = UserStatuses::pluck("name", "id")->toArray();
+        return view("admin.allCars", compact('leads','statuses'));
     }
 
     public function statuses(){
