@@ -15,7 +15,8 @@
                             <div class="divTableBody">
                                 <div class="divTableRow divTable-head">
                                     <div class="divTableCell" style="width:48px"></div>
-                                    <div class="divTableCell" style="width: 145px;">Дата</div>
+                                    <div class="divTableCell" style="width: 45px;">ID</div>
+                                    <div class="divTableCell" style="width: 100px;">Дата</div>
                                     <div class="divTableCell" style="width: 213px;">Автомобиль</div>
                                     <div class="divTableCell" style="width: 157px;">Телефон</div>
                                     <div class="divTableCell" style="width: 264px;">Статус</div>
@@ -25,7 +26,8 @@
                                 <div class="divTableRow t-row">
                                     <div class="divTableCell btn-show" style="width:48px" data-id="info-{{$key+1}}"></div>
                                     <div class="table-col-1">
-                                        <div class="divTableCell" style="width: 145px;">{{ $lead->created_at->format('d-m-Y') }}</div>
+                                        <div class="divTableCell" style="width: 45px;">{{ $lead->id }}</div>
+                                        <div class="divTableCell" style="width: 100px;">{{ $lead->created_at->format('d-m-Y') }}</div>
                                         <div class="divTableCell" style="width: 213px;" data-lead-id="{{ $lead->id }}">
                                             <span>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</span>
                                             <span class="icon-group">

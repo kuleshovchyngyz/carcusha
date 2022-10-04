@@ -6,12 +6,13 @@
 
 
             <div class="main__content">
-                <h2 class="main__content-title">Фантомные лиды</h2>
+                <h2 class="main__content-title">Все лиды</h2>
                 <input type="text" class="form-control search-tabel-mob" placeholder="Поиск по пользователям">
                 <div class="table-responsive">
                     <table class="main__table">
                         <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Автомобиль</th>
                             <th>Дата</th>
                             <th>Логин</th>
@@ -25,6 +26,7 @@
 
                         @foreach ($leads as $lead)
                             <tr>
+                                <td>{{ $lead->id }}</td>
                                 <td>{{ $lead->vendor }} {{ $lead->vendor_model }}, {{ $lead->vendor_year }}</td>
                                 <td>{{ $lead->created_at->format('Y-m-d h:i') }}</td>
                                 <td>
