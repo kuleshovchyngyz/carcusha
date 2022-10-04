@@ -40,7 +40,7 @@
                                             Битрикс
                                         </option>
                                         <option
-                                            value="{{ route('admin.fantom.close', $fantom->id) }}">Закрыть
+                                            value="{{ route('admin.fantom.close', $fantom->id) }}">Скрыть
                                         </option>
                                         <option
                                             value="{{ route('admin.fantom.delete', $fantom->id ) }}">Удалить
