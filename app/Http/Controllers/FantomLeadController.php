@@ -101,7 +101,7 @@ class FantomLeadController extends Controller
             $b->setData($data);
             $b->execute();
             $result = $b->getResponse();
-
+dd($result["result"]);
             $bitrix_leads = array_merge($bitrix_leads, $result["result"]);
         } while (isset($result["next"]));
 
