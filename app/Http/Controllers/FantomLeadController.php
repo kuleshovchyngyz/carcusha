@@ -101,9 +101,10 @@ class FantomLeadController extends Controller
             $b->setData($data);
             $b->execute();
             $result = $b->getResponse();
+
             $bitrix_leads = array_merge($bitrix_leads, $result["result"]);
         } while (isset($result["next"]));
-//        dd($bitrix_leads);
+
         $pendingStatuses = Status::where("status_type", "pending")
             ->pluck("index")
             ->toArray();
@@ -113,12 +114,12 @@ class FantomLeadController extends Controller
                 return in_array($value["STATUS_ID"], $pendingStatuses);
             })
             ->pluck("ID");
-//        dump($bitrix_leads_id);
         $acception_users = [];
+
         $acception_lead_ids = Fantom::pluck("bitrix_lead_id")->toArray();
 
         $leads = Lead::with(["status", "user"]);
-//        dump(Lead::pluck('bitrix_lead_id'));
+
         $lead_ids = $leads
             ->get()
             ->reject(function ($lead) use (

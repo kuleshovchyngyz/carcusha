@@ -9,7 +9,7 @@ class ApiConnect
 {
     protected $webhook_url;
     const crmLeadList = 'crm.lead.list';
-    const crmLeadListData = ['order' => ['STATUS_ID'=> 'ASC' ] , 'select'=> [ "ID", "TITLE", "STATUS_ID", "OPPORTUNITY", "CURRENCY_ID" ]];
+    const crmLeadListData = ['order' => ['ID'=> 'ASC' ] ,'filter' => ['>ID' => 126600] ,'select'=> [ "ID", "STATUS_ID" ]];
     const fields = [
           'isInAvito.ru' => 'UF_CRM_1526732622',
           'isInAuto.ru' => 'UF_CRM_1526733011',
