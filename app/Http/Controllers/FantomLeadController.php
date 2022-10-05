@@ -58,7 +58,8 @@ class FantomLeadController extends Controller
             $lead->vendor_year ?? "",
             $lead->phonenumber,
             $lead->folder,
-            'NEW'
+            'NEW',
+            'SKYVIN'
         );
         $result = $bitrix->addLead();
         Reason::where('reason_name','lead')->where('table_id',$lead->bitrix_lead_id)->update(['table_id'=>$result["result"]]);
@@ -89,7 +90,7 @@ class FantomLeadController extends Controller
     public function compareLeads()
     {
 
-        Storage::disk('local')->append('cronworking.txt',Carbon::now()->format('Y-h-m g:ia'));
+        Storage::disk('local')->append('cronworking.txt',Carbon::now()->format('Y-m-d H:i:s'));
         $b = new ApiConnect();
         $fantoms_ids = [];
         $result = $b->getLeadList();
@@ -102,7 +103,7 @@ class FantomLeadController extends Controller
             $result = $b->getResponse();
             $bitrix_leads = array_merge($bitrix_leads, $result["result"]);
         } while (isset($result["next"]));
-
+//        dd($bitrix_leads);
         $pendingStatuses = Status::where("status_type", "pending")
             ->pluck("index")
             ->toArray();
@@ -112,11 +113,12 @@ class FantomLeadController extends Controller
                 return in_array($value["STATUS_ID"], $pendingStatuses);
             })
             ->pluck("ID");
-
+//        dump($bitrix_leads_id);
         $acception_users = [];
         $acception_lead_ids = Fantom::pluck("bitrix_lead_id")->toArray();
 
         $leads = Lead::with(["status", "user"]);
+//        dump(Lead::pluck('bitrix_lead_id'));
         $lead_ids = $leads
             ->get()
             ->reject(function ($lead) use (
@@ -130,6 +132,7 @@ class FantomLeadController extends Controller
             ->map(function ($value) {
                 return $value->bitrix_lead_id;
             });
+//        dump($lead_ids);
         if (count($lead_ids) > 0) {
             $fantoms_ids = $lead_ids
                 ->diff($bitrix_leads_id)

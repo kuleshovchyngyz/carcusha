@@ -12,6 +12,7 @@
                     <table class="main__table">
                         <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Автомобиль</th>
                             <th>Дата</th>
                             <th>Логин</th>
@@ -25,6 +26,7 @@
 
                         @foreach ($fantoms as $fantom)
                             <tr>
+                                <td>{{ $fantom->id }}</td>
                                 <td>{{ $fantom->vendor }} {{ $fantom->vendor_model }}, {{ $fantom->vendor_year }}</td>
                                 <td>{{ $fantom->created_at->format('Y-m-d') }}</td>
                                 <td>

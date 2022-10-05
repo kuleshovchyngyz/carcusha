@@ -146,7 +146,7 @@ class Bitrix
         return substr($str, 5, strpos($str, ';') - 5);
     }
 
-    public function addDeal($vendor, $model, $year, $phone, $folder_name, $status = 'NEW')
+    public function addDeal($vendor, $model, $year, $phone, $folder_name, $status = 'NEW',$title='')
     {
 
 //        dd($phone);
@@ -206,6 +206,9 @@ class Bitrix
         }
         if (env('BITRIX_HEADER') == 'real') {
             $this->bitrix_data['TITLE'] = $v . ' ' . $car;
+        }
+        if ($title != '') {
+            $this->bitrix_data['TITLE'] = $title;
         }
 
         $this->bitrix_data[self::crm_pics_field['Модель']] = $v . ' ' . $car; //real   "ID" => "312"
