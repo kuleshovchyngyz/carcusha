@@ -363,6 +363,10 @@ class AuthController extends Controller
 
         event(new Registered($user = $this->createUser($request->all())));
         if (Str::contains(Route::currentRouteName(), 'api')) {
+            if($request->has('firebase_token')){
+                $user->$user = $request->firebase_token;
+                $user->save();
+            }
 //            return 3443433443;
             if ($request->has('email')) {
                 if ($token = auth()->guard('api')->attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -374,6 +378,7 @@ class AuthController extends Controller
                 }
             }
         }
+
         $this->guard()->login($user);
         return $request->wantsJson()
             ? new JsonResponse([], 201)
