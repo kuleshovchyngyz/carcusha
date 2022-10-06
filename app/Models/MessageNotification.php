@@ -12,7 +12,7 @@ class MessageNotification extends Model
     use MessageNotificationTrait;
     protected $fillable = ['user_id','seen','message','lead_id'];
     public function lead(){
-        return $this->belongsTo(Lead::class);
+        return $this->belongsTo(Lead::class,'lead_id','bitrix_lead_id');
     }
     public function user(){
         return $this->belongsTo(User::class);
