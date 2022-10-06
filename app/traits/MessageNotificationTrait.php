@@ -28,5 +28,6 @@ trait MessageNotificationTrait
                         Log::info('notification ' . collect($message));
             $res = Http::withHeaders(['Authorization'=>env('FIREBASE_TOKEN')])->post(env('FIREBASE_URL') ,$message);
         });
+
     }
 }
