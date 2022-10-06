@@ -360,14 +360,13 @@ class AuthController extends Controller
 
     public function registerUser(Request $request)
     {
-
         event(new Registered($user = $this->createUser($request->all())));
+        if($request->has('firebase_token')){
+            $user->firebase_token = $request->firebase_token;
+            $user->save();
+        }
         if (Str::contains(Route::currentRouteName(), 'api')) {
-            if($request->has('firebase_token')){
-                $user->$user = $request->firebase_token;
-                $user->save();
-            }
-//            return 3443433443;
+
             if ($request->has('email')) {
                 if ($token = auth()->guard('api')->attempt(['email' => $request->email, 'password' => $request->password])) {
                     return $this->respondWithToken($token);
@@ -397,6 +396,7 @@ class AuthController extends Controller
 
     public function resetUserPassword(Request $request)
     {
+
         AuthConfirmation::where('email', $request->email)->delete();
         if ($this->fieldType == 'number') {
             $user = User::where('number', $request->number)->first();
