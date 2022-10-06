@@ -24,7 +24,7 @@ trait MessageNotificationTrait
 //            Log::info('Deleted   event call: ' . $item);
         });
         static::created(function ($item) {
-            $message = ['to'=> $item->user->firebase_token, 'notification'=>["title"=>$item->lead->vendor.' '.$item->lead->vendor_model.', '. $item->lead->vendor_year, "body"=> $item->message]];
+            $message = ['to'=> $item->user->firebase_token, 'notification'=>["title"=>'Статус изменен.', "body"=>strip_tags($item->message) ]];
                         Log::info('notification ' . collect($message));
             $res = Http::withHeaders(['Authorization'=>env('FIREBASE_TOKEN')])->post(env('FIREBASE_URL') ,$message);
         });
