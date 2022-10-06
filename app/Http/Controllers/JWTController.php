@@ -23,12 +23,15 @@ class JWTController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register','showRegisterForm']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'showRegisterForm']]);
     }
-    public function showRegisterForm(){
-        $majors = Major::pluck('name','id')->toArray();
-        return response()->json(['next_url'=>\route('api.auth.verification-code'),'nex_method'=>'post','expected_inputs'=>'number,major,code,invitation_code','majors' => $majors],200);
+
+    public function showRegisterForm()
+    {
+        $majors = Major::pluck('name', 'id')->toArray();
+        return response()->json(['next_url' => \route('api.auth.verification-code'), 'nex_method' => 'post', 'expected_inputs' => 'number,major,code,invitation_code', 'majors' => $majors], 200);
     }
+
     /**
      * Register user.
      *
@@ -42,7 +45,7 @@ class JWTController extends Controller
             'password' => 'required|string|confirmed|min:6',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 200);
         }
 
@@ -51,13 +54,33 @@ class JWTController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-
+        if($request->has('firebase_token')){
+            $user->firebase_token = $request->firebase_token;
+            $user->save();
+        }
         return response()->json([
             'message' => 'User successfully registered',
             'user' => $user
         ], 201);
     }
 
+    /**
+     * login user
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function flogin(Request $request){
+        $message = [
+            'to'=> "dM5UuZYjTkebui7-Q8KyTF:APA91bFpOr_Hv9zf4FDwO35ZGj1ywG05yIInS1KTRi6VJqmZdCHF_Fkt5NGUC-pffVinbgUKfmaq_tFitYsFpnV-KAcCc2q-nBufDCBsQKovEWSyKW3W8EhFvV12i89u-3IXXcbIoEFK",
+            'notification'=>[
+                "title"=> "Статус обновлен4 !!!",
+                "body"=> "Статус обновлен На 'Одобрено3'"
+            ]
+        ];
+
+
+        return $message;
+    }
     /**
      * login user
      *
@@ -80,10 +103,17 @@ class JWTController extends Controller
         if (!$token = auth()->guard('api')->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
         $user = User::where((($fieldType=='email') ? 'email' : 'number'), $request[$fieldType] )->first();
+        if($request->has('firebase_token')){
+            $user->firebase_token = $request->firebase_token;
+            $user->save();
+        }
 
         return $this->respondWithToken($token);
     }
+
+
 
     /**
      * Logout user

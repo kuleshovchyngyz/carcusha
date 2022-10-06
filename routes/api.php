@@ -37,6 +37,7 @@ Route::post('/confirm-email-code-change-password', [App\Http\Controllers\ApiAuth
 Route::post('/confirm-number-code-change-password', [App\Http\Controllers\ApiAuthController::class, 'conNumberCode']);
 Route::get('/register', [JWTController::class, 'showRegisterForm']);
 Route::post('/login', [JWTController::class, 'login']);
+Route::post('/login/firebase', [JWTController::class, 'flogin'])->name('login.firebase');
 Route::post('/verification-by-code', [App\Http\Controllers\AuthController::class, 'RegisterWithVerificationCode'])->name('api.auth.verification-code');
 Route::post('/voice-code-validator', [App\Http\Controllers\AuthController::class, 'VoiceVerificationCode'])->name('api.auth.VoiceVerification-code');
 Route::get('/download-card-csssss/{id}', [App\Http\Controllers\ApiSettings::class, 'downloadСard'])->name('api.download_card');
