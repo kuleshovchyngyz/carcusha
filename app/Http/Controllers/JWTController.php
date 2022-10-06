@@ -153,6 +153,7 @@ class JWTController extends Controller
         $info['balance']=auth()->user()->balance->balance;
         $info['freezed']=auth()->user()->SumOfPendingAmount();
         $info['paid']=auth()->user()->sum_of_paids();
+        $info['firebase_token']=auth()->user()->firebase_token;
 
 
 
