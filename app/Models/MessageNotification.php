@@ -2,7 +2,7 @@
 namespace App\Models;
 use App\Models\Lead;
 use App\Models\User;
-use App\Traits\MessageNotificationTrait;
+use App\ModelTraits\MessageNotificationTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

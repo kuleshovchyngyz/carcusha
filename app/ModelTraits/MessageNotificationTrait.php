@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\ModelTraits;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
