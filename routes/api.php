@@ -72,5 +72,4 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::post('/settings/confirm-number', [App\Http\Controllers\AuthController::class, 'confirmNumber'])->name('api.confirm.number');
     Route::get('/help', [App\Http\Controllers\HomeController::class, 'help'])->name('api.help');
     Route::get('/updates', [App\Http\Controllers\HomeController::class, 'updates'])->name('api.updates');
-
 });

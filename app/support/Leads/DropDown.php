@@ -52,6 +52,9 @@ class DropDown
         return response()->json(["models"=>$result], 200);
 
     }
+    public function ruslan(){
+
+    }
     public function get_car_models()
     {
         $car_vendor = trim($_REQUEST['car_vendor']);

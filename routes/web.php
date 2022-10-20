@@ -200,7 +200,9 @@ Route::get('/', function () {
 })->name('home');
 
 
-
+Route::get('/1', function (){
+    return redirect()->to(url('/').'/car_application?id=109');
+});
 
 Auth::routes();
 

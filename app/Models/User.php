@@ -226,9 +226,6 @@ class User extends Authenticatable implements JWTSubject
         $paids = Paid::where('user_id',$this->attributes['id'])->where('status','pending')->pluck('amount');
         return $paids->sum();
     }
-    public function availableAmount(){
-        return $this->balance->balance - $this->SumOfPendingAmount() - $this->sumOfPendingPaidAmount();
-    }
 
     public function number_of_violations(){
         return $this->violations->count();
@@ -263,7 +260,9 @@ class User extends Authenticatable implements JWTSubject
         }
         else return '--';
     }
-
+    public function availableAmount(){
+        return $this->balance->balance - $this->SumOfPendingAmount() - $this->sumOfPendingPaidAmount();
+    }
     public function SumOfPendingAmount(){
         $payments = Payment::where('user_id',$this->attributes['id'])->pluck('id');
         $pending = PendingAmount::whereIn('payment_id',$payments)->where('status',false)->pluck('payment_id');
