@@ -214,8 +214,9 @@ class HomeController extends Controller
             ]);
         }
 
-//        $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
-        $QRPics = new QRCodeGenerator(route('promo'));
+        $QRPics = new QRCodeGenerator(route('car_application').'?id='.$user_id);
+        $QRPics->generate_qr_code(800,$QRPics->big_name);
+//        $QRPics = new QRCodeGenerator(route('promo'));
         $QRPics->touchPromo(Auth::user());
         if(!file_exists(public_path('/qrcodes/plakat_'.Auth::user()->id.'.pdf'))){
             $QRPics->pdf_part_two();

@@ -51,12 +51,12 @@ if ($sort == '') {
 
                                 <td>NULL</td>
                             @else
-{{--                                @if($lead->history()!==false)--}}
-{{--                                    @dump($lead->history())--}}
-{{--                                    @dump($lead->history()->status())--}}
-{{--                                @else--}}
-{{--                                    @dump($lead->history()->status())--}}
-{{--                                @endif--}}
+                                {{--                                @if($lead->history()!==false)--}}
+                                {{--                                    @dump($lead->history())--}}
+                                {{--                                    @dump($lead->history()->status())--}}
+                                {{--                                @else--}}
+                                {{--                                    @dump($lead->history()->status())--}}
+                                {{--                                @endif--}}
 
                                 {{--                                @dump($lead->history())--}}
                                 {{--                                @dump($lead)--}}
@@ -66,8 +66,8 @@ if ($sort == '') {
                                     <ul class="main__table-dd">
                                         <li>
 
-                                                                                        <span >{{ ($lead->history()==false )? "" : ($lead->history()->status()==false ? '': $lead->history()->status()->name) }}</span>
-                                                                                        <span>{{ $lead->history()==false ? "" :  $lead->history()->updated_at->format('d.m.y') }}</span>
+                                            <span>{{ ($lead->history()==false )? "" : ($lead->history()->status()==false ? '': $lead->history()->status()->name) }}</span>
+                                            <span>{{ $lead->history()==false ? "" :  $lead->history()->updated_at->format('d.m.y') }}</span>
                                         </li>
                                         <li>
                                             <span class="text-warning"> {{ $lead->status->name }}</span>

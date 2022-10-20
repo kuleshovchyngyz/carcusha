@@ -30,6 +30,7 @@ class Bitrix
         $res = Http::timeout(10)->post($this->http . $method, $data);
         $this->result = json_decode($res->body(), 1);
         return $this->result;
+
     }
 
     public function getResponse()
