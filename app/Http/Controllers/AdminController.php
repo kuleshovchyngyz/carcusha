@@ -309,7 +309,7 @@ class AdminController extends Controller
         foreach ($arr as $key => $item){
 
             $status = Status::find($key);
-            $status->color = $item['color'];
+            $status->color = isset($item['color']) ? $item['color'] : '';
             $status->save();
             $notify = 0;
             if(isset($item['notify'])){
@@ -603,5 +603,12 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function syncStatuses(){
+        $b = new Bitrix();
+        $b->syncStatuses();
+        return 'Done';
+
     }
 }

@@ -15,11 +15,12 @@ class Status extends Model
         'index',
         'color',
         'ID_on_bitrix',
-        'status_type'
+        'status_type',
+        'update'
 
     ];
 
-    
+
 
     public function leads(){
         return $this->hasMany(Lead::class,'status_id');

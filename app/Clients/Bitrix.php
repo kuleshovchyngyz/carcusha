@@ -21,7 +21,7 @@ class Bitrix
 
     public function __construct()
     {
-        $this->http = env('BITRIX_CARCUSHA_WEBHOOK_URL');
+        $this->http = env('BITRIX_CARCUSHA_WEBHOOK_URL','https://rosgroup.bitrix24.ru/rest/52/t6jwgqobgwc1rqyz/');
         $this->result = array();
     }
 
@@ -67,6 +67,7 @@ class Bitrix
     public function getStatusList()
     {
 
+
         $this->result = $this->connect('crm.status.list', [
             'order' => ["SORT" => "ASC"],
             'filter' => ["ENTITY_ID" => "STATUS"]
@@ -97,13 +98,14 @@ class Bitrix
     {
         $dealData = $this->getStatusList();
         foreach ($dealData['result'] as $key => $status) {
-            Status::where('id', $key + 1)->update([
+            Status::where('index', $status['STATUS_ID'])->update([
                 'index' => $status['STATUS_ID'],
                 'ID_on_bitrix' => $status['ID'],
                 'name' => $status['NAME'],
-                'color' => $status['COLOR']
+                'color' => $status['COLOR'],
+                'updated'=>now()->format('Y.m.d')
             ]);
-            if (Status::find($key + 1) === null) {
+            if (Status::where('index', $status['STATUS_ID'])->count()==0) {
                 Status::create([
                     'index' => $status['STATUS_ID'],
                     'ID_on_bitrix' => $status['ID'],

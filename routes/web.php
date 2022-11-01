@@ -250,6 +250,8 @@ Route::group([ 'middleware' => ['auth', 'role:user']], function () {
     Route::get('/updates', [App\Http\Controllers\HomeController::class, 'updates'])->name('updates');
 });
 Route::group(['prefix'=>'admin', 'middleware' => ['auth', 'role:admin']], function () {
+
+    Route::get('/sync-statuses', [App\Http\Controllers\AdminController::class, 'syncStatuses']);
     Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.users');
     Route::get('user/{user}', [App\Http\Controllers\AdminController::class, 'user'])->name('admin.user');
     Route::post('user/paymentype', [App\Http\Controllers\AdminController::class, 'changePaymentType']);

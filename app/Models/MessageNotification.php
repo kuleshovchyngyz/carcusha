@@ -1,5 +1,6 @@
 <?php
 namespace App\Models;
+
 use App\Models\Lead;
 use App\Models\User;
 use App\ModelTraits\MessageNotificationTrait;
@@ -17,4 +18,5 @@ class MessageNotification extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
 }
