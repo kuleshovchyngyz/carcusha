@@ -403,9 +403,6 @@ class AdminController extends Controller
             UserPaymentAmount::where('user_id',$user_id)->where('reason_of_payment',$key)->update(['amount'=>str_replace('%','',$item)]);
         }
 
-
-
-
         return redirect()->back()->with('success_message', ['Сохранено']);
     }
     public function pay_to_partner(Paid $paid)

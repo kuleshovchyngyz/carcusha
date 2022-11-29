@@ -73,7 +73,7 @@ class ApiSettings extends Controller
 //            $param['code'] = $call->call('+'.preg_replace('/[^0-9]/', '', $request->number));
         $param['code'] = $call->call(preg_replace('/[^0-9]/', '', $request->number)); //needs to change
         //$sms->sendSms(+996708277186, "Ваш код: ".$this->code);
-//            AuthConfirmation::updateOrCreate( $param);
+            AuthConfirmation::updateOrCreate( $param);
         return response()->json(['next_url'=> route('api.confirm.number'),'expected_inputs'=>'code,number'], 200);
     }
     public function edit_api_settings_confirmEmail(Request $request){
