@@ -64,6 +64,7 @@ class LoginController extends Controller
             $user = User::where((($this->fieldType=='email') ? 'email' : 'number'), $request[$this->fieldType] )->first();
             if($user!==null){
                 $this->guard()->login($user);
+//                dump($user->hasRole('admin'));
                 if($user->hasRole('admin')){
                     return redirect('/admin');
                 }else{

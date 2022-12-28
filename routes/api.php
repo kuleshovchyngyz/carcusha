@@ -51,6 +51,7 @@ Route::group(['middleware' => 'jwt.verify'], function($router) {
     Route::post('/lead/photos', [App\Http\Controllers\LeadController::class, 'getFiles']);
     Route::get('/leads', [App\Http\Controllers\LeadController::class, 'index'])->middleware(['middleware' => 'api'])->name('api.leads');
     Route::post('/logout', [JWTController::class, 'logout']);
+    Route::get('/delete', [JWTController::class, 'delete']);
     Route::post('/refresh', [JWTController::class, 'refresh']);
     Route::post('/profile', [JWTController::class, 'profile']);
     Route::get('/notifications', [App\Http\Controllers\HomeController::class, 'notifications'])->middleware(['middleware' => 'api'])->name('api.notification.list');

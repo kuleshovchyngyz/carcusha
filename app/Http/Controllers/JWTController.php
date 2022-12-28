@@ -5,12 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Major;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Auth\LoginController;
-
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class JWTController extends Controller
@@ -54,7 +50,7 @@ class JWTController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        if($request->has('firebase_token')){
+        if ($request->has('firebase_token')) {
             $user->firebase_token = $request->firebase_token;
             $user->save();
         }
@@ -69,18 +65,20 @@ class JWTController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function flogin(Request $request){
+    public function flogin(Request $request)
+    {
         $message = [
-            'to'=> "dM5UuZYjTkebui7-Q8KyTF:APA91bFpOr_Hv9zf4FDwO35ZGj1ywG05yIInS1KTRi6VJqmZdCHF_Fkt5NGUC-pffVinbgUKfmaq_tFitYsFpnV-KAcCc2q-nBufDCBsQKovEWSyKW3W8EhFvV12i89u-3IXXcbIoEFK",
-            'notification'=>[
-                "title"=> "Статус обновлен4 !!!",
-                "body"=> "Статус обновлен На 'Одобрено3'"
+            'to' => "dM5UuZYjTkebui7-Q8KyTF:APA91bFpOr_Hv9zf4FDwO35ZGj1ywG05yIInS1KTRi6VJqmZdCHF_Fkt5NGUC-pffVinbgUKfmaq_tFitYsFpnV-KAcCc2q-nBufDCBsQKovEWSyKW3W8EhFvV12i89u-3IXXcbIoEFK",
+            'notification' => [
+                "title" => "Статус обновлен4 !!!",
+                "body" => "Статус обновлен На 'Одобрено3'"
             ]
         ];
 
 
         return $message;
     }
+
     /**
      * login user
      *
@@ -88,7 +86,7 @@ class JWTController extends Controller
      */
     public function login(Request $request)
     {
-//        return $request->toArray();
+
         $fieldType = isset($request['email']) ? 'email' : 'number';
 
         $validator = Validator::make($request->all(), [
@@ -104,15 +102,14 @@ class JWTController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $user = User::where((($fieldType=='email') ? 'email' : 'number'), $request[$fieldType] )->first();
-        if($request->has('firebase_token')){
+        $user = User::where((($fieldType == 'email') ? 'email' : 'number'), $request[$fieldType])->first();
+        if ($request->has('firebase_token')) {
             $user->firebase_token = $request->firebase_token;
             $user->save();
         }
 
         return $this->respondWithToken($token);
     }
-
 
 
     /**
@@ -125,6 +122,18 @@ class JWTController extends Controller
         auth()->logout();
 
         return response()->json(['message' => 'User successfully logged out.']);
+    }
+
+    public function delete()
+    {
+        $item = User::find(Auth::user()->id);
+        Auth::logout();
+
+        if ($item->delete()) {
+            return response()->json(['message' => 'User successfully deleted.']);
+        }
+
+        return response()->json(['message' => 'User not deleted.']);
     }
 
     /**
@@ -144,17 +153,16 @@ class JWTController extends Controller
      */
     public function profile()
     {
-        $info=[];
-        $info['numberOfNewNotifications']=\ViewService::init()->view('numberOfNewNotifications');
-        $info['headerNotifications']=\ViewService::init()->view('headerNotifications');
-        $info['user_id']=auth()->user()->id;
-        $info['qr_code']=asset( 'qrcodes/qrqr_'.auth()->user()->id.'.png');
-        $info['paymentAmountsDetailInfo']=\ViewService::init()->view('paymentAmountsDetail');
-        $info['balance']=auth()->user()->balance->balance;
-        $info['freezed']=auth()->user()->SumOfPendingAmount();
-        $info['paid']=auth()->user()->sum_of_paids();
-        $info['firebase_token']=auth()->user()->firebase_token;
-
+        $info = [];
+        $info['numberOfNewNotifications'] = \ViewService::init()->view('numberOfNewNotifications');
+        $info['headerNotifications'] = \ViewService::init()->view('headerNotifications');
+        $info['user_id'] = auth()->user()->id;
+        $info['qr_code'] = asset('qrcodes/qrqr_' . auth()->user()->id . '.png');
+        $info['paymentAmountsDetailInfo'] = \ViewService::init()->view('paymentAmountsDetail');
+        $info['balance'] = auth()->user()->balance->balance;
+        $info['freezed'] = auth()->user()->SumOfPendingAmount();
+        $info['paid'] = auth()->user()->sum_of_paids();
+        $info['firebase_token'] = auth()->user()->firebase_token;
 
 
         return response()->json($info);
@@ -163,7 +171,7 @@ class JWTController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -174,6 +182,7 @@ class JWTController extends Controller
             'token_type' => 'bearer',
         ]);
     }
+
     public function guard()
     {
         return Auth::guard();
