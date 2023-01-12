@@ -35,7 +35,7 @@ class Bitrix
 
     public function getResponse()
     {
-        dd($this->result);
+        dump($this->result);
         if (!array_key_exists('error_description', $this->result)) {
             return $this->result;
         }
