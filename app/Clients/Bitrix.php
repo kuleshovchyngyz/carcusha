@@ -217,7 +217,7 @@ class Bitrix
 
         $this->bitrix_data[self::crm_pics_field['Модель']] = $v . ' ' . $car; //real   "ID" => "312"
 
-        $this->bitrix_data[self::crm_pics_field['Год выпуска']] = isset($year) == true ? [self::years[$year]] : ""; //real
+        $this->bitrix_data[self::crm_pics_field['Год выпуска']] = isset($year) == true ? self::years[$year] : ""; //real
 
         $this->bitrix_data['SOURCE_ID'] = "5";
         $this->bitrix_data['STATUS_ID'] = $status;
