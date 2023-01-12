@@ -361,7 +361,7 @@ class LeadController extends Controller
         $bitrix = new Bitrix();
         $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$request->phone,$folder_name);
         $result = $bitrix->addLead();
-        dd($result);
+        dump($result);
         new LeadBuilder(
             isset($request->car_vendor) == true ? $request->car_vendor : '',
             isset($request->car_model) == true ? $request->car_model : '',
