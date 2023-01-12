@@ -14,7 +14,7 @@ class TelegramBot
     protected $data;
     protected $companyCode;
     public function __construct($text,$user){
-        $this->telegramWebhook =  env('TELEGRAM_WEB_HOOK');
+        $this->telegramWebhook =  env('TELEGRAM_WEB_HOOK','https://t.kuleshov.studio/api/getmessages');
         $this->text = $text;
         $this->user = $user;
         $this->telegramId = ($user->setting->telegram_id ===null) ? false : $user->setting->telegram_id;
@@ -31,7 +31,11 @@ class TelegramBot
         $this->data = ["companycode" => $this->companyCode, "data" => [["message" =>  $this->text,"userId"=>$this->telegramId]]];
     }
     public function sendMessage(){
-        $res = Http::post($this->telegramWebhook,$this->data);
-        return $res->object();
+        try {
+            $res = Http::post($this->telegramWebhook,$this->data);
+            return $res->object();
+        }  catch (\Throwable $e) {
+            echo "Telegram notification not worked!";
+        }
     }
 }

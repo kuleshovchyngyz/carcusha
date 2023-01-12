@@ -114,17 +114,21 @@ class UserController extends Controller
 //        $data = ["companycode" => 'codbffe856297fe', "webhook" => route('apiforpartnerstelegram')];
         $data = ["companycode" => $s->value, "webhook" => route('apiforpartnerstelegram')];
 
+        try {
+            $res = Http::post(env('TELEGRAM_WEB_HOOK_LINK','https://t.kuleshov.studio/api/webhook-link'),$data);
 
-        $res = Http::post(env('TELEGRAM_WEB_HOOK_LINK','https://t.kuleshov.studio/api/webhook-link'),$data);
+            $username = $res->object()->username;
+            $username = str_replace('@','',$username);
+            $str = $s->value.'['.\auth()->user()->id.']';
 
-        $username = $res->object()->username;
-        $username = str_replace('@','',$username);
-        $str = $s->value.'['.\auth()->user()->id.']';
-
-        if(Str::contains(Route::currentRouteName(), 'api')){
-            return 'https://t.me/'.$username.'?start='.base64_encode($str);
+            if(Str::contains(Route::currentRouteName(), 'api')){
+                return 'https://t.me/'.$username.'?start='.base64_encode($str);
+            }
+            return Redirect::to('https://t.me/'.$username.'?start='.base64_encode($str));
+        }  catch (\Throwable $e) {
+            echo "Telegram ssl is expired i guess";
         }
-        return Redirect::to('https://t.me/'.$username.'?start='.base64_encode($str));
+
     }
 
 

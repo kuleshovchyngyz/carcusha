@@ -41,8 +41,7 @@ class LeadController extends Controller
      */
     public function index($origin=null)
     {
-
-            $user_id = auth()->user()->id;
+        $user_id = auth()->user()->id;
 
         if(!\File::exists('qrcodes/qrqr_'.$user_id.'.png')){
             $text = route('car_application').'?id='.$user_id;
@@ -361,7 +360,6 @@ class LeadController extends Controller
         $bitrix = new Bitrix();
         $bitrix->addDeal($request->car_vendor,$request->car_model,$request->car_year,$request->phone,$folder_name);
         $result = $bitrix->addLead();
-        dump($result);
         new LeadBuilder(
             isset($request->car_vendor) == true ? $request->car_vendor : '',
             isset($request->car_model) == true ? $request->car_model : '',
