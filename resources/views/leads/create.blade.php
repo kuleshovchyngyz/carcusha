@@ -12,7 +12,8 @@
                 <div class="col-md-9">
                     <div class="main__content">
                         <h2 class="main__content-title-blue">Добавление авто</h2>
-                        <form method="POST" action="{{ route('lead.store') }}" id ="formdata" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('lead.store') }}" id="formdata"
+                              enctype="multipart/form-data">
                             @csrf
 
                             <input type="hidden" name="folder_id" id="folder_id" value="{{  $folder_id }}">
@@ -53,13 +54,14 @@
                                 <div class="col-md-6">
                                     <div class="main__setting-item">
                                         <div>Телефон продавца:
-                                            <input name="phone" id="phone" type="text" class="form-control phone-error" placeholder="Не указан" required>
+                                            <input name="phone" id="phone" type="text" class="form-control phone-error"
+                                                   placeholder="Не указан" required>
                                             <p class="error text-danger d-none"></p>
-{{--                                            @error('phone')--}}
-{{--                                            <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $message }}</strong>--}}
-{{--                                    </span>--}}
-{{--                                            @enderror--}}
+                                            {{--                                            @error('phone')--}}
+                                            {{--                                            <span class="invalid-feedback" role="alert">--}}
+                                            {{--                                        <strong>{{ $message }}</strong>--}}
+                                            {{--                                    </span>--}}
+                                            {{--                                            @enderror--}}
                                         </div>
                                     </div>
                                 </div>
@@ -69,18 +71,24 @@
                                         <div class="form-control " id="fileuploader">
                                             Прикрепить фото <i class="fa fa-upload" aria-hidden="true"></i>
                                         </div>
-                                            <input type="file" name="image[]" id="pictures" multiple="" hidden >
+                                        <input type="file" name="image[]" id="pictures" multiple="" hidden>
 
                                     </label>
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="filelist" id="filelist">
-                                    <div class="onlyFour">
-                                        <li><i class="fa fa-times timesicon d-none" id="1"  aria-hidden="true"></i> <img src="" id="img1" class="uploadImage d-none"></li>
-                                        <li><i class="fa fa-times timesicon d-none" id="2" aria-hidden="true"></i> <img src="" id="img2" class="uploadImage d-none"></li>
-                                        <li> <i class="fa fa-times timesicon d-none" id="3" aria-hidden="true"></i><img src="" id="img3" class="uploadImage d-none"></li>
-                                        <li> <i class="fa fa-times timesicon d-none"  id="4" aria-hidden="true"></i><img src="" id="img4" class="uploadImage d-none"></li>
-                                    </div>
+                                        <div class="onlyFour">
+                                            <li><i class="fa fa-times timesicon d-none" id="1" aria-hidden="true"></i>
+                                                <img src="" id="img1" class="uploadImage d-none"></li>
+                                            <li><i class="fa fa-times timesicon d-none" id="2" aria-hidden="true"></i>
+                                                <img src="" id="img2" class="uploadImage d-none"></li>
+                                            <li><i class="fa fa-times timesicon d-none" id="3"
+                                                   aria-hidden="true"></i><img src="" id="img3"
+                                                                               class="uploadImage d-none"></li>
+                                            <li><i class="fa fa-times timesicon d-none" id="4"
+                                                   aria-hidden="true"></i><img src="" id="img4"
+                                                                               class="uploadImage d-none"></li>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
@@ -88,26 +96,32 @@
                                 function submitForm(btn) {
                                     let val = $("input[name=phone]").val()
                                     console.log(val.length)
-                                    if(val.length==0){
+                                    if (val.length == 0) {
                                         $('p.error').removeClass('d-none')
                                         $('p.error').empty()
                                         $('p.error').append('Пожалуйста, заполните это поле.');
-                                    }else if(val.length>0 && val.length<16){
+                                    } else if (val.length > 0 && val.length < 16) {
                                         $('p.error').removeClass('d-none')
                                         $('p.error').empty()
                                         $('p.error').append('Пожалуйста введите правильный номер телефона.');
-                                    }else{
+                                    } else {
                                         $('p.error').empty()
                                         btn.disabled = true;
-                                        $('#pictures').removeAttr( "name" );
+                                        $('#pictures').removeAttr("name");
                                         btn.form.submit();
                                     }
 
                                 }
                             </script>
                             <div class="text-center">
+                            <textarea name="comment" placeholder="Не указан" rows="4" cols="50" class="form-control" ></textarea>
 
-                                <input id="submitButton" class="btn btn-blue" type="button" value="ОТПРАВИТЬ" onclick="submitForm(this);" />
+
+                            </div>
+                            <div class="text-center">
+
+                                <input id="submitButton" class="btn btn-blue" type="button" value="ОТПРАВИТЬ"
+                                       onclick="submitForm(this);"/>
                             </div>
                         </form>
                     </div>
@@ -117,23 +131,23 @@
         </div>
     </main>
     @if(!$errors->any())
-{{--    <div class="modal fade show" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: block; padding-right: 17px;" aria-modal="true" role="dialog">--}}
-{{--        <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">--}}
-{{--            <div class="modal-info">--}}
-{{--                <div class="modal__title__blue">--}}
-{{--                    Мы не выкупаем авто, если:--}}
-{{--                </div>--}}
-{{--                <ul class="modal__list">--}}
-{{--                    <li>- Оно старше 15 лет (2006 года и ранее);</li>--}}
-{{--                    <li>- Оно размещено на Avito и Auto.Ru;</li>--}}
-{{--                    <li>- Продавец не заинтересован в продаже.</li>--}}
-{{--                </ul>--}}
-{{--                <button class="btn btn-blue agreed">СОГЛАСИТЬСЯ и добавить</button>--}}
-{{--                <div class="text-center">--}}
-{{--                    <a href="{{ url()->previous() }}" class="blue-link back">Вернуться назад</a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+        {{--    <div class="modal fade show" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" style="display: block; padding-right: 17px;" aria-modal="true" role="dialog">--}}
+        {{--        <div class="modal-dialog modal-dialog-centered" style="max-width: 400px">--}}
+        {{--            <div class="modal-info">--}}
+        {{--                <div class="modal__title__blue">--}}
+        {{--                    Мы не выкупаем авто, если:--}}
+        {{--                </div>--}}
+        {{--                <ul class="modal__list">--}}
+        {{--                    <li>- Оно старше 15 лет (2006 года и ранее);</li>--}}
+        {{--                    <li>- Оно размещено на Avito и Auto.Ru;</li>--}}
+        {{--                    <li>- Продавец не заинтересован в продаже.</li>--}}
+        {{--                </ul>--}}
+        {{--                <button class="btn btn-blue agreed">СОГЛАСИТЬСЯ и добавить</button>--}}
+        {{--                <div class="text-center">--}}
+        {{--                    <a href="{{ url()->previous() }}" class="blue-link back">Вернуться назад</a>--}}
+        {{--                </div>--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
+        {{--    </div>--}}
     @endif
 @endsection

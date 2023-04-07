@@ -71,6 +71,7 @@ class LeadController extends Controller
                 $leadApi[$key]['vendor']=$lead->vendor;
                 $leadApi[$key]['vendor_model']=$lead->vendor_model;
                 $leadApi[$key]['vendor_year']=$lead->vendor_year;
+                $leadApi[$key]['comment']=$lead->comment;
                 $leadApi[$key]['lead_id']=$lead->id;
                 if($lead->status->status_type!="finished"){
                     $leadApi[$key]['lead-folder']=$lead->folder;
@@ -368,7 +369,8 @@ class LeadController extends Controller
             isset($request->folder_id) == true ? $request->folder_id : '',
             Auth::user()->id,
             $result['result'],
-            0
+            0,
+            isset($request->comment) == true ? $request->comment : ''
         );
         if(Str::contains(Route::currentRouteName(), 'api')){
             return response()->json(['lead'=>'added'], 200);

@@ -27,6 +27,7 @@ class Lead extends Model
         'folder',
         'status_id',
         'checked',
+        'comment',
         'checked_texts'
     ];
 

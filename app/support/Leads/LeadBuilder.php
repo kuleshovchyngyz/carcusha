@@ -2,12 +2,7 @@
 
 namespace App\support\Leads;
 
-use App\Models\balance;
 use App\Models\Lead;
-use App\Models\Notification;
-use App\Models\Payment;
-use App\Models\PendingAmount;
-use App\Models\Reason;
 use App\Models\Status;
 use App\Models\User;
 
@@ -23,10 +18,12 @@ class LeadBuilder extends UpdatingLeadStatus
     public $bitrix_lead_id;
     public $status;
     public $from;
+    public $comment;
     private $reason_id;
     private $reason;
     private $payment;
-    public function __construct($vendor = '', $vendor_model = '', $vendor_year = '', $phone = '', $folder = '', $user_id = '', $bitrix_lead_id = '', $from = 0)
+
+    public function __construct($vendor = '', $vendor_model = '', $vendor_year = '', $phone = '', $folder = '', $user_id = '', $bitrix_lead_id = '', $from = 0, $comment = '')
     {
         $this->vendor = $vendor;
         $this->vendor_model = $vendor_model;
@@ -38,9 +35,11 @@ class LeadBuilder extends UpdatingLeadStatus
         $this->status = Status::where('name', 'Новый лид')->first();
         $this->bitrix_lead_id = $bitrix_lead_id;
         $this->from = $from;
+        $this->comment = $comment;
         $this->create_lead();
         parent::__construct($bitrix_lead_id, 1);
     }
+
     public function create_lead()
     {
         Lead::create([
@@ -52,7 +51,8 @@ class LeadBuilder extends UpdatingLeadStatus
             'user_id' => $this->user_id,
             'bitrix_lead_id' => $this->bitrix_lead_id,
             'status_id' => 1,
-            'number' => $this->from
+            'number' => $this->from,
+            'comment'=>$this->comment
         ]);
 
     }
